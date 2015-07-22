@@ -5,7 +5,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Filter ListView Images</string>
     <string name="ranklabel">"ID : "</string>
-    <string name="countrylabel">"Nombre : "</string>
-    <string name="populationlabel">"Domicilio : "</string>
-
+    <string name="nombrelabel">"Nombre : "</string>
+    <string name="direccionlabel">"Dirección : "</string>
+	<string name="detallelabel">"Detalle : "</string>
 </resources>

@@ -17,13 +17,13 @@ public class MainActivity extends Activity {
 
 	// Declare Variables
 	ListView list;
-	ListViewAdapter adapter;
+	ClientesListView adapter;
 	EditText editsearch;
-	//String[] rank;
-	String[] country;
-	String[] population;
-	int[] flag;
-	ArrayList<WorldPopulation> arraylist = new ArrayList<WorldPopulation>();
+	
+	String[] nombre;
+	String[] direccion;
+	int[] imagen;
+	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
 	SQLiteDatabase db;
 	
 	@Override
@@ -35,14 +35,14 @@ public class MainActivity extends Activity {
 		db.execSQL("CREATE TABLE IF NOT EXISTS clientes("
 						+ "nombre VARCHAR,"
 						+ "domicilio VARCHAR,"
-						+ "foto VARCHAR"
+						+ "imagen VARCHAR"
 						+ ");");
-		/*
-		sql = "TRUNCATE TABLE `clientes`";
-		db.execSQL(sql);
-		*/
 		
-		String sql = "INSERT INTO `clientes` (`nombre`, `domicilio`, `foto`) VALUES"
+		String truncate = "DELETE FROM `clientes`";
+		db.execSQL(truncate);
+		
+		
+		String sql = "INSERT INTO `clientes` (`nombre`, `domicilio`, `imagen`) VALUES"
 		+ "('David', 'Godoy Cruz', 'David'),"
 		+ "('Matias', 'Godoy Cruz', 'Matias'),"
 		+ "('Ales', 'Luján de cuyo', 'Ale'),"
@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
 		Cursor c = db.rawQuery("SELECT * FROM clientes", null);
 		
 		
-		String[] country = new String[10];
-		String[] population = new String[10];
+		String[] nombre = new String[10];
+		String[] direccion = new String[10];
 		
 		int j = 0;
 				
@@ -73,18 +73,13 @@ public class MainActivity extends Activity {
 		StringBuffer buffer=new StringBuffer();
 		while(c.moveToNext())
 		{
-			
-			if(j < 10)
-			{
-				country[j] = c.getString(0);
-				population[j] = c.getString(1);
-			}
+			nombre[j] = c.getString(0);
+			direccion[j] = c.getString(1);
 			j = j + 1;
-			
 		}
 				
 		
-		flag = new int[] { 
+		imagen = new int[] { 
 				R.drawable.david, 
 				R.drawable.matias,
 				R.drawable.ale, 
@@ -100,20 +95,23 @@ public class MainActivity extends Activity {
 		// Locate the ListView in listview_main.xml
 		list = (ListView) findViewById(R.id.listview);
 
-		for (int i = 0; i < country.length; i++) 
+		for (int i = 0; i < nombre.length; i++) 
 		{
 			//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
-			WorldPopulation wp = new WorldPopulation(
-					country[i],
-					population[i], 
-					flag[i]
+			Clientes wp = new Clientes();
+			
+			wp.cliente(
+				nombre[i],
+				direccion[i], 
+				imagen[i]
 			);
+			
 			// Binds all strings into an array
 			arraylist.add(wp);
 		}
 
 		// Pass results to ListViewAdapter Class
-		adapter = new ListViewAdapter(this, arraylist);
+		adapter = new ClientesListView(this, arraylist);
 		
 		// Binds the Adapter to the ListView
 		list.setAdapter(adapter);
