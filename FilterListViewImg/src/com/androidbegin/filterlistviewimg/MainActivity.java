@@ -179,7 +179,7 @@ public class MainActivity extends Activity {
  ****************************************************************************************************
  ***************************************************************************************************/
         	        	
-        	setContentView(R.layout.clientes_listview);
+        	setContentView(R.layout.productos_listview);
     		
     		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
     		db.execSQL("CREATE TABLE IF NOT EXISTS productos("
@@ -241,21 +241,21 @@ public class MainActivity extends Activity {
     		for (int i = 0; i < p_nombre.length; i++) 
     		{
     			//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
-    			Clientes wp = new Clientes(
+    			Productos wp = new Productos(
     					p_nombre[i],
     					detalle[i], 
     					imagen[i]
     			);
     			
     			// Binds all strings into an array
-    			arraylist.add(wp);
+    			arraylistp.add(wp);
     		}
 
     		// Pass results to ListViewAdapter Class
-    		adapter = new Clientes_ListView(this, arraylist);
+    		adapterp = new Productos_ListView(this, arraylistp);
     		
     		// Binds the Adapter to the ListView
-    		list.setAdapter(adapter);
+    		list.setAdapter(adapterp);
     		
     		// Locate the EditText in listview_main.xml
     		editsearch = (EditText) findViewById(R.id.search);
@@ -267,7 +267,7 @@ public class MainActivity extends Activity {
     			public void afterTextChanged(Editable arg0) 
     			{
     				String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-    				adapter.filter(text);
+    				adapterp.filter(text);
     			}
 
     			@Override
