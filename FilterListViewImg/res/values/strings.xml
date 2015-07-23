@@ -9,4 +9,9 @@
     <string name="nombrelabel">"Nombre : "</string>
     <string name="direccionlabel">"Dirección : "</string>
 	<string name="detallelabel">"Detalle : "</string>
+	<string name="editar">"Editar"</string>
+	<string name="eliminar">"Eliminar"</string>
+	<string name="visita">"Visita"</string>
+	<string name="presupuesto">"Presupuesto"</string>
+	<string name="pedido">"Pedido"</string>
 </resources>

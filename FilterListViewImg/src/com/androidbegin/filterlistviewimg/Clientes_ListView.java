@@ -28,6 +28,7 @@ public class Clientes_ListView extends BaseAdapter {
 		this.clientes = clientes;
 		inflater = LayoutInflater.from(mContext);
 		this.arraylist = new ArrayList<Clientes>();
+		this.arraylist.clear();
 		this.arraylist.addAll(clientes);
 	}
 
