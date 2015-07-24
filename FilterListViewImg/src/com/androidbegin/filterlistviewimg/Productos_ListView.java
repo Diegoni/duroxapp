@@ -19,17 +19,17 @@ public class Productos_ListView extends BaseAdapter {
 	// Declare Variables
 	Context mContext;
 	LayoutInflater inflater;
-	private List<Productos> producto = null;
+	private List<Productos> productos = null;
 	private ArrayList<Productos> arraylist;
 
 	public Productos_ListView(Context context,
-			List<Productos> producto) 
+			List<Productos> productos) 
 	{
 		mContext = context;
-		this.producto = producto;
+		this.productos = productos;
 		inflater = LayoutInflater.from(mContext);
 		this.arraylist = new ArrayList<Productos>();
-		this.arraylist.addAll(producto);
+		this.arraylist.addAll(productos);
 	}
 
 	public class ViewHolder 
@@ -41,12 +41,12 @@ public class Productos_ListView extends BaseAdapter {
 
 	public int getCount() 
 	{
-		return producto.size();
+		return productos.size();
 	}
 
 	public Productos getItem(int position) 
 	{
-		return producto.get(position);
+		return productos.get(position);
 	}
 
 	public long getItemId(int position) 
@@ -57,7 +57,9 @@ public class Productos_ListView extends BaseAdapter {
 	public View getView(final int position, View view, ViewGroup parent) 
 	{
 		final ViewHolder holder;
-		if (view == null) {
+		
+		if (view == null) 
+		{
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.productos_listviewitem, null);
 	
@@ -74,9 +76,9 @@ public class Productos_ListView extends BaseAdapter {
 		}
 		
 		// Set the results into TextViews
-		holder.nombre.setText(producto.get(position).getNombre());
-		holder.detalle.setText(producto.get(position).getDetalle());
-		holder.imagen.setImageResource(producto.get(position).getImagen());
+		holder.nombre.setText(productos.get(position).getNombre());
+		holder.detalle.setText(productos.get(position).getDetalle());
+		holder.imagen.setImageResource(productos.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
 		view.setOnClickListener(new OnClickListener() 
@@ -84,15 +86,17 @@ public class Productos_ListView extends BaseAdapter {
 			public void onClick(View arg0) {
 				
 				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Productos_ItemView.class);
+				//Intent intent = new Intent(mContext, Productos_ItemView.class); // Arreglar esto
+				Intent intent = new Intent(mContext, Clientes_ItemView.class);
 				
 				// Pasamos todos los datos de producto
-				intent.putExtra("nombre", (producto.get(position).getNombre()));
-				intent.putExtra("detalle", (producto.get(position).getDetalle()));
-				intent.putExtra("imagen", (producto.get(position).getImagen()));
+				intent.putExtra("nombre", (productos.get(position).getNombre()));
+				intent.putExtra("direccion", (productos.get(position).getDetalle()));// esto esta mal
+				intent.putExtra("imagen", (productos.get(position).getImagen()));
 		
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
+				
 			}
 		});
 
@@ -103,10 +107,10 @@ public class Productos_ListView extends BaseAdapter {
 	public void filter(String charText) 
 	{
 		charText = charText.toLowerCase(Locale.getDefault());
-		producto.clear();
+		productos.clear();
 		if (charText.length() == 0) 
 		{
-			producto.addAll(arraylist);
+			productos.addAll(arraylist);
 		}
 		else 
 		{
@@ -114,7 +118,7 @@ public class Productos_ListView extends BaseAdapter {
 			{
 				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
 				{
-					producto.add(wp);
+					productos.add(wp);
 				}
 			}
 		}

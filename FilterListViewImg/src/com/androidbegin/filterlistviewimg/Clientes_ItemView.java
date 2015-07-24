@@ -1,17 +1,27 @@
 package com.androidbegin.filterlistviewimg;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+@SuppressLint("ShowToast")
 public class Clientes_ItemView extends Activity 
 {
 	// Declare Variables
 	TextView txtnombre;
 	TextView txtdireccion;
+	Button btnvisita;
 	ImageView imgimagen;
+	
+	Context mContext;
 	
 	String nombre;
 	String direccion;
@@ -33,10 +43,21 @@ public class Clientes_ItemView extends Activity
 		txtnombre = (TextView) findViewById(R.id.nombre);
 		txtdireccion = (TextView) findViewById(R.id.direccion);
 		imgimagen = (ImageView) findViewById(R.id.imagen);
+		btnvisita = (Button) findViewById(R.id.visita);
 		
 		// Load the results into the TextViews
 		txtnombre.setText(nombre);
 		txtdireccion.setText(direccion);
 		imgimagen.setImageResource(imagen);
+		
+		btnvisita.setOnClickListener(new OnClickListener() 
+		{
+			public void onClick(View v) 
+			{
+				Intent intent = new Intent(mContext, Pedidos_Create.class);
+				
+				mContext.startActivity(intent);
+			}
+		});
 	}
 }
