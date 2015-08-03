@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class Clientes_ListView extends BaseAdapter {
@@ -121,5 +122,5 @@ public class Clientes_ListView extends BaseAdapter {
 		}
 		notifyDataSetChanged();
 	}
-
+	
 }

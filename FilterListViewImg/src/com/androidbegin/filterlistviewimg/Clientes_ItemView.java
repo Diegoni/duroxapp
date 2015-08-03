@@ -50,14 +50,20 @@ public class Clientes_ItemView extends Activity
 		txtdireccion.setText(direccion);
 		imgimagen.setImageResource(imagen);
 		
-		btnvisita.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View v) 
-			{
-				Intent intent = new Intent(mContext, Pedidos_Create.class);
-				
-				mContext.startActivity(intent);
-			}
-		});
+	}
+	
+	
+	public void visitas_crear(View view) {
+		
+		
+		Intent i = getIntent();
+		nombre = i.getStringExtra("nombre");
+		
+		Intent intent = new Intent(this, Visitas_Main.class);
+		
+		intent.putExtra("nombre", nombre);
+		
+		startActivity(intent);
+		
 	}
 }

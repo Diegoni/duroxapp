@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -290,6 +291,11 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "Productos", Toast.LENGTH_SHORT).show(); 
             return true;
         case R.id.item3: 
+        	
+        	Intent i = new Intent(this, Visitas_Main.class);
+    		
+    		startActivity(i);
+        	
             Toast.makeText(this, "Visitas", Toast.LENGTH_SHORT).show(); 
             return true;            
         case R.id.item4: 
