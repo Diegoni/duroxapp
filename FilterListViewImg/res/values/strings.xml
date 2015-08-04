@@ -19,6 +19,11 @@
 	<string name="productos">"Productos"</string>
 	<string name="cantidad">"Cantidad"</string>
 	<string name="direccion">"Dirección"</string>
+	<string name="nombre">"Nombre"</string>
 	<string name="detalle">"Detalle"</string>
 	<string name="seleccionar">"Seleccionar"</string>
+	<string name="fecha">"Fecha"</string>
+	<string name="comentarios">"Comentarios"</string>
+	<string name="guardar">"Guardar"</string>
+	<string name="agregar_comentarios">"Agregar Comentarios"</string>
 </resources>

@@ -54,8 +54,6 @@ public class Clientes_ItemView extends Activity
 	
 	
 	public void visitas_crear(View view) {
-		
-		
 		Intent i = getIntent();
 		nombre = i.getStringExtra("nombre");
 		
@@ -64,6 +62,5 @@ public class Clientes_ItemView extends Activity
 		intent.putExtra("nombre", nombre);
 		
 		startActivity(intent);
-		
 	}
 }

@@ -20,13 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity android:name=".Clientes_Main" >
+        </activity>
         <activity android:name=".Clientes_ItemView" >
+        </activity>
+        <activity android:name=".Productos_Main" >
         </activity>
         <activity android:name=".Productos_ItemView" >
         </activity>
         <activity android:name=".Visitas_Main" >
         </activity>
         <activity android:name=".Visitas_Detalle" >
+        </activity>
+        <activity android:name=".Presupuestos_Main" >
+        </activity>
+        <activity android:name=".Presupuestos_Create" >
         </activity>
     </application>
 
