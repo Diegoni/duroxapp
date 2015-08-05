@@ -19,8 +19,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>a
         <activity android:name="com.durox.app.Clientes.Clientes_ItemView" >
+        </activity>
+        <activity android:name="com.durox.app.Visitas.Visitas_Main" >
+        </activity>
+        <activity android:name="com.durox.app.Visitas.Visitas_ItemView" >
+        </activity>
+        <activity android:name="com.durox.app.Visitas.Visitas_Detalle" >
+        </activity>
+        <activity android:name="com.durox.app.Productos.Productos_ItemView" >
+        </activity>
+        <activity android:name="com.durox.app.Presupuestos.Presupuestos_Main" >
+        </activity>
+        <activity android:name="com.durox.app.Presupuestos.Presupuestos_Create" >
+        </activity>
+        <activity android:name="com.durox.app.Presupuestos.Linea_Presupuestos_ItemView" >
         </activity>
     </application>
 

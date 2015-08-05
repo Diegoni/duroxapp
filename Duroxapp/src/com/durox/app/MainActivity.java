@@ -72,7 +72,9 @@ public class MainActivity extends Activity {
         	setContentView(R.layout.clientes_listview);
     		
     		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-    		db.execSQL("CREATE TABLE IF NOT EXISTS clientes("
+    		
+    		db.execSQL("CREATE TABLE IF NOT EXISTS `clientes`("
+    						+ "id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,"
     						+ "nombre VARCHAR,"
     						+ "domicilio VARCHAR,"
     						+ "foto VARCHAR"
@@ -97,36 +99,25 @@ public class MainActivity extends Activity {
     		
     		c = db.rawQuery("SELECT * FROM clientes", null);
     		
-    		c_nombre = new String[10];
-    		direccion = new String[10];
+    		int cantidad_clientes = c.getCount();
     		
+    		c_nombre = new String[cantidad_clientes];
+    		direccion = new String[cantidad_clientes];
+    		foto = new int[cantidad_clientes];
+    	    
     		int j = 0;
     				
     		if(c.getCount() > 0)
     		{
     			while(c.moveToNext())
         		{
-    				c_nombre[j] = c.getString(0);
-        			direccion[j] = c.getString(1);
+    				c_nombre[j] = c.getString(2);
+        			direccion[j] = c.getString(3);
+        			foto[j] = R.drawable.clientes; 
         			j = j + 1;
-        		}		
+        		}	 	
     		}
-    		    			
     		
-    		foto = new int[] 
-    		{ 
-    			R.drawable.david, 
-    			R.drawable.matias,
-    			R.drawable.ale, 
-    			R.drawable.seba,
-    			R.drawable.dario, 
-    			R.drawable.jose, 
-    			R.drawable.juan,
-    			R.drawable.pedro, 
-    			R.drawable.pepe, 
-    			R.drawable.mario 
-    		};
-
     		// Locate the ListView in listview_main.xml
     		list = (ListView) findViewById(R.id.listview);
 
@@ -192,7 +183,12 @@ public class MainActivity extends Activity {
         	setContentView(R.layout.productos_listview);
     		
     		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-    		db.execSQL("CREATE TABLE IF NOT EXISTS productos("
+    		
+    		truncate = "DROP TABLE IF EXISTS `productos`;";
+    		db.execSQL(truncate);
+    		
+    		db.execSQL("CREATE TABLE IF NOT EXISTS `productos`("
+    						+ "id_producto INTEGER PRIMARY KEY AUTOINCREMENT,"
     						+ "nombre VARCHAR,"
     						+ "detalle VARCHAR,"
     						+ "imagen VARCHAR"

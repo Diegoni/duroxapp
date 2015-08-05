@@ -74,9 +74,11 @@ public class Presupuestos_Create extends Activity
 		auto_producto.setThreshold(1);
 		auto_producto.setAdapter(adapter);
 		
-		
-		
+		String truncate = "DROP TABLE IF EXISTS `linea_presupuestos`;";
+		db.execSQL(truncate);
+				
 		db.execSQL("CREATE TABLE IF NOT EXISTS linea_presupuestos("
+				+ "id_linea_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "producto VARCHAR,"
 				+ "cantidad INT,"
 				+ "comentario VARCHAR"

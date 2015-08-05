@@ -85,8 +85,8 @@ public class Visitas_Main extends Activity {
 		auto_cliente.setThreshold(1);
 		auto_cliente.setAdapter(adapter);
 		
-		
 		db.execSQL("CREATE TABLE IF NOT EXISTS `epocas_visitas`("
+				+ "id_epoca INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "epoca VARCHAR"
 				+ ");");
 
@@ -151,7 +151,13 @@ public class Visitas_Main extends Activity {
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS visitas("
+		
+		truncate = "DROP TABLE IF EXISTS `visitas`;";
+		
+		db.execSQL(truncate);
+		
+		db.execSQL("CREATE TABLE IF NOT EXISTS  `visitas `("
+				+ "id_visita INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "nombre VARCHAR, "
 				+ "epoca VARCHAR, "
 				+ "fecha VARCHAR, "
