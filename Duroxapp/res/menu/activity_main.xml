@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_settings" android:orderInCategory="100" android:showAsAction="never" android:title="@string/menu_settings"/>
+	<item android:id="@+id/item1" android:title="Clientes"></item>
+    <item android:id="@+id/item2" android:title="Productos"></item>
+    <item android:id="@+id/item3" android:title="Visitas"></item>
+    <item android:id="@+id/item4" android:title="Presupuestos"></item>
+    <item android:id="@+id/item5" android:title="Pedidos"></item>
+    <item android:id="@+id/item6" android:title="Mensajes"></item>
+</menu>
