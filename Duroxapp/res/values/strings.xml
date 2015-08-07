@@ -30,5 +30,6 @@
 	<string name="pass">"Pass"</string>
 	<string name="login">"Login"</string>
 	<string name="actualizar">"Actualizar"</string>
+	<string name="ver">"Ver"</string>
 	<string name="agregar_comentarios">"Agregar Comentarios"</string>
 </resources>

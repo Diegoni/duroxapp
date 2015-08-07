@@ -1,98 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/TableLayout1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
- 
+    android:layout_height="fill_parent"
+    android:onClick="agregar_comentarios" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <AutoCompleteTextView
+        android:id="@+id/autoClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/cliente">
 
-        <AutoCompleteTextView
-            android:id="@+id/clientes"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:ems="10"
-            android:hint="@string/cliente" >
+        <requestFocus />
+    </AutoCompleteTextView>
 
-            <requestFocus />
-        </AutoCompleteTextView>
-   
-    </TableRow>
-    
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <AutoCompleteTextView
+        android:id="@+id/autoEpocas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoClientes"
+        android:ems="10"
+        android:hint="@string/epoca" />
 
-        <AutoCompleteTextView
-            android:id="@+id/epocas_visitas"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-           
-            android:ems="10"
-            android:hint="@string/epoca" >
+    <EditText
+        android:id="@+id/etFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoEpocas"
+        android:ems="10"
+        android:hint="@string/fecha"
+        android:inputType="date" />
 
-            
-   	</AutoCompleteTextView>
-   
-    </TableRow>
-    
-    <TableRow    
-        android:id="@+id/tableRow3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <RatingBar
+        android:id="@+id/ebValoracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFecha"
+        android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:id="@+id/fecha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/fecha"
-            android:inputType="date" />
+    <Button
+        android:id="@+id/btnAgregarComentarios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ebValoracion"
+        android:layout_alignRight="@+id/ebValoracion"
+        android:layout_centerVertical="true"
+        android:onClick="agregar_comentarios"
+        android:text="@string/agregar_comentarios" />
 
-    </TableRow>
-    
-	<TableRow    
-        android:id="@+id/tableRow4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        
-	    <RatingBar
-	        android:id="@+id/valoracion"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" />
-
-	</TableRow>   
-
-	<TableRow    
-        android:id="@+id/tableRow5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-	    
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="agregar_comentarios"
-        android:text="@string/agregar_comentarios" />
+        android:layout_alignLeft="@+id/btnAgregarComentarios"
+        android:layout_alignRight="@+id/btnAgregarComentarios"
+        android:layout_below="@+id/btnAgregarComentarios"
+        android:onClick="guardar"
+        android:text="@string/guardar" />
 
-    </TableRow>
-    
-	<TableRow    
-        android:id="@+id/tableRow6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-	<Button
-	    android:id="@+id/button2"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:onClick="guardar"
-	    android:text="@string/guardar" />
-	
-	</TableRow>
-
-</TableLayout>
+</RelativeLayout>

@@ -8,7 +8,7 @@
         android:id="@+id/etCantidad"
         android:layout_width="wrap_content"
         android:layout_height="274dp"
-        android:layout_above="@+id/btnGuardar"
+        android:layout_above="@+id/btnGuardarVisita"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:ems="10"
@@ -81,7 +81,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/btnGuardar"
+        android:id="@+id/btnGuardarVisita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

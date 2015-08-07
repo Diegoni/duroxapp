@@ -4,6 +4,7 @@ import com.androidbegin.filterlistviewimg.R;
 import com.androidbegin.filterlistviewimg.R.id;
 import com.androidbegin.filterlistviewimg.R.layout;
 import com.durox.app.MainActivity;
+import com.durox.app.Clientes.Clientes_model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,6 +31,7 @@ public class Visitas_Main extends Activity {
 	Cursor c;
 	int cantidad;
 	int j;
+	Clientes_model mCliente;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +40,15 @@ public class Visitas_Main extends Activity {
 		
 		setContentView(R.layout.visitas_main);
 		
-		auto_cliente = (AutoCompleteTextView) findViewById(R.id.clientes);
-		auto_epoca = (AutoCompleteTextView) findViewById(R.id.epocas_visitas);
-		etfecha = (EditText) findViewById(R.id.fecha);
+		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
+		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
+		etfecha = (EditText) findViewById(R.id.fechass);
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-		db.execSQL("CREATE TABLE IF NOT EXISTS clientes("
-						+ "nombre VARCHAR,"
-						+ "domicilio VARCHAR,"
-						+ "foto VARCHAR"
-						+ ");");
 		
-		truncate = "DELETE FROM `clientes`";
-		db.execSQL(truncate);
+		mCliente = new Clientes_model(db);
 		
-		sql = "INSERT INTO `clientes` (`nombre`, `domicilio`, `foto`) VALUES"
-		+ "('David', 'Godoy Cruz', 'David'),"
-		+ "('Matias', 'Godoy Cruz', 'Matias'),"
-		+ "('Ales', 'Luján de cuyo', 'Ale'),"
-		+ "('Seba', 'Luján de cuyo', 'Seba'),"
-		+ "('Dario', 'Luján de cuyo', 'Dario'),"
-		+ "('Jose', 'Maipú', 'Jose'),"
-		+ "('Juan', 'Maipú', 'Juan'),"
-		+ "('Pedro', 'Las Heras', 'Pedro'),"
-		+ "('Pepe', 'Las Heras', 'Pepe'),"
-		+ "('Mario', 'Godoy Cruz', 'Mario');";
-		
-		db.execSQL(sql);
-		
-		c = db.rawQuery("SELECT * FROM clientes", null);
+		c = mCliente.getRegistros();
 		
 		cantidad = c.getCount();
 		
@@ -76,14 +58,13 @@ public class Visitas_Main extends Activity {
 				
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
-				c_nombre[j] = c.getString(0);
-    			j = j + 1;
+				c_nombre[j] = c.getString(1);
+				j = j + 1;
     		}		
 		}
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, c_nombre);
-		auto_cliente.setThreshold(1);
-		auto_cliente.setAdapter(adapter);
+		else{
+			Toast.makeText(this, "No hay clientes cargados", Toast.LENGTH_SHORT).show();
+		}
 		
 		db.execSQL("CREATE TABLE IF NOT EXISTS `epocas_visitas`("
 				+ "id_epoca INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -120,6 +101,11 @@ public class Visitas_Main extends Activity {
 		auto_epoca.setAdapter(adapterProductos);
 		
 		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, c_nombre);
+		auto_cliente.setThreshold(1);
+		auto_cliente.setAdapter(adapter);
+		
+		
 		Intent i = getIntent();
 		String nombre = i.getStringExtra("nombre");
 		
@@ -128,7 +114,6 @@ public class Visitas_Main extends Activity {
 		}
 		
 	}
-
 
 	public void agregar_comentarios(View view) {
 		String nombre = auto_cliente.getText().toString();
@@ -174,7 +159,6 @@ public class Visitas_Main extends Activity {
 		
 		Intent intent = new Intent(Visitas_Main.this, MainActivity.class);
 		startActivity(intent);
-		
 	}
 
 }
