@@ -26,5 +26,9 @@
 	<string name="comentarios">"Comentarios"</string>
 	<string name="guardar">"Guardar"</string>
 	<string name="agregar">"Agregar"</string>
+	<string name="usuario">"Usuario"</string>
+	<string name="pass">"Pass"</string>
+	<string name="login">"Login"</string>
+	<string name="actualizar">"Actualizar"</string>
 	<string name="agregar_comentarios">"Agregar Comentarios"</string>
 </resources>

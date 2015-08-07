@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/nombrelabel"
+        android:text="@string/nombrelabel"
         android:textColor="#33CC33" />
 
     <TextView
@@ -23,13 +24,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombrelabel"
         android:text="@string/detallelabel" />
-
-    <TextView
-        android:id="@+id/detalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/producto"
-        android:layout_toRightOf="@+id/detalleabel" />
+    
+     <TextView
+         android:id="@+id/detalle"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/nombre"
+         android:layout_below="@+id/nombre"
+         android:text="@string/detallelabel" />
     
      <ImageView
         android:id="@+id/imagen"
@@ -81,5 +83,7 @@
          android:layout_alignBottom="@+id/visita"
          android:layout_toRightOf="@+id/visita"
          android:text="@string/presupuesto" />
+
+   
      
 </RelativeLayout>

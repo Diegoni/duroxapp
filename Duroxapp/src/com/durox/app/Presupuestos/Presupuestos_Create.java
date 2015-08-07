@@ -65,7 +65,7 @@ public class Presupuestos_Create extends Activity
 				
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
-				p_nombre[j] = c.getString(0);
+				p_nombre[j] = c.getString(1);
     			j = j + 1;
     		}		
 		}
@@ -142,7 +142,7 @@ public class Presupuestos_Create extends Activity
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS linea_presupuestos("
+		db.execSQL("CREATE TABLE IF NOT EXISTS `linea_presupuestos` ("
 				+ "producto VARCHAR, "
 				+ "cantidad INT, "
 				+ "comentario VARCHAR "

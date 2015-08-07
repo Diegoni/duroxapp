@@ -95,7 +95,7 @@ public class Productos_ListView extends BaseAdapter {
 				
 				// Pasamos todos los datos de producto
 				intent.putExtra("nombre", (productos.get(position).getNombre()));
-				intent.putExtra("direccion", (productos.get(position).getDetalle()));// esto esta mal
+				intent.putExtra("detalle", (productos.get(position).getDetalle()));// esto esta mal
 				intent.putExtra("imagen", (productos.get(position).getImagen()));
 		
 				// Start SingleItemView Class

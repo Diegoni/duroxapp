@@ -1,29 +1,56 @@
 package com.durox.app;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.androidbegin.filterlistviewimg.R;
 import com.durox.app.Clientes.Clientes;
 import com.durox.app.Clientes.Clientes_ListView;
+import com.durox.app.Clientes.Clientes_model;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
+import com.durox.app.Productos.Productos_model;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
  
 public class MainActivity extends Activity {
@@ -47,13 +74,22 @@ public class MainActivity extends Activity {
 	String truncate;
 	String sql;
 	Cursor c;
-	int j;		
+	int j;	
+		
+	private String jsonResult;
+	private ListView listView;
+	
+	Clientes_model mCliente;
+	Productos_model mProductos;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        
     } 
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -62,64 +98,222 @@ public class MainActivity extends Activity {
      public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.item1:
+        	clientes_lista();
         	
-/****************************************************************************************************
- **************************************************************************************************** 
- *			Clientes      	
- ****************************************************************************************************
- ***************************************************************************************************/
+    		Toast.makeText(this, "Clientes :"+c.getCount(), Toast.LENGTH_SHORT).show(); 
+            return true;
+    		
+        case R.id.item2: 
+        	productos_lista();        	
+        	    		
+            Toast.makeText(this, "Productos "+c.getCount(), Toast.LENGTH_SHORT).show(); 
+            return true;
+        case R.id.item3: 
+        	Toast.makeText(this, "Visitas", Toast.LENGTH_SHORT).show();
         	
-        	setContentView(R.layout.clientes_listview);
+        	Intent intentVisitas = new Intent(this, Visitas_Main.class);
+    		startActivity(intentVisitas);
+        	 
+            return true;            
+        case R.id.item4: 
+            Toast.makeText(this, "Presupestos", Toast.LENGTH_SHORT).show();
+           
+            Intent intentPresupuestos = new Intent(this, Presupuestos_Main.class);
+    		startActivity(intentPresupuestos);
+            
+            return true;
+        case R.id.item5: 
+            Toast.makeText(this, "Pedidos", Toast.LENGTH_SHORT).show(); 
+            return true;
+        case R.id.item6: 
+            Toast.makeText(this, "Actualizar", Toast.LENGTH_SHORT).show(); 
+            
+            setContentView(R.layout.actualizar);
+    		listView = (ListView) findViewById(R.id.listView1);
     		
-    		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-    		
-    		db.execSQL("CREATE TABLE IF NOT EXISTS `clientes`("
-    						+ "id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,"
-    						+ "nombre VARCHAR,"
-    						+ "domicilio VARCHAR,"
-    						+ "foto VARCHAR"
-    						+ ");");
-    		
-    		truncate = "DELETE FROM `clientes`";
-    		db.execSQL(truncate);
-    		
-    		String sql = "INSERT INTO `clientes` (`nombre`, `domicilio`, `foto`) VALUES"
-    		+ "('David', 'Godoy Cruz', 'David'),"
-    		+ "('Matias', 'Godoy Cruz', 'Matias'),"
-    		+ "('Ales', 'Luján de cuyo', 'Ale'),"
-    		+ "('Seba', 'Luján de cuyo', 'Seba'),"
-    		+ "('Dario', 'Luján de cuyo', 'Dario'),"
-    		+ "('Jose', 'Maipú', 'Jose'),"
-    		+ "('Juan', 'Maipú', 'Juan'),"
-    		+ "('Pedro', 'Las Heras', 'Pedro'),"
-    		+ "('Pepe', 'Las Heras', 'Pepe'),"
-    		+ "('Mario', 'Godoy Cruz', 'Mario');";
-    		
-    		db.execSQL(sql);
-    		
-    		c = db.rawQuery("SELECT * FROM clientes", null);
-    		
-    		int cantidad_clientes = c.getCount();
-    		
-    		c_nombre = new String[cantidad_clientes];
-    		direccion = new String[cantidad_clientes];
-    		foto = new int[cantidad_clientes];
-    	    
-    		int j = 0;
-    				
-    		if(c.getCount() > 0)
+            return true;            
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+ 
+    }
+         
+     
+     // Async Task to access the web
+ 	private class JsonReadTask extends AsyncTask<String, Void, String> {
+ 		String carga;
+ 		
+ 		public JsonReadTask(String carga) {
+ 			this.carga = carga;
+ 		}
+ 		
+ 		protected String doInBackground(String... params) {
+ 			HttpClient httpclient = new DefaultHttpClient();
+ 			HttpPost httppost = new HttpPost(params[0]);
+ 			
+ 			try {
+ 				HttpResponse response = httpclient.execute(httppost);
+ 				jsonResult = inputStreamToString(
+ 				response.getEntity().getContent()).toString();
+ 			}
+ 	 
+ 			catch (ClientProtocolException e) {
+ 				e.printStackTrace();
+ 			} catch (IOException e) {
+ 				e.printStackTrace();
+ 			}
+ 			
+ 			return null;
+ 		}
+  
+ 		private StringBuilder inputStreamToString(InputStream is) {
+ 			String rLine = "";
+ 			StringBuilder answer = new StringBuilder();
+ 			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+ 	 
+ 			try {
+ 				while ((rLine = rd.readLine()) != null) {
+ 					answer.append(rLine);
+ 				}
+ 			} catch (IOException e) {
+ 				// e.printStackTrace();
+ 				Toast.makeText(getApplicationContext(), 
+ 				"Error..." + e.toString(), Toast.LENGTH_LONG).show();
+ 			}
+ 			
+ 			return answer;
+ 		}
+  
+ 		protected void onPostExecute(String result) {
+ 			
+ 			if(carga == "clientes"){
+ 				CargarClientes();
+ 			}else
+ 			if(carga == "productos"){
+ 				CargarProductos();
+ 			}
+ 		}
+ 	}// end async task
+ 	
+ 	public void actualizar_clientes(View view) {
+ 		JsonReadTask taskclientes = new JsonReadTask("clientes");
+ 		String url = "http://10.0.2.2/durox/index.php/actualizaciones/getClientes/";
+ 		taskclientes.execute(new String[] { url });
+ 	}
+ 	
+ 	public void actualizar_productos(View view) {
+ 		JsonReadTask taskproductos = new JsonReadTask("productos");
+ 		String url = "http://10.0.2.2/durox/index.php/actualizaciones/getProductos/";
+ 		taskproductos.execute(new String[] { url });
+ 	}
+  
+ 	
+ 	// build hash set for list view
+ 	public void CargarClientes() {
+ 		try {
+ 			JSONObject jsonResponse = new JSONObject(jsonResult);
+ 			JSONArray jsonMainNode = jsonResponse.optJSONArray("clientes");
+ 			
+ 			String razon_social;
+ 			String nombre;
+ 			String apellido;
+ 			String number;
+ 			
+ 			if(jsonMainNode.length() > 0){
+ 				mCliente.truncate();
+ 				Toast.makeText(getApplicationContext(), 
+ 			 			"Registros registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
+ 			}
+ 			  
+ 			for (int i = 0; i < jsonMainNode.length(); i++) {
+ 				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+ 				razon_social = jsonChildNode.optString("razon_social");
+ 				nombre = jsonChildNode.optString("nombre");
+ 				apellido = jsonChildNode.optString("apellido");
+ 				number = jsonChildNode.optString("cuit");
+ 				
+ 				mCliente.insert(razon_social, apellido+" "+nombre , number);
+ 			}
+ 		} catch (JSONException e) {
+ 			Toast.makeText(getApplicationContext(), 
+ 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
+ 		}
+ 		
+ 		Toast.makeText(getApplicationContext(), 
+ 	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
+ 		
+ 		clientes_lista();
+  	}
+ 	
+ 	
+ 	public void CargarProductos() {
+ 		try {
+ 			JSONObject jsonResponse = new JSONObject(jsonResult);
+ 			JSONArray jsonMainNode = jsonResponse.optJSONArray("productos");
+ 			
+ 			String nombre;
+ 			String precio;
+ 			String ficha_tecnica;
+ 			
+ 			if(jsonMainNode.length() > 0){
+ 				mProductos.truncate();
+ 				Toast.makeText(getApplicationContext(), 
+ 			 			"Buscando registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
+ 			}
+ 			  
+ 			for (int i = 0; i < jsonMainNode.length(); i++) {
+ 				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+ 				
+ 				nombre = jsonChildNode.optString("nombre");
+ 				precio = jsonChildNode.optString("precio");
+ 				ficha_tecnica = jsonChildNode.optString("ficha_tecnica");
+ 				
+ 				mProductos.insert(nombre, precio , ficha_tecnica);
+ 			}
+ 		} catch (JSONException e) {
+ 			Toast.makeText(getApplicationContext(), 
+ 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
+ 		}
+ 		
+ 		Toast.makeText(getApplicationContext(), 
+ 	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
+ 		
+ 		productos_lista();   
+  	}
+ 	
+ 	
+ 	public void clientes_lista(){
+ 		setContentView(R.layout.clientes_listview);
+    	
+    	db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
+    	
+    	mCliente = new Clientes_model(db);
+		
+		mCliente.createTable();
+		
+		c = mCliente.getRegistros();
+		
+		int cantidad_clientes = c.getCount();
+		
+		c_nombre = new String[cantidad_clientes];
+		direccion = new String[cantidad_clientes];
+		foto = new int[cantidad_clientes];
+	    
+		int j = 0;
+				
+		if(c.getCount() > 0)
+		{
+			while(c.moveToNext())
     		{
-    			while(c.moveToNext())
-        		{
-    				c_nombre[j] = c.getString(2);
-        			direccion[j] = c.getString(3);
-        			foto[j] = R.drawable.clientes; 
-        			j = j + 1;
-        		}	 	
-    		}
-    		
-    		// Locate the ListView in listview_main.xml
+				c_nombre[j] = c.getString(1);
+    			direccion[j] = c.getString(2);
+    			foto[j] = R.drawable.clientes; 
+    			j = j + 1;
+    		}	
+			
+			// Locate the ListView in listview_main.xml
     		list = (ListView) findViewById(R.id.listview);
+    		arraylist.clear();
 
     		for (int i = 0; i < c_nombre.length; i++) 
     		{
@@ -169,80 +363,42 @@ public class MainActivity extends Activity {
     					int arg3) {
     			}
     		});
-    		Toast.makeText(this, "Clientes", Toast.LENGTH_SHORT).show(); 
-            return true;
-    		
-        case R.id.item2: 
-        	
-/****************************************************************************************************
- **************************************************************************************************** 
- *			Productos      	
- ****************************************************************************************************
- ***************************************************************************************************/
-        	        	
-        	setContentView(R.layout.productos_listview);
-    		
-    		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-    		
-    		truncate = "DROP TABLE IF EXISTS `productos`;";
-    		db.execSQL(truncate);
-    		
-    		db.execSQL("CREATE TABLE IF NOT EXISTS `productos`("
-    						+ "id_producto INTEGER PRIMARY KEY AUTOINCREMENT,"
-    						+ "nombre VARCHAR,"
-    						+ "detalle VARCHAR,"
-    						+ "imagen VARCHAR"
-    						+ ");");
-    		
-    		truncate = "DELETE FROM `productos`";
-    		db.execSQL(truncate);
-    		
-    		sql = "INSERT INTO `productos` (`nombre`, `detalle`, `imagen`) VALUES"
-    		+ "('Producto 0', 'Detalle producto 0', 'Producto 1'),"
-    		+ "('Producto 1', 'Detalle producto 1', 'Producto 1'),"
-    		+ "('Producto 2', 'Detalle producto 2', 'Producto 1'),"
-    		+ "('Producto 3', 'Detalle producto 3', 'Producto 1'),"
-    		+ "('Producto 4', 'Detalle producto 4', 'Producto 1'),"
-    		+ "('Producto 5', 'Detalle producto 5', 'Producto 1'),"
-    		+ "('Producto 6', 'Detalle producto 6', 'Producto 1'),"
-    		+ "('Producto 7', 'Detalle producto 7', 'Producto 1'),"
-    		+ "('Producto 8', 'Detalle producto 8', 'Producto 1'),"
-    		+ "('Producto 9', 'Detalle producto 9', 'Producto 1');";
-    		
-    		db.execSQL(sql);
-    		
-    		c = db.rawQuery("SELECT * FROM productos", null);
-    		
-    		p_nombre = new String[10];
-    		detalle = new String[10];
-    		
-    		j = 0;
-    				
-    		if(c.getCount() > 0)
+		}
+ 	}
+ 	
+ 	
+ 	public void productos_lista(){
+ 		setContentView(R.layout.productos_listview);
+		
+		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
+		
+		mProductos = new Productos_model(db);
+		
+		mProductos.createTable();
+		    		
+		c = mProductos.getRegistros();
+		
+		int cantidad_productos = c.getCount();
+		
+		p_nombre = new String[cantidad_productos];
+		detalle = new String[cantidad_productos];
+		imagen = new int[cantidad_productos];
+		
+		j = 0;
+				
+		if(c.getCount() > 0)
+		{
+			while(c.moveToNext())
     		{
-    			while(c.moveToNext())
-        		{
-        			p_nombre[j] = c.getString(0);
-        			detalle[j] = c.getString(1);
-        			j = j + 1;
-        		}		
+    			p_nombre[j] = c.getString(1);
+    			detalle[j] = c.getString(2);
+    			imagen[j] = R.drawable.articulo; 
+    			j = j + 1;
     		}	
-    		
-    		imagen = new int[] 
-    		{ 
-    			R.drawable.articulo, 
-    			R.drawable.articulo,
-    			R.drawable.articulo, 
-    			R.drawable.articulo,
-    			R.drawable.articulo, 
-    			R.drawable.articulo,
-    			R.drawable.articulo, 
-    			R.drawable.articulo,
-    			R.drawable.articulo, 
-    			R.drawable.articulo 
-    		};
-    		// Locate the ListView in listview_main.xml
+			
+			// Locate the ListView in listview_main.xml
     		list = (ListView) findViewById(R.id.listview);
+    		arraylistp.clear();
 
     		for (int i = 0; i < p_nombre.length; i++) 
     		{
@@ -292,34 +448,8 @@ public class MainActivity extends Activity {
     					int arg3) {
     			}
     		});
-    		
-            Toast.makeText(this, "Productos", Toast.LENGTH_SHORT).show(); 
-            return true;
-        case R.id.item3: 
-        	Toast.makeText(this, "Visitas", Toast.LENGTH_SHORT).show();
-        	
-        	Intent intentVisitas = new Intent(this, Visitas_Main.class);
-    		startActivity(intentVisitas);
-        	 
-            return true;            
-        case R.id.item4: 
-            Toast.makeText(this, "Presupestos", Toast.LENGTH_SHORT).show();
-           
-            Intent intentPresupuestos = new Intent(this, Presupuestos_Main.class);
-    		startActivity(intentPresupuestos);
-            
-            return true;
-        case R.id.item5: 
-            Toast.makeText(this, "Pedidos", Toast.LENGTH_SHORT).show(); 
-            return true;
-        case R.id.item6: 
-            Toast.makeText(this, "Mensajes", Toast.LENGTH_SHORT).show(); 
-            return true;            
-        default:
-            return super.onOptionsItemSelected(item);
-        }
- 
-    }
- 
+		}	
+ 		
+ 	}
 }
   

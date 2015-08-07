@@ -5,5 +5,5 @@
     <item android:id="@+id/item3" android:title="Visitas"></item>
     <item android:id="@+id/item4" android:title="Presupuestos"></item>
     <item android:id="@+id/item5" android:title="Pedidos"></item>
-    <item android:id="@+id/item6" android:title="Mensajes"></item>
+    <item android:id="@+id/item6" android:title="Actualizar"></item>
 </menu>
