@@ -27,11 +27,11 @@ import org.json.JSONObject;
 import com.androidbegin.filterlistviewimg.R;
 import com.durox.app.Clientes.Clientes;
 import com.durox.app.Clientes.Clientes_ListView;
-import com.durox.app.Clientes.Clientes_model;
+import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Productos_model;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
-import com.durox.app.Productos.Productos_model;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.app.Activity;
@@ -82,20 +82,20 @@ public class MainActivity extends Activity {
 	Clientes_model mCliente;
 	Productos_model mProductos;
  
-    @Override
+   
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        
-    } 
+   } 
     
-    @Override
+   
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-     public boolean onOptionsItemSelected(MenuItem item) {
+    
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.item1:
         	clientes_lista();
@@ -135,11 +135,10 @@ public class MainActivity extends Activity {
         default:
             return super.onOptionsItemSelected(item);
         }
- 
     }
          
      
-     // Async Task to access the web
+    // Async Task to access the web
  	private class JsonReadTask extends AsyncTask<String, Void, String> {
  		String carga;
  		

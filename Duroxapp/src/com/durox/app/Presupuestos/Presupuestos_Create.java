@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.androidbegin.filterlistviewimg.R;
+import com.durox.app.Models.Lineas_Presupuestos_model;
+import com.durox.app.Models.Productos_model;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -36,6 +38,9 @@ public class Presupuestos_Create extends Activity
 	ArrayList<Linea_Presupuestos> arraylist = new ArrayList<Linea_Presupuestos>();
 	Linea_Presupuestos_ListView adapter_listView;
 	EditText editsearch;
+	
+	Productos_model mProductos;
+	Lineas_Presupuestos_model mLineas;
 
 	public void onCreate(Bundle savedInstanceState) 
 	{
@@ -55,7 +60,9 @@ public class Presupuestos_Create extends Activity
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		c = db.rawQuery("SELECT * FROM productos", null);
+		mProductos = new Productos_model(db);
+		
+		c = mProductos.getRegistros();
 		
 		cantidad = c.getCount();
 		
@@ -74,17 +81,9 @@ public class Presupuestos_Create extends Activity
 		auto_producto.setThreshold(1);
 		auto_producto.setAdapter(adapter);
 		
-		String truncate = "DROP TABLE IF EXISTS `linea_presupuestos`;";
-		db.execSQL(truncate);
-				
-		db.execSQL("CREATE TABLE IF NOT EXISTS linea_presupuestos("
-				+ "id_linea_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "producto VARCHAR,"
-				+ "cantidad INT,"
-				+ "comentario VARCHAR"
-				+ ");");
+		mLineas = new Lineas_Presupuestos_model(db);
 		
-		Cursor cursor = db.rawQuery("SELECT * FROM linea_presupuestos", null);
+		Cursor cursor = mLineas.getRegistros();
 		
 		int cantidad_lineas = cursor.getCount();
 		
@@ -104,9 +103,9 @@ public class Presupuestos_Create extends Activity
 			
 			while(cursor.moveToNext())
 			{
-				producto_linea[x] = cursor.getString(0);
-				cantidad_linea[x] = cursor.getString(1);
-				comentario_linea[x] = cursor.getString(2);
+				producto_linea[x] = cursor.getString(1);
+				cantidad_linea[x] = cursor.getString(2);
+				comentario_linea[x] = cursor.getString(3);
 				x = x + 1;
 			}	
 			
@@ -117,8 +116,8 @@ public class Presupuestos_Create extends Activity
 			{
 				//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
 				Linea_Presupuestos wp = new Linea_Presupuestos(
+						cantidad_linea[i],
 						producto_linea[i],
-						cantidad_linea[i], 
 						comentario_linea[i]
 				);
 				
@@ -142,16 +141,9 @@ public class Presupuestos_Create extends Activity
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS `linea_presupuestos` ("
-				+ "producto VARCHAR, "
-				+ "cantidad INT, "
-				+ "comentario VARCHAR "
-				+ ");");
+		mLineas = new Lineas_Presupuestos_model(db);
 		
-		String sql = "INSERT INTO `linea_presupuestos` (`producto`, `cantidad`, `comentario`) VALUES"
-	    		+ "('" + producto + "', '" + cantidad + "', '" + comentario + "');";
-				
-		db.execSQL(sql);
+		mLineas.insert(producto, cantidad, comentario);
 		
 		Toast.makeText(this, "El registro se ha guardado con éxito", Toast.LENGTH_SHORT).show();
 		

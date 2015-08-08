@@ -1,4 +1,4 @@
-package com.durox.app.Clientes;
+package com.durox.app.Models;
 
 import android.app.Activity;
 import android.content.Context;

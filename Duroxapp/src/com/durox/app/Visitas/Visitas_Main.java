@@ -4,7 +4,9 @@ import com.androidbegin.filterlistviewimg.R;
 import com.androidbegin.filterlistviewimg.R.id;
 import com.androidbegin.filterlistviewimg.R.layout;
 import com.durox.app.MainActivity;
-import com.durox.app.Clientes.Clientes_model;
+import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Epocas_model;
+import com.durox.app.Models.Visitas_model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,9 +33,11 @@ public class Visitas_Main extends Activity {
 	Cursor c;
 	int cantidad;
 	int j;
-	Clientes_model mCliente;
+	Clientes_model mClientes;
+	Visitas_model mVisitas;
+	Epocas_model mEpocas;
 
-	@Override
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
@@ -42,13 +46,13 @@ public class Visitas_Main extends Activity {
 		
 		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
 		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
-		etfecha = (EditText) findViewById(R.id.fechass);
+		etfecha = (EditText) findViewById(R.id.etFecha);
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		mCliente = new Clientes_model(db);
+		mClientes = new Clientes_model(db);
 		
-		c = mCliente.getRegistros();
+		c = mClientes.getRegistros();
 		
 		cantidad = c.getCount();
 		
@@ -66,22 +70,15 @@ public class Visitas_Main extends Activity {
 			Toast.makeText(this, "No hay clientes cargados", Toast.LENGTH_SHORT).show();
 		}
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS `epocas_visitas`("
-				+ "id_epoca INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "epoca VARCHAR"
-				+ ");");
-
-		truncate = "DELETE FROM `epocas_visitas`";
-		db.execSQL(truncate);
-		
+		/*
 		sql = "INSERT INTO `epocas_visitas` (`epoca`) VALUES"
 		+ "('Verano'),"
 		+ "('Pre Cosecha');";
+		*/
 				
-		db.execSQL(sql);
+		mEpocas = new Epocas_model(db);
 		
-		c = db.rawQuery("SELECT * FROM `epocas_visitas`", null);
-		
+		c = mEpocas.getRegistros();
 		
 		cantidad = c.getCount();
 		
@@ -111,10 +108,10 @@ public class Visitas_Main extends Activity {
 		
 		if(nombre != ""){
 			auto_cliente.setText(nombre);
-		}
-		
+		}	
 	}
 
+	
 	public void agregar_comentarios(View view) {
 		String nombre = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
@@ -129,6 +126,7 @@ public class Visitas_Main extends Activity {
 		startActivity(intent);
 	}
 	
+	
 	public void guardar(View view){
 		String nombre = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
@@ -136,24 +134,9 @@ public class Visitas_Main extends Activity {
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
+		mVisitas = new Visitas_model(db);
 		
-		truncate = "DROP TABLE IF EXISTS `visitas`;";
-		
-		db.execSQL(truncate);
-		
-		db.execSQL("CREATE TABLE IF NOT EXISTS  `visitas `("
-				+ "id_visita INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "nombre VARCHAR, "
-				+ "epoca VARCHAR, "
-				+ "fecha VARCHAR, "
-				+ "comentario VARCHAR"
-				+ ");");
-
-		
-		sql = "INSERT INTO `visitas` (`nombre`, `epoca`, `fecha`) VALUES"
-	    		+ "('" + nombre + "', '" + epoca + "', '" + fecha + "');";
-				
-		db.execSQL(sql);
+		mVisitas.insert(nombre, epoca, fecha, null);
 		
 		Toast.makeText(this, "El registro se ha guardado con éxito", Toast.LENGTH_SHORT).show();
 		

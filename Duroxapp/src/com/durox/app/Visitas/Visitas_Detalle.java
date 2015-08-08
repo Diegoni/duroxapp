@@ -4,6 +4,7 @@ import com.androidbegin.filterlistviewimg.R;
 import com.androidbegin.filterlistviewimg.R.id;
 import com.androidbegin.filterlistviewimg.R.layout;
 import com.durox.app.MainActivity;
+import com.durox.app.Models.Visitas_model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,8 +30,10 @@ public class Visitas_Detalle extends Activity {
 	EditText etComentario;
 	
 	String sql;
+	
+	Visitas_model mVisitas;
 
-	@Override
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.visitas_detalle);
@@ -39,7 +42,6 @@ public class Visitas_Detalle extends Activity {
 		nombre = intent.getStringExtra("nombre");
 		epoca = intent.getStringExtra("epoca");
 		fecha = intent.getStringExtra("fecha");
-		EditText etComentario = (EditText) findViewById(R.id.etCantidad);
 		
 		final TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
 		final TextView txtEpoca = (TextView) findViewById(R.id.txtEpoca);
@@ -48,34 +50,22 @@ public class Visitas_Detalle extends Activity {
 		txtNombre.setText(nombre);
 		txtEpoca.setText(epoca);
 		txtFecha.setText(fecha);
-		
-		comentario = etComentario.getText().toString();			
 	}
 	
+	
 	public void guardar(View view){
+		EditText etComentario = (EditText) findViewById(R.id.etComentario);
+		comentario = etComentario.getText().toString();	
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS visitas2("
-				+ "nombre VARCHAR, "
-				+ "epoca VARCHAR, "
-				+ "fecha VARCHAR, "
-				+ "comentario VARCHAR "
-				+ ");");
-
+		mVisitas = new Visitas_model(db);
 		
-		sql = "INSERT INTO `visitas2` (`nombre`, `epoca`, `fecha`, `comentario`) VALUES"
-	    		+ "('" + nombre + "', '" + epoca + "', '" + fecha + "', '" + comentario + "');";
-				
-		db.execSQL(sql);
+		mVisitas.insert(nombre, epoca, fecha, comentario);
 		
-		Toast.makeText(this, "El registro se ha guardado con éxito", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "El registro fue guardado con éxito", Toast.LENGTH_LONG).show();
 		
 		Intent intent = new Intent(Visitas_Detalle.this, MainActivity.class);
 		startActivity(intent);
 	}
-
-
-
-	
 }
