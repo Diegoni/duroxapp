@@ -72,7 +72,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_pCodigoLote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -84,8 +84,8 @@
         android:id="@+id/txt_cGrupo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/txt_pCodigoLote"
+        android:layout_alignBottom="@+id/txt_pCodigoLote"
         android:layout_alignLeft="@+id/txt_cCuit"
         android:text="@string/id_grupo_cliente"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/txt_pCodigoLote"
         android:text="@string/id_iva"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

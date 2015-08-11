@@ -78,6 +78,7 @@ public class MainActivity extends Activity {
 	String[] detalle;
 	int[] foto;
 	String[] id_back;
+	String[] id_pback;
 	int[] imagen;
 	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
 	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
@@ -290,11 +291,7 @@ public class MainActivity extends Activity {
  		try {
  			JSONObject jsonResponse = new JSONObject(jsonResult);
  			JSONArray jsonMainNode = jsonResponse.optJSONArray("productos");
- 			
- 			String nombre;
- 			String precio;
- 			String ficha_tecnica;
- 			
+ 			 			
  			if(jsonMainNode.length() > 0){
  				mProductos.truncate();
  				Toast.makeText(getApplicationContext(), 
@@ -304,11 +301,39 @@ public class MainActivity extends Activity {
  			for (int i = 0; i < jsonMainNode.length(); i++) {
  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
  				
- 				nombre = jsonChildNode.optString("nombre");
- 				precio = jsonChildNode.optString("precio");
- 				ficha_tecnica = jsonChildNode.optString("ficha_tecnica");
+ 				String id_back = jsonChildNode.optString("id_producto");
+ 				String codigo = jsonChildNode.optString("codigo");
+ 				String codigo_lote = jsonChildNode.optString("codigo_lote");
+ 				String nombre = jsonChildNode.optString("nombre");
+ 				String precio = jsonChildNode.optString("precio");
+ 				String precio_iva = jsonChildNode.optString("precio_iva");
+ 				String precio_min = jsonChildNode.optString("precio_min");
+ 				String precio_min_iva = jsonChildNode.optString("precio_min_iva");
+ 				String id_iva = jsonChildNode.optString("id_iva");
+ 				String ficha_tecnica = jsonChildNode.optString("ficha_tecnica");
+ 				String date_add = jsonChildNode.optString("date_add");
+ 				String date_upd = jsonChildNode.optString("date_upd");
+ 				String eliminado = jsonChildNode.optString("eliminado");
+ 				String user_add = jsonChildNode.optString("user_add");
+ 				String user_upd = jsonChildNode.optString("user_upd");
  				
- 				mProductos.insert(nombre, precio , ficha_tecnica);
+ 				mProductos.insert(
+ 						id_back,
+ 						codigo,
+ 						codigo_lote,
+ 						nombre,
+ 						precio,
+ 						precio_iva,
+ 						precio_min,
+ 						precio_min_iva,
+ 						id_iva,
+ 						ficha_tecnica,
+ 						date_add,
+ 						date_upd,
+ 						eliminado,
+ 						user_add,
+ 						user_upd
+ 				);
  			}
  		} catch (JSONException e) {
  			Toast.makeText(getApplicationContext(), 
@@ -419,6 +444,7 @@ public class MainActivity extends Activity {
 		int cantidad_productos = c.getCount();
 		
 		p_nombre = new String[cantidad_productos];
+		id_pback = new String[cantidad_productos];
 		detalle = new String[cantidad_productos];
 		imagen = new int[cantidad_productos];
 		
@@ -428,8 +454,9 @@ public class MainActivity extends Activity {
 		{
 			while(c.moveToNext())
     		{
-    			p_nombre[j] = c.getString(1);
-    			detalle[j] = c.getString(2);
+				id_pback[j] = c.getString(1);
+    			p_nombre[j] = c.getString(4);
+    			detalle[j] = c.getString(5);
     			imagen[j] = R.drawable.articulo; 
     			j = j + 1;
     		}	
@@ -442,6 +469,7 @@ public class MainActivity extends Activity {
     		{
     			//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
     			Productos wp = new Productos(
+    					id_pback[i],
     					p_nombre[i],
     					detalle[i], 
     					imagen[i]

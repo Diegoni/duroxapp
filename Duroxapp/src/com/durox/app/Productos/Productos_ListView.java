@@ -38,6 +38,7 @@ public class Productos_ListView extends BaseAdapter {
 
 	public class ViewHolder 
 	{
+		TextView txt_pID;
 		TextView nombre;
 		TextView detalle;
 		ImageView imagen;
@@ -68,8 +69,9 @@ public class Productos_ListView extends BaseAdapter {
 			view = inflater.inflate(R.layout.productos_listviewitem, null);
 	
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
-			holder.detalle = (TextView) view.findViewById(R.id.detalle);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_pNombre);
+			holder.txt_pID = (TextView) view.findViewById(R.id.txt_pId);
+			holder.detalle = (TextView) view.findViewById(R.id.txt_pCodigo);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
@@ -81,6 +83,7 @@ public class Productos_ListView extends BaseAdapter {
 		
 		// Set the results into TextViews
 		holder.nombre.setText(productos.get(position).getNombre());
+		holder.txt_pID.setText(productos.get(position).getID());
 		holder.detalle.setText(productos.get(position).getDetalle());
 		holder.imagen.setImageResource(productos.get(position).getImagen());
 
@@ -95,6 +98,7 @@ public class Productos_ListView extends BaseAdapter {
 				
 				// Pasamos todos los datos de producto
 				intent.putExtra("nombre", (productos.get(position).getNombre()));
+				intent.putExtra("id", (productos.get(position).getID()));
 				intent.putExtra("detalle", (productos.get(position).getDetalle()));// esto esta mal
 				intent.putExtra("imagen", (productos.get(position).getImagen()));
 		

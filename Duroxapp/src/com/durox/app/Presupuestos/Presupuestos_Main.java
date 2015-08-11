@@ -181,7 +181,7 @@ public class Presupuestos_Main extends Activity
 		}				
 			
 		// Locate the ListView in listview_main.xml
-		list = (ListView) findViewById(R.id.listview);
+		list = (ListView) findViewById(R.id.lvVisitas);
 
 		for (int i = 0; i < nombre.length; i++) 
 		{

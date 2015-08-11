@@ -52,4 +52,14 @@
 	
 	<string name="telefono">"Teléfono"</string>
 	<string name="email">"Email"</string>
+	
+	
+	<string name="codigo">"Código"</string>
+	<string name="codigo_lote">"Código lote"</string>
+	<string name="precio">"Precio"</string>
+	<string name="precio_iva">"Precio iva"</string>
+	<string name="precio_min">"Precio min"</string>
+	<string name="precio_min_iva">"Precio min iva"</string>
+	<string name="ficha_tecnica">"Ficha técnica"</string>
+	
 </resources>

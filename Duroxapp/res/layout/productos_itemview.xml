@@ -11,27 +11,11 @@
         android:text="@string/nombrelabel" />
 
     <TextView
-        android:id="@+id/txt_cRazon_social"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/nombrelabel"
-        android:text="@string/nombrelabel"
-        android:textColor="#33CC33" />
-
-    <TextView
         android:id="@+id/detallelabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombrelabel"
-        android:text="@string/detallelabel" />
-    
-     <TextView
-         android:id="@+id/detalle"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/txt_cRazon_social"
-         android:layout_below="@+id/txt_cRazon_social"
-         android:text="@string/detallelabel" />
+        android:text="@string/codigo" />
     
      <ImageView
         android:id="@+id/imagen"
@@ -40,50 +24,186 @@
         android:layout_height="60dp"
         android:padding="1dp" />
 
-     <Button
-         android:id="@+id/btn_cDireccion"
+     <TextView
+         android:id="@+id/txt_pNombre"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_below="@+id/detalle"
-         android:layout_marginTop="36dp"
-         android:text="@string/editar" />
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:text="@string/nombrelabel"
+         android:textColor="#33CC33" />
 
-     <Button
-         android:id="@+id/btn_cTelefono"
+     <TextView
+         android:id="@+id/txt_pCodigo"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/editar"
-         android:layout_alignBottom="@+id/editar"
-         android:layout_toRightOf="@+id/editar"
-         android:text="@string/eliminar" />
+         android:layout_alignLeft="@+id/txt_pNombre"
+         android:layout_below="@+id/txt_pNombre"
+         android:text="@string/codigo"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <Button
-         android:id="@+id/visita"
+     <TextView
+         android:id="@+id/textView1"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignParentLeft="true"
-         android:layout_below="@+id/editar"
-         android:layout_marginTop="16dp"
-         android:text="@string/visita" />
+         android:layout_below="@+id/detallelabel"
+         android:text="@string/codigo_lote"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <Button
-         android:id="@+id/pedido"
+     <TextView
+         android:id="@+id/txt_pCodigoLote"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/presupuesto"
-         android:layout_alignBottom="@+id/presupuesto"
-         android:layout_toRightOf="@+id/presupuesto"
-         android:text="@string/pedido" />
+         android:layout_alignBaseline="@+id/textView1"
+         android:layout_alignBottom="@+id/textView1"
+         android:layout_alignLeft="@+id/txt_pCodigo"
+         android:text="@string/codigo_lote"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <Button
-         android:id="@+id/presupuesto"
+     <TextView
+         android:id="@+id/textView2"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/visita"
-         android:layout_alignBottom="@+id/visita"
-         android:layout_toRightOf="@+id/visita"
-         android:text="@string/presupuesto" />
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView1"
+         android:text="@string/precio"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-   
+     <TextView
+         android:id="@+id/textView3"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView2"
+         android:text="@string/precio_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView3"
+         android:text="@string/precio_min"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView5"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView4"
+         android:text="@string/precio_min_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView6"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView5"
+         android:text="@string/id_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView7"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView6"
+         android:text="@string/ficha_tecnica"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView8"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView7"
+         android:text="@string/date_add"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView9"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView8"
+         android:text="@string/date_upd"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecio"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textView3"
+         android:layout_alignLeft="@+id/txt_pCodigoLote"
+         android:text="@string/precio"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioMinIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pPrecioMin"
+         android:layout_below="@+id/txt_pPrecioMin"
+         android:text="@string/precio_min_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textView7"
+         android:layout_alignLeft="@+id/txt_pPrecioMinIva"
+         android:text="@string/id_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pFichaTecnica"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/textView7"
+         android:layout_alignBottom="@+id/textView7"
+         android:layout_alignLeft="@+id/txt_pIva"
+         android:text="@string/ficha_tecnica"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pDateAdd"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pFichaTecnica"
+         android:layout_below="@+id/txt_pFichaTecnica"
+         android:text="@string/date_add"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pDateUpd"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pDateAdd"
+         android:layout_below="@+id/txt_pDateAdd"
+         android:text="@string/date_upd"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/txt_pPrecioMin"
+         android:layout_alignLeft="@+id/txt_pPrecio"
+         android:text="@string/precio_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioMin"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textView5"
+         android:layout_alignLeft="@+id/txt_pPrecioIva"
+         android:text="@string/precio_min"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
      
 </RelativeLayout>

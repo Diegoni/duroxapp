@@ -10,12 +10,13 @@
         android:layout_height="60dp"
 		android:padding="5dp" />
 
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/txt_cRazon_social"
+        android:id="@+id/txt_pNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Medium Text"
@@ -24,12 +25,37 @@
         android:layout_marginTop="5dp"
         android:padding="2dp"
         android:textColor="#33CC33" />
-       
-     <TextView
-        android:id="@+id/detalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" 
-        android:layout_marginLeft="10dp"/>
+    
+    
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="horizontal" >
+
+		<TextView
+		    android:id="@+id/txt_pId"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Small Text"
+		    android:layout_marginLeft="10dp"
+		    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+		<TextView
+		    android:id="@+id/detalle"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/precio"
+		    android:layout_marginLeft="10dp" />
+
+		<TextView
+		    android:id="@+id/txt_pCodigo"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/precio"
+		    android:layout_marginLeft="10dp"
+		    android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	</LinearLayout>
+	
 	</LinearLayout>
 </LinearLayout>
