@@ -18,11 +18,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 public class Visitas_Main extends Activity {
 	AutoCompleteTextView auto_cliente;
 	AutoCompleteTextView auto_epoca;
+	RatingBar ebValoracion;
 	EditText etfecha;
 	String[] c_nombre;
 	String[] epocas;
@@ -47,6 +49,7 @@ public class Visitas_Main extends Activity {
 		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
 		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
 		etfecha = (EditText) findViewById(R.id.etFecha);
+		ebValoracion = (RatingBar) findViewById(R.id.ebValoracion);
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
@@ -116,12 +119,14 @@ public class Visitas_Main extends Activity {
 		String nombre = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
 		String fecha = etfecha.getText().toString();
-
+		float valoracion = ebValoracion.getRating();
+		
 		Intent intent = new Intent(Visitas_Main.this, Visitas_Detalle.class);
 		
 		intent.putExtra("nombre", nombre);
 		intent.putExtra("epoca", epoca);
 		intent.putExtra("fecha", fecha);
+		intent.putExtra("valoracion", valoracion);
 		
 		startActivity(intent);
 	}
@@ -131,16 +136,22 @@ public class Visitas_Main extends Activity {
 		String nombre = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
 		String fecha = etfecha.getText().toString();
+		float valoracion = ebValoracion.getRating();
 		
 		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
 		mVisitas = new Visitas_model(db);
 		
-		mVisitas.insert(nombre, epoca, fecha, null);
+		mVisitas.insert(nombre, epoca, fecha, valoracion, null);
 		
 		Toast.makeText(this, "El registro se ha guardado con éxito", Toast.LENGTH_SHORT).show();
 		
 		Intent intent = new Intent(Visitas_Main.this, MainActivity.class);
+		startActivity(intent);
+	}
+	
+	public void actualizar_visitas(View view){
+		Intent intent = new Intent(Visitas_Main.this, Visitas_Enviar.class);
 		startActivity(intent);
 	}
 

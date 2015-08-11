@@ -3,12 +3,15 @@ package com.durox.app.Clientes;
 import com.androidbegin.filterlistviewimg.R;
 import com.androidbegin.filterlistviewimg.R.id;
 import com.androidbegin.filterlistviewimg.R.layout;
+import com.durox.app.Models.Clientes_model;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,8 +24,7 @@ import android.widget.Toast;
 public class Clientes_ItemView extends Activity 
 {
 	// Declare Variables
-	TextView txtnombre;
-	TextView txtdireccion;
+	
 	Button btnvisita;
 	ImageView imgimagen;
 	
@@ -32,27 +34,62 @@ public class Clientes_ItemView extends Activity
 	String direccion;
 	int imagen;
 	
+	SQLiteDatabase db;
+	Clientes_model mCliente;
+	Cursor c;
+	
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.clientes_itemview);
-		// Intent para ClientesListView
-		Intent i = getIntent();
 		
-		// Traigo los resultados 
-		nombre = i.getStringExtra("nombre");
-		direccion = i.getStringExtra("direccion");
-		imagen = i.getIntExtra("imagen", imagen);
+		db = openOrCreateDatabase("Durox_app", Context.MODE_PRIVATE, null);
 		
 		// Locate the TextViews in singleitemview.xml
-		txtnombre = (TextView) findViewById(R.id.nombre);
-		txtdireccion = (TextView) findViewById(R.id.direccion);
+		//TextView id_back = (TextView) findViewById(R.id.txt_c);
+		TextView txtnombre = (TextView) findViewById(R.id.txt_cNombre);
+		TextView txtcuit = (TextView) findViewById(R.id.txt_cCuit);
+		TextView txtgrupo = (TextView) findViewById(R.id.txt_cGrupo);
+		TextView txtiva = (TextView) findViewById(R.id.txt_cIva);
+		TextView txtnombre_fantasia = (TextView) findViewById(R.id.txt_cNombreFantasia);
+		TextView txtrazon_social = (TextView) findViewById(R.id.txt_cRazon_social);
+		TextView txtweb = (TextView) findViewById(R.id.txt_cWeb);
+		TextView txtdate_add = (TextView) findViewById(R.id.txt_cDateadd);
+		TextView txtdate_upd = (TextView) findViewById(R.id.txt_cDateupd);
+		
 		imgimagen = (ImageView) findViewById(R.id.imagen);
 		btnvisita = (Button) findViewById(R.id.visita);
 		
+		// Intent para ClientesListView
+		Intent i = getIntent();
+				
+		// Traigo los resultados 
+		String id = i.getStringExtra("id");
+		imagen = i.getIntExtra("imagen", imagen);
+		
+		mCliente = new Clientes_model(db);
+		
+		c = mCliente.getRegistro(id);
+				
+		if(c.getCount() > 0)
+		{
+			while(c.moveToNext())
+    		{
+				txtnombre.setText(c.getString(3)+" "+c.getString(2));
+				txtcuit.setText(c.getString(5));
+				txtgrupo.setText(c.getString(6));
+				txtiva.setText(c.getString(7));
+				txtnombre_fantasia.setText(c.getString(9));
+				txtrazon_social.setText(c.getString(10));
+				txtweb.setText(c.getString(11));
+				txtdate_add.setText(c.getString(12));
+				txtdate_upd.setText(c.getString(13));	
+    		}
+		}
+		
 		// Load the results into the TextViews
-		txtnombre.setText(nombre);
-		txtdireccion.setText(direccion);
+		
+		
 		imgimagen.setImageResource(imagen);
 		
 	}

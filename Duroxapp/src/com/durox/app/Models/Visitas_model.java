@@ -23,6 +23,7 @@ public class Visitas_model extends Activity{
 				+ "nombre VARCHAR, "
 				+ "epoca VARCHAR, "
 				+ "fecha VARCHAR, "
+				+ "valoracion FLOAT, "
 				+ "comentario VARCHAR"
 				+ ");";
 		
@@ -38,9 +39,9 @@ public class Visitas_model extends Activity{
 	}
 	
 	
-	public void insert(String nombre, String  epoca, String  fecha, String comentario){
-		sql = "INSERT INTO `visitas2` (`nombre`, `epoca`, `fecha`, `comentario`) VALUES"
- 			    + "('"+nombre+"', '"+epoca+"', '"+fecha+"', '"+comentario+"');";
+	public void insert(String nombre, String  epoca, String  fecha, float valoracion, String comentario){
+		sql = "INSERT INTO `visitas2` (`nombre`, `epoca`, `fecha`, `valoracion`, `comentario`) VALUES"
+ 			    + "('"+nombre+"', '"+epoca+"', '"+fecha+"', '"+valoracion+"', '"+comentario+"');";
  		
 		//return sql;
 		db.execSQL(sql);

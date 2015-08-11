@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+    android:id="@+id/btnActualizar_visitas"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
 
@@ -47,12 +47,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/etCantidad"
         android:layout_marginTop="24dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/txt_id"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txt_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/txtNombre"
@@ -62,21 +62,21 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_cCuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/txtEpoca"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/txt_id"
         android:text="@string/epoca"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txt_cGrupo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/txtEpoca"
         android:layout_alignBottom="@+id/txtEpoca"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/txt_cCuit"
         android:text="@string/fecha"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -87,6 +87,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="guardar"
+        android:drawableLeft="@drawable/save"
         android:text="@string/guardar" />
 
 </RelativeLayout>

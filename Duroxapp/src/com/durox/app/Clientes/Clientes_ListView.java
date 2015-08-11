@@ -45,6 +45,7 @@ public class Clientes_ListView extends BaseAdapter {
 	{
 		TextView nombre;
 		TextView direccion;
+		TextView id;
 		ImageView imagen;
 	}
 	
@@ -72,8 +73,9 @@ public class Clientes_ListView extends BaseAdapter {
 			view = inflater.inflate(R.layout.clientes_listviewitem, null);
 			
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.nombre);
-			holder.direccion = (TextView) view.findViewById(R.id.direccion);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
+			holder.id = (TextView) view.findViewById(R.id.txt_cIdback);
+			holder.direccion = (TextView) view.findViewById(R.id.txt_cNombre);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
@@ -85,6 +87,7 @@ public class Clientes_ListView extends BaseAdapter {
 		
 		// Set the results into TextViews
 		holder.nombre.setText(clientes.get(position).getNombre());
+		holder.id.setText(clientes.get(position).getID());
 		holder.direccion.setText(clientes.get(position).getDireccion());
 		holder.imagen.setImageResource(clientes.get(position).getImagen());
 
@@ -97,6 +100,7 @@ public class Clientes_ListView extends BaseAdapter {
 				Intent intent = new Intent(mContext, Clientes_ItemView.class);
 				
 				// Pasamos toda la informacion
+				intent.putExtra("id", (clientes.get(position).getID()));
 				intent.putExtra("nombre", (clientes.get(position).getNombre()));
 				intent.putExtra("direccion", (clientes.get(position).getDireccion()));
 				intent.putExtra("imagen", (clientes.get(position).getImagen()));

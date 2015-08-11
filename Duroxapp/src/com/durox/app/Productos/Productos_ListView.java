@@ -68,7 +68,7 @@ public class Productos_ListView extends BaseAdapter {
 			view = inflater.inflate(R.layout.productos_listviewitem, null);
 	
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.nombre);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
 			holder.detalle = (TextView) view.findViewById(R.id.detalle);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			

@@ -29,6 +29,8 @@
         </activity>
         <activity android:name="com.durox.app.Visitas.Visitas_Detalle" >
         </activity>
+        <activity android:name="com.durox.app.Visitas.Visitas_Enviar" >
+        </activity>
         <activity android:name="com.durox.app.Productos.Productos_ItemView" >
         </activity>
         <activity android:name="com.durox.app.Presupuestos.Presupuestos_Main" >

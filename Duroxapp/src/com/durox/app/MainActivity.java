@@ -5,6 +5,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +22,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -35,6 +43,7 @@ import com.durox.app.Productos.Productos_ListView;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.app.Activity;
+import android.app.DownloadManager.Request;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +53,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +61,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
  
 public class MainActivity extends Activity {
@@ -66,6 +77,7 @@ public class MainActivity extends Activity {
 	String[] direccion;
 	String[] detalle;
 	int[] foto;
+	String[] id_back;
 	int[] imagen;
 	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
 	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
@@ -81,11 +93,15 @@ public class MainActivity extends Activity {
 	
 	Clientes_model mCliente;
 	Productos_model mProductos;
+	
+	TextView content;
  
    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        db = openOrCreateDatabase("Durox_app", Context.MODE_PRIVATE, null);
    } 
     
    
@@ -149,8 +165,8 @@ public class MainActivity extends Activity {
  		protected String doInBackground(String... params) {
  			HttpClient httpclient = new DefaultHttpClient();
  			HttpPost httppost = new HttpPost(params[0]);
- 			
- 			try {
+ 				
+ 			try { 				
  				HttpResponse response = httpclient.execute(httppost);
  				jsonResult = inputStreamToString(
  				response.getEntity().getContent()).toString();
@@ -213,11 +229,6 @@ public class MainActivity extends Activity {
  			JSONObject jsonResponse = new JSONObject(jsonResult);
  			JSONArray jsonMainNode = jsonResponse.optJSONArray("clientes");
  			
- 			String razon_social;
- 			String nombre;
- 			String apellido;
- 			String number;
- 			
  			if(jsonMainNode.length() > 0){
  				mCliente.truncate();
  				Toast.makeText(getApplicationContext(), 
@@ -226,12 +237,42 @@ public class MainActivity extends Activity {
  			  
  			for (int i = 0; i < jsonMainNode.length(); i++) {
  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
- 				razon_social = jsonChildNode.optString("razon_social");
- 				nombre = jsonChildNode.optString("nombre");
- 				apellido = jsonChildNode.optString("apellido");
- 				number = jsonChildNode.optString("cuit");
  				
- 				mCliente.insert(razon_social, apellido+" "+nombre , number);
+ 				int id_back = jsonChildNode.optInt("id_cliente");
+ 				String nombre = jsonChildNode.optString("nombre");
+ 				String apellido = jsonChildNode.optString("apellido");
+ 				String domicilio = jsonChildNode.optString("domicilio");
+ 				String cuit = jsonChildNode.optString("cuit");
+ 				int id_grupo_cliente = jsonChildNode.optInt("id_grupo_cliente");
+ 				int id_iva = jsonChildNode.optInt("id_iva"); 
+ 				String imagen = jsonChildNode.optString("imagen");
+ 				String nombre_fantasia = jsonChildNode.optString("nombre_fantasia");
+ 				String razon_social = jsonChildNode.optString("razon_social");
+ 				String web = jsonChildNode.optString("web");
+ 				String date_add = jsonChildNode.optString("date_add");
+ 				String date_upd = jsonChildNode.optString("date_upd");
+ 				String eliminado = jsonChildNode.optString("eliminado");
+ 				int  user_add = jsonChildNode.optInt("user_add");
+ 				int user_upd = jsonChildNode.optInt("user_upd");
+ 				 				
+ 				mCliente.insert(
+ 					id_back,
+ 					nombre,
+ 					apellido,
+ 					domicilio,
+ 					cuit,
+ 					id_grupo_cliente,
+ 					id_iva,
+ 					imagen,
+ 					nombre_fantasia,
+ 					razon_social,
+ 					web,
+ 					date_add,
+ 					date_upd,
+ 					eliminado,
+ 					user_add,
+ 					user_upd
+ 				);
  			}
  		} catch (JSONException e) {
  			Toast.makeText(getApplicationContext(), 
@@ -284,16 +325,13 @@ public class MainActivity extends Activity {
  	public void clientes_lista(){
  		setContentView(R.layout.clientes_listview);
     	
-    	db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
-    	
     	mCliente = new Clientes_model(db);
-		
-		mCliente.createTable();
 		
 		c = mCliente.getRegistros();
 		
 		int cantidad_clientes = c.getCount();
 		
+		id_back = new String[cantidad_clientes];
 		c_nombre = new String[cantidad_clientes];
 		direccion = new String[cantidad_clientes];
 		foto = new int[cantidad_clientes];
@@ -304,20 +342,23 @@ public class MainActivity extends Activity {
 		{
 			while(c.moveToNext())
     		{
-				c_nombre[j] = c.getString(1);
-    			direccion[j] = c.getString(2);
+				id_back[j] = c.getString(1);
+				c_nombre[j] = c.getString(10);
+    			direccion[j] = c.getString(3)+" "+c.getString(2);
     			foto[j] = R.drawable.clientes; 
+    		
     			j = j + 1;
     		}	
 			
 			// Locate the ListView in listview_main.xml
-    		list = (ListView) findViewById(R.id.listview);
+    		list = (ListView) findViewById(R.id.lvClientes);
     		arraylist.clear();
 
     		for (int i = 0; i < c_nombre.length; i++) 
     		{
     			//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
     			Clientes wp = new Clientes(
+    					id_back[i],
     					c_nombre[i],
     					direccion[i], 
     					foto[i]
@@ -368,8 +409,6 @@ public class MainActivity extends Activity {
  	
  	public void productos_lista(){
  		setContentView(R.layout.productos_listview);
-		
-		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
 		
 		mProductos = new Productos_model(db);
 		
@@ -447,8 +486,8 @@ public class MainActivity extends Activity {
     					int arg3) {
     			}
     		});
-		}	
- 		
+		}		
  	}
+ 	
 }
   

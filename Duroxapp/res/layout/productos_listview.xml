@@ -28,6 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:onClick="actualizar_productos"
-        android:text="@string/actualizar" />
+        android:drawableLeft="@drawable/download"
+        android:text="@string/bajar" />
 
 </RelativeLayout>

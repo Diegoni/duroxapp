@@ -123,6 +123,7 @@ public class Presupuestos_Main extends Activity
 			String id_epoca_visita;
 			String fecha;
 	 		String descripcion;
+	 		float valoracion;
 	 			
 	 		if(jsonMainNode.length() > 0){
 	 			mVisitas.truncate();
@@ -136,8 +137,9 @@ public class Presupuestos_Main extends Activity
 	 			id_epoca_visita = jsonChildNode.optString("id_epoca_visita");
 	 			fecha = jsonChildNode.optString("fecha");
 	 			descripcion = jsonChildNode.optString("descripcion");
+	 			valoracion = (float) jsonChildNode.optDouble("valoracion");
 	 				
-	 			mVisitas.insert(id_cliente, id_epoca_visita, fecha, descripcion);
+	 			mVisitas.insert(id_cliente, id_epoca_visita, fecha, valoracion, descripcion);
 	 			
 	 		}
 	 	} catch (JSONException e) {

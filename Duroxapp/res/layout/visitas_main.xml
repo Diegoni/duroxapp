@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:onClick="agregar_comentarios" >
+    android:id="@+id/btnActualizar_visitas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="actualizar_visitas" >
 
     <AutoCompleteTextView
         android:id="@+id/autoClientes"
@@ -50,9 +50,9 @@
         android:id="@+id/btnAgregarComentarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ebValoracion"
-        android:layout_alignRight="@+id/ebValoracion"
-        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ebValoracion"
+        android:drawableLeft="@drawable/comments"
         android:onClick="agregar_comentarios"
         android:text="@string/agregar_comentarios" />
 
@@ -60,10 +60,23 @@
         android:id="@+id/btnGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnAgregarComentarios"
-        android:layout_alignRight="@+id/btnAgregarComentarios"
-        android:layout_below="@+id/btnAgregarComentarios"
+        android:layout_alignBaseline="@+id/btnAgregarComentarios"
+        android:layout_alignBottom="@+id/btnAgregarComentarios"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/btnAgregarComentarios"
+        android:drawableLeft="@drawable/save"
         android:onClick="guardar"
         android:text="@string/guardar" />
+    
+    <Button
+        android:id="@+id/actualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/upload"
+        android:onClick="actualizar_visitas"
+        android:text="@string/subir" />
 
 </RelativeLayout>

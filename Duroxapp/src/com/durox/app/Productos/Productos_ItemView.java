@@ -34,7 +34,7 @@ public class Productos_ItemView extends Activity
 		imagen = i.getIntExtra("imagen", imagen);
 		
 		// Locate the TextViews in singleitemview.xml
-		txtnombre = (TextView) findViewById(R.id.nombre);
+		txtnombre = (TextView) findViewById(R.id.txt_cRazon_social);
 		txtdetalle = (TextView) findViewById(R.id.detalle);
 		imgimagen = (ImageView) findViewById(R.id.imagen);
 		

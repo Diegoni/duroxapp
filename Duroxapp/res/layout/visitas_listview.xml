@@ -7,25 +7,26 @@
         android:id="@+id/listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/button1" />
+        android:layout_below="@+id/actualizar" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/actualizar"
         style="?android:attr/buttonStyleSmall"
       	android:onClick="actualizar_visitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/actualizar" />
+        android:drawableLeft="@drawable/download"
+        android:text="@string/bajar" />
 
     <EditText
         android:id="@+id/search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBottom="@+id/actualizar"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_toLeftOf="@+id/actualizar"
         android:ems="10"
         android:hint="@string/nombre" />
 

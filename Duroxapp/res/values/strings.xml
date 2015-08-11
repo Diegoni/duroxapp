@@ -19,17 +19,37 @@
 	<string name="productos">"Productos"</string>
 	<string name="cantidad">"Cantidad"</string>
 	<string name="direccion">"Dirección"</string>
-	<string name="nombre">"Nombre"</string>
 	<string name="detalle">"Detalle"</string>
 	<string name="seleccionar">"Seleccionar"</string>
 	<string name="fecha">"Fecha"</string>
 	<string name="comentarios">"Comentarios"</string>
-	<string name="guardar">"Guardar"</string>
+	<string name="guardar">" Guardar"</string>
 	<string name="agregar">"Agregar"</string>
 	<string name="usuario">"Usuario"</string>
 	<string name="pass">"Pass"</string>
 	<string name="login">"Login"</string>
 	<string name="actualizar">"Actualizar"</string>
 	<string name="ver">"Ver"</string>
-	<string name="agregar_comentarios">"Agregar Comentarios"</string>
+	<string name="subir">"Subir"</string>
+	<string name="bajar">" Bajar"</string>
+	<string name="agregar_comentarios">"Comentarios"</string>
+	
+	<string name="id_back">"ID"</string>
+	<string name="nombre">"Nombre"</string>
+	<string name="apellido">"Apellido"</string>
+	<string name="cuit">"Cuit"</string>
+	<string name="id_grupo_cliente">"Grupo"</string>
+	<string name="id_iva">"Iva"</string>
+	<string name="imagen">"Imagen"</string>
+	<string name="nombre_fantasia">"Nombre Fantasia"</string>
+	<string name="razon_social">"Razón Social"</string>
+	<string name="web">"Web"</string>
+	<string name="date_add">"Creación"</string>
+	<string name="date_upd">"Actualización"</string>
+	<string name="eliminado">"Delete"</string>
+	<string name="user_add">"Creación user"</string>
+	<string name="user_upd">"Actualización user"</string>
+	
+	<string name="telefono">"Teléfono"</string>
+	<string name="email">"Email"</string>
 </resources>

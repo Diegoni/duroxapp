@@ -8,81 +8,210 @@
         android:id="@+id/nombrelabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nombrelabel" />
-
-    <TextView
-        android:id="@+id/nombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/nombrelabel"
-        android:textColor="#33CC33" 
-        android:text="@string/nombrelabel" />
+        android:text="@string/razon_social" />
 
     <TextView
         android:id="@+id/direccionlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombrelabel"
-        android:text="@string/direccionlabel" />
+        android:text="@string/nombre" />
 
-    <TextView
-        android:id="@+id/direccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nombre"
-        android:text="@string/direccionlabel"
-        android:layout_toRightOf="@+id/direccionlabel" />
-    
-     <ImageView
+    <ImageView
         android:id="@+id/imagen"
-        android:layout_alignParentRight="true"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_alignParentRight="true"
         android:padding="1dp" />
 
-     <Button
-         android:id="@+id/editar"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/direccion"
-         android:layout_marginTop="36dp"
-         android:text="@string/editar" />
+    <TextView
+        android:id="@+id/txt_cNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/direccionlabel"
+        android:layout_alignBottom="@+id/direccionlabel"
+        android:layout_alignLeft="@+id/txt_cRazon_social"
+        android:text="@string/nombre" />
 
-     <Button
-         android:id="@+id/eliminar"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/editar"
-         android:layout_alignBottom="@+id/editar"
-         android:layout_toRightOf="@+id/editar"
-         android:text="@string/eliminar" />
+    <Button
+        android:id="@+id/visita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/txt_cDateadd"
+        android:drawableLeft="@drawable/suitcase"
+        android:onClick="visitas_crear"
+        android:text="@string/visita" />
 
-     <Button
-         android:id="@+id/visita"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/editar"
-         android:layout_marginTop="16dp"
-         android:onClick="visitas_crear"
-         android:text="@string/visita" />
+    <TextView
+        android:id="@+id/txt_cRazon_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/direccion"
+        android:layout_centerHorizontal="true"
+        android:text="@string/razon_social"
+        android:textColor="#33CC33" />
 
-     <Button
-         android:id="@+id/pedido"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/presupuesto"
-         android:layout_alignBottom="@+id/presupuesto"
-         android:layout_toRightOf="@+id/presupuesto"
-         android:text="@string/pedido" />
+    <TextView
+        android:id="@+id/txt_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/direccionlabel"
+        android:text="@string/cuit"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <Button
-         android:id="@+id/presupuesto"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/visita"
-         android:layout_alignBottom="@+id/visita"
-         android:layout_toRightOf="@+id/visita"
-         android:text="@string/presupuesto" />
-     
+    <TextView
+        android:id="@+id/txt_cCuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cNombre"
+        android:layout_below="@+id/txt_cNombre"
+        android:text="@string/cuit"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_id"
+        android:text="@string/id_grupo_cliente"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cGrupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/txt_cCuit"
+        android:text="@string/id_grupo_cliente"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView2"
+        android:text="@string/id_iva"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cIva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/txt_cGrupo"
+        android:text="@string/id_iva"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView3"
+        android:text="@string/nombre_fantasia"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cNombreFantasia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignLeft="@+id/txt_cIva"
+        android:text="@string/nombre_fantasia"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView4"
+        android:text="@string/web"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignLeft="@+id/txt_cNombreFantasia"
+        android:text="@string/web"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView5"
+        android:text="@string/date_add"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView6"
+        android:text="@string/date_upd"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cDateadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView7"
+        android:layout_alignLeft="@+id/txt_cWeb"
+        android:text="@string/date_add"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_cDateupd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cDateadd"
+        android:layout_below="@+id/txt_cDateadd"
+        android:text="@string/date_upd"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/btn_cTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/visita"
+        android:layout_alignLeft="@+id/visita"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/phonecell"
+        android:text="@string/telefono" />
+
+    <Button
+        android:id="@+id/btn_cEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/txt_cCuit"
+        android:drawableLeft="@drawable/email"
+        android:text="@string/email" />
+
+    <Button
+        android:id="@+id/btn_cDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_cTelefono"
+        android:layout_alignBottom="@+id/btn_cTelefono"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/btn_cEmail"
+        android:drawableLeft="@drawable/address"
+        android:text="@string/direccion" />
+
 </RelativeLayout>

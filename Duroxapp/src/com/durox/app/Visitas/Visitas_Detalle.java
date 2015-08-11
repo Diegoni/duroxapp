@@ -27,6 +27,7 @@ public class Visitas_Detalle extends Activity {
 	String nombre;
 	String fecha;
 	String comentario;
+	float valoracion;
 	EditText etComentario;
 	
 	String sql;
@@ -42,6 +43,7 @@ public class Visitas_Detalle extends Activity {
 		nombre = intent.getStringExtra("nombre");
 		epoca = intent.getStringExtra("epoca");
 		fecha = intent.getStringExtra("fecha");
+		valoracion = intent.getFloatExtra("valoracion", 3);
 		
 		final TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
 		final TextView txtEpoca = (TextView) findViewById(R.id.txtEpoca);
@@ -61,7 +63,7 @@ public class Visitas_Detalle extends Activity {
 		
 		mVisitas = new Visitas_model(db);
 		
-		mVisitas.insert(nombre, epoca, fecha, comentario);
+		mVisitas.insert(nombre, epoca, fecha, valoracion, comentario);
 		
 		Toast.makeText(this, "El registro fue guardado con éxito", Toast.LENGTH_LONG).show();
 		
