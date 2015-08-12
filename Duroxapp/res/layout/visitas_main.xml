@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/autoClientes"
+        android:layout_toLeftOf="@+id/button1"
         android:ems="10"
         android:hint="@string/epoca" />
 
@@ -78,5 +78,15 @@
         android:drawableLeft="@drawable/upload"
         android:onClick="actualizar_visitas"
         android:text="@string/subir" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/autoEpocas"
+        android:layout_alignBottom="@+id/autoEpocas"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/download"
+        android:onClick="actualizar_epocas" />
 
 </RelativeLayout>

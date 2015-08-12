@@ -33,22 +33,10 @@
         android:layout_alignLeft="@+id/txt_cRazon_social"
         android:text="@string/nombre" />
 
-    <Button
-        android:id="@+id/visita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/txt_cDateadd"
-        android:drawableLeft="@drawable/suitcase"
-        android:onClick="visitas_crear"
-        android:text="@string/visita" />
-
     <TextView
         android:id="@+id/txt_cRazon_social"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/direccion"
         android:layout_centerHorizontal="true"
         android:text="@string/razon_social"
         android:textColor="#33CC33" />
@@ -184,34 +172,40 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
-        android:id="@+id/btn_cTelefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/visita"
-        android:layout_alignLeft="@+id/visita"
-        android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/phonecell"
-        android:text="@string/telefono" />
-
-    <Button
         android:id="@+id/btn_cEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/btn_cTelefono"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/txt_cCuit"
         android:drawableLeft="@drawable/email"
         android:text="@string/email" />
+
+    <Button
+        android:id="@+id/visita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/suitcase"
+        android:onClick="visitas_crear"
+        android:text="@string/visita" />
 
     <Button
         android:id="@+id/btn_cDireccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_cTelefono"
-        android:layout_alignBottom="@+id/btn_cTelefono"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/btn_cEmail"
+        android:layout_above="@+id/visita"
+        android:layout_alignParentRight="true"
         android:drawableLeft="@drawable/address"
         android:text="@string/direccion" />
+
+    <Button
+        android:id="@+id/btn_cTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_cDireccion"
+        android:drawableLeft="@drawable/phonecell"
+        android:text="@string/telefono" />
 
 </RelativeLayout>

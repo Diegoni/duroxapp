@@ -63,7 +63,37 @@ public class Visitas_Detalle extends Activity {
 		
 		mVisitas = new Visitas_model(db);
 		
-		mVisitas.insert(nombre, epoca, fecha, valoracion, comentario);
+		String id_visita = nombre;
+		String id_vendedor = nombre;
+		String id_cliente = nombre;
+		String descripcion = nombre;
+		String id_epoca_visita = nombre;
+		String valoracion = nombre;
+		String fecha = nombre;
+		String id_origen = nombre;
+		String visto = nombre;
+		String date_add = nombre;
+		String date_upd = nombre;
+		String eliminado = nombre;
+		String user_add = nombre;
+		String user_upd = nombre;
+		
+		mVisitas.insert(
+ 				id_visita,
+ 				id_vendedor,
+ 				id_cliente,
+ 				descripcion,
+ 				id_epoca_visita,
+ 				valoracion,
+ 				fecha,
+ 				id_origen,
+ 				visto,
+ 				date_add,
+ 				date_upd,
+ 				eliminado,
+ 				user_add,
+ 				user_upd
+ 			);
 		
 		Toast.makeText(this, "El registro fue guardado con éxito", Toast.LENGTH_LONG).show();
 		

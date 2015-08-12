@@ -45,7 +45,25 @@ public class Clientes_model extends Activity{
 	public Cursor getRegistros(){
 		createTable();
 		
-		sql = "SELECT * FROM clientes";
+		sql = "SELECT "
+				+ "id_cliente,"
+				+ "id_back,"
+				+ "nombre,"
+				+ "apellido,"
+				+ "domicilio,"
+				+ "cuit,"
+				+ "id_grupo_cliente,"
+				+ "id_iva,"
+				+ "imagen,"
+				+ "nombre_fantasia,"
+				+ "razon_social,"
+				+ "web,"
+				+ "date_add,"
+				+ "date_upd,"
+				+ "eliminado,"
+				+ "user_add,"
+				+ "user_upd"
+				+ " FROM clientes";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -54,7 +72,29 @@ public class Clientes_model extends Activity{
 	
 	
 	public Cursor getRegistro(String id){
-		sql = "SELECT * FROM clientes WHERE id_back = '"+id+"'";
+		sql = "SELECT "
+				+ "clientes.id_cliente,"
+				+ "clientes.id_back,"
+				+ "clientes.nombre,"
+				+ "clientes.apellido,"
+				+ "clientes.domicilio,"
+				+ "clientes.cuit,"
+				+ "grupos_clientes.grupo,"
+				+ "iva.iva,"
+				+ "clientes.imagen,"
+				+ "clientes.nombre_fantasia,"
+				+ "clientes.razon_social,"
+				+ "clientes.web,"
+				+ "clientes.date_add,"
+				+ "clientes.date_upd,"
+				+ "clientes.eliminado,"
+				+ "clientes.user_add,"
+				+ "clientes.user_upd"
+			+ " FROM clientes "
+			+ " INNER JOIN grupos_clientes ON(grupos_clientes.id_back = clientes.id_grupo_cliente)"
+			+ " INNER JOIN iva ON(iva.id_back = clientes.id_iva)"
+			+ " WHERE clientes.id_back = '"+id+"' ";
+			
 		
 		c = db.rawQuery(sql, null);
 		

@@ -49,7 +49,25 @@ public class Productos_model extends Activity{
 	}
 	
 	public Cursor getRegistro(String id){
-		sql = "SELECT * FROM productos WHERE id_back = '"+id+"'";
+		sql = "SELECT "
+				+ "productos.id_producto, "
+				+ "productos.id_back, "
+				+ "productos.codigo, "
+				+ "productos.codigo_lote, "
+				+ "productos.nombre, "
+				+ "productos.precio, "
+				+ "productos.precio_iva, "
+				+ "productos.precio_min, "
+				+ "productos.precio_min_iva, "
+				+ "productos.id_iva, "
+				+ "productos.ficha_tecnica, "
+				+ "productos.date_add, "
+				+ "productos.date_upd, "
+				+ "productos.eliminado, "
+				+ "productos.user_add, "
+				+ "productos.user_upd "
+			+ " FROM productos "
+			+ " WHERE productos.id_back = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
 		

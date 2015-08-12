@@ -18,20 +18,47 @@ public class Visitas_model extends Activity{
 	}
 	
 	public void createTable(){
-		sql = "CREATE TABLE IF NOT EXISTS  `visitas2`("
+		sql = "CREATE TABLE IF NOT EXISTS  `visitas`("
 				+ "id_visita INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "nombre VARCHAR, "
-				+ "epoca VARCHAR, "
+				+ "id_back VARCHAR, "
+				+ "id_vendedor VARCHAR, "
+				+ "id_cliente VARCHAR, "
+				+ "descripcion VARCHAR, "
+				+ "id_epoca_visita VARCHAR, "
+				+ "valoracion VARCHAR, "
 				+ "fecha VARCHAR, "
-				+ "valoracion FLOAT, "
-				+ "comentario VARCHAR"
+				+ "id_origen VARCHAR, "
+				+ "visto VARCHAR, "
+				+ "date_add VARCHAR, "
+				+ "date_upd VARCHAR, "
+				+ "eliminado VARCHAR, "
+				+ "user_add VARCHAR, "
+				+ "user_upd VARCHAR "
 				+ ");";
-		
 		db.execSQL(sql);
 	}
 	
 	public Cursor getRegistros(){
-		sql = "SELECT * FROM `visitas2`";
+		createTable();
+		
+		sql = "SELECT * FROM `visitas`";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	public Cursor getVisitas(){
+		createTable();
+		
+		sql = "SELECT "
+				+ "visitas.id_back, "
+				+ "clientes.razon_social, "
+				+ "epocas_visitas.epoca, "
+				+ "visitas.fecha "
+				+ " FROM `visitas` "
+				+ " INNER JOIN clientes ON(visitas.id_cliente = clientes.id_back) "
+				+ " INNER JOIN epocas_visitas ON(visitas.id_epoca_visita = epocas_visitas.id_back) ";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -39,16 +66,69 @@ public class Visitas_model extends Activity{
 	}
 	
 	
-	public void insert(String nombre, String  epoca, String  fecha, float valoracion, String comentario){
-		sql = "INSERT INTO `visitas2` (`nombre`, `epoca`, `fecha`, `valoracion`, `comentario`) VALUES"
- 			    + "('"+nombre+"', '"+epoca+"', '"+fecha+"', '"+valoracion+"', '"+comentario+"');";
+	public Cursor getNuevos(){
+		sql = "SELECT * FROM `visitas` WHERE id_back = '0' ";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public void insert(
+				String id_visita,
+				String id_vendedor,
+				String id_cliente,
+				String descripcion,
+				String id_epoca_visita,
+				String valoracion,
+				String fecha,
+				String id_origen,
+				String visto,
+				String date_add,
+				String date_upd,
+				String eliminado,
+				String user_add,
+				String user_upd
+			){
+		sql = "INSERT INTO `visitas` ("
+				+ "`id_back`, "
+				+ "`id_vendedor`, "
+				+ "`id_cliente`, "
+				+ "`descripcion`, "
+				+ "`id_epoca_visita`, "
+				+ "`valoracion`, "
+				+ "`fecha`, "
+				+ "`id_origen`, "
+				+ "`visto`, "
+				+ "`date_add`, "
+				+ "`date_upd`, "
+				+ "`eliminado`, "
+				+ "`user_add`, "
+				+ "`user_upd`"
+			+ ") VALUES ("
+				+ "'"+id_visita+"', "
+				+ "'"+id_vendedor+"', "
+				+ "'"+id_cliente+"', "
+				+ "'"+descripcion+"', "
+				+ "'"+id_epoca_visita+"', "
+				+ "'"+valoracion+"', "
+				+ "'"+fecha+"', "
+				+ "'"+id_origen+"', "
+				+ "'"+visto+"', "
+				+ "'"+date_add+"', "
+				+ "'"+date_upd+"', "
+				+ "'"+eliminado+"', "
+				+ "'"+user_add+"', "
+				+ "'"+user_upd+"' "
+			+ ");";
  		
 		//return sql;
 		db.execSQL(sql);
  	}
 	
 	public void truncate(){
-		sql = "DELETE FROM `visitas2`";
+		sql = "DELETE FROM `visitas`";
 		db.execSQL(sql);
 	}
 

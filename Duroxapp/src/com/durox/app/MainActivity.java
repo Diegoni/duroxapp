@@ -36,6 +36,8 @@ import com.androidbegin.filterlistviewimg.R;
 import com.durox.app.Clientes.Clientes;
 import com.durox.app.Clientes.Clientes_ListView;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Grupos_model;
+import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos;
@@ -204,16 +206,28 @@ public class MainActivity extends Activity {
  			
  			if(carga == "clientes"){
  				CargarClientes();
- 			}else
- 			if(carga == "productos"){
+ 			}else if(carga == "productos"){
  				CargarProductos();
- 			}
+ 			}else if(carga == "grupos"){
+ 				CargarGrupos();
+	 		}else if(carga == "iva"){
+				CargarIva();
+			}
+ 			
  		}
  	}// end async task
  	
  	public void actualizar_clientes(View view) {
+ 		JsonReadTask taskgrupos = new JsonReadTask("grupos");
+ 		String url = "http://10.0.2.2/durox/index.php/actualizaciones/getGrupos/";
+ 		taskgrupos.execute(new String[] { url });
+ 		
+ 		JsonReadTask taskiva = new JsonReadTask("iva");
+ 		url = "http://10.0.2.2/durox/index.php/actualizaciones/getIva/";
+ 		taskiva.execute(new String[] { url });
+ 		
  		JsonReadTask taskclientes = new JsonReadTask("clientes");
- 		String url = "http://10.0.2.2/durox/index.php/actualizaciones/getClientes/";
+ 		url = "http://10.0.2.2/durox/index.php/actualizaciones/getClientes/";
  		taskclientes.execute(new String[] { url });
  	}
  	
@@ -345,6 +359,103 @@ public class MainActivity extends Activity {
  		
  		productos_lista();   
   	}
+ 	
+ 	
+ 	public void CargarGrupos() {
+  		try {
+  			JSONObject jsonResponse = new JSONObject(jsonResult);
+  			JSONArray jsonMainNode = jsonResponse.optJSONArray("grupos");
+  			
+  			Grupos_model mGrupos = new Grupos_model(db);
+				
+			Cursor m = mGrupos.getRegistros();
+  			
+  			if(jsonMainNode.length() > 0){
+  				
+  				mGrupos.truncate();
+  				
+  				Toast.makeText(getApplicationContext(), 
+  			 			"Registros registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
+  			}
+  			  
+  			for (int i = 0; i < jsonMainNode.length(); i++) {
+  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+  				  				
+  				String id_back = jsonChildNode.optString("id_grupo_cliente");
+  				String grupo = jsonChildNode.optString("grupo_nombre");
+  				String date_add = jsonChildNode.optString("date_add");
+  				String date_upd = jsonChildNode.optString("date_upd");
+  				String eliminado = jsonChildNode.optString("eliminado");
+  				String user_add = jsonChildNode.optString("user_add");
+  				String user_upd = jsonChildNode.optString("user_upd");
+  				 				
+  				mGrupos.insert(
+  					id_back,
+  					grupo,
+  					date_add,
+  					date_upd,
+  					eliminado,
+  					user_add,
+  					user_upd
+  				);
+  			}
+  		} catch (JSONException e) {
+  			Toast.makeText(getApplicationContext(), 
+  			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
+  		}
+  		
+  		Toast.makeText(getApplicationContext(), 
+  	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
+   	}
+ 	
+ 	
+ 	public void CargarIva() {
+  		try {
+  			JSONObject jsonResponse = new JSONObject(jsonResult);
+  			JSONArray jsonMainNode = jsonResponse.optJSONArray("iva");
+  			
+  			Iva_model mIva = new Iva_model(db);
+				
+			Cursor m = mIva.getRegistros();
+  			
+  			if(jsonMainNode.length() > 0){
+  				
+  				mIva.truncate();
+  				
+  				Toast.makeText(getApplicationContext(), 
+  			 			"Registros registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
+  			}
+  			  
+  			for (int i = 0; i < jsonMainNode.length(); i++) {
+  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+  				  				
+  				String id_back = jsonChildNode.optString("id_iva");
+  				String iva = jsonChildNode.optString("iva");
+  				String date_add = jsonChildNode.optString("date_add");
+  				String date_upd = jsonChildNode.optString("date_upd");
+  				String eliminado = jsonChildNode.optString("eliminado");
+  				String user_add = jsonChildNode.optString("user_add");
+  				String user_upd = jsonChildNode.optString("user_upd");
+  				 				
+  				mIva.insert(
+  					id_back,
+  					iva,
+  					date_add,
+  					date_upd,
+  					eliminado,
+  					user_add,
+  					user_upd
+  				);
+  			}
+  		} catch (JSONException e) {
+  			Toast.makeText(getApplicationContext(), 
+  			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
+  		}
+  		
+  		Toast.makeText(getApplicationContext(), 
+  	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
+  		
+   	}
  	
  	
  	public void clientes_lista(){

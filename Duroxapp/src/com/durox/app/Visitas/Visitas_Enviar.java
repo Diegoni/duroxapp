@@ -54,31 +54,33 @@ public class Visitas_Enviar extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.visitas_enviar);
 		
-		db = openOrCreateDatabase("Duroxapp", Context.MODE_PRIVATE, null);
+		db = openOrCreateDatabase("Durox_app", Context.MODE_PRIVATE, null);
 		
 		mVisitas = new Visitas_model(db);
 		
+		//c = mVisitas.getNuevos();
 		c = mVisitas.getRegistros();
 		
 		int cantidad = c.getCount();
 		
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
-				String cadena = c.getString(0) +" "+ c.getString(2) +" "+ c.getString(3);
 				
 				JsonReadTask task = new JsonReadTask(
-						c.getString(0),
-						c.getString(1),
 						c.getString(2),
 						c.getString(3),
-						cadena
+						c.getString(4),
+						c.getString(5),
+						c.getString(6),
+						c.getString(7)
 				);
-		 		String url = "http://10.0.2.2/durox/index.php/actualizaciones/setVisita/";
+				
+				String url = "http://10.0.2.2/durox/index.php/actualizaciones/setVisita/";
 		 		task.execute(new String[] { url });
     		}		
 		}
 		else{
-			Toast.makeText(this, "No hay clientes cargados", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "No hay visitas cargadas", Toast.LENGTH_SHORT).show();
 		}
  			
 		
@@ -88,23 +90,26 @@ public class Visitas_Enviar extends Activity {
 	
 	  // Async Task to access the web
 	private class JsonReadTask extends AsyncTask<String, Void, String> {
+		String id_vendedor;
 		String id_cliente;
-		String id_epoca_visita;
-		String fecha;
-		String valoracion;
 		String descripcion;
+		String id_epoca_visita;
+		String valoracion;
+		String fecha;
 		
  		public JsonReadTask(
+ 				String id_vendedor,
  				String id_cliente,
+ 				String descripcion,
  				String id_epoca_visita,
- 				String fecha,
  				String valoracion,
- 				String descripcion) {
- 			this.id_cliente = id_cliente;
- 			this.id_epoca_visita = id_epoca_visita;
- 			this.fecha = fecha;
- 			this.valoracion = valoracion;
- 			this.descripcion = descripcion;
+ 				String fecha) {
+			this.id_vendedor  = id_vendedor;
+ 			this.id_cliente  = id_cliente;
+ 			this.descripcion  = descripcion;
+ 			this.id_epoca_visita  = id_epoca_visita;
+ 			this.valoracion  = valoracion;
+ 			this.fecha  = fecha;	
  		}
  		
 	
@@ -114,91 +119,31 @@ public class Visitas_Enviar extends Activity {
 	 		
 	 		
 	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-	 		pairs.add(new BasicNameValuePair("id_cliente", id_cliente));
-	 		pairs.add(new BasicNameValuePair("id_epoca_visita", id_epoca_visita));
-	 		pairs.add(new BasicNameValuePair("fecha", fecha));
-	 		pairs.add(new BasicNameValuePair("valoracion", valoracion));
-	 		pairs.add(new BasicNameValuePair("descripcion", descripcion));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+ 			pairs.add(new BasicNameValuePair("id_cliente", id_cliente));
+ 			pairs.add(new BasicNameValuePair("descripcion", descripcion));
+ 			pairs.add(new BasicNameValuePair("id_epoca_visita", id_epoca_visita));
+ 			pairs.add(new BasicNameValuePair("valoracion", valoracion));
+ 			pairs.add(new BasicNameValuePair("fecha", fecha));
+ 			
 	 			
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 	 				
 	 			HttpResponse response = httpclient.execute(httppost);
-	 		}
-	 	 
-	 		catch (ClientProtocolException e) {
-	 			e.printStackTrace();
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
+	 			
 	 		} catch (IOException e) {
-	 			e.printStackTrace();
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
 	 		}
 	 			
 	 		return null;
 	 	}
 	  
 		protected void onPostExecute(String result) {
-	 		CargarClientes();
-	 			
 	 	}
-	}// end async task
-	 	
-	 	
-	 public void CargarClientes() {
-	 		try {
-	 			JSONObject jsonResponse = new JSONObject(jsonResult);
-	 			JSONArray jsonMainNode = jsonResponse.optJSONArray("visitas");
-	 			
-	 			if(jsonMainNode.length() > 0){
-	 				mCliente.truncate();
-	 				Toast.makeText(getApplicationContext(), 
-	 			 			"Registros registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
-	 			}
-	 			  
-	 			for (int i = 0; i < jsonMainNode.length(); i++) {
-	 				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 				int id_back = jsonChildNode.optInt("id_back");
-	 				String nombre = jsonChildNode.optString("nombre");
-	 				String apellido = jsonChildNode.optString("apellido");
-	 				String domicilio = jsonChildNode.optString("domicilio");
-	 				String cuit = jsonChildNode.optString("cuit");
-	 				int id_grupo_cliente = jsonChildNode.optInt("id_grupo_cliente");
-	 				int id_iva = jsonChildNode.optInt("id_iva"); 
-	 				String imagen = jsonChildNode.optString("imagen");
-	 				String nombre_fantasia = jsonChildNode.optString("nombre_fantasia");
-	 				String razon_social = jsonChildNode.optString("razon_social");
-	 				String web = jsonChildNode.optString("web");
-	 				String date_add = jsonChildNode.optString("date_add");
-	 				String date_upd = jsonChildNode.optString("date_upd");
-	 				String eliminado = jsonChildNode.optString("eliminado");
-	 				int  user_add = jsonChildNode.optInt("user_add");
-	 				int user_upd = jsonChildNode.optInt("user_upd");
-	 					 				
-	 				mCliente.insert(
-	 					id_back,
-	 					nombre,
-	 					apellido,
-	 					domicilio,
-	 					cuit,
-	 					id_grupo_cliente,
-	 					id_iva,
-	 					imagen,
-	 					nombre_fantasia,
-	 					razon_social,
-	 					web,
-	 					date_add,
-	 					date_upd,
-	 					eliminado,
-	 					user_add,
-	 					user_upd
-	 				);
-	 			}
-	 		} catch (JSONException e) {
-	 			Toast.makeText(getApplicationContext(), 
-	 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
-	 		}
-	 		
-	 		Toast.makeText(getApplicationContext(), 
-	 	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
-	 		
-	 		//clientes_lista();
-	  	}
+	}
 }

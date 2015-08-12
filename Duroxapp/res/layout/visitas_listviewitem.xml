@@ -41,7 +41,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txt_pNombre"
+            android:id="@+id/txt_vNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -52,14 +52,14 @@
             android:textColor="#33CC33" />
        
      <TextView
-         android:id="@+id/epoca"
+         android:id="@+id/txt_vEpoca"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginLeft="10dp"
          android:text="@string/epoca" />
      
      <TextView
-         android:id="@+id/fechass"
+         android:id="@+id/txt_vFecha"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginLeft="10dp"

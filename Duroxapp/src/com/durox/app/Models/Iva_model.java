@@ -5,22 +5,22 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Epocas_model extends Activity{
+public class Iva_model extends Activity{
 	
 	SQLiteDatabase db;
 	String sql;
 	Cursor c;
 	
 	
-	public Epocas_model(SQLiteDatabase db) {
+	public Iva_model(SQLiteDatabase db) {
 		this.db = db;
 	}
 	
 	public void createTable(){
-		sql = "CREATE TABLE IF NOT EXISTS `epocas_visitas`("
-				+ "id_epoca INTEGER PRIMARY KEY AUTOINCREMENT,"
+		sql = "CREATE TABLE IF NOT EXISTS `iva`("
+				+ "id_iva INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR, "
-				+ "epoca VARCHAR, "
+				+ "iva VARCHAR, "
 				+ "date_add VARCHAR, "
 				+ "date_upd VARCHAR, "
 				+ "eliminado VARCHAR, "
@@ -34,7 +34,7 @@ public class Epocas_model extends Activity{
 	public Cursor getRegistros(){
 		createTable();
 		
-		sql = "SELECT * FROM `epocas_visitas`";
+		sql = "SELECT * FROM `iva`";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -44,16 +44,16 @@ public class Epocas_model extends Activity{
 	
 	public void insert(
 			String id_back,
-			String epoca, 
+			String iva, 
 			String date_add, 
 			String date_upd, 
 			String eliminado, 
 			String user_add, 
 			String user_upd
 		){
-		sql = "INSERT INTO `epocas_visitas` ("
+		sql = "INSERT INTO `iva` ("
 				+ "`id_back`, "
-				+ "`epoca`, "
+				+ "`iva`, "
 				+ "`date_add`, "
 				+ "`date_upd`, "
 				+ "`eliminado`, "
@@ -61,7 +61,7 @@ public class Epocas_model extends Activity{
 				+ "`user_upd`"
 			+ ") VALUES ("
  			    + "'"+id_back+"', "
- 			    + "'"+epoca+"', "
+ 			    + "'"+iva+"', "
  			    + "'"+date_add+"', "
  			    + "'"+date_upd+"', "
  			    + "'"+eliminado+"', "
@@ -73,7 +73,7 @@ public class Epocas_model extends Activity{
  	}
 	
 	public void truncate(){
-		sql = "DELETE FROM `epocas_visitas`";
+		sql = "DELETE FROM `iva`";
 		db.execSQL(sql);
 	}
 

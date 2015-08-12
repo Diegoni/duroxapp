@@ -69,9 +69,9 @@ public class Visitas_ListView extends BaseAdapter {
 			view = inflater.inflate(R.layout.visitas_listviewitem, null);
 			
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
-			holder.epoca = (TextView) view.findViewById(R.id.epoca);
-			holder.fecha = (TextView) view.findViewById(R.id.fechass);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_vNombre);
+			holder.epoca = (TextView) view.findViewById(R.id.txt_vEpoca);
+			holder.fecha = (TextView) view.findViewById(R.id.txt_vFecha);
 			
 			view.setTag(holder);
 		}
