@@ -41,6 +41,7 @@ public class Visitas_Main extends Activity {
 	AutoCompleteTextView auto_epoca;
 	RatingBar ebValoracion;
 	EditText etfecha;
+	EditText etComentario;
 	String[] c_nombre;
 	String[] epocas;
 	SQLiteDatabase db;
@@ -59,11 +60,9 @@ public class Visitas_Main extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
+		setContentView(R.layout.visitas_main2);
 		
-		setContentView(R.layout.visitas_main);
-		
-		cargar_vista();
+		//cargar_vista();
 	}
 
 	
@@ -71,7 +70,9 @@ public class Visitas_Main extends Activity {
 		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
 		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
 		etfecha = (EditText) findViewById(R.id.etFecha);
+		etComentario = (EditText) findViewById(R.id.txtcomentario);
 		ebValoracion = (RatingBar) findViewById(R.id.ebValoracion);
+		
 		
 		db = openOrCreateDatabase("Durox_app", Context.MODE_PRIVATE, null);
 		
@@ -154,6 +155,7 @@ public class Visitas_Main extends Activity {
 		String nombre = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
 		String fecha = etfecha.getText().toString();
+		String comentario = etComentario.getText().toString();
 		float valoracion2 = ebValoracion.getRating();
 		
 		db = openOrCreateDatabase("Durox_app", Context.MODE_PRIVATE, null);
@@ -180,7 +182,7 @@ public class Visitas_Main extends Activity {
 
 						String id_visita = "0";
 						String id_cliente = c.getString(0);
-						String descripcion = "";
+						String descripcion = comentario;
 						String id_vendedor = "1";
 						String id_epoca_visita = cursor.getString(0);
 						String valoracion = Float.toString(valoracion2);

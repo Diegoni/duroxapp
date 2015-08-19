@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/nombrelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nombrelabel" />
+
+    <TextView
+        android:id="@+id/detallelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nombrelabel"
+        android:text="@string/codigo" />
+    
+     <ImageView
+        android:id="@+id/imagen"
+        android:layout_alignParentRight="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="1dp" />
+
+     <TextView
+         android:id="@+id/txt_pNombre"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:text="@string/nombrelabel"
+         android:textColor="#33CC33" />
+
+     <TextView
+         android:id="@+id/txt_pCodigo"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pNombre"
+         android:layout_below="@+id/txt_pNombre"
+         android:text="@string/codigo"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pTotal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/linea_presupuesto_total"
+         android:text="@string/precio"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_preNumero"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/txt_pTotal"
+         android:text="@string/precio_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/txt_preNumero"
+         android:text="@string/precio_min"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView5"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView4"
+         android:text="@string/precio_min_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView6"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView5"
+         android:text="@string/id_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView7"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView6"
+         android:text="@string/ficha_tecnica"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView8"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView7"
+         android:text="@string/date_add"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/textView9"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/textView8"
+         android:text="@string/date_upd"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioMinIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pPrecioMin"
+         android:layout_below="@+id/txt_pPrecioMin"
+         android:text="@string/precio_min_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textView7"
+         android:layout_alignLeft="@+id/txt_pPrecioMinIva"
+         android:text="@string/id_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pFichaTecnica"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/textView7"
+         android:layout_alignBottom="@+id/textView7"
+         android:layout_alignLeft="@+id/txt_pIva"
+         android:text="@string/ficha_tecnica"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pDateAdd"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pFichaTecnica"
+         android:layout_below="@+id/txt_pFichaTecnica"
+         android:text="@string/date_add"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pDateUpd"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/txt_pDateAdd"
+         android:layout_below="@+id/txt_pDateAdd"
+         android:text="@string/date_upd"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioIva"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/txt_pPrecioMin"
+         android:layout_alignLeft="@+id/txt_pPrecio"
+         android:text="@string/precio_iva"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecioMin"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textView5"
+         android:layout_alignLeft="@+id/txt_pPrecioIva"
+         android:text="@string/precio_min"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pPrecio"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/txt_pPrecioIva"
+         android:layout_alignLeft="@+id/txt_pCodigoLote"
+         android:text="@string/precio"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/linea_presupuesto_total"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/detallelabel"
+         android:text="@string/codigo_lote"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/txt_pCodigoLote"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/txt_pPrecio"
+         android:layout_alignLeft="@+id/txt_pCodigo"
+         android:text="@string/codigo_lote"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+     
+</RelativeLayout>

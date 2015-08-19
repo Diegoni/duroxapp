@@ -20,7 +20,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>a
+        </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_ItemView" >
         </activity>
         <activity android:name="com.durox.app.Visitas.Visitas_Main" >
