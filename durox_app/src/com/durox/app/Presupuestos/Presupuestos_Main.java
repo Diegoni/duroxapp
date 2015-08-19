@@ -223,7 +223,7 @@ public class Presupuestos_Main extends Activity
 			if(jsonMainNode.length() > 0){
 	 			mVisitas.truncate();
 	 			Toast.makeText(getApplicationContext(), 
-	 					config.msjActualizandoRegistros()+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
+	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	 		}
 	 			  
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {
