@@ -39,8 +39,10 @@ import com.durox.app.Clientes.Clientes_ListView;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
+import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
+import com.durox.app.Models.Visitas_model;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
@@ -97,6 +99,9 @@ public class Presupuestos_Lista extends Activity {
 	TextView content;
 	
 	Config_durox config;
+	
+	Presupuestos_model mPresupuesto;
+	Lineas_Presupuestos_model mLineas;
  
    
     public void onCreate(Bundle savedInstanceState) {
@@ -108,141 +113,10 @@ public class Presupuestos_Lista extends Activity {
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
         
         presupuestos_lista();
-   } 
+   }
     
-   
     
-   private class JsonReadTask extends AsyncTask<String, Void, String> {
- 		String carga;
- 		
- 		public JsonReadTask(String carga) {
- 			this.carga = carga;
- 		}
- 		
- 		protected String doInBackground(String... params) {
- 			HttpClient httpclient = new DefaultHttpClient();
- 			HttpPost httppost = new HttpPost(params[0]);
- 				
- 			try { 				
- 				HttpResponse response = httpclient.execute(httppost);
- 				jsonResult = inputStreamToString(
- 				response.getEntity().getContent()).toString();
- 			}
- 	 
- 			catch (ClientProtocolException e) {
- 				e.printStackTrace();
- 			} catch (IOException e) {
- 				e.printStackTrace();
- 			}
- 			
- 			return null;
- 		}
-  
- 		private StringBuilder inputStreamToString(InputStream is) {
- 			String rLine = "";
- 			StringBuilder answer = new StringBuilder();
- 			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
- 	 
- 			try {
- 				while ((rLine = rd.readLine()) != null) {
- 					answer.append(rLine);
- 				}
- 			} catch (IOException e) {
- 				// e.printStackTrace();
- 				Toast.makeText(getApplicationContext(), 
- 				config.msjError(e.toString()) , Toast.LENGTH_LONG).show();
- 			}
- 			
- 			return answer;
- 		}
-  
- 		protected void onPostExecute(String result) {
- 			
- 			if(carga == "presupuestos"){
- 				CargarPresupuestos();
- 			}
- 			
- 		}
- 	}// end async task
- 	
- 	public void actualizar_presupuestos(View view) {
- 		JsonReadTask taskclientes = new JsonReadTask("presupuestos");
- 		String url = config.getIp()+"/actualizaciones/getClientes/";
- 		taskclientes.execute(new String[] { url });
- 	}
- 	
- 		
- 	// build hash set for list view
- 	public void CargarPresupuestos() {
- 		/*
- 		try {
- 			JSONObject jsonResponse = new JSONObject(jsonResult);
- 			JSONArray jsonMainNode = jsonResponse.optJSONArray("clientes");
- 			
- 			if(jsonMainNode.length() > 0){
- 				
- 				mPresupuestos.truncate();
- 				Toast.makeText(getApplicationContext(), 
- 			 			"Registros registros "+jsonMainNode.length() , Toast.LENGTH_SHORT).show();
- 				
- 			}
- 			  
- 			for (int i = 0; i < jsonMainNode.length(); i++) {
- 				
- 				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
- 				
- 				int id_back = jsonChildNode.optInt("id_cliente");
- 				String nombre = jsonChildNode.optString("nombre");
- 				String apellido = jsonChildNode.optString("apellido");
- 				String domicilio = jsonChildNode.optString("domicilio");
- 				String cuit = jsonChildNode.optString("cuit");
- 				int id_grupo_cliente = jsonChildNode.optInt("id_grupo_cliente");
- 				int id_iva = jsonChildNode.optInt("id_iva"); 
- 				String imagen = jsonChildNode.optString("imagen");
- 				String nombre_fantasia = jsonChildNode.optString("nombre_fantasia");
- 				String razon_social = jsonChildNode.optString("razon_social");
- 				String web = jsonChildNode.optString("web");
- 				String date_add = jsonChildNode.optString("date_add");
- 				String date_upd = jsonChildNode.optString("date_upd");
- 				String eliminado = jsonChildNode.optString("eliminado");
- 				int  user_add = jsonChildNode.optInt("user_add");
- 				int user_upd = jsonChildNode.optInt("user_upd");
- 				 		
- 				mCliente.insert(
- 					id_back,
- 					nombre,
- 					apellido,
- 					domicilio,
- 					cuit,
- 					id_grupo_cliente,
- 					id_iva,
- 					imagen,
- 					nombre_fantasia,
- 					razon_social,
- 					web,
- 					date_add,
- 					date_upd,
- 					eliminado,
- 					user_add,
- 					user_upd
- 				);
- 			}
- 		} catch (JSONException e) {
- 			Toast.makeText(getApplicationContext(), 
- 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
- 		}
- 		
- 		Toast.makeText(getApplicationContext(), 
- 	 			"Registros actualizados", Toast.LENGTH_SHORT).show();
- 		
- 		presupuestos_lista();
- 		*/
-  	}
- 	
- 	
- 	
- 	
- 	public void presupuestos_lista(){
+    public void presupuestos_lista(){
  		setContentView(R.layout.presupuestos_listview);
  		
  		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
@@ -327,5 +201,453 @@ public class Presupuestos_Lista extends Activity {
     		});
 		}
  	}	
+    
+    
+    public void actualizar_presupuestos(View view) {
+		// Exportamos los presupuestos 
+    	
+    	mPresupuesto = new Presupuestos_model(db);
+		
+		Cursor c = mPresupuesto.getNuevos();
+		
+		if(c.getCount() > 0) {
+			while(c.moveToNext()){
+				
+				JsonSetTask task = new JsonSetTask(
+					c.getString(0),		//+ 0"id_presupuesto VARCHAR, "
+					c.getString(2),		//+ 2"id_visita VARCHAR, "
+					c.getString(3),		//+ 3"id_cliente VARCHAR, "
+					c.getString(4),		//+ 4"id_vendedor VARCHAR, "
+					c.getString(5),		//+ 5"id_estado_presupuesto VARCHAR, "
+					c.getString(6),		//+ 6"total VARCHAR, "
+					c.getString(8),		//+ 8"id_origen VARCHAR, "
+					c.getString(9),		//+ 9" aprobado_back VARCHAR, "
+					c.getString(10),	//+ 10" aprobado_front VARCHAR, "
+					c.getString(11),	//+ 11" visto_back VARCHAR, "
+					c.getString(12),	//+ 12" visto_front VARCHAR, "
+					c.getString(15)		//+ 15"eliminado VARCHAR, "
+				);
+				
+				String url2 = config.getIp()+"/actualizaciones/setPresupuestos/";
+		 		task.execute(new String[] { url2 });
+    		}		
+		} else {
+			Toast.makeText(this, config.msjNoRegistros("presupuestos"), Toast.LENGTH_SHORT).show();
+		}
+		
+		// Importamos los presupuestos
+		
+		JsonReadTask taskpresupuestos = new JsonReadTask();
+		String url = config.getIp()+"/actualizaciones/getPresupuestos/";
+		taskpresupuestos.execute(new String[] { url });
+		
+		// Exportamos las lineas de los presupuestos
+		
+		mLineas = new Lineas_Presupuestos_model(db);
+		
+		Cursor cLineas = mLineas.getNuevos();
+		
+		if(cLineas.getCount() > 0) {
+			while(cLineas.moveToNext()){
+				
+				JsonSetTaskLineas task = new JsonSetTaskLineas(
+					cLineas.getString(2), 	//2+ "id_temporario VARCHAR, "		
+					cLineas.getString(4), 	//4+ "id_producto VARCHAR, "
+					cLineas.getString(5), 	//5+ "precio VARCHAR, "
+					cLineas.getString(6), 	//6+ "cantidad VARCHAR, "
+					cLineas.getString(7), 	//7+ "subtotal VARCHAR, "
+					cLineas.getString(8), 	//8+ "id_estado_producto_presupuesto VARCHAR, "
+					cLineas.getString(9), 	//9+ "comentario VARCHAR, "
+					cLineas.getString(12) 	//12+ "eliminado VARCHAR, "
+				);
+				
+				String url2 = config.getIp()+"/actualizaciones/setLineasPresupuestos/";
+		 		task.execute(new String[] { url2 });
+    		}		
+		} else {
+			Toast.makeText(this, config.msjNoRegistros("lineas presupuestos"), Toast.LENGTH_SHORT).show();
+		}
+		
+		// Importamos los presupuestos
+		
+		JsonReadTaskLineas tasklineas = new JsonReadTaskLineas();
+		String urlLineas = config.getIp()+"/actualizaciones/getLineasPresupuestos/";
+		tasklineas.execute(new String[] { urlLineas });
+		
+		presupuestos_lista();
+	}
+    
+    
+    // Clase para leer presupuestos
+	private class JsonReadTask extends AsyncTask<String, Void, String> {
+		
+		protected String doInBackground(String... params) {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(params[0]);
+			
+			try {
+				HttpResponse response = httpclient.execute(httppost);
+				jsonResult = inputStreamToString(
+				response.getEntity().getContent()).toString();
+			}
+	 
+			catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+ 
+		private StringBuilder inputStreamToString(InputStream is) {
+			String rLine = "";
+			StringBuilder answer = new StringBuilder();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	 
+			try {
+				while ((rLine = rd.readLine()) != null) {
+					answer.append(rLine);
+				}
+			} catch (IOException e) {
+				// e.printStackTrace();
+				Toast.makeText(getApplicationContext(), 
+				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
+			}
+			
+			return answer;
+		}
+ 
+		protected void onPostExecute(String result) {
+			CargarPresupuestos();
+		}
+	}
+	
+	
+	 // Clase para leer presupuestos
+	 private class JsonReadTaskLineas extends AsyncTask<String, Void, String> {
+			
+			protected String doInBackground(String... params) {
+				HttpClient httpclient = new DefaultHttpClient();
+				HttpPost httppost = new HttpPost(params[0]);
+				
+				try {
+					HttpResponse response = httpclient.execute(httppost);
+					jsonResult = inputStreamToString(
+					response.getEntity().getContent()).toString();
+				}
+		 
+				catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				return null;
+			}
+	 
+			private StringBuilder inputStreamToString(InputStream is) {
+				String rLine = "";
+				StringBuilder answer = new StringBuilder();
+				BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		 
+				try {
+					while ((rLine = rd.readLine()) != null) {
+						answer.append(rLine);
+					}
+				} catch (IOException e) {
+					// e.printStackTrace();
+					Toast.makeText(getApplicationContext(), 
+					config.msjError(e.toString()), Toast.LENGTH_LONG).show();
+				}
+				
+				return answer;
+			}
+	 
+			protected void onPostExecute(String result) {
+				CargarLineasPresupuestos();
+			}
+		}
+	
+	
+	
+	private class JsonSetTask extends AsyncTask<String, Void, String> {
+		String id_presupuesto;
+		String id_visita;
+		String id_cliente;
+		String id_vendedor;
+		String id_estado_presupuesto;
+		String total;
+		String id_origen;
+		String aprobado_back;
+		String aprobado_front;
+		String visto_back;
+		String visto_front;
+		String eliminado;
+		
+ 		public JsonSetTask(
+ 				String id_presupuesto,
+ 				String id_visita,
+				String id_cliente,
+				String id_vendedor,
+				String id_estado_presupuesto,
+				String total,
+				String id_origen,
+				String aprobado_back,
+				String aprobado_front,
+				String visto_back,
+				String visto_front,
+				String eliminado) {
+ 			this.id_presupuesto = id_presupuesto;
+ 			this.id_visita = id_visita;
+ 			this.id_cliente = id_cliente;
+ 			this.id_vendedor = id_vendedor;
+ 			this.id_estado_presupuesto = id_estado_presupuesto;
+ 			this.total = total;
+ 			this.id_origen = id_origen;
+ 			this.aprobado_back = aprobado_back;
+ 			this.aprobado_front = aprobado_front;
+ 			this.visto_back = visto_back;
+ 			this.visto_front = visto_front;
+ 			this.eliminado = eliminado;	
+ 		}
+ 		
+	
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 		
+	 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_front", id_presupuesto));
+	 		pairs.add(new BasicNameValuePair("id_visita", id_visita));
+	 		pairs.add(new BasicNameValuePair("id_cliente", id_cliente));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+	 		pairs.add(new BasicNameValuePair("id_estado_presupuesto", id_estado_presupuesto));
+	 		pairs.add(new BasicNameValuePair("total", total));
+	 		pairs.add(new BasicNameValuePair("id_origen", id_origen));
+	 		pairs.add(new BasicNameValuePair("aprobado_back", aprobado_back));
+	 		pairs.add(new BasicNameValuePair("aprobado_front", aprobado_front));
+	 		pairs.add(new BasicNameValuePair("visto_back", visto_back));
+	 		pairs.add(new BasicNameValuePair("visto_front", visto_front));
+	 		pairs.add(new BasicNameValuePair("eliminado", eliminado));	
+ 				 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			HttpResponse response = httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	
+	
+	private class JsonSetTaskLineas extends AsyncTask<String, Void, String> {
+		String id_temporario;		
+		String id_producto;
+		String precio;
+		String cantidad;
+		String subtotal;
+		String id_estado_producto_presupuesto;
+		String comentario;
+		String eliminado;
+		
+ 		public JsonSetTaskLineas(
+ 				String id_temporario,		
+				String id_producto,
+				String precio,
+				String cantidad,
+				String subtotal,
+				String id_estado_producto_presupuesto,
+				String comentario,
+				String eliminado
+				) {
+ 			this.id_temporario = id_temporario;		
+			this.id_producto = id_producto;
+			this.precio = precio;
+			this.cantidad = cantidad;
+			this.subtotal = subtotal;
+			this.id_estado_producto_presupuesto = id_estado_producto_presupuesto;
+			this.comentario = comentario;
+			this.eliminado = eliminado;
+ 		}
+ 		
+	
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 		
+	 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_temporario", id_temporario));		
+	 		pairs.add(new BasicNameValuePair("id_producto", id_producto));
+	 		pairs.add(new BasicNameValuePair("precio", precio));
+	 		pairs.add(new BasicNameValuePair("cantidad", cantidad));
+	 		pairs.add(new BasicNameValuePair("subtotal", subtotal));
+	 		pairs.add(new BasicNameValuePair("id_estado_producto_presupuesto", id_estado_producto_presupuesto));
+	 		pairs.add(new BasicNameValuePair("comentario", comentario));
+	 		pairs.add(new BasicNameValuePair("eliminado", eliminado));	
+ 				 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			HttpResponse response = httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	
+	
+	// build hash set for list view
+	public void CargarPresupuestos() {
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray("presupuestos");
+	 			
+			if(jsonMainNode.length() > 0){
+				mPresupuesto.truncate();
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
+	 		}
+	 			  
+	 		for (int i = 0; i < jsonMainNode.length(); i++) {
+	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	 			
+	 			String id_back = jsonChildNode.optString("id_presupuesto");
+		 		String id_visita = jsonChildNode.optString("id_visita");
+		 		String id_cliente = jsonChildNode.optString("id_cliente");
+		 		String id_vendedor = jsonChildNode.optString("id_vendedor");
+		 		String id_estado_presupuesto = jsonChildNode.optString("id_estado_presupuesto");
+		 		String total = jsonChildNode.optString("total");
+		 		String fecha = jsonChildNode.optString("fecha");
+		 		String id_origen = jsonChildNode.optString("id_origen");
+		 		String aprobado_back = jsonChildNode.optString("aprobado_back");
+		 		String aprobado_front = jsonChildNode.optString("aprobado_front");
+		 		String visto_back = jsonChildNode.optString("visto_back");
+		 		String visto_front = jsonChildNode.optString("visto_front");
+		 		String date_add = jsonChildNode.optString("date_add");
+		 		String date_upd = jsonChildNode.optString("date_upd");
+		 		String eliminado = jsonChildNode.optString("eliminado");
+		 		String user_add = jsonChildNode.optString("user_add");
+		 		String user_upd = jsonChildNode.optString("user_upd");
+		 		
+		 		mPresupuesto.insert(
+		 				id_back, 
+		 				id_visita, 
+		 				id_cliente, 
+		 				id_vendedor, 
+		 				id_estado_presupuesto, 
+		 				total, 
+		 				fecha, 
+		 				id_origen, 
+		 				aprobado_back, 
+		 				aprobado_front, 
+		 				visto_back, 
+		 				visto_front, 
+		 				date_add,
+		 				date_upd, 
+		 				eliminado, 
+		 				user_add, 
+		 				user_upd
+		 		);
+	 			
+	 		}
+	 		
+	 		Toast.makeText(getApplicationContext(), 
+	 		 		config.msjRegistrosActualizados(" presupuestos "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 	} catch (JSONException e) {
+	 		Toast.makeText(getApplicationContext(), 
+	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 	}
+	 		
+	 	presupuestos_lista();
+	}
+	
+	
+	
+	// build hash set for list view
+		public void CargarLineasPresupuestos() {
+			try {
+				JSONObject jsonResponse = new JSONObject(jsonResult);
+				JSONArray jsonMainNode = jsonResponse.optJSONArray("lineas_presupuestos");
+		 			
+				if(jsonMainNode.length() > 0){
+					mLineas.delete();
+		 			Toast.makeText(getApplicationContext(), 
+		 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
+		 		}
+		 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 			
+		 			String id_back = jsonChildNode.optString("id_linea_producto_presupuesto");
+		 			String id_presupuesto = jsonChildNode.optString("id_presupuesto");
+		 			String id_producto = jsonChildNode.optString("id_producto");
+		 			String precio = jsonChildNode.optString("precio");
+		 			String cantidad = jsonChildNode.optString("cantidad");
+		 			String subtotal = jsonChildNode.optString("subtotal");
+		 			String id_estado_producto_presupuesto = jsonChildNode.optString("id_estado_producto_presupuesto");
+		 			String id_temporario = jsonChildNode.optString("id_front");
+		 			String comentario = jsonChildNode.optString("comentario");
+			 		String date_add = jsonChildNode.optString("date_add");
+			 		String date_upd = jsonChildNode.optString("date_upd");
+			 		String eliminado = jsonChildNode.optString("eliminado");
+			 		String user_add = jsonChildNode.optString("user_add");
+			 		String user_upd = jsonChildNode.optString("user_upd");
+			 		
+			 		mLineas.insert(
+			 			id_back, 
+			 			id_temporario, 
+			 			id_presupuesto, 
+			 			id_producto, 
+			 			precio, 
+			 			cantidad, 
+			 			subtotal, 
+			 			id_estado_producto_presupuesto, 
+			 			comentario, 
+			 			date_add, 
+			 			date_upd, 
+			 			eliminado, 
+			 			user_add, 
+			 			user_upd
+			 		);
+		 			
+		 		}
+		 		
+		 		Toast.makeText(getApplicationContext(), 
+		 		 		config.msjRegistrosActualizados(" lineas presupuestos "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	} catch (JSONException e) {
+		 		Toast.makeText(getApplicationContext(), 
+		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+		 	}
+		 		
+		 	presupuestos_lista();
+		}
 }
   

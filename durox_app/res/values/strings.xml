@@ -68,4 +68,6 @@
 	<string name="documento">"Documento"</string>
 	<string name="inicio">"Inicio"</string>
 	
+	<string name="aprobar">"Aprobar"</string>
+	
 </resources>

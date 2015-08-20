@@ -133,6 +133,15 @@ public class Lineas_Presupuestos_model extends Activity{
 		db.execSQL(sql);
 	}
 	
+	public void delete(){
+		createTable();
+		
+		sql = "DELETE FROM "
+				+ " `linea_productos_presupuestos` ";
+				//+ " WHERE id_back = '0";
+		db.execSQL(sql);
+	}
+	
 	
 	public void setPresupuesto(String id_presupuesto){
 		createTable();
@@ -140,5 +149,30 @@ public class Lineas_Presupuestos_model extends Activity{
 		sql = "UPDATE `linea_productos_presupuestos` SET id_temporario='"+id_presupuesto+"' WHERE id_back = '0' AND id_temporario = '0'";
 		db.execSQL(sql);
 	}
-
+	
+	
+	public Cursor getLineasProceso(){
+		sql =  "SELECT "
+				+ " linea_productos_presupuestos.subtotal "
+				+ " FROM linea_productos_presupuestos"
+				+ " WHERE linea_productos_presupuestos.id_back = '0' AND linea_productos_presupuestos.id_temporario = '0'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	public Cursor getNuevos(){
+		createTable();
+		
+		sql = "SELECT "
+				+ "	* FROM "
+				+ " `linea_productos_presupuestos` "
+				+ " WHERE id_back = '0' ";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
 }

@@ -121,10 +121,6 @@ public class Presupuestos_Main extends Activity
 	
 	
 	public void actualizar_visitas(View view) {
-		JsonReadTask taskclientes = new JsonReadTask();
-		String url = config.getIp()+"/actualizaciones/getVisitas/";
-		taskclientes.execute(new String[] { url });
-		
 		mVisitas = new Visitas_model(db);
 		
 		Cursor c = mVisitas.getNuevos();
@@ -147,6 +143,12 @@ public class Presupuestos_Main extends Activity
 		} else {
 			Toast.makeText(this, config.msjNoRegistros("visitas"), Toast.LENGTH_SHORT).show();
 		}
+		
+		
+		JsonReadTask taskclientes = new JsonReadTask();
+		String url = config.getIp()+"/actualizaciones/getVisitas/";
+		taskclientes.execute(new String[] { url });
+		
 		
 		visitas_lista();
 	}

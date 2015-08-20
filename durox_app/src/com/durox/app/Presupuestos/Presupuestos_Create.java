@@ -6,9 +6,11 @@ import java.util.Locale;
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
+import com.durox.app.Models.Vendedores_model;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -153,14 +155,8 @@ public class Presupuestos_Create extends Activity
 				// Binds the Adapter to the ListView
 				list.setAdapter(adapter_listView);
 			}
-			
-			
-			String sql =  "SELECT "
-							+ " linea_productos_presupuestos.subtotal "
-							+ " FROM linea_productos_presupuestos"
-							+ " WHERE linea_productos_presupuestos.id_back = '0' AND linea_productos_presupuestos.id_temporario = '0'";
-
-			Cursor cursorLinea = db.rawQuery(sql, null);
+						
+			Cursor cursorLinea = mLineas.getLineasProceso();			
 			
 			if(cursorLinea.getCount() > 0){
 				Float total = (float) 0;
@@ -187,14 +183,7 @@ public class Presupuestos_Create extends Activity
 		
 		mLineas = new Lineas_Presupuestos_model(db);
 		
-		String sql = "SELECT "
-						+ "id_back, "
-						+ "nombre, "
-						+ "precio "
-					+ "FROM productos "
-					+ "WHERE nombre = '"+producto+"' ";
-		
-		Cursor cursor = db.rawQuery(sql, null);
+		Cursor cursor = mProductos.getAutocomplete(producto);
 		
 		if(cursor.getCount() > 0){
 			while(cursor.moveToNext()){
@@ -212,7 +201,7 @@ public class Presupuestos_Create extends Activity
 						cursor.getString(2), 	//precio
 						cantidad,		//cantidad
 						subt, 			//subtotal
-						"0", 			//id_estado_producto_presupuesto
+						"1", 			//id_estado_producto_presupuesto
 						comentario, 	//comentario
 						null, 			//date_add
 						null, 			//date_upd
@@ -251,18 +240,17 @@ public class Presupuestos_Create extends Activity
 		startActivity(intent);
 	}
 	
+	
+	
 	public void guardar_presupuesto(View view){
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		TextView txtTotal = (TextView) findViewById(R.id.txt_pTotal);
 		String total = txtTotal.getText().toString();
 		
-		String sql =  "SELECT "
-				+ " clientes.id_back "
-				+ " FROM clientes "
-				+ " WHERE clientes.razon_social = '"+cNombre+"'";
+		Clientes_model mCliente = new Clientes_model(db);
 		
-		Cursor cursorCliente = db.rawQuery(sql, null);
+		Cursor cursorCliente = mCliente.getID(cNombre);
 		
 		String id_cliente = "1";
 		
@@ -272,38 +260,50 @@ public class Presupuestos_Create extends Activity
 			}
 		}
 		
+		Vendedores_model mVendedor = new Vendedores_model(db);
+		
+		Cursor cursorVendedor = mVendedor.getRegistros();
+		
+		String id_vendedor = "1";
+		
+		if(cursorVendedor.getCount() > 0){
+			while(cursorVendedor.moveToNext()){
+				id_vendedor = cursorVendedor.getString(1); 
+			}
+		}
+		
 		Presupuestos_model mPresupuestos = new Presupuestos_model(db);
 		Lineas_Presupuestos_model mLineas = new Lineas_Presupuestos_model(db);
 		
 		mPresupuestos.createTable();
 		
 		mPresupuestos.insert(
-			"0", 		// id_back
-			cIdVisita, 	// id_visita 
-			id_cliente,	// id_cliente 
-			"1",		// id_vendedor 
-			"1",		// id_estado_presupuesto 
-			total,		// total 
-			"0",		// fecha 
-			"1",		// id_origen 
-			"0",		// visto 
-			null,		// date_add
-			null,		// date_upd 
-			null,		// eliminado 
-			null,		// user_add 
-			null		// user_upd
+			"0", 			// id_back
+			cIdVisita, 		// id_visita 
+			id_cliente,		// id_cliente 
+			id_vendedor,	// id_vendedor 
+			"1",			// id_estado_presupuesto 
+			total,			// total 
+			"0",			// fecha 
+			"1",			// id_origen
+			"0",			// aprobado_back 
+			"0",			// aprobado_front
+			"0",			// visto_back 
+			"1",			// visto_front
+			null,			// date_add
+			null,			// date_upd 
+			null,			// eliminado 
+			null,			// user_add 
+			null			// user_upd
 		);
 		
-		String sql_last_insert = "SELECT MAX(id_linea_presupuesto) FROM presupuestos";
-		
-		Cursor last_insert = db.rawQuery(sql_last_insert, null);
+		Cursor last_insert = mPresupuestos.getLastInsert();
 		
 		if(last_insert.getCount() > 0){
 			while(last_insert.moveToNext()){
 				mLineas.setPresupuesto(last_insert.getString(0)); 
 			}
-		}
-		
+		}	
 		
 		
 		Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
@@ -313,6 +313,80 @@ public class Presupuestos_Create extends Activity
 		startActivity(intent);
 	}
 	
+	
+	
+	public void aprobar_presupuesto(View view){
+		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+		
+		TextView txtTotal = (TextView) findViewById(R.id.txt_pTotal);
+		String total = txtTotal.getText().toString();
+		
+		Clientes_model mCliente = new Clientes_model(db);
+		
+		Cursor cursorCliente = mCliente.getID(cNombre);
+		
+		String id_cliente = "1";
+		
+		if(cursorCliente.getCount() > 0){
+			while(cursorCliente.moveToNext()){
+				id_cliente = cursorCliente.getString(0); 
+			}
+		}
+		
+		Vendedores_model mVendedor = new Vendedores_model(db);
+		
+		Cursor cursorVendedor = mVendedor.getRegistros();
+		
+		String id_vendedor = "1";
+		
+		if(cursorVendedor.getCount() > 0){
+			while(cursorVendedor.moveToNext()){
+				id_vendedor = cursorVendedor.getString(1); 
+			}
+		}
+		
+		Presupuestos_model mPresupuestos = new Presupuestos_model(db);
+		Lineas_Presupuestos_model mLineas = new Lineas_Presupuestos_model(db);
+		
+		mPresupuestos.createTable();
+		
+		mPresupuestos.insert(
+			"0", 			// id_back
+			cIdVisita, 		// id_visita 
+			id_cliente,		// id_cliente 
+			id_vendedor,	// id_vendedor 
+			"1",			// id_estado_presupuesto 
+			total,			// total 
+			"0",			// fecha 
+			"1",			// id_origen
+			"0",			// aprobado_back 
+			"1",			// aprobado_front
+			"0",			// visto_back 
+			"1",			// visto_front
+			null,			// date_add
+			null,			// date_upd 
+			null,			// eliminado 
+			null,			// user_add 
+			null			// user_upd
+		);
+		
+		Cursor last_insert = mPresupuestos.getLastInsert();
+		
+		if(last_insert.getCount() > 0){
+			while(last_insert.moveToNext()){
+				mLineas.setPresupuesto(last_insert.getString(0)); 
+			}
+		}	
+		
+		
+		Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
+		
+		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
+		
+		startActivity(intent);
+	}
+	
+		
 	
 	public void inicio(View view){
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);

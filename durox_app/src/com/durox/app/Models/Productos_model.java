@@ -134,5 +134,18 @@ public class Productos_model extends Activity{
 		sql = "DELETE FROM `productos`";
 		db.execSQL(sql);
 	}
+	
+	public Cursor getAutocomplete(String producto){
+		sql = "SELECT "
+				+ "id_back, "
+				+ "nombre, "
+				+ "precio "
+			+ "FROM productos "
+			+ "WHERE nombre = '"+producto+"' ";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
 
 }

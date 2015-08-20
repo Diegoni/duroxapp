@@ -18,7 +18,7 @@ public class Presupuestos_model extends Activity{
 	
 	public void createTable(){
 		sql = "CREATE TABLE IF NOT EXISTS presupuestos("
-				+ "id_linea_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "id_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR, "
 				+ "id_visita VARCHAR, "
 				+ "id_cliente VARCHAR, "
@@ -27,7 +27,10 @@ public class Presupuestos_model extends Activity{
 				+ "total VARCHAR, "
 				+ "fecha VARCHAR, "
 				+ "id_origen VARCHAR, "
-				+ "visto VARCHAR, "
+				+ "aprobado_back VARCHAR, "
+				+ "aprobado_front VARCHAR, "
+				+ "visto_back VARCHAR, "
+				+ "visto_front VARCHAR, "
 				+ "date_add VARCHAR, "
 				+ "date_upd VARCHAR, "
 				+ "eliminado VARCHAR, "
@@ -42,7 +45,7 @@ public class Presupuestos_model extends Activity{
 		createTable();
 		
 		sql = "SELECT "
-				+ " presupuestos.id_linea_presupuesto, "
+				+ " presupuestos.id_presupuesto, "
 				+ " presupuestos.id_visita, "
 				+ " clientes.razon_social, "
 				+ " presupuestos.total VARCHAR, "
@@ -59,7 +62,7 @@ public class Presupuestos_model extends Activity{
 		createTable();
 		
 		sql = "SELECT "
-				+ " presupuestos.id_linea_presupuesto, "
+				+ " presupuestos.id_presupuesto, "
 				+ " presupuestos.id_visita, "
 				+ " presupuestos.total VARCHAR, "
 				+ " clientes.razon_social, "
@@ -68,7 +71,7 @@ public class Presupuestos_model extends Activity{
 				+ " clientes.cuit "
 				+ " FROM presupuestos"
 				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)"
-				+ " WHERE id_linea_presupuesto = '"+id+"'";
+				+ " WHERE id_presupuesto = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -85,7 +88,10 @@ public class Presupuestos_model extends Activity{
 			String total,
 			String fecha,
 			String id_origen,
-			String visto,
+			String aprobado_back,
+			String aprobado_front,
+			String visto_back,
+			String visto_front,
 			String date_add,
 			String date_upd,
 			String eliminado,
@@ -101,7 +107,10 @@ public class Presupuestos_model extends Activity{
 				+ "`total`, "
 				+ "`fecha`, "
 				+ "`id_origen`, "
-				+ "`visto`, "
+				+ "`aprobado_back`, "
+				+ "`aprobado_front`, "
+				+ "`visto_back`, "
+				+ "`visto_front`, "
 				+ "`date_add`, "
 				+ "`date_upd`, "
 				+ "`eliminado`, "
@@ -116,7 +125,10 @@ public class Presupuestos_model extends Activity{
  			    + "'"+total+"', "
  			    + "'"+fecha+"', "
  			    + "'"+id_origen+"', "
- 			    + "'"+visto+"', "
+ 			    + "'"+aprobado_back+"', "
+ 			    + "'"+aprobado_front+"', "
+ 			    + "'"+visto_back+"', "
+ 			    + "'"+visto_front+"', "
  			    + "'"+date_add+"', "
  			    + "'"+date_upd+"', "
  			    + "'"+eliminado+"', "
@@ -131,8 +143,37 @@ public class Presupuestos_model extends Activity{
 	
 	
 	public void truncate(){
-		sql = "DELETE FROM `presupuestos`";
+		sql = "DELETE FROM "
+				+ " `presupuestos` "
+				+ " WHERE "
+				//+ " id_back = '0' AND "
+				+ " aprobado_front = '1' ";
 		db.execSQL(sql);
+	}
+	
+	
+	public Cursor getNuevos(){
+		createTable();
+		
+		sql = "SELECT "
+				+ "	* FROM "
+				+ " `presupuestos` "
+				+ " WHERE id_back = '0' AND "
+				+ " aprobado_front = '1' ";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	
+	public Cursor getLastInsert(){
+		sql = "SELECT MAX(id_presupuesto) FROM presupuestos";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
 	}
 
 }
