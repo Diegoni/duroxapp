@@ -12,14 +12,6 @@
         android:padding="1dp" />
 
     <TextView
-        android:id="@+id/txt_preIdPresupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/presupuesto"
-        android:textColor="#33CC33" />
-
-    <TextView
         android:id="@+id/label_idPresupuesto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,5 +114,54 @@
         android:layout_alignLeft="@+id/txt_preNombre"
         android:text="@string/cuit"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_preIdPresupuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_preIdVisita"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/label_idPresupuesto"
+        android:text="@string/presupuesto"
+        android:textColor="#33CC33" />
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/aprobar" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:text="@string/inicio" />
+
+    <Button
+        android:id="@+id/button3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_toRightOf="@+id/button2"
+        android:text="@string/presupuesto" />
+
+    <ListView
+        android:id="@+id/detallePresupuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_cuit" >
+
+    </ListView>
 
 </RelativeLayout>

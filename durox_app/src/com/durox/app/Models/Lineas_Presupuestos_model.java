@@ -66,7 +66,7 @@ public class Lineas_Presupuestos_model extends Activity{
 				+ " linea_productos_presupuestos.subtotal "
 				+ " FROM linea_productos_presupuestos"
 				+ " INNER JOIN productos ON(linea_productos_presupuestos.id_producto = productos.id_back)"
-				+ " WHERE id_temporario = '"+id+"'";
+				+ " WHERE id_presupuesto = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
 		

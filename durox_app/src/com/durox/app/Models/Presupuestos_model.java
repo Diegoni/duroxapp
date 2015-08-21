@@ -45,7 +45,7 @@ public class Presupuestos_model extends Activity{
 		createTable();
 		
 		sql = "SELECT "
-				+ " presupuestos.id_presupuesto, "
+				+ " presupuestos.id_back, "
 				+ " presupuestos.id_visita, "
 				+ " clientes.razon_social, "
 				+ " presupuestos.total VARCHAR, "
@@ -62,7 +62,7 @@ public class Presupuestos_model extends Activity{
 		createTable();
 		
 		sql = "SELECT "
-				+ " presupuestos.id_presupuesto, "
+				+ " presupuestos.id_back, "
 				+ " presupuestos.id_visita, "
 				+ " presupuestos.total VARCHAR, "
 				+ " clientes.razon_social, "
@@ -71,7 +71,7 @@ public class Presupuestos_model extends Activity{
 				+ " clientes.cuit "
 				+ " FROM presupuestos"
 				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)"
-				+ " WHERE id_presupuesto = '"+id+"'";
+				+ " WHERE presupuestos.id_back = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -144,10 +144,10 @@ public class Presupuestos_model extends Activity{
 	
 	public void truncate(){
 		sql = "DELETE FROM "
-				+ " `presupuestos` "
-				+ " WHERE "
+				+ " `presupuestos` ";
+				//+ " WHERE "
 				//+ " id_back = '0' AND "
-				+ " aprobado_front = '1' ";
+				//+ " aprobado_front = '1' ";
 		db.execSQL(sql);
 	}
 	
