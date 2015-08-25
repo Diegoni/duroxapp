@@ -24,6 +24,7 @@ import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.MenuActivity;
 import com.durox.app.Clientes.Clientes;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Visitas_model;
@@ -42,7 +43,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Visitas_Enviar extends Activity {
+public class Visitas_Enviar extends MenuActivity {
 	
 	private String jsonResult;
 	Clientes_model mCliente;

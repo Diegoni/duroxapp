@@ -4,8 +4,10 @@ import com.example.durox_app.R;
 import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Visitas.Visitas_Main;
 import com.durox.app.Config_durox;
+import com.durox.app.MenuActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,6 +17,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,8 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ShowToast")
-public class Clientes_ItemView extends Activity 
-{
+public class Clientes_ItemView extends MenuActivity {
 	// Declare Variables
 	
 	Button btnvisita;
@@ -91,6 +93,20 @@ public class Clientes_ItemView extends Activity
 				txtdate_upd.setText(c.getString(13));	
     		}
 		}
+		
+		Telefonos_clientes_model mTelefonos = new Telefonos_clientes_model(db);
+		
+		Cursor cTelefonos = mTelefonos.getRegistro(id);
+		
+		Log.e("Resultado  ", ""+cTelefonos.getCount());
+		
+		if(cTelefonos.getCount() > 0){
+			
+		}else{
+			//btnTelefono.setEnabled(false);
+		}
+		
+		
 		
 		// Load the results into the TextViews
 		

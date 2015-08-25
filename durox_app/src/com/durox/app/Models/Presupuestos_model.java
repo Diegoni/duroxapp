@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Presupuestos_model extends Activity{
 	
@@ -48,8 +49,9 @@ public class Presupuestos_model extends Activity{
 				+ " presupuestos.id_back, "
 				+ " presupuestos.id_visita, "
 				+ " clientes.razon_social, "
-				+ " presupuestos.total VARCHAR, "
-				+ " presupuestos.fecha VARCHAR "
+				+ " presupuestos.total, "
+				+ " presupuestos.fecha, "
+				+ " presupuestos.id_presupuesto "
 				+ " FROM presupuestos"
 				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)";
 		
@@ -68,7 +70,9 @@ public class Presupuestos_model extends Activity{
 				+ " clientes.razon_social, "
 				+ " clientes.nombre, "
 				+ " clientes.apellido, "
-				+ " clientes.cuit "
+				+ " clientes.cuit, "
+				+ " clientes.nombre_fantasia, "
+				+ " presupuestos.fecha "
 				+ " FROM presupuestos"
 				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)"
 				+ " WHERE presupuestos.id_back = '"+id+"'";
@@ -76,6 +80,45 @@ public class Presupuestos_model extends Activity{
 		c = db.rawQuery(sql, null);
 		
 		return c;
+	}
+	
+	
+	public Cursor getIDRegistro(String id){
+		createTable();
+		
+		sql = "SELECT "
+				+ " presupuestos.id_back, "
+				+ " presupuestos.id_visita, "
+				+ " presupuestos.total VARCHAR, "
+				+ " clientes.razon_social, "
+				+ " clientes.nombre, "
+				+ " clientes.apellido, "
+				+ " clientes.cuit, "
+				+ " clientes.nombre_fantasia, "
+				+ " presupuestos.fecha "
+				+ " FROM presupuestos"
+				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)"
+				+ " WHERE presupuestos.id_presupuesto = '"+id+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public void aprobar(String id){
+		createTable();
+		
+		sql = "UPDATE "
+				+ "	`presupuestos` "
+			+ " SET "
+				+ " `aprobado_front` = '1' "
+			+ " WHERE "
+				+ " `presupuestos`.`id_presupuesto` = '"+id+"' ";
+		
+		Log.e("Paso ", sql);
+		
+		db.execSQL(sql);
 	}
 	
 	
@@ -143,11 +186,10 @@ public class Presupuestos_model extends Activity{
 	
 	
 	public void truncate(){
-		sql = "DELETE FROM "
-				+ " `presupuestos` ";
-				//+ " WHERE "
-				//+ " id_back = '0' AND "
-				//+ " aprobado_front = '1' ";
+		sql = "DELETE FROM `presupuestos` WHERE aprobado_front = '1' AND visto_front = '1'";
+		db.execSQL(sql);
+		
+		sql = "DELETE FROM `presupuestos` WHERE visto_front = '0'"; 
 		db.execSQL(sql);
 	}
 	

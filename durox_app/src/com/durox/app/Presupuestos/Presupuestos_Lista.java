@@ -82,6 +82,7 @@ public class Presupuestos_Lista extends Activity {
 	String[] direccion;
 	String[] detalle;
 	int[] foto;
+	String[] id_presupuesto;
 	String[] id_back;
 	String[] id_pback;
 	int[] imagen;
@@ -128,10 +129,11 @@ public class Presupuestos_Lista extends Activity {
 		int cantidad_clientes = c.getCount();
 		
 		id_back = new String[cantidad_clientes];
+		id_presupuesto = new String[cantidad_clientes];
 		c_nombre = new String[cantidad_clientes];
 		direccion = new String[cantidad_clientes];
 		foto = new int[cantidad_clientes];
-	    
+		
 		int j = 0;
 				
 		if(c.getCount() > 0)
@@ -140,11 +142,12 @@ public class Presupuestos_Lista extends Activity {
     		{
 				id_back[j] = c.getString(0);
 				c_nombre[j] = c.getString(2);
+				id_presupuesto[j] = c.getString(5);
     			direccion[j] = c.getString(3);
     			foto[j] = R.drawable.presupuesto; 
     		
     			j = j + 1;
-    		}	
+    		}
 			
 			// Locate the ListView in listview_main.xml
     		list = (ListView) findViewById(R.id.lvPresupuestos);
@@ -157,13 +160,14 @@ public class Presupuestos_Lista extends Activity {
     					id_back[i],
     					c_nombre[i],
     					direccion[i], 
-    					foto[i]
+    					foto[i],
+    					id_presupuesto[i]
     			);
     			
     			// Binds all strings into an array
     			arraylist.add(wp);
     		}
-
+    		
     		// Pass results to ListViewAdapter Class
     		adapter = new Presupuestos_ListView(this, arraylist);
     		

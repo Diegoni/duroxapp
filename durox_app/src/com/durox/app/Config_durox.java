@@ -1,11 +1,25 @@
 package com.durox.app;
 
+import com.durox.app.Documentos.Documentos_Main;
+import com.durox.app.Presupuestos.Presupuestos_Main;
+import com.durox.app.Visitas.Visitas_Main;
+import com.example.durox_app.R;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class Config_durox {
 	private String database = "Durox_app";
 	private String ip = "http://192.168.1.207/durox/index.php";
+	boolean actualizando = true;
 	
-	public Config_durox() {}
+	public void onCreate(Bundle savedInstanceState) {
+		 
+	}
 	
 	public String getDatabase() {
 		return this.database;
@@ -18,6 +32,11 @@ public class Config_durox {
 	
 	public String msjOkInsert() {
 		String msj = "El registro se inserto ok";
+		return msj;
+	}
+	
+	public String msjOkUpdate() {
+		String msj = "El registro se modifico ok";
 		return msj;
 	}
 	
@@ -55,8 +74,4 @@ public class Config_durox {
 		String msj = "Bienvenido "+user;
 		return msj;
 	}
-	
-	
-
-
 }

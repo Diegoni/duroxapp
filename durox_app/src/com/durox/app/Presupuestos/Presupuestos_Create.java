@@ -6,6 +6,7 @@ import java.util.Locale;
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
@@ -28,8 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Presupuestos_Create extends Activity 
-{
+public class Presupuestos_Create extends MenuActivity {
 	AutoCompleteTextView auto_producto;
 	EditText etCantidad;
 	EditText etComentario;

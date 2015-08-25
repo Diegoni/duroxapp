@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Visitas_model;
 import com.durox.app.Visitas.Visitas;
@@ -42,8 +43,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Documentos_Main extends Activity 
-{
+public class Documentos_Main extends MenuActivity {
 
 	// Declare Variables
 	ListView list;

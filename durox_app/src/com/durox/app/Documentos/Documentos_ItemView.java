@@ -4,6 +4,7 @@ import com.example.durox_app.R;
 import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Productos_model;
 
@@ -16,8 +17,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Documentos_ItemView extends Activity 
-{
+public class Documentos_ItemView extends MenuActivity {
 	// Declare Variables
 	ImageView imgimagen;
 	

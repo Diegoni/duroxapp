@@ -19,6 +19,7 @@ import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Epocas_model;
 import com.durox.app.Models.Vendedores_model;
@@ -38,7 +39,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class Visitas_Main extends Activity {
+public class Visitas_Main extends MenuActivity {
 	AutoCompleteTextView auto_cliente;
 	AutoCompleteTextView auto_epoca;
 	RatingBar ebValoracion;

@@ -96,7 +96,7 @@ public class Clientes_ListView extends BaseAdapter {
 			public void onClick(View arg0) 
 			{
 				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Clientes_ItemView.class);
+				Intent intent = new Intent(mContext, Clientes_Tabs.class);
 				
 				// Pasamos toda la informacion
 				intent.putExtra("id", (clientes.get(position).getID()));

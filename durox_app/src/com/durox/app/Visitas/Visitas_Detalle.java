@@ -5,6 +5,7 @@ import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Visitas_model;
 
 import android.app.Activity;
@@ -20,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Visitas_Detalle extends Activity {
+public class Visitas_Detalle extends MenuActivity {
 	
 	SQLiteDatabase db;
 	

@@ -1,4 +1,4 @@
-package com.durox.app.Presupuestos;
+package com.durox.app.Clientes;
 
 
 
@@ -9,7 +9,6 @@ import java.util.Locale;
 import com.example.durox_app.R;
 import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
-import com.durox.app.Clientes.*;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,22 +22,22 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 
-public class Presupuestos_ListView extends BaseAdapter {
+public class Clientes_TelefonosList extends BaseAdapter {
 
 	// Declare Variables
 	Context mContext;
 	LayoutInflater inflater;
-	private List<Presupuesto> presupuestos = null;
-	private ArrayList<Presupuesto> arraylist;
+	private List<Clientes> clientes = null;
+	private ArrayList<Clientes> arraylist;
 
-	public Presupuestos_ListView(Context context, List<Presupuesto> presupuestos) 
+	public Clientes_TelefonosList(Context context, List<Clientes> clientes) 
 	{
 		mContext = context;
-		this.presupuestos = presupuestos;
+		this.clientes = clientes;
 		inflater = LayoutInflater.from(mContext);
-		this.arraylist = new ArrayList<Presupuesto>();
+		this.arraylist = new ArrayList<Clientes>();
 		this.arraylist.clear();
-		this.arraylist.addAll(presupuestos);
+		this.arraylist.addAll(clientes);
 	}
 
 	public class ViewHolder 
@@ -51,12 +50,12 @@ public class Presupuestos_ListView extends BaseAdapter {
 	
 	public int getCount() 
 	{
-		return presupuestos.size();
+		return clientes.size();
 	}
 
-	public Presupuesto getItem(int position) 
+	public Clientes getItem(int position) 
 	{
-		return presupuestos.get(position);
+		return clientes.get(position);
 	}
 
 	public long getItemId(int position) 
@@ -86,10 +85,10 @@ public class Presupuestos_ListView extends BaseAdapter {
 		}
 		
 		// Set the results into TextViews
-		holder.nombre.setText(presupuestos.get(position).getNombre());
-		holder.id.setText(presupuestos.get(position).getID());
-		holder.direccion.setText(presupuestos.get(position).getDireccion());
-		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
+		holder.nombre.setText(clientes.get(position).getNombre());
+		holder.id.setText(clientes.get(position).getID());
+		holder.direccion.setText(clientes.get(position).getDireccion());
+		holder.imagen.setImageResource(clientes.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
 		view.setOnClickListener(new OnClickListener() 
@@ -97,14 +96,13 @@ public class Presupuestos_ListView extends BaseAdapter {
 			public void onClick(View arg0) 
 			{
 				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Presupuestos_ItemView.class);
+				Intent intent = new Intent(mContext, Clientes_Tabs.class);
 				
 				// Pasamos toda la informacion
-				intent.putExtra("id", (presupuestos.get(position).getID()));
-				intent.putExtra("nombre", (presupuestos.get(position).getNombre()));
-				intent.putExtra("direccion", (presupuestos.get(position).getDireccion()));
-				intent.putExtra("imagen", (presupuestos.get(position).getImagen()));
-				intent.putExtra("id_presupuesto", (presupuestos.get(position).getIDPresupuesto()));
+				intent.putExtra("id", (clientes.get(position).getID()));
+				intent.putExtra("nombre", (clientes.get(position).getNombre()));
+				intent.putExtra("direccion", (clientes.get(position).getDireccion()));
+				intent.putExtra("imagen", (clientes.get(position).getImagen()));
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
@@ -118,18 +116,18 @@ public class Presupuestos_ListView extends BaseAdapter {
 	public void filter(String charText) 
 	{
 		charText = charText.toLowerCase(Locale.getDefault());
-		presupuestos.clear();
+		clientes.clear();
 		if (charText.length() == 0) 
 		{
-			presupuestos.addAll(arraylist);
+			clientes.addAll(arraylist);
 		} 
 		else 
 		{
-			for (Presupuesto wp : arraylist) 
+			for (Clientes wp : arraylist) 
 			{
 				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
 				{
-					presupuestos.add(wp);
+					clientes.add(wp);
 				}
 			}
 		}
