@@ -55,7 +55,8 @@ public class Clientes_Tabs extends TabActivity {
 		
 		
 		// Blackberry tab
-		Intent intentDireccion = new Intent().setClass(this, Clientes_Main.class);
+		Intent intentDireccion = new Intent().setClass(this, Clientes_Direcciones.class);
+		intentDireccion.putExtra("id", id);
 		TabSpec tabSpecDireccion = tabHost
 			.newTabSpec("@string/direccion")
 			.setIndicator("", ressources.getDrawable(R.drawable.address))

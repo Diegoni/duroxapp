@@ -384,13 +384,5 @@ public class Presupuestos_Create extends MenuActivity {
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
 		
 		startActivity(intent);
-	}
-	
-		
-	
-	public void inicio(View view){
-		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
-		
-		startActivity(intent);
-	}
+	}	
 }

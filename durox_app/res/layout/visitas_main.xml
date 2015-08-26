@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/autoClientes"
-        android:layout_toLeftOf="@+id/btm_lpLimpiar"
+        android:layout_toLeftOf="@+id/btm_lpLimpiar2"
         android:ems="10"
         android:hint="@string/epoca" />
 
@@ -47,7 +47,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/btm_lpLimpiar"
+        android:id="@+id/btm_lpLimpiar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/autoEpocas"

@@ -12,6 +12,7 @@ import com.example.durox_app.R.layout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 
-public class Clientes_MailsList extends BaseAdapter {
+public class Telefonos_ListView extends BaseAdapter {
 
 	// Declare Variables
 	Context mContext;
@@ -30,7 +31,7 @@ public class Clientes_MailsList extends BaseAdapter {
 	private List<Clientes> clientes = null;
 	private ArrayList<Clientes> arraylist;
 
-	public Clientes_MailsList(Context context, List<Clientes> clientes) 
+	public Telefonos_ListView(Context context, List<Clientes> clientes) 
 	{
 		mContext = context;
 		this.clientes = clientes;
@@ -95,6 +96,11 @@ public class Clientes_MailsList extends BaseAdapter {
 		{
 			public void onClick(View arg0) 
 			{
+				
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + clientes.get(position).getDireccion()));
+				mContext.startActivity(intent);
+				
+				/*
 				// Send single item click data to SingleItemView Class
 				Intent intent = new Intent(mContext, Clientes_Tabs.class);
 				
@@ -106,6 +112,7 @@ public class Clientes_MailsList extends BaseAdapter {
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
+				*/
 			}
 		});
 

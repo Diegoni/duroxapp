@@ -22,7 +22,7 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 
-public class Clientes_TelefonosList extends BaseAdapter {
+public class Direcciones_ListView extends BaseAdapter {
 
 	// Declare Variables
 	Context mContext;
@@ -30,7 +30,7 @@ public class Clientes_TelefonosList extends BaseAdapter {
 	private List<Clientes> clientes = null;
 	private ArrayList<Clientes> arraylist;
 
-	public Clientes_TelefonosList(Context context, List<Clientes> clientes) 
+	public Direcciones_ListView(Context context, List<Clientes> clientes) 
 	{
 		mContext = context;
 		this.clientes = clientes;
@@ -95,6 +95,7 @@ public class Clientes_TelefonosList extends BaseAdapter {
 		{
 			public void onClick(View arg0) 
 			{
+				/*
 				// Send single item click data to SingleItemView Class
 				Intent intent = new Intent(mContext, Clientes_Tabs.class);
 				
@@ -106,6 +107,7 @@ public class Clientes_TelefonosList extends BaseAdapter {
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
+				*/
 			}
 		});
 

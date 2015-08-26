@@ -37,7 +37,7 @@ import android.widget.Toast;
 public class Clientes_Mails extends MenuActivity {
 	// Declare Variables
 	ListView list;
-	Clientes_ListView adapter;
+	Mails_ListView adapter;
 	EditText editsearch;
 		
 	String[] c_nombre;
@@ -72,7 +72,7 @@ public class Clientes_Mails extends MenuActivity {
 	
 	
 	public void clientes_lista(){
-		setContentView(R.layout.clientes_listview);
+		setContentView(R.layout.perfil_listview);
  		
 		mMail = new Mails_clientes_model(db);
 		
@@ -97,14 +97,14 @@ public class Clientes_Mails extends MenuActivity {
 			while(c.moveToNext())
     		{
 				id_back[j] = c.getString(1);
-				c_nombre[j] = c.getString(2);
-    			direccion[j] = c.getString(3);
+				c_nombre[j] = c.getString(3);
+    			direccion[j] = c.getString(2);
     			foto[j] = R.drawable.email; 
     		
     			j = j + 1;
     		}	
 			
-			list = (ListView) findViewById(R.id.lvClientes);
+			list = (ListView) findViewById(R.id.lv_Perfiles);
     		arraylist.clear();
 
     		for (int i = 0; i < c_nombre.length; i++) 
@@ -118,7 +118,7 @@ public class Clientes_Mails extends MenuActivity {
     			arraylist.add(wp);
     		}
 
-    		adapter = new Clientes_ListView(this, arraylist);
+    		adapter = new Mails_ListView(this, arraylist);
     		list.setAdapter(adapter);
     		
     		editsearch = (EditText) findViewById(R.id.search);

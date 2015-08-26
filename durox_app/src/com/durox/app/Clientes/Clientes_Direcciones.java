@@ -4,7 +4,9 @@ import com.example.durox_app.R;
 import com.example.durox_app.R.id;
 import com.example.durox_app.R.layout;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
+import com.durox.app.Models.Mails_clientes_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Visitas.Visitas_Main;
 
@@ -33,10 +35,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-public class Clientes_Telefonos extends MenuActivity {
+public class Clientes_Direcciones extends MenuActivity {
 	// Declare Variables
 	ListView list;
-	Telefonos_ListView adapter;
+	Direcciones_ListView adapter;
 	EditText editsearch;
 		
 	String[] c_nombre;
@@ -53,7 +55,7 @@ public class Clientes_Telefonos extends MenuActivity {
 	Cursor c;
 	int j;	
 			
-	Telefonos_clientes_model mTelefono;
+	Direcciones_clientes_model mDirecciones;
 	TextView content;
 			
 	Documentos_model mDocumentos;
@@ -73,14 +75,14 @@ public class Clientes_Telefonos extends MenuActivity {
 	public void clientes_lista(){
 		setContentView(R.layout.perfil_listview);
  		
-		mTelefono = new Telefonos_clientes_model(db);
+		mDirecciones = new Direcciones_clientes_model(db);
 		
 		Intent intent = getIntent();
 		
 		// Traigo los resultados 
 		String id = intent.getStringExtra("id");
     	 	
-		c = mTelefono.getRegistro(id);
+		c = mDirecciones.getRegistro(id);
 		
 		int cantidad_clientes = c.getCount();
 		
@@ -95,10 +97,10 @@ public class Clientes_Telefonos extends MenuActivity {
 		{
 			while(c.moveToNext())
     		{
-				id_back[j] = c.getString(3);
-				c_nombre[j] = c.getString(5);
-    			direccion[j] = c.getString(2);
-    			foto[j] = R.drawable.phonecell; 
+				id_back[j] = c.getString(2);
+				c_nombre[j] = c.getString(7);
+    			direccion[j] = c.getString(1);
+    			foto[j] = R.drawable.address; 
     		
     			j = j + 1;
     		}	
@@ -117,7 +119,7 @@ public class Clientes_Telefonos extends MenuActivity {
     			arraylist.add(wp);
     		}
 
-    		adapter = new Telefonos_ListView(this, arraylist);
+    		adapter = new Direcciones_ListView(this, arraylist);
     		list.setAdapter(adapter);
     		
     		editsearch = (EditText) findViewById(R.id.search);

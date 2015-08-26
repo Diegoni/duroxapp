@@ -204,4 +204,13 @@
         android:text="@string/cliente"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <Button
+        android:id="@+id/btn_GenerarPedido"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btn_preAprobar"
+        android:text="@string/pedido" />
+
 </RelativeLayout>

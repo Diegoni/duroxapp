@@ -26,7 +26,7 @@ public class Documentos_ListView extends BaseAdapter {
 	LayoutInflater inflater;
 	private List<Documentos> documentos = null;
 	private ArrayList<Documentos> arraylist;
-
+	
 	public Documentos_ListView(Context context,
 			List<Documentos> documentos) 
 	{
@@ -90,12 +90,6 @@ public class Documentos_ListView extends BaseAdapter {
 		view.setOnClickListener(new OnClickListener() 
 		{
 			public void onClick(View arg0) {
-				
-				Intent intent = new Intent(mContext, Documentos_Main.class); 
-				intent.putExtra("nombre", (documentos.get(position).getNombre()));
-				mContext.startActivity(intent);
-				
-				/*
 				// Send single item click data to SingleItemView Class
 				//Intent intent = new Intent(mContext, Productos_ItemView.class); // Arreglar esto
 				Intent intent = new Intent(mContext, Documentos_ItemView.class);
@@ -103,13 +97,10 @@ public class Documentos_ListView extends BaseAdapter {
 				// Pasamos todos los datos de producto
 				intent.putExtra("nombre", (documentos.get(position).getNombre()));
 				intent.putExtra("id", (documentos.get(position).getID()));
-				intent.putExtra("detalle", (documentos.get(position).getDetalle()));// esto esta mal
-				intent.putExtra("imagen", (documentos.get(position).getImagen()));
-		
+				intent.putExtra("url", (documentos.get(position).getDetalle()));// esto esta mal
+				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
-				*/
-				
 			}
 		});
 
@@ -137,5 +128,8 @@ public class Documentos_ListView extends BaseAdapter {
 		}
 		notifyDataSetChanged();
 	}
+	
+	
+	
 
 }

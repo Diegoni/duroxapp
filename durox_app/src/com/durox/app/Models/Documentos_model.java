@@ -20,6 +20,7 @@ public class Documentos_model extends Activity{
 		sql = "CREATE TABLE IF NOT EXISTS `documentos`("
 				+ "id_documento INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR,"
+				+ "nombre VARCHAR,"
 				+ "documento VARCHAR,"
 				+ "date_add VARCHAR,"
 				+ "date_upd VARCHAR,"
@@ -35,6 +36,7 @@ public class Documentos_model extends Activity{
 		
 		sql = "SELECT "
 				+ "id_back ,"
+				+ "nombre ,"
 				+ "documento ,"
 				+ "date_add ,"
 				+ "date_upd ,"
@@ -51,6 +53,7 @@ public class Documentos_model extends Activity{
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
 				+ "id_back ,"
+				+ "nombre ,"
 				+ "documento ,"
 				+ "date_add ,"
 				+ "date_upd ,"
@@ -68,6 +71,7 @@ public class Documentos_model extends Activity{
 	
 	public void insert(
 					String id_back,
+					String nombre,
 					String documento,
 					String date_add,
 					String date_upd,
@@ -77,6 +81,7 @@ public class Documentos_model extends Activity{
 			){
 		sql = "INSERT INTO documentos("
 				+"id_back,"
+				+"nombre,"
 				+"documento,"
 				+"date_add,"
 				+"date_upd,"
@@ -85,6 +90,7 @@ public class Documentos_model extends Activity{
 				+"user_upd"
 			+")VALUES("
 				+"'"+id_back+"',"
+				+"'"+nombre+"',"
 				+"'"+documento+"',"
 				+"'"+date_add+"',"
 				+"'"+date_upd+"',"

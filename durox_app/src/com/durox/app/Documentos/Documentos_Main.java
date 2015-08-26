@@ -153,6 +153,7 @@ public class Documentos_Main extends MenuActivity {
 	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 	 			
 	 			String id_back = jsonChildNode.optString("id_documento");
+	 			String nombre = jsonChildNode.optString("nombre");
 				String documento = jsonChildNode.optString("documento");
 				String date_add = jsonChildNode.optString("date_add");
 				String date_upd = jsonChildNode.optString("date_upd");
@@ -162,6 +163,7 @@ public class Documentos_Main extends MenuActivity {
 	 				
 				mDocumentos.insert(
 					id_back,
+					nombre,
 					documento,
 	 				date_add,
 	 				date_upd,

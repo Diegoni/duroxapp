@@ -69,5 +69,9 @@
 	<string name="inicio">"Inicio"</string>
 	
 	<string name="aprobar">"Aprobar"</string>
+	<string name="descargar">"Descargar"</string>
+	<string name="descargando">"Descargando"</string>
+	<string name="descargacompleta">"Descarga Completa"</string>
+	
 	
 </resources>

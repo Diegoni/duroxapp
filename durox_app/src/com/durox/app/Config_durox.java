@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class Config_durox {
 	private String database = "Diego_app";
 	private String ip = "http://192.168.1.207/durox/index.php";
+	private String documentos = "http://192.168.1.207/durox/documentos";
 	boolean actualizando = true;
 	
 	public String getDatabase() {
@@ -25,6 +26,9 @@ public class Config_durox {
 		return this.ip;
 	}
 	
+	public String getDocumentos() {
+		return this.documentos;
+	}	
 	
 	public String msjOkInsert() {
 		String msj = "El registro se inserto ok";
