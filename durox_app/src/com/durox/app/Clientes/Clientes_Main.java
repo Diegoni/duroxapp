@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
@@ -17,10 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
+import com.durox.app.Login;
 import com.durox.app.MenuActivity;
 import com.durox.app.Documentos.Documentos;
 import com.durox.app.Documentos.Documentos_ListView;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
@@ -33,6 +36,7 @@ import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -79,6 +83,7 @@ public class Clientes_Main extends MenuActivity {
 	Cursor cDocumentos;
 		
 	Config_durox config;
+	private ProgressDialog pDialog;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -156,7 +161,7 @@ public class Clientes_Main extends MenuActivity {
     			}
     		});
 		}
- 	}
+	}
 	
 	
 	/*---------------------------------------------------------------------------------
@@ -164,39 +169,103 @@ public class Clientes_Main extends MenuActivity {
 	---------------------------------------------------------------------------------*/    	
 
 	public void actualizar_clientes(View view) {
-		JsonReadTask taskgrupos = new JsonReadTask("grupos");
-		String url = config.getIp()+"/actualizaciones/getGrupos/";
-		taskgrupos.execute(new String[] { url });
-		
-		JsonReadTask taskiva = new JsonReadTask("iva");
-		url = config.getIp()+"/actualizaciones/getIva/";
-		taskiva.execute(new String[] { url });
-		
-		JsonReadTask tasktipos= new JsonReadTask("tipos");
-		url = config.getIp()+"/actualizaciones/getTipos/";
-		tasktipos.execute(new String[] { url });
-		
-		JsonReadTask tasktelefonos= new JsonReadTask("telefonos");
-		url = config.getIp()+"/actualizaciones/getTelefonos/";
-		tasktelefonos.execute(new String[] { url });
-		
-		JsonReadTask taskSintelefonos= new JsonReadTask("sin_telefonos");
-		url = config.getIp()+"/actualizaciones/getSinTelefonosClientes/";
-		taskSintelefonos.execute(new String[] { url });
-		
-		JsonReadTask taskmails= new JsonReadTask("mails");
-		url = config.getIp()+"/actualizaciones/getMails/";
-		taskmails.execute(new String[] { url });
-		
-		JsonReadTask taskSinmails= new JsonReadTask("sin_mails");
-		url = config.getIp()+"/actualizaciones/getSinMailsClientes/";
-		taskSinmails.execute(new String[] { url });
-		
-		JsonReadTask taskclientes = new JsonReadTask("clientes");
-		url = config.getIp()+"/actualizaciones/getClientes/";
-		taskclientes.execute(new String[] { url });
+		new asyncciente().execute();
 	}
-
+	
+	
+	class asyncciente extends AsyncTask< String, String, String > {
+   	 
+    	String user,pass;
+        protected void onPreExecute() {
+        	//para el progress dialog
+            pDialog = new ProgressDialog(Clientes_Main.this);
+            pDialog.setMessage("Actualizando....");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+ 
+		protected String doInBackground(String... params) {
+			String url;
+			JsonReadTask taskgrupos = new JsonReadTask("grupos");
+			url = config.getIp()+"/actualizaciones/getGrupos/";
+			taskgrupos.execute(new String[] { url });
+			
+			JsonReadTask taskiva = new JsonReadTask("iva");
+			url = config.getIp()+"/actualizaciones/getIva/";
+			taskiva.execute(new String[] { url });
+			
+			JsonReadTask tasktipos= new JsonReadTask("tipos");
+			url = config.getIp()+"/actualizaciones/getTipos/";
+			tasktipos.execute(new String[] { url });
+				
+			JsonReadTask taskclientes = new JsonReadTask("clientes");
+			url = config.getIp()+"/actualizaciones/getClientes/";
+			taskclientes.execute(new String[] { url });
+			
+			return "ok";
+        }
+       
+        protected void onPostExecute(String result) {
+        	pDialog.dismiss();
+        	clientes_lista();
+        }
+	}
+	
+	
+	public void actualizar_perfiles(View view) {
+		new asyncperfil().execute();
+	}
+	
+	
+	class asyncperfil extends AsyncTask< String, String, String > {
+	   	 
+    	String user,pass;
+        protected void onPreExecute() {
+        	//para el progress dialog
+            pDialog = new ProgressDialog(Clientes_Main.this);
+            pDialog.setMessage("Actualizando....");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+ 
+		protected String doInBackground(String... params) {
+			String url;
+			 
+			JsonReadTask tasktelefonos= new JsonReadTask("telefonos");
+			url = config.getIp()+"/actualizaciones/getTelefonos/";
+			tasktelefonos.execute(new String[] { url });
+				
+			JsonReadTask taskSintelefonos= new JsonReadTask("sin_telefonos");
+			url = config.getIp()+"/actualizaciones/getSinTelefonosClientes/";
+			taskSintelefonos.execute(new String[] { url });
+				
+			JsonReadTask taskmails= new JsonReadTask("mails");
+			url = config.getIp()+"/actualizaciones/getMails/";
+			taskmails.execute(new String[] { url });
+				
+			JsonReadTask taskSinmails= new JsonReadTask("sin_mails");
+			url = config.getIp()+"/actualizaciones/getSinMailsClientes/";
+			taskSinmails.execute(new String[] { url });
+				
+			JsonReadTask taskdirecciones= new JsonReadTask("direcciones");
+			url = config.getIp()+"/actualizaciones/getDirecciones/";
+			taskdirecciones.execute(new String[] { url });
+				
+			JsonReadTask taskSindirecciones= new JsonReadTask("sin_direcciones");
+			url = config.getIp()+"/actualizaciones/getSinDireccionesClientes/";
+			taskSindirecciones.execute(new String[] { url });
+			
+			return "ok";
+        }
+       
+        protected void onPostExecute(String result) {
+        	pDialog.dismiss();
+        	clientes_lista();
+        }
+	}
+	
 	
 	/*---------------------------------------------------------------------------------
 		Clases Para Leer el Json y actualizar tablas
@@ -263,6 +332,10 @@ public class Clientes_Main extends MenuActivity {
 				CargarMails();	
 			}else if(carga == "sin_mails"){
 				CargarSinMails();
+			}else if(carga == "direcciones"){
+				CargarDirecciones();	
+			}else if(carga == "sin_direcciones"){
+				CargarSinDirecciones();	
 			}else if(carga == "iva"){
 				CargarIva();
 			}
@@ -276,7 +349,7 @@ public class Clientes_Main extends MenuActivity {
 
 	 public void CargarClientes() {
 		String subjet = "clientes";
-		Clientes_model mModel = new Clientes_model(db);  
+		Clientes_model mModel = new Clientes_model(db);
 		 
 	 	try {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
@@ -286,8 +359,6 @@ public class Clientes_Main extends MenuActivity {
 	 			
 	 		if(jsonMainNode.length() > 0){
 	 			mModel.truncate();
-	 			Toast.makeText(getApplicationContext(), 
-	 		 		config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	 		}
 	 			  
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -331,12 +402,11 @@ public class Clientes_Main extends MenuActivity {
 	 		}
 	 		
 	 		Toast.makeText(getApplicationContext(), 
-	  	 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	 	} catch (JSONException e) {
+		  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		} catch (JSONException e) {
 	 		Toast.makeText(getApplicationContext(), 
 	 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 	 	}
-	 	clientes_lista();
 	}
 	 
 	 
@@ -353,8 +423,6 @@ public class Clientes_Main extends MenuActivity {
 	  			
 	  		if(jsonMainNode.length() > 0){
 	  			mModel.truncate();
-	  			Toast.makeText(getApplicationContext(), 
-	  			 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	  		}
 	  		
 	  		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -401,9 +469,6 @@ public class Clientes_Main extends MenuActivity {
 	  		
 	  		if(jsonMainNode.length() > 0){
 	  			mModel.truncate();
-	  			
-	  			Toast.makeText(getApplicationContext(), 
-	  		 		config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	  		}
 	  		  
 	  		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -450,9 +515,7 @@ public class Clientes_Main extends MenuActivity {
 		  			
 		  	if(jsonMainNode.length() > 0){
 		  		mModel.truncate();
-		  		Toast.makeText(getApplicationContext(), 
-		  		 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
-		  	}
+		   	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
 		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
@@ -499,8 +562,6 @@ public class Clientes_Main extends MenuActivity {
 		  			
 		  	if(jsonMainNode.length() > 0){
 		  		mModel.truncate();
-		  		Toast.makeText(getApplicationContext(), 
-		  		 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -554,8 +615,6 @@ public class Clientes_Main extends MenuActivity {
 		  			
 		  	if(jsonMainNode.length() > 0){
 		  		mModel.truncateSin();
-		  		Toast.makeText(getApplicationContext(), 
-		  		 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -605,8 +664,6 @@ public class Clientes_Main extends MenuActivity {
 		  			
 		  	if(jsonMainNode.length() > 0){
 		  		mModel.truncate();
-		  		Toast.makeText(getApplicationContext(), 
-		  		 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -646,7 +703,7 @@ public class Clientes_Main extends MenuActivity {
 	
 	public void CargarSinMails() {
 		String subjet = "sin_clientes_mails";
-		Telefonos_clientes_model mModel = new Telefonos_clientes_model(db);
+		Mails_clientes_model mModel = new Mails_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
@@ -656,8 +713,6 @@ public class Clientes_Main extends MenuActivity {
 		  			
 		  	if(jsonMainNode.length() > 0){
 		  		mModel.truncateSin();
-		  		Toast.makeText(getApplicationContext(), 
-		  		 	config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -665,7 +720,7 @@ public class Clientes_Main extends MenuActivity {
 		  			  				
 		  		String id_back = jsonChildNode.optString("id_sin_cliente_mail");
 		  		String id_cliente = jsonChildNode.optString("id_cliente");
-		  		String id_telefono = jsonChildNode.optString("id_mail");
+		  		String id_mail = jsonChildNode.optString("id_mail");
 		  		String date_add = jsonChildNode.optString("date_add");
 		  		String date_upd = jsonChildNode.optString("date_upd");
 		  		String eliminado = jsonChildNode.optString("eliminado");
@@ -675,7 +730,112 @@ public class Clientes_Main extends MenuActivity {
 		  		mModel.insertSin(
 		  			id_back, 
 		  			id_cliente, 
-		  			id_telefono, 
+		  			id_mail, 
+		  			date_add, 
+		  			date_upd, 
+		  			eliminado, 
+		  			user_add, 
+		  			user_upd
+		  		);
+		  		
+		  	}
+		  			
+		  	Toast.makeText(getApplicationContext(), 
+		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		  			
+		} catch (JSONException e) {
+		 	Toast.makeText(getApplicationContext(), 
+		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	
+	public void CargarDirecciones() {
+		String subjet = "direcciones";
+		Direcciones_clientes_model mModel = new Direcciones_clientes_model(db);
+		 
+		try {
+		 	JSONObject jsonResponse = new JSONObject(jsonResult);
+		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			
+			mModel.createTable();
+		  			
+		  	if(jsonMainNode.length() > 0){
+		  		mModel.truncate();
+		  	}
+		  			  		
+		  	for (int i = 0; i < jsonMainNode.length(); i++) {
+		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			  				
+		  		String id_back = jsonChildNode.optString("id_direccion");
+		  		String id_tipo = jsonChildNode.optString("id_tipo");
+		  		String id_departamento = jsonChildNode.optString("id_departamento");
+		  		String id_provincia = jsonChildNode.optString("id_provincia");
+		  		String id_pais = jsonChildNode.optString("id_pais");
+		  		String direccion = jsonChildNode.optString("direccion");
+		  		String cod_postal = jsonChildNode.optString("cod_postal");
+		  		String date_add = jsonChildNode.optString("date_add");
+		  		String date_upd = jsonChildNode.optString("date_upd");
+		  		String eliminado = jsonChildNode.optString("eliminado");
+		  		String user_add = jsonChildNode.optString("user_add");
+		  		String user_upd = jsonChildNode.optString("user_upd");
+		  		
+		  		mModel.insert( 
+		  				id_back, 
+		  				id_tipo,
+		  				direccion,
+		  				id_departamento, 
+		  				id_provincia, 
+		  				id_pais, 
+		  			 	cod_postal, 
+		  				date_add, 
+		  				date_upd, 
+		  				eliminado, 
+		  				user_add, 
+		  				user_upd);
+		  		
+		  	}
+		  			
+		  	Toast.makeText(getApplicationContext(), 
+		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		  			
+		} catch (JSONException e) {
+		 	Toast.makeText(getApplicationContext(), 
+		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	
+	public void CargarSinDirecciones() {
+		String subjet = "sin_clientes_direcciones";
+		Direcciones_clientes_model mModel = new Direcciones_clientes_model(db);
+		 
+		try {
+		 	JSONObject jsonResponse = new JSONObject(jsonResult);
+		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			
+			mModel.createTable();
+		  			
+		  	if(jsonMainNode.length() > 0){
+		  		mModel.truncateSin();
+		  	}
+		  		
+		  	for (int i = 0; i < jsonMainNode.length(); i++) {
+		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			  				
+		  		String id_back = jsonChildNode.optString("id_sin_cliente_direccion");
+		  		String id_cliente = jsonChildNode.optString("id_cliente");
+		  		String id_direccion = jsonChildNode.optString("id_direccion");
+		  		String date_add = jsonChildNode.optString("date_add");
+		  		String date_upd = jsonChildNode.optString("date_upd");
+		  		String eliminado = jsonChildNode.optString("eliminado");
+		  		String user_add = jsonChildNode.optString("user_add");
+		  		String user_upd = jsonChildNode.optString("user_upd");
+		  		
+		  		mModel.insertSin(
+		  			id_back, 
+		  			id_cliente, 
+		  			id_direccion, 
 		  			date_add, 
 		  			date_upd, 
 		  			eliminado, 

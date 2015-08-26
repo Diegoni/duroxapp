@@ -13,13 +13,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class Config_durox {
-	private String database = "Durox_app";
+	private String database = "Diego_app";
 	private String ip = "http://192.168.1.207/durox/index.php";
 	boolean actualizando = true;
-	
-	public void onCreate(Bundle savedInstanceState) {
-		 
-	}
 	
 	public String getDatabase() {
 		return this.database;
