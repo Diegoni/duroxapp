@@ -26,14 +26,15 @@
             </intent-filter>
         </activity>
         <!-- 
-        <activity android:name="com.durox.app.MainActivity" >
+        <activity android:name="com.durox.app.Login" >
+        MainActivity
         </activity>
          -->
         <activity android:name="com.durox.app.HiScreen" >
         </activity>
-        <activity android:name="com.durox.app.MainActivity" >
-        </activity>
         <activity android:name="com.durox.app.Config_vista_durox" >
+        </activity>
+        <activity android:name="com.durox.app.MainActivity" >
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Main" >
         </activity>

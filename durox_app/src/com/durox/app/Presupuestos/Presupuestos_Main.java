@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
+import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
 import com.durox.app.Visitas.Visitas;
 import com.durox.app.Visitas.Visitas_ListView;
@@ -58,6 +59,8 @@ public class Presupuestos_Main extends MenuActivity {
 	
 	Visitas_model mVisitas;
 	Cursor cVisitas;
+	Vendedores_model mVendedor;
+	String id_vendedor;
 	private String jsonResult;
 	
 	Config_durox config;
@@ -68,66 +71,14 @@ public class Presupuestos_Main extends MenuActivity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.visitas_listview);
-		
 		config = new Config_durox();
+		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+		
+		mVendedor = new Vendedores_model(db);
+		id_vendedor = mVendedor.getID();
 		
 		visitas_lista();
 	}
-	
-	
-    // Async Task to access the web
-	private class JsonReadTask extends AsyncTask<String, Void, String> {
-		
-		protected String doInBackground(String... params) {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(params[0]);
-			
-			try { 				
-				HttpResponse response = httpclient.execute(httppost);
-				jsonResult = inputStreamToString(
-				response.getEntity().getContent()).toString();
-			} catch (ClientProtocolException e) {
-				Log.e("Error ClientProtocolException", e.toString());
-				return "ClientProtocolException "+e.toString();
-			} catch (IOException e) {
-				Log.e("Error IOException", e.toString());
-				return "IOException "+e.toString();
-			}
-			
-			return "ok";
-		}
- 
-		private StringBuilder inputStreamToString(InputStream is) {
-			String rLine = "";
-			StringBuilder answer = new StringBuilder();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	 
-			try {
-				while ((rLine = rd.readLine()) != null) {
-					answer.append(rLine);
-				}
-			} catch (IOException e) {
-				// e.printStackTrace();
-				Toast.makeText(getApplicationContext(), 
-				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
-			}
-			
-			return answer;
-		}
- 
-		protected void onPostExecute(String result) {
-			pDialog.dismiss();
-			
-			if(result.equals("ok")){
-				CargarVisitas();
-			}else{
-				Toast.makeText(getApplicationContext(), 
-						result, Toast.LENGTH_LONG).show();
-			}
-		}
-	}// end async task
-	
-	
 	
 	
 	public void actualizar_visitas(View view) {
@@ -161,13 +112,70 @@ public class Presupuestos_Main extends MenuActivity {
 		}
 		
 		
-		JsonReadTask taskclientes = new JsonReadTask();
+		JsonReadTask taskVisitas = new JsonReadTask();
 		String url = config.getIp(db)+"/actualizaciones/getVisitas/";
-		taskclientes.execute(new String[] { url });
+		taskVisitas.execute(new String[] { url });
 		
 		
 		visitas_lista();
 	}
+	
+	
+	private class JsonReadTask extends AsyncTask<String, Void, String> {
+			
+		protected String doInBackground(String... params) {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(params[0]);
+			
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+				
+			try { 		
+				httppost.setEntity(new UrlEncodedFormEntity(pairs));
+ 				
+	 			HttpResponse response = httpclient.execute(httppost);
+				jsonResult = inputStreamToString(
+				response.getEntity().getContent()).toString();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
+			} catch (IOException e) {
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
+			}
+				
+			return "ok";
+		}
+	 
+		private StringBuilder inputStreamToString(InputStream is) {
+			String rLine = "";
+			StringBuilder answer = new StringBuilder();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	 
+			try {
+				while ((rLine = rd.readLine()) != null) {
+					answer.append(rLine);
+				}
+			} catch (IOException e) {
+				// e.printStackTrace();
+				Toast.makeText(getApplicationContext(), 
+				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
+			}
+				
+			return answer;
+		}
+	 
+		protected void onPostExecute(String result) {
+			pDialog.dismiss();
+				
+			if(result.equals("ok")){
+				CargarVisitas();
+			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
+			}
+		}
+	}// end async task
 	
 	
 	
@@ -199,8 +207,7 @@ public class Presupuestos_Main extends MenuActivity {
 		protected String doInBackground(String... params) {
 	 		HttpClient httpclient = new DefaultHttpClient();
 	 		HttpPost httppost = new HttpPost(params[0]);
-	 		
-	 		
+	 			 		
 	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
  			pairs.add(new BasicNameValuePair("id_cliente", id_cliente));
@@ -294,8 +301,6 @@ public class Presupuestos_Main extends MenuActivity {
 	
 	
 	public void visitas_lista(){
-		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
-			
 		mVisitas = new Visitas_model(db);
 			
 		cVisitas = mVisitas.getVisitas();

@@ -5,14 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +35,7 @@ import com.durox.app.Models.Mails_clientes_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
+import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
@@ -78,9 +83,11 @@ public class Clientes_Main extends MenuActivity {
 	Clientes_model mCliente;
 	TextView content;
 		
-		
 	Documentos_model mDocumentos;
 	Cursor cDocumentos;
+	
+	Vendedores_model mVendedor;
+	String id_vendedor;
 		
 	Config_durox config;
 	private ProgressDialog pDialog;
@@ -89,6 +96,9 @@ public class Clientes_Main extends MenuActivity {
 		super.onCreate(savedInstanceState);
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+        
+        mVendedor = new Vendedores_model(db);
+        id_vendedor = mVendedor.getID();
 		
 		clientes_lista();
 	}
@@ -281,7 +291,12 @@ public class Clientes_Main extends MenuActivity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(params[0]);
 				
-			try { 				
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+				
+			try { 		
+				httppost.setEntity(new UrlEncodedFormEntity(pairs));
+				
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();

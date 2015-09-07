@@ -12,10 +12,12 @@ public class Vendedores_model extends Activity{
 	SQLiteDatabase db;
 	String sql;
 	Cursor c;
+	String id;
 	
 	public Vendedores_model(SQLiteDatabase db) {
 		this.db = db;
 	}
+	
 	
 	public void createTable(){
 		sql = "CREATE TABLE IF NOT EXISTS `vendedores`("
@@ -28,6 +30,7 @@ public class Vendedores_model extends Activity{
 		db.execSQL(sql);
 	}
 	
+	
 	public Cursor getRegistros(){
 		createTable();
 		
@@ -39,7 +42,7 @@ public class Vendedores_model extends Activity{
 		
 		return c;
 	}
-	
+		
 	
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
@@ -73,9 +76,29 @@ public class Vendedores_model extends Activity{
  		db.execSQL(sql);
  	}
 	
+	
 	public void truncate(){
 		sql = "DELETE FROM `vendedores`";
 		db.execSQL(sql);
+	}
+	
+	
+	public String getID(){
+		sql = "SELECT "
+				+ " id_back "
+				+ " FROM `vendedores`";
+		
+		c = db.rawQuery(sql, null);
+		
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id = c.getString(0);
+    		}
+		}else{
+			id = "0";
+		}
+		
+		return id;
 	}
 
 }

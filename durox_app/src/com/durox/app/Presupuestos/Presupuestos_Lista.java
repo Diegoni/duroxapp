@@ -42,6 +42,7 @@ import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
+import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos;
@@ -99,34 +100,35 @@ public class Presupuestos_Lista extends Activity {
 	private ListView listView;
 	
 	TextView content;
-	
 	Config_durox config;
 	
 	Presupuestos_model mPresupuesto;
 	Lineas_Presupuestos_model mLineas;
 	ProgressDialog pDialog;
- 
+	Vendedores_model mVendedor;
+	String id_vendedor;
    
+	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
         config = new Config_durox();
-        
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+        
+        mVendedor = new Vendedores_model(db);
+        id_vendedor = mVendedor.getID();        
         
         presupuestos_lista();
    }
     
     
-    public void presupuestos_lista(){
+   public void presupuestos_lista(){
  		setContentView(R.layout.presupuestos_listview);
- 		
  		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
     	
     	Presupuestos_model mPresupuestos = new Presupuestos_model(db);
- 		
-		c = mPresupuestos.getRegistros();
+ 		c = mPresupuestos.getRegistros();
 		
 		int cantidad_clientes = c.getCount();
 		
@@ -138,10 +140,8 @@ public class Presupuestos_Lista extends Activity {
 		
 		int j = 0;
 				
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
 				id_back[j] = c.getString(0);
 				c_nombre[j] = c.getString(2);
 				id_presupuesto[j] = c.getString(5);
@@ -151,13 +151,10 @@ public class Presupuestos_Lista extends Activity {
     			j = j + 1;
     		}
 			
-			// Locate the ListView in listview_main.xml
-    		list = (ListView) findViewById(R.id.lvPresupuestos);
+			list = (ListView) findViewById(R.id.lvPresupuestos);
     		arraylist.clear();
 
-    		for (int i = 0; i < c_nombre.length; i++) 
-    		{
-    			//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
+    		for (int i = 0; i < c_nombre.length; i++) {
     			Presupuesto wp = new Presupuesto(
     					id_back[i],
     					c_nombre[i],
@@ -166,60 +163,46 @@ public class Presupuestos_Lista extends Activity {
     					id_presupuesto[i]
     			);
     			
-    			// Binds all strings into an array
     			arraylist.add(wp);
     		}
     		
-    		// Pass results to ListViewAdapter Class
     		adapter = new Presupuestos_ListView(this, arraylist);
-    		
-    		// Binds the Adapter to the ListView
     		list.setAdapter(adapter);
-    		
-    		// Locate the EditText in listview_main.xml
     		editsearch = (EditText) findViewById(R.id.search);
-
-    		// Capture Text in EditText
+    		
     		editsearch.addTextChangedListener(new TextWatcher() {
-
-    			@Override
-    			public void afterTextChanged(Editable arg0) 
-    			{
-    				String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-    				adapter.filter(text);
-    			}
-
-    			@Override
-    			public void beforeTextChanged(
-    					CharSequence arg0, 
-    					int arg1,
-    					int arg2, 
-    					int arg3) {
-    			}
-
-    			@Override
-    			public void onTextChanged(
-    					CharSequence arg0, 
-    					int arg1, 
-    					int arg2,
-    					int arg3) {
-    			}
+	   			public void afterTextChanged(Editable arg0) {
+	   				String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
+	    			adapter.filter(text);
+	    		}
+	
+	    		public void beforeTextChanged(
+	    			CharSequence arg0, 
+	    			int arg1,
+	    			int arg2, 
+	    			int arg3) {
+	    			}
+	
+	    			@Override
+	    			public void onTextChanged(
+	    					CharSequence arg0, 
+	    					int arg1, 
+	    					int arg2,
+	    					int arg3) {
+	    			}
     		});
 		}
  	}	
     
     
     public void actualizar_presupuestos(View view) {
-		// Exportamos los presupuestos 
-    	
-    	pDialog = new ProgressDialog(this);
+		pDialog = new ProgressDialog(this);
         pDialog.setMessage("Actualizando....");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
         pDialog.show();
     	
     	mPresupuesto = new Presupuestos_model(db);
-		
 		Cursor c = mPresupuesto.getNuevos();
 		
 		if(c.getCount() > 0) {
@@ -261,7 +244,6 @@ public class Presupuestos_Lista extends Activity {
 		
 		if(cLineas.getCount() > 0) {
 			while(cLineas.moveToNext()){
-				
 				JsonSetTaskLineas task = new JsonSetTaskLineas(
 					cLineas.getString(2), 	//2+ "id_temporario VARCHAR, "		
 					cLineas.getString(4), 	//4+ "id_producto VARCHAR, "
@@ -297,7 +279,11 @@ public class Presupuestos_Lista extends Activity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(params[0]);
 			
-			try { 				
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+				
+			try { 		
+				httppost.setEntity(new UrlEncodedFormEntity(pairs));		
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();
@@ -343,50 +329,52 @@ public class Presupuestos_Lista extends Activity {
 	}
 	
 	
-	 // Clase para leer presupuestos
-	 private class JsonReadTaskLineas extends AsyncTask<String, Void, String> {
+	//Clase para leer lineas de presupuestos
+	private class JsonReadTaskLineas extends AsyncTask<String, Void, String> {
 			
-			protected String doInBackground(String... params) {
-				HttpClient httpclient = new DefaultHttpClient();
-				HttpPost httppost = new HttpPost(params[0]);
+		protected String doInBackground(String... params) {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(params[0]);
 				
-				try {
-					HttpResponse response = httpclient.execute(httppost);
-					jsonResult = inputStreamToString(
-					response.getEntity().getContent()).toString();
-				}
-		 
-				catch (ClientProtocolException e) {
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+					
+			try { 		
+				httppost.setEntity(new UrlEncodedFormEntity(pairs));
+				HttpResponse response = httpclient.execute(httppost);
+				jsonResult = inputStreamToString(
+				response.getEntity().getContent()).toString();
+			} catch (ClientProtocolException e) {
 					e.printStackTrace();
-				} catch (IOException e) {
+			} catch (IOException e) {
 					e.printStackTrace();
-				}
+			}
 				
-				return null;
-			}
-	 
-			private StringBuilder inputStreamToString(InputStream is) {
-				String rLine = "";
-				StringBuilder answer = new StringBuilder();
-				BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		 
-				try {
-					while ((rLine = rd.readLine()) != null) {
-						answer.append(rLine);
-					}
-				} catch (IOException e) {
-					// e.printStackTrace();
-					Toast.makeText(getApplicationContext(), 
-					config.msjError(e.toString()), Toast.LENGTH_LONG).show();
-				}
-				
-				return answer;
-			}
-	 
-			protected void onPostExecute(String result) {
-				CargarLineasPresupuestos();
-			}
+			return null;
 		}
+	 
+		private StringBuilder inputStreamToString(InputStream is) {
+			String rLine = "";
+			StringBuilder answer = new StringBuilder();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		 
+			try {
+				while ((rLine = rd.readLine()) != null) {
+					answer.append(rLine);
+				}
+			} catch (IOException e) {
+				// e.printStackTrace();
+			Toast.makeText(getApplicationContext(), 
+				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
+			}
+				
+			return answer;
+		}
+	 
+		protected void onPostExecute(String result) {
+			CargarLineasPresupuestos();
+		}
+	}
 	
 	
 	
@@ -432,7 +420,7 @@ public class Presupuestos_Lista extends Activity {
  		}
  		
 	
-		protected String doInBackground(String... params) {
+ 		protected String doInBackground(String... params) {
 	 		HttpClient httpclient = new DefaultHttpClient();
 	 		HttpPost httppost = new HttpPost(params[0]);
 	 		
@@ -508,8 +496,7 @@ public class Presupuestos_Lista extends Activity {
 		protected String doInBackground(String... params) {
 	 		HttpClient httpclient = new DefaultHttpClient();
 	 		HttpPost httppost = new HttpPost(params[0]);
-	 		
-	 		
+	 			 		
 	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 	 		pairs.add(new BasicNameValuePair("id_temporario", id_temporario));		
 	 		pairs.add(new BasicNameValuePair("id_producto", id_producto));
@@ -551,8 +538,6 @@ public class Presupuestos_Lista extends Activity {
 	 			
 			if(jsonMainNode.length() > 0){
 				mPresupuesto.truncate();
-	 			Toast.makeText(getApplicationContext(), 
-	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	 		}
 	 			  
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -618,8 +603,6 @@ public class Presupuestos_Lista extends Activity {
 		 			
 				if(jsonMainNode.length() > 0){
 					mLineas.delete();
-		 			Toast.makeText(getApplicationContext(), 
-		 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 		 		}
 		 			  
 		 		for (int i = 0; i < jsonMainNode.length(); i++) {
