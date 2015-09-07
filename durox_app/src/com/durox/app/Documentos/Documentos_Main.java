@@ -31,12 +31,14 @@ import com.durox.app.Visitas.Visitas_ListView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -60,6 +62,7 @@ public class Documentos_Main extends MenuActivity {
 	Cursor cDocumentos;
 	private String jsonResult;
 	Config_durox config;
+	ProgressDialog pDialog;
 	
 	
 	public void onCreate(Bundle savedInstanceState) 
@@ -86,19 +89,19 @@ public class Documentos_Main extends MenuActivity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(params[0]);
 			
-			try {
+			try { 				
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();
-			}
-	 
-			catch (ClientProtocolException e) {
-				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
 			}
 			
-			return null;
+			return "ok";
 		}
  
 		private StringBuilder inputStreamToString(InputStream is) {
@@ -120,16 +123,27 @@ public class Documentos_Main extends MenuActivity {
 		}
  
 		protected void onPostExecute(String result) {
-			CargarDocumentos();
+			pDialog.dismiss();
+			
+			if(result.equals("ok")){
+				CargarDocumentos();
+			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
+			}
 		}
 	}// end async task
 	
 	
-	
-	
 	public void actualizar_documentos(View view) {
+		pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Actualizando....");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+        
 		JsonReadTask taskclientes = new JsonReadTask();
-		String url = config.getIp()+"/actualizaciones/getDocumentos/";
+		String url = config.getIp(db)+"/actualizaciones/getDocumentos/";
 		taskclientes.execute(new String[] { url });
 	}
 	

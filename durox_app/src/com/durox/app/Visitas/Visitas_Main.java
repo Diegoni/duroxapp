@@ -32,9 +32,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -43,7 +46,7 @@ public class Visitas_Main extends MenuActivity {
 	AutoCompleteTextView auto_cliente;
 	AutoCompleteTextView auto_epoca;
 	RatingBar ebValoracion;
-	EditText etfecha;
+	DatePicker etfecha;
 	EditText etComentario;
 	String[] c_nombre;
 	String[] epocas;
@@ -74,7 +77,7 @@ public class Visitas_Main extends MenuActivity {
 	public void cargar_vista(){
 		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
 		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
-		etfecha = (EditText) findViewById(R.id.etFecha);
+		etfecha = (DatePicker) findViewById(R.id.dp_Fecha);
 		etComentario = (EditText) findViewById(R.id.txtcomentario);
 		ebValoracion = (RatingBar) findViewById(R.id.ebValoracion);
 		
@@ -140,29 +143,20 @@ public class Visitas_Main extends MenuActivity {
 		
 	}
 	
-	public void agregar_comentarios(View view) {
-		String nombre = auto_cliente.getText().toString();
-		String epoca = auto_epoca.getText().toString();
-		String fecha = etfecha.getText().toString();
-		float valoracion = ebValoracion.getRating();
-		
-		Intent intent = new Intent(Visitas_Main.this, Visitas_Detalle.class);
-		
-		intent.putExtra("nombre", nombre);
-		intent.putExtra("epoca", epoca);
-		intent.putExtra("fecha", fecha);
-		intent.putExtra("valoracion", valoracion);
-		
-		startActivity(intent);
-	}
-	
 	
 	public void guardar(View view){
 		String razon_social = auto_cliente.getText().toString();
 		String epoca = auto_epoca.getText().toString();
-		String fecha = etfecha.getText().toString();
+		
+		int mes = etfecha.getMonth();
+		mes = mes + 1;
+		String fecha = etfecha.getYear()+"/"+mes+"/"+etfecha.getDayOfMonth();
 		String comentario = etComentario.getText().toString();
 		float valoracion2 = ebValoracion.getRating();
+		
+		Log.e("Fecha ","dia "+etfecha.getDayOfMonth());
+		Log.e("Fecha ","mes "+etfecha.getMonth());
+		Log.e("Fecha ","año "+etfecha.getYear());
 		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
@@ -241,7 +235,7 @@ public class Visitas_Main extends MenuActivity {
 	
 	public void actualizar_epocas(View view) {
  		JsonReadTask taskclientes = new JsonReadTask();
- 		String url = config.getIp()+"/actualizaciones/getEpocas/";
+ 		String url = config.getIp(db)+"/actualizaciones/getEpocas/";
  		taskclientes.execute(new String[] { url });
  	}
 	
@@ -253,16 +247,18 @@ public class Visitas_Main extends MenuActivity {
  			HttpPost httppost = new HttpPost(params[0]);
  				
  			try { 				
- 				HttpResponse response = httpclient.execute(httppost);
- 				jsonResult = inputStreamToString(
- 				response.getEntity().getContent()).toString();
- 			} catch (ClientProtocolException e) {
- 				e.printStackTrace();
- 			} catch (IOException e) {
- 				e.printStackTrace();
- 			}
- 			
- 			return null;
+				HttpResponse response = httpclient.execute(httppost);
+				jsonResult = inputStreamToString(
+				response.getEntity().getContent()).toString();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
+			} catch (IOException e) {
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
+			}
+			
+			return "ok";
  		}
   
  		private StringBuilder inputStreamToString(InputStream is) {
@@ -284,7 +280,12 @@ public class Visitas_Main extends MenuActivity {
  		}
   
  		protected void onPostExecute(String result) {
- 			CargarEpocas();
+ 			if(result.equals("ok")){
+ 				CargarEpocas();
+ 			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
+			}
  		}
  	}
  	

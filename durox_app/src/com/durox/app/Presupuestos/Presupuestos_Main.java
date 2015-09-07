@@ -30,12 +30,14 @@ import com.durox.app.Visitas.Visitas_ListView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -59,6 +61,7 @@ public class Presupuestos_Main extends MenuActivity {
 	private String jsonResult;
 	
 	Config_durox config;
+	ProgressDialog pDialog;
 	
 	
 	public void onCreate(Bundle savedInstanceState) 
@@ -79,19 +82,19 @@ public class Presupuestos_Main extends MenuActivity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(params[0]);
 			
-			try {
+			try { 				
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();
-			}
-	 
-			catch (ClientProtocolException e) {
-				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
 			}
 			
-			return null;
+			return "ok";
 		}
  
 		private StringBuilder inputStreamToString(InputStream is) {
@@ -113,7 +116,14 @@ public class Presupuestos_Main extends MenuActivity {
 		}
  
 		protected void onPostExecute(String result) {
-			CargarVisitas();
+			pDialog.dismiss();
+			
+			if(result.equals("ok")){
+				CargarVisitas();
+			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
+			}
 		}
 	}// end async task
 	
@@ -121,6 +131,12 @@ public class Presupuestos_Main extends MenuActivity {
 	
 	
 	public void actualizar_visitas(View view) {
+		pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Actualizando....");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+        
 		mVisitas = new Visitas_model(db);
 		
 		Cursor c = mVisitas.getNuevos();
@@ -137,7 +153,7 @@ public class Presupuestos_Main extends MenuActivity {
 					c.getString(7)
 				);
 				
-				String url2 = config.getIp()+"/actualizaciones/setVisita/";
+				String url2 = config.getIp(db)+"/actualizaciones/setVisita/";
 		 		task.execute(new String[] { url2 });
     		}		
 		} else {
@@ -146,7 +162,7 @@ public class Presupuestos_Main extends MenuActivity {
 		
 		
 		JsonReadTask taskclientes = new JsonReadTask();
-		String url = config.getIp()+"/actualizaciones/getVisitas/";
+		String url = config.getIp(db)+"/actualizaciones/getVisitas/";
 		taskclientes.execute(new String[] { url });
 		
 		

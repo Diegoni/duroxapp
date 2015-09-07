@@ -63,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etComentario"
+        android:layout_toLeftOf="@+id/btnGuardarPresupuesto"
         android:ems="10"
         android:hint="@string/cantidad"
         android:inputType="number" />
@@ -76,45 +77,6 @@
         android:text="@string/limpiar" />
 
     <Button
-        android:id="@+id/guardar_presupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnGuardarPresupuesto"
-        android:layout_alignTop="@+id/btnAprobarPresupuesto"
-        android:layout_toRightOf="@+id/btnAprobarPresupuesto"
-        android:ems="10"
-        android:onClick="guardar_presupuesto"
-        android:text="@string/guardar" />
-
-    <TextView
-        android:id="@+id/label_preIdPresupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btm_lpLimpiar"
-        android:layout_toRightOf="@+id/btm_lpLimpiar"
-        android:text="@string/total"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/txt_pTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/btnAprobarPresupuesto"
-        android:layout_below="@+id/list_linea"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Button
-        android:id="@+id/btnAprobarPresupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/etCantidad"
-        android:onClick="aprobar_presupuesto"
-        android:text="@string/aprobar" />
-
-    <Button
         android:id="@+id/btnGuardarPresupuesto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,5 +84,42 @@
         android:layout_below="@+id/etComentario"
         android:onClick="guardar_detalle"
         android:text="@string/agregar" />
+
+    <Button
+        android:id="@+id/btnAprobarPresupuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txt_pTotal"
+        android:onClick="aprobar_presupuesto"
+        android:text="@string/aprobar" />
+
+    <Button
+        android:id="@+id/guardar_presupuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnAprobarPresupuesto"
+        android:onClick="guardar_presupuesto"
+        android:text="@string/guardar" />
+
+    <TextView
+        android:id="@+id/txt_pTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/guardar_presupuesto"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/label_preIdPresupuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/guardar_presupuesto"
+        android:layout_alignLeft="@+id/guardar_presupuesto"
+        android:text="@string/total"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

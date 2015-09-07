@@ -7,28 +7,95 @@ import com.example.durox_app.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 public class Config_durox {
-	private String database = "Diego_app";
-	private String ip = "http://192.168.1.207/durox/index.php";
-	private String documentos = "http://192.168.1.207/durox/documentos";
+	private String database = "Durox_app";
+	
+	private String ip;
+	private String documentos;
 	boolean actualizando = true;
+	
+	String sql;
+	SQLiteDatabase db;
+	Cursor c;
+	
+	public void createConfig(){
+		sql = "CREATE TABLE IF NOT EXISTS `config`("
+				+ "id_config INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "ip VARCHAR,"
+				+ "documentos VARCHAR"
+				+ ");";
+		
+		db.execSQL(sql);
+		
+		sql = "SELECT * FROM config";
+					
+		c = db.rawQuery(sql, null);
+				
+		if(c.getCount() == 0){
+			ip =  "http://192.168.1.207/durox/index.php";
+			documentos = "http://192.168.1.207/durox/documentos";
+
+			sql = "INSERT INTO `config` ("
+					+ "`ip`, "
+					+ "`documentos` "
+				+ ") VALUES ("
+					+ "'"+ip+"', "
+					+ "'"+documentos+"' "
+					+ ");";
+	 		db.execSQL(sql);
+		}else{
+			while(c.moveToNext()){
+				ip = c.getString(1);
+				documentos = c.getString(2);
+    		}	
+		}
+	}
 	
 	public String getDatabase() {
 		return this.database;
 	}
 	
-	public String getIp() {
+	public String getIp(SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
 		return this.ip;
 	}
 	
-	public String getDocumentos() {
+	public void setIP(String ip, SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		
+		sql = "UPDATE `config` SET ip = '"+ip+"'"; 
+		Log.e("Consulta ", sql);
+		
+		db.execSQL(sql);
+		
+		this.ip = ip;
+	}
+	
+	public String getDocumentos(SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
 		return this.documentos;
 	}	
+	
+	public void setDocumentos(String documentos, SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		sql = "UPDATE `config` SET documentos = '"+documentos+"'"; 
+		Log.e("Consulta ", sql);
+		db.execSQL(sql);
+		
+		this.documentos = documentos;
+	}
 	
 	public String msjOkInsert() {
 		String msj = "El registro se inserto ok";
@@ -74,4 +141,5 @@ public class Config_durox {
 		String msj = "Bienvenido "+user;
 		return msj;
 	}
+	
 }

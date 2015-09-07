@@ -49,6 +49,7 @@ import com.durox.app.Productos.Productos_ListView;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.DownloadManager.Request;
 import android.content.Context;
 import android.content.Intent;
@@ -103,6 +104,7 @@ public class Presupuestos_Lista extends Activity {
 	
 	Presupuestos_model mPresupuesto;
 	Lineas_Presupuestos_model mLineas;
+	ProgressDialog pDialog;
  
    
     public void onCreate(Bundle savedInstanceState) {
@@ -210,6 +212,12 @@ public class Presupuestos_Lista extends Activity {
     public void actualizar_presupuestos(View view) {
 		// Exportamos los presupuestos 
     	
+    	pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Actualizando....");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+    	
     	mPresupuesto = new Presupuestos_model(db);
 		
 		Cursor c = mPresupuesto.getNuevos();
@@ -232,7 +240,7 @@ public class Presupuestos_Lista extends Activity {
 					c.getString(15)		//+ 15"eliminado VARCHAR, "
 				);
 				
-				String url2 = config.getIp()+"/actualizaciones/setPresupuestos/";
+				String url2 = config.getIp(db)+"/actualizaciones/setPresupuestos/";
 		 		task.execute(new String[] { url2 });
     		}		
 		} else {
@@ -242,7 +250,7 @@ public class Presupuestos_Lista extends Activity {
 		// Importamos los presupuestos
 		
 		JsonReadTask taskpresupuestos = new JsonReadTask();
-		String url = config.getIp()+"/actualizaciones/getPresupuestos/";
+		String url = config.getIp(db)+"/actualizaciones/getPresupuestos/";
 		taskpresupuestos.execute(new String[] { url });
 		
 		// Exportamos las lineas de los presupuestos
@@ -265,7 +273,7 @@ public class Presupuestos_Lista extends Activity {
 					cLineas.getString(12) 	//12+ "eliminado VARCHAR, "
 				);
 				
-				String url2 = config.getIp()+"/actualizaciones/setLineasPresupuestos/";
+				String url2 = config.getIp(db)+"/actualizaciones/setLineasPresupuestos/";
 		 		task.execute(new String[] { url2 });
     		}		
 		} else {
@@ -275,7 +283,7 @@ public class Presupuestos_Lista extends Activity {
 		// Importamos los presupuestos
 		
 		JsonReadTaskLineas tasklineas = new JsonReadTaskLineas();
-		String urlLineas = config.getIp()+"/actualizaciones/getLineasPresupuestos/";
+		String urlLineas = config.getIp(db)+"/actualizaciones/getLineasPresupuestos/";
 		tasklineas.execute(new String[] { urlLineas });
 		
 		presupuestos_lista();
@@ -289,19 +297,19 @@ public class Presupuestos_Lista extends Activity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(params[0]);
 			
-			try {
+			try { 				
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();
-			}
-	 
-			catch (ClientProtocolException e) {
-				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
 			}
 			
-			return null;
+			return "ok";
 		}
  
 		private StringBuilder inputStreamToString(InputStream is) {
@@ -323,7 +331,14 @@ public class Presupuestos_Lista extends Activity {
 		}
  
 		protected void onPostExecute(String result) {
-			CargarPresupuestos();
+			pDialog.dismiss();
+			
+			if(result.equals("ok")){
+				CargarPresupuestos();
+			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 	

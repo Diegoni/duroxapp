@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class Login extends Activity {
     EditText user;
     EditText pass;
     Button blogin;
+    Button btnSalir;
+    Button btn_Sin;
     
     Httppostaux post;
     // String URL_connect="http://www.scandroidtest.site90.com/acces.php";
@@ -46,9 +49,9 @@ public class Login extends Activity {
     Vendedores_model mVendedores;
     
     int logstatus;
+    int intentos;
+    int segundos;
     
-    
-    @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -60,8 +63,38 @@ public class Login extends Activity {
         user = (EditText) findViewById(R.id.edusuario);
         pass = (EditText) findViewById(R.id.edpassword);
         blogin = (Button) findViewById(R.id.Blogin);
+        btnSalir = (Button) findViewById(R.id.btn_Salir);
+        btn_Sin = (Button) findViewById(R.id.btn_Sin);
+               
+        intentos = 3;
+        segundos = 15;
         
-          
+        //Login button action
+        btnSalir.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View view){
+        		Intent salida = new Intent( Intent.ACTION_MAIN); //Llamando a la activity principal
+        		finish(); 
+        	}
+        });
+        
+        
+        //Login button action
+        btn_Sin.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View view){
+        		String usuario = user.getText().toString();
+        		String passw   = pass.getText().toString();
+        		
+        		SQLiteDatabase db;
+    			Config_durox config = new Config_durox();
+    			db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+    			
+    			Vendedores_model mVendedor = new Vendedores_model(db);
+    			mVendedor.truncate();
+    			
+    			new asynclogin().execute(usuario,passw); 
+        	}
+        });
+        
         
         //Login button action
         blogin.setOnClickListener(new View.OnClickListener(){
@@ -72,22 +105,16 @@ public class Login extends Activity {
         		
         		//verificamos si estan en blanco
         		if( checklogindata( usuario , passw ) == true){
-        			Config_durox config = new Config_durox();
         			
         			SQLiteDatabase db;
-        			
+        			Config_durox config = new Config_durox();
         			db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
         			
         			Vendedores_model mVendedor = new Vendedores_model(db);
-        			
         			Cursor c = mVendedor.getRegistros();
         			
-        			
-        			
-        			if(c.getCount() > 0)
-        			{
-        				while(c.moveToNext())
-        	    		{
+        			if(c.getCount() > 0){
+        				while(c.moveToNext()){
         					if(new String (usuario).equals(c.getString(2)) && new String (passw).equals(c.getString(3))){
         						Toast.makeText(getApplicationContext(),
             							config.msjOkLogin(usuario), Toast.LENGTH_SHORT).show();
@@ -117,13 +144,28 @@ public class Login extends Activity {
     }
     
     
-    // vibra y muestra un Toast
     public void err_login(){
-    	//Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-	    //vibrator.vibrate(200);
-	    Toast toast1 = Toast.makeText(getApplicationContext(),
-	    		"Error : Nombre de usuario o password incorrectos", Toast.LENGTH_SHORT);
- 	    toast1.show();    	
+    	intentos = intentos - 1;
+    	if(intentos > 0){
+    		Toast toast1 = Toast.makeText(getApplicationContext(),
+    	    		"Error: Nombre de usuario o password incorrectos, le quedan "+intentos+" intentos", 
+    	    		Toast.LENGTH_LONG);
+     	    toast1.show();
+    	} else {
+    		Toast toast1 = Toast.makeText(getApplicationContext(),
+    	    		"Se acabaron los intentos", 
+    	    		Toast.LENGTH_LONG);
+     	    toast1.show();
+     	    blogin.setEnabled(false);
+     	   
+     	    Handler handler = new Handler();
+     	    handler.postDelayed(new Runnable() {
+     	    	public void run() {
+     	    		blogin.setEnabled(true);
+     	    		intentos = 3;
+     	    	}
+     	    }, 1000 * segundos);
+     	}
     }
     
     

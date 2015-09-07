@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
        <activity
-            android:name="com.durox.app.MainActivity"
+            android:name="com.durox.app.Login"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +30,10 @@
         </activity>
          -->
         <activity android:name="com.durox.app.HiScreen" >
+        </activity>
+        <activity android:name="com.durox.app.MainActivity" >
+        </activity>
+        <activity android:name="com.durox.app.Config_vista_durox" >
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Main" >
         </activity>

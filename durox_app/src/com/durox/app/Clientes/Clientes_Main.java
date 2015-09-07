@@ -176,7 +176,7 @@ public class Clientes_Main extends MenuActivity {
 	class asyncciente extends AsyncTask< String, String, String > {
    	 
     	String user,pass;
-        protected void onPreExecute() {
+    	protected void onPreExecute() {
         	//para el progress dialog
             pDialog = new ProgressDialog(Clientes_Main.this);
             pDialog.setMessage("Actualizando....");
@@ -188,26 +188,25 @@ public class Clientes_Main extends MenuActivity {
 		protected String doInBackground(String... params) {
 			String url;
 			JsonReadTask taskgrupos = new JsonReadTask("grupos");
-			url = config.getIp()+"/actualizaciones/getGrupos/";
+			url = config.getIp(db)+"/actualizaciones/getGrupos/";
 			taskgrupos.execute(new String[] { url });
 			
 			JsonReadTask taskiva = new JsonReadTask("iva");
-			url = config.getIp()+"/actualizaciones/getIva/";
+			url = config.getIp(db)+"/actualizaciones/getIva/";
 			taskiva.execute(new String[] { url });
 			
 			JsonReadTask tasktipos= new JsonReadTask("tipos");
-			url = config.getIp()+"/actualizaciones/getTipos/";
+			url = config.getIp(db)+"/actualizaciones/getTipos/";
 			tasktipos.execute(new String[] { url });
 				
 			JsonReadTask taskclientes = new JsonReadTask("clientes");
-			url = config.getIp()+"/actualizaciones/getClientes/";
+			url = config.getIp(db)+"/actualizaciones/getClientes/";
 			taskclientes.execute(new String[] { url });
 			
 			return "ok";
         }
        
         protected void onPostExecute(String result) {
-        	pDialog.dismiss();
         	clientes_lista();
         }
 	}
@@ -234,34 +233,33 @@ public class Clientes_Main extends MenuActivity {
 			String url;
 			 
 			JsonReadTask tasktelefonos= new JsonReadTask("telefonos");
-			url = config.getIp()+"/actualizaciones/getTelefonos/";
+			url = config.getIp(db)+"/actualizaciones/getTelefonos/";
 			tasktelefonos.execute(new String[] { url });
 				
 			JsonReadTask taskSintelefonos= new JsonReadTask("sin_telefonos");
-			url = config.getIp()+"/actualizaciones/getSinTelefonosClientes/";
+			url = config.getIp(db)+"/actualizaciones/getSinTelefonosClientes/";
 			taskSintelefonos.execute(new String[] { url });
 				
 			JsonReadTask taskmails= new JsonReadTask("mails");
-			url = config.getIp()+"/actualizaciones/getMails/";
+			url = config.getIp(db)+"/actualizaciones/getMails/";
 			taskmails.execute(new String[] { url });
 				
 			JsonReadTask taskSinmails= new JsonReadTask("sin_mails");
-			url = config.getIp()+"/actualizaciones/getSinMailsClientes/";
+			url = config.getIp(db)+"/actualizaciones/getSinMailsClientes/";
 			taskSinmails.execute(new String[] { url });
 				
 			JsonReadTask taskdirecciones= new JsonReadTask("direcciones");
-			url = config.getIp()+"/actualizaciones/getDirecciones/";
+			url = config.getIp(db)+"/actualizaciones/getDirecciones/";
 			taskdirecciones.execute(new String[] { url });
 				
 			JsonReadTask taskSindirecciones= new JsonReadTask("sin_direcciones");
-			url = config.getIp()+"/actualizaciones/getSinDireccionesClientes/";
+			url = config.getIp(db)+"/actualizaciones/getSinDireccionesClientes/";
 			taskSindirecciones.execute(new String[] { url });
 			
 			return "ok";
         }
        
         protected void onPostExecute(String result) {
-        	pDialog.dismiss();
         	clientes_lista();
         }
 	}
@@ -287,15 +285,15 @@ public class Clientes_Main extends MenuActivity {
 				HttpResponse response = httpclient.execute(httppost);
 				jsonResult = inputStreamToString(
 				response.getEntity().getContent()).toString();
-			}
-		
-			catch (ClientProtocolException e) {
-				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				Log.e("Error ClientProtocolException", e.toString());
+				return "ClientProtocolException "+e.toString();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.e("Error IOException", e.toString());
+				return "IOException "+e.toString();
 			}
 			
-			return null;
+			return "ok";
 		}
 		
 		private StringBuilder inputStreamToString(InputStream is) {
@@ -317,27 +315,33 @@ public class Clientes_Main extends MenuActivity {
 		}
 		
 		protected void onPostExecute(String result) {
+			pDialog.dismiss();
 			
-			if(carga == "clientes"){
-				CargarClientes();
-			}else if(carga == "grupos"){
-				CargarGrupos();
-			}else if(carga == "tipos"){
-				CargarTipos();	
-			}else if(carga == "telefonos"){
-				CargarTelefonos();	
-			}else if(carga == "sin_telefonos"){
-				CargarSinTelefonos();
-			}else if(carga == "mails"){
-				CargarMails();	
-			}else if(carga == "sin_mails"){
-				CargarSinMails();
-			}else if(carga == "direcciones"){
-				CargarDirecciones();	
-			}else if(carga == "sin_direcciones"){
-				CargarSinDirecciones();	
-			}else if(carga == "iva"){
-				CargarIva();
+			if(result.equals("ok")){
+				if(carga == "clientes"){
+					CargarClientes();
+				}else if(carga == "grupos"){
+					CargarGrupos();
+				}else if(carga == "tipos"){
+					CargarTipos();	
+				}else if(carga == "telefonos"){
+					CargarTelefonos();	
+				}else if(carga == "sin_telefonos"){
+					CargarSinTelefonos();
+				}else if(carga == "mails"){
+					CargarMails();	
+				}else if(carga == "sin_mails"){
+					CargarSinMails();
+				}else if(carga == "direcciones"){
+					CargarDirecciones();	
+				}else if(carga == "sin_direcciones"){
+					CargarSinDirecciones();	
+				}else if(carga == "iva"){
+					CargarIva();
+				}
+			}else{
+				Toast.makeText(getApplicationContext(), 
+						result, Toast.LENGTH_LONG).show();
 			}
 		}
 	}

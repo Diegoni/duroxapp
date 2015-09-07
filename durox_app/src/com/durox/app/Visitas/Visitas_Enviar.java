@@ -80,7 +80,7 @@ public class Visitas_Enviar extends MenuActivity {
 						c.getString(7)
 				);
 				
-				String url = config.getIp()+"/actualizaciones/setVisita/";
+				String url = config.getIp(db)+"/actualizaciones/setVisita/";
 		 		task.execute(new String[] { url });
     		}		
 		}

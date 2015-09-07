@@ -1,61 +1,87 @@
-<LinearLayout
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:orientation="vertical"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:padding="10dip"
-          android:id="@+id/layout1" 
-          android:background="#FFFFFF"
-                
-          >
-        
-          <!--  Email Label -->
-          
-          <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Usuario"
-                android:layout_marginTop="25dip"
-           />
-                
-          <EditText android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:layout_marginBottom="20dip"
-                android:singleLine="true"
-                android:id="@+id/edusuario"
-           />
-                
-          <!--  Password Label -->
-          
-          <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Password"/>
-                
-          <EditText android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:singleLine="true"
-                android:password="true"
-                android:id="@+id/edpassword"
-           />
-                
-          <!-- Login button -->
-          <Button 
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dip"
-                android:text="Login"
-                android:id="@+id/Blogin"
-                />
-                
-          <!-- Link to forgot passw -->
-         
-          <!-- Link to Registration Screen -->
- 
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <!-- Email Label -->
 
 
+    <!-- Password Label -->
+
+    <EditText
+        android:id="@+id/edpassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edusuario"
+        android:layout_alignRight="@+id/edusuario"
+        android:layout_below="@+id/edusuario"
+        android:layout_marginTop="5dip"
+        android:hint="@string/pass"
+        android:password="true"
+        android:singleLine="true" />
+
+    <!-- Login button -->
 
 
+    <!-- Link to forgot passw -->
+
+
+    <!-- Link to Registration Screen -->
+
+    <EditText
+        android:id="@+id/edusuario"
+        android:layout_width="457dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/usuario"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btn_Salir"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edpassword"
+        android:layout_below="@+id/edpassword"
+        android:layout_toLeftOf="@+id/textView1"
+        android:text="@string/cancelar" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/Blogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/edpassword"
+        android:layout_alignTop="@+id/btn_Salir"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/btn_Sin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/btn_Salir"
+        android:drawableLeft="@drawable/refresh" />
+
+</RelativeLayout>

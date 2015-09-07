@@ -114,8 +114,8 @@ public class MenuActivity extends Activity {
         	  
             return true;
         case R.id.item6: 
-            Toast.makeText(this, "Actualizar", Toast.LENGTH_SHORT).show(); 
-            Intent intentLogin = new Intent(this, Login.class);
+            Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show(); 
+            Intent intentLogin = new Intent(this, Config_vista_durox.class);
      		startActivity(intentLogin);
     		
             return true;            

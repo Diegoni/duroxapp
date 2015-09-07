@@ -72,6 +72,9 @@
 	<string name="descargar">"Descargar"</string>
 	<string name="descargando">"Descargando"</string>
 	<string name="descargacompleta">"Descarga Completa"</string>
+	<string name="valoracion">"Valoración"</string>
+	<string name="ip">"IP"</string>
+	<string name="cancelar">"Cancelar"</string>
 	
 	
 </resources>
