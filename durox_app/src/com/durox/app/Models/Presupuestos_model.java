@@ -39,6 +39,8 @@ public class Presupuestos_model extends Activity{
 				+ "user_upd VARCHAR "	
 				+ ");";
 		
+		Log.e("Consulta ", sql);
+		
 		db.execSQL(sql);
 	}
 	
@@ -56,6 +58,8 @@ public class Presupuestos_model extends Activity{
 				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)";
 		
 		c = db.rawQuery(sql, null);
+		
+		Log.e("Consulta ", sql);
 		
 		return c;
 	}
@@ -78,6 +82,8 @@ public class Presupuestos_model extends Activity{
 				+ " WHERE presupuestos.id_back = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
+		
+		Log.e("Consulta ", sql);
 		
 		return c;
 	}
@@ -102,6 +108,8 @@ public class Presupuestos_model extends Activity{
 		
 		c = db.rawQuery(sql, null);
 		
+		Log.e("Consulta ", sql);
+		
 		return c;
 	}
 	
@@ -116,7 +124,7 @@ public class Presupuestos_model extends Activity{
 			+ " WHERE "
 				+ " `presupuestos`.`id_presupuesto` = '"+id+"' ";
 		
-		Log.e("Paso ", sql);
+		Log.e("Consulta ", sql);
 		
 		db.execSQL(sql);
 	}
@@ -181,6 +189,8 @@ public class Presupuestos_model extends Activity{
  			    
  		db.execSQL(sql);
  		
+ 		Log.e("Consulta ", sql);
+ 		
  		return c;
  	}
 	
@@ -189,8 +199,12 @@ public class Presupuestos_model extends Activity{
 		sql = "DELETE FROM `presupuestos` WHERE aprobado_front = '1' AND visto_front = '1'";
 		db.execSQL(sql);
 		
+		Log.e("Consulta ", sql);
+		
 		sql = "DELETE FROM `presupuestos` WHERE visto_front = '0'"; 
 		db.execSQL(sql);
+		
+		Log.e("Consulta ", sql);
 	}
 	
 	
@@ -205,6 +219,8 @@ public class Presupuestos_model extends Activity{
 		
 		c = db.rawQuery(sql, null);
 		
+		Log.e("Consulta ", sql);
+		
 		return c;
 	}
 	
@@ -214,6 +230,8 @@ public class Presupuestos_model extends Activity{
 		sql = "SELECT MAX(id_presupuesto) FROM presupuestos";
 		
 		c = db.rawQuery(sql, null);
+		
+		Log.e("Consulta ", sql);
 		
 		return c;
 	}

@@ -21,23 +21,14 @@
         android:layout_below="@+id/btnAgregarComentarios" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnAgregarComentarios"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:drawableLeft="@drawable/download"
-        android:onClick="actualizar_perfiles" />
-
-    <Button
-        android:id="@+id/btnAgregarComentarios"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button1"
-        android:drawableLeft="@drawable/download"
-        android:onClick="actualizar_clientes"/>
+        android:onClick="actualizar_clientes"
+        android:text="@string/bajar" />
     
 </RelativeLayout>

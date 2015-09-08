@@ -197,74 +197,9 @@ public class Clientes_Main extends MenuActivity {
  
 		protected String doInBackground(String... params) {
 			String url;
-			JsonReadTask taskgrupos = new JsonReadTask("grupos");
-			url = config.getIp(db)+"/actualizaciones/getGrupos/";
-			taskgrupos.execute(new String[] { url });
-			
-			JsonReadTask taskiva = new JsonReadTask("iva");
-			url = config.getIp(db)+"/actualizaciones/getIva/";
-			taskiva.execute(new String[] { url });
-			
-			JsonReadTask tasktipos= new JsonReadTask("tipos");
-			url = config.getIp(db)+"/actualizaciones/getTipos/";
-			tasktipos.execute(new String[] { url });
-				
 			JsonReadTask taskclientes = new JsonReadTask("clientes");
 			url = config.getIp(db)+"/actualizaciones/getClientes/";
 			taskclientes.execute(new String[] { url });
-			
-			return "ok";
-        }
-       
-        protected void onPostExecute(String result) {
-        	clientes_lista();
-        }
-	}
-	
-	
-	public void actualizar_perfiles(View view) {
-		new asyncperfil().execute();
-	}
-	
-	
-	class asyncperfil extends AsyncTask< String, String, String > {
-	   	 
-    	String user,pass;
-        protected void onPreExecute() {
-        	//para el progress dialog
-            pDialog = new ProgressDialog(Clientes_Main.this);
-            pDialog.setMessage("Actualizando....");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
- 
-		protected String doInBackground(String... params) {
-			String url;
-			 
-			JsonReadTask tasktelefonos= new JsonReadTask("telefonos");
-			url = config.getIp(db)+"/actualizaciones/getTelefonos/";
-			tasktelefonos.execute(new String[] { url });
-				
-			JsonReadTask taskSintelefonos= new JsonReadTask("sin_telefonos");
-			url = config.getIp(db)+"/actualizaciones/getSinTelefonosClientes/";
-			taskSintelefonos.execute(new String[] { url });
-				
-			JsonReadTask taskmails= new JsonReadTask("mails");
-			url = config.getIp(db)+"/actualizaciones/getMails/";
-			taskmails.execute(new String[] { url });
-				
-			JsonReadTask taskSinmails= new JsonReadTask("sin_mails");
-			url = config.getIp(db)+"/actualizaciones/getSinMailsClientes/";
-			taskSinmails.execute(new String[] { url });
-				
-			JsonReadTask taskdirecciones= new JsonReadTask("direcciones");
-			url = config.getIp(db)+"/actualizaciones/getDirecciones/";
-			taskdirecciones.execute(new String[] { url });
-				
-			JsonReadTask taskSindirecciones= new JsonReadTask("sin_direcciones");
-			url = config.getIp(db)+"/actualizaciones/getSinDireccionesClientes/";
-			taskSindirecciones.execute(new String[] { url });
 			
 			return "ok";
         }
@@ -426,22 +361,23 @@ public class Clientes_Main extends MenuActivity {
 	 		Toast.makeText(getApplicationContext(), 
 	 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 	 	}
-	}
-	 
-	 
-	 
-	public void CargarGrupos() {
-		String subjet = "grupos";
-		Grupos_model mModel = new Grupos_model(db); 
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	subjet = "grupos";
+		Grupos_model mGrupos = new Grupos_model(db); 
 	 	
 		try {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("grupos");
 	 			
-	 		mModel.createTable();
+	 		mGrupos.createTable();
 	  			
 	  		if(jsonMainNode.length() > 0){
-	  			mModel.truncate();
+	  			mGrupos.truncate();
 	  		}
 	  		
 	  		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -455,7 +391,7 @@ public class Clientes_Main extends MenuActivity {
 	  			String user_add = jsonChildNode.optString("user_add");
 	  			String user_upd = jsonChildNode.optString("user_upd");
 	  				 				
-	  			mModel.insert(
+	  			mGrupos.insert(
 	  				id_back,
 	  				grupo,
 	  				date_add,
@@ -473,21 +409,24 @@ public class Clientes_Main extends MenuActivity {
 	  		Toast.makeText(getApplicationContext(), 
 	  			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 	  	}
-	}
-	 	
-	 	
-	public void CargarIva() {
-		String subjet = "iva";
-		Iva_model mModel = new Iva_model(db);
+		
+		
+		
+		
+		
+		
+		
+		subjet = "iva";
+		Iva_model mIva = new Iva_model(db);
 		
 	 	try {
 	  		JSONObject jsonResponse = new JSONObject(jsonResult);
 	  		JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 	  			
-	  		mModel.createTable();
+	  		mIva.createTable();
 	  		
 	  		if(jsonMainNode.length() > 0){
-	  			mModel.truncate();
+	  			mIva.truncate();
 	  		}
 	  		  
 	  		for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -501,7 +440,7 @@ public class Clientes_Main extends MenuActivity {
 	  			String user_add = jsonChildNode.optString("user_add");
 	  			String user_upd = jsonChildNode.optString("user_upd");
 	  			 				
-	  			mModel.insert(
+	  			mIva.insert(
 	  				id_back,
 	  				iva,
 	  				date_add,
@@ -519,21 +458,25 @@ public class Clientes_Main extends MenuActivity {
 	  		Toast.makeText(getApplicationContext(), 
 	  		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 	  	}
-	}
-	
-	
-	public void CargarTipos() {
-		String subjet = "tipos";
-		Tipos_model mModel = new Tipos_model(db);
+		
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	subjet = "tipos";
+		Tipos_model mTipos = new Tipos_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mTipos.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncate();
+		  		mTipos.truncate();
 		   	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -547,7 +490,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insert(
+		  		mTipos.insert(
 		  			id_back, 
 		  			tipo, 
 		  			date_add, 
@@ -566,21 +509,23 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarTelefonos() {
-		String subjet = "telefonos";
-		Telefonos_clientes_model mModel = new Telefonos_clientes_model(db);
-		 
+		
+		
+		
+		
+		
+		
+		subjet = "telefonos";
+		Telefonos_clientes_model mTelefonos = new Telefonos_clientes_model(db);
+		
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mTelefonos.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncate();
+		  		mTelefonos.truncate();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -597,7 +542,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insert(
+		  		mTelefonos.insert(
 		  			id_back, 
 		  			id_tipo, 
 		  			telefono, 
@@ -619,21 +564,27 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarSinTelefonos() {
-		String subjet = "sin_clientes_telefonos";
-		Telefonos_clientes_model mModel = new Telefonos_clientes_model(db);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		subjet = "sin_clientes_telefonos";
+		Telefonos_clientes_model mSinTelefonos = new Telefonos_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mSinTelefonos.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncateSin();
+		  		mSinTelefonos.truncateSin();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -648,7 +599,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insertSin(
+		  		mSinTelefonos.insertSin(
 		  			id_back, 
 		  			id_cliente, 
 		  			id_telefono, 
@@ -668,21 +619,25 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarMails() {
-		String subjet = "mails";
-		Mails_clientes_model mModel = new Mails_clientes_model(db);
+		
+		
+		
+		
+		
+		
+		
+		
+		subjet = "mails";
+		Mails_clientes_model mMails = new Mails_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mMails.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncate();
+		  		mMails.truncate();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -697,7 +652,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insert(
+		  		mMails.insert(
 		  			id_back, 
 		  			id_tipo, 
 		  			mail, 
@@ -717,21 +672,21 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarSinMails() {
-		String subjet = "sin_clientes_mails";
-		Mails_clientes_model mModel = new Mails_clientes_model(db);
+		
+		
+		
+		
+		subjet = "sin_clientes_mails";
+		Mails_clientes_model mSinMails = new Mails_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mSinMails.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncateSin();
+		  		mSinMails.truncateSin();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -746,7 +701,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insertSin(
+		  		mSinMails.insertSin(
 		  			id_back, 
 		  			id_cliente, 
 		  			id_mail, 
@@ -766,21 +721,22 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarDirecciones() {
-		String subjet = "direcciones";
-		Direcciones_clientes_model mModel = new Direcciones_clientes_model(db);
+		
+		
+		
+		
+		
+		subjet = "direcciones";
+		Direcciones_clientes_model mDirecciones = new Direcciones_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mDirecciones.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncate();
+		  		mDirecciones.truncate();
 		  	}
 		  			  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -799,7 +755,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insert( 
+		  		mDirecciones.insert( 
 		  				id_back, 
 		  				id_tipo,
 		  				direccion,
@@ -822,21 +778,26 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	
-	public void CargarSinDirecciones() {
-		String subjet = "sin_clientes_direcciones";
-		Direcciones_clientes_model mModel = new Direcciones_clientes_model(db);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		subjet = "sin_clientes_direcciones";
+		Direcciones_clientes_model mSinDirecciones = new Direcciones_clientes_model(db);
 		 
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-			mModel.createTable();
+		 	mSinDirecciones.createTable();
 		  			
 		  	if(jsonMainNode.length() > 0){
-		  		mModel.truncateSin();
+		  		mSinDirecciones.truncateSin();
 		  	}
 		  		
 		  	for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -851,7 +812,7 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mModel.insertSin(
+		  		mSinDirecciones.insertSin(
 		  			id_back, 
 		  			id_cliente, 
 		  			id_direccion, 
@@ -871,6 +832,54 @@ public class Clientes_Main extends MenuActivity {
 		 	Toast.makeText(getApplicationContext(), 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
+		
+	}
+	 
+	 
+	 
+	public void CargarGrupos() {
+		
+	}
+	 	
+	 	
+	public void CargarIva() {
+		
+	}
+	
+	
+	public void CargarTipos() {
+		
+	}
+	
+	
+	public void CargarTelefonos() {
+		
+	}
+	
+	
+	
+	public void CargarSinTelefonos() {
+		
+	}
+	
+	
+	public void CargarMails() {
+		
+	}
+	
+	
+	public void CargarSinMails() {
+		
+	}
+	
+	
+	public void CargarDirecciones() {
+		
+	}
+	
+	
+	public void CargarSinDirecciones() {
+		
 	}
 	 
 }
