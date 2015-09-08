@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 	String id;
 	String cIdVisita;
 	String cNombre;
+	String cPresupuesto;
 	String id_presupuesto;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 		TextView txtpreNombreFantasia = (TextView) findViewById(R.id.txt_preNombreFantasia);
 		TextView txtpreFecha = (TextView) findViewById(R.id.txt_preFecha);
 		Button btnAprobar = (Button) findViewById(R.id.btn_preAprobar);
+		Button btnEditar = (Button) findViewById(R.id.btn_pEditar);
 		
 		
 		imgimagen = (ImageView) findViewById(R.id.imagen);
@@ -85,6 +88,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 			c = mPresupuesto.getIDRegistro(id_presupuesto);
 		} else {
 			btnAprobar.setEnabled(false);
+			btnEditar.setEnabled(false);
 			c = mPresupuesto.getRegistro(id);
 		}
 				
@@ -101,6 +105,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 				
 				cIdVisita = c.getString(1);
 				cNombre = c.getString(3);
+				cPresupuesto = c.getString(0);
 			}
 		}
 		
@@ -169,26 +174,16 @@ public class Presupuestos_ItemView extends MenuActivity {
 	
 	
 	public void editar_presupuesto(View view) {
-		/*//Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
-		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_ItemView.class);
-		Log.e("Paso ", "intent ");
-		
-		intent.putExtra("cNombre", cNombre);
-		Log.e("Paso ", "cNombre "+cNombre);
-		intent.putExtra("cIdVisita", cIdVisita);
-		Log.e("Paso ", "cIdVisita "+cIdVisita);
+		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
+		intent.putExtra("truncate", "no");
+		intent.putExtra("nombre", cNombre);
+		Log.e("Paso ", "nombre "+cNombre);
+		intent.putExtra("id_visita", cIdVisita);
+		Log.e("Paso ", "id_visita "+cIdVisita);
 		intent.putExtra("id_presupuesto", id_presupuesto);
 		Log.e("Paso ", "id_presupuesto "+id_presupuesto);
-		startActivity(intent);
-		Log.e("Paso ", "startActivity ");
-		*/
-		
-		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
-		/*
-		intent.putExtra("nombre", cNombre);
-		intent.putExtra("id_visita", cIdVisita);
-		intent.putExtra("truncate", "truncate");
-		*/
+		intent.putExtra("id", id);
+		Log.e("Paso ", "id "+id);
 		startActivity(intent);
 	}
 }

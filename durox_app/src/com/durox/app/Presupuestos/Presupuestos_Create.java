@@ -13,6 +13,7 @@ import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Vendedores_model;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -47,6 +48,7 @@ public class Presupuestos_Create extends MenuActivity {
 	String cIdVisita;
 	String truncate;
 	String id_presupuesto;
+	String id;
 	
 	Config_durox config;
 
@@ -58,6 +60,7 @@ public class Presupuestos_Create extends MenuActivity {
 		cNombre = intent.getStringExtra("nombre");
 		cIdVisita = intent.getStringExtra("id_visita");
 		id_presupuesto = intent.getStringExtra("id_presupuesto");
+		id = intent.getStringExtra("id");
 		String truncate = intent.getStringExtra("truncate");
 		
 		TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
@@ -96,13 +99,21 @@ public class Presupuestos_Create extends MenuActivity {
 		if(truncate.equals("truncate")){
 			mLineas.truncate();
 		}else{
-			
 			Cursor cursor;
 			
-			if(id_presupuesto.isEmpty()){
+			Log.e("Paso ", "IF id_presupuesto valor " + id_presupuesto);
+			
+			if(id_presupuesto == null || id_presupuesto.equals(" ") || id_presupuesto == ""+null){
 				cursor = mLineas.getRegistros();
+				Log.e("Paso ", "IF id_presupuesto NULL");
 			} else {
-				cursor = mLineas.getIDRegistro(id_presupuesto);
+				if (id.equals("0")){
+					cursor = mLineas.getIDRegistro(id_presupuesto);
+					Log.e("Paso ", "IF id_presupuesto "+id_presupuesto);
+				} else {
+					cursor = mLineas.getRegistro(id);
+					Log.e("Paso ", "IF id "+id);
+				}	
 			}
 			
 			int cantidad_lineas = cursor.getCount();
@@ -142,10 +153,14 @@ public class Presupuestos_Create extends MenuActivity {
 						
 			Cursor cursorLinea;	
 			
-			if(id_presupuesto.isEmpty()){
+			if(id_presupuesto == null || id_presupuesto.equals(" ") || id_presupuesto == ""+null){
 				cursorLinea = mLineas.getRegistros();
 			} else {
-				cursorLinea = mLineas.getIDRegistro(id_presupuesto);
+				if (id.equals("0")){
+					cursorLinea = mLineas.getIDRegistro(id_presupuesto);
+				} else {
+					cursorLinea = mLineas.getRegistro(id);
+				}	
 			}
 			
 			if(cursorLinea.getCount() > 0){
@@ -184,22 +199,58 @@ public class Presupuestos_Create extends MenuActivity {
 				Float subtotal = precio * row_cant;
 				String subt = String.valueOf(subtotal);
 				
+				String linea_id_back = "0";
+				String linea_id_presupuesto = "0";
+				String linea_id_temporario = "0";
+				
+				
+				
+				Log.e("Paso ", "id_presupuesto "+id_presupuesto);
+				if(id_presupuesto == null){
+				Log.e("Paso ", "id_presupuesto "+id_presupuesto);
+				}else{
+					Cursor cursorLinea;
+					Log.e("Paso ", "cursorLinea ");
+					
+					if (id.equals("0")){
+						cursorLinea = mLineas.getIDRegistro(id_presupuesto);
+						Log.e("Paso ", "getIDRegistro ");
+					} else {
+						cursorLinea = mLineas.getRegistro(id);
+						Log.e("Paso ", "getRegistro ");
+					}	
+					
+					if(cursorLinea.getCount() > 0){
+						Log.e("Paso ", "cursorLinea ");
+						while(cursorLinea.moveToNext()){
+							linea_id_presupuesto = cursorLinea.getString(4);
+							linea_id_temporario = cursorLinea.getString(5);
+						}
+					}
+				}
+				
+				Log.e("Paso ", "linea_id_back "+linea_id_back);
+				Log.e("Paso ", "linea_id_presupuesto "+linea_id_presupuesto);
+				Log.e("Paso ", "linea_id_temporario "+linea_id_temporario);
+				
 				mLineas.insert(
-						"0",			//id_back
-						"0",			//id_temporario
-						"0",			//id_presupuesto
+						linea_id_back,			//id_back
+						linea_id_temporario,	//id_temporario
+						linea_id_presupuesto,	//id_presupuesto
 						cursor.getString(0),	//id_producto
 						cursor.getString(2), 	//precio
-						cantidad,		//cantidad
-						subt, 			//subtotal
-						"1", 			//id_estado_producto_presupuesto
-						comentario, 	//comentario
-						null, 			//date_add
-						null, 			//date_upd
-						null,			//eliminado 
-						null,			//user_add
-						null 			//user_upd
+						cantidad,				//cantidad
+						subt, 					//subtotal
+						"1", 					//id_estado_producto_presupuesto
+						comentario, 			//comentario
+						null, 					//date_add
+						null, 					//date_upd
+						null,					//eliminado 
+						null,					//user_add
+						null 					//user_upd
 				);
+				
+				
 				
 				Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
 				
@@ -210,10 +261,31 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		
 		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Create.class);
-		
+		/*
 		intent.putExtra("nombre", cNombre);
 		intent.putExtra("id_visita", cIdVisita);
 		intent.putExtra("truncate", "no");
+		intent.putExtra("id_presupuesto", id_presupuesto);
+		intent.putExtra("id", id);
+		*/
+		intent.putExtra("truncate", "no");
+		intent.putExtra("nombre", cNombre);
+		Log.e("Paso ", "nombre "+cNombre);
+		intent.putExtra("id_visita", cIdVisita);
+		Log.e("Paso ", "id_visita "+cIdVisita);
+		
+		if(id_presupuesto == null){
+			intent.putExtra("id_presupuesto", " ");
+			Log.e("Paso ", "id_presupuesto " + " ");
+			intent.putExtra("id", " ");
+			Log.e("Paso ", "id "+" ");
+		}else{
+			intent.putExtra("id_presupuesto", ""+id_presupuesto);
+			Log.e("Paso ", "id_presupuesto " + ""+id_presupuesto);
+			intent.putExtra("id", ""+id);
+			Log.e("Paso ", "id "+id);
+		}
+		
 		
 		startActivity(intent);
 	}

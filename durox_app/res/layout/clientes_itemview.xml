@@ -21,9 +21,9 @@
         android:id="@+id/txt_cNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cRazon_social"
         android:layout_alignBaseline="@+id/direccionlabel"
         android:layout_alignBottom="@+id/direccionlabel"
-        android:layout_alignLeft="@+id/txt_cRazon_social"
         android:text="@string/nombre" />
 
     <TextView
