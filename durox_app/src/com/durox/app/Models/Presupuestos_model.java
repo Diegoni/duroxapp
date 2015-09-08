@@ -1,7 +1,6 @@
 package com.durox.app.Models;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -53,9 +52,11 @@ public class Presupuestos_model extends Activity{
 				+ " clientes.razon_social, "
 				+ " presupuestos.total, "
 				+ " presupuestos.fecha, "
-				+ " presupuestos.id_presupuesto "
+				+ " presupuestos.id_presupuesto, "
+				+ " estados_presupuestos.text "
 				+ " FROM presupuestos"
-				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)";
+				+ " INNER JOIN clientes ON(presupuestos.id_cliente = clientes.id_back)"
+				+ " INNER JOIN estados_presupuestos ON(presupuestos.id_estado_presupuesto = estados_presupuestos.id_back)";
 		
 		c = db.rawQuery(sql, null);
 		

@@ -1,22 +1,16 @@
 package com.durox.app.Visitas;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Visitas_model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;

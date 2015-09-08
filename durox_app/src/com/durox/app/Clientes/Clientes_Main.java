@@ -13,7 +13,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,25 +21,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
-import com.durox.app.Login;
 import com.durox.app.MenuActivity;
-import com.durox.app.Documentos.Documentos;
-import com.durox.app.Documentos.Documentos_ListView;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Mails_clientes_model;
-import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
-import com.durox.app.Productos.Productos;
-import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -78,7 +70,6 @@ public class Clientes_Main extends MenuActivity {
 	int j;	
 			
 	private String jsonResult;
-	private ListView listView;
 		
 	Clientes_model mCliente;
 	TextView content;

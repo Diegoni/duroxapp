@@ -75,6 +75,7 @@
 	<string name="valoracion">"Valoración"</string>
 	<string name="ip">"IP"</string>
 	<string name="cancelar">"Cancelar"</string>
+	<string name="estado">"Estado"</string>
 	
 	
 </resources>

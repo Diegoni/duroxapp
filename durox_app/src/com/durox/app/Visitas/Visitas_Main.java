@@ -15,8 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
@@ -25,7 +23,6 @@ import com.durox.app.Models.Epocas_model;
 import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,7 +33,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -190,10 +186,6 @@ public class Visitas_Main extends MenuActivity {
 						String id_vendedor = IDvendedor;
 						String id_epoca_visita = cEpoca.getString(0);
 						String valoracion = Float.toString(valoracion2);
-						String id_origen = "1";
-						String visto = "0";
-						
-						
 						mVisitas = new Visitas_model(db);
 						
 						mVisitas.insert(

@@ -5,27 +5,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -34,28 +23,15 @@ import org.json.JSONObject;
 
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
-import com.durox.app.Clientes.Clientes;
-import com.durox.app.Clientes.Clientes_ListView;
-import com.durox.app.Models.Clientes_model;
+import com.durox.app.MenuActivity;
 import com.durox.app.Models.Estados_presupuesto_model;
-import com.durox.app.Models.Grupos_model;
-import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
-import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Vendedores_model;
-import com.durox.app.Models.Visitas_model;
-import com.durox.app.Presupuestos.Presupuestos_Main;
-import com.durox.app.Productos.Productos;
-import com.durox.app.Productos.Productos_ListView;
-import com.durox.app.Visitas.Visitas_Main;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
-import android.app.DownloadManager.Request;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -63,17 +39,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
  
-public class Presupuestos_Lista extends Activity {
+public class Presupuestos_Lista extends MenuActivity {
 	
 	// Declare Variables
 	ListView list;
@@ -82,8 +54,8 @@ public class Presupuestos_Lista extends Activity {
 	
 	String[] c_nombre;
 	String[] p_nombre;
-	String[] direccion;
-	String[] detalle;
+	String[] total;
+	String[] estado;
 	int[] foto;
 	String[] id_presupuesto;
 	String[] id_back;
@@ -98,7 +70,6 @@ public class Presupuestos_Lista extends Activity {
 	int j;	
 		
 	private String jsonResult;
-	private ListView listView;
 	
 	TextView content;
 	Config_durox config;
@@ -132,13 +103,14 @@ public class Presupuestos_Lista extends Activity {
     	Presupuestos_model mPresupuestos = new Presupuestos_model(db);
  		c = mPresupuestos.getRegistros();
 		
-		int cantidad_clientes = c.getCount();
+		int cantidad_presupuestos = c.getCount();
 		
-		id_back = new String[cantidad_clientes];
-		id_presupuesto = new String[cantidad_clientes];
-		c_nombre = new String[cantidad_clientes];
-		direccion = new String[cantidad_clientes];
-		foto = new int[cantidad_clientes];
+		id_back = new String[cantidad_presupuestos];
+		id_presupuesto = new String[cantidad_presupuestos];
+		c_nombre = new String[cantidad_presupuestos];
+		total = new String[cantidad_presupuestos];
+		estado = new String[cantidad_presupuestos];
+		foto = new int[cantidad_presupuestos];
 		
 		int j = 0;
 				
@@ -147,7 +119,8 @@ public class Presupuestos_Lista extends Activity {
 				id_back[j] = c.getString(0);
 				c_nombre[j] = c.getString(2);
 				id_presupuesto[j] = c.getString(5);
-    			direccion[j] = c.getString(3);
+    			total[j] = c.getString(3);
+    			estado[j] = c.getString(6);
     			foto[j] = R.drawable.presupuesto; 
     		
     			j = j + 1;
@@ -160,7 +133,8 @@ public class Presupuestos_Lista extends Activity {
     			Presupuesto wp = new Presupuesto(
     					id_back[i],
     					c_nombre[i],
-    					direccion[i], 
+    					total[i],
+    					estado[i], 
     					foto[i],
     					id_presupuesto[i]
     			);
@@ -389,8 +363,8 @@ public class Presupuestos_Lista extends Activity {
  				 			
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
-	 				
-	 			HttpResponse response = httpclient.execute(httppost);
+	 			//HttpResponse response;	
+	 			httpclient.execute(httppost);
 	 		} catch (ClientProtocolException e) {
 	 			Toast.makeText(getApplicationContext(), 
 	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -458,7 +432,8 @@ public class Presupuestos_Lista extends Activity {
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 	 				
-	 			HttpResponse response = httpclient.execute(httppost);
+	 			//HttpResponse response; 
+	 			httpclient.execute(httppost);
 	 		} catch (ClientProtocolException e) {
 	 			Toast.makeText(getApplicationContext(), 
 	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();

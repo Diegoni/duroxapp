@@ -1,13 +1,9 @@
 package com.durox.app.Visitas;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -15,37 +11,23 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.Config_durox;
-import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
-import com.durox.app.Clientes.Clientes;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Visitas_model;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Visitas_Enviar extends MenuActivity {
 	
-	private String jsonResult;
 	Clientes_model mCliente;
 	SQLiteDatabase db;
 	Visitas_model mVisitas;
@@ -68,7 +50,7 @@ public class Visitas_Enviar extends MenuActivity {
 		
 		int cantidad = c.getCount();
 		
-		if(c.getCount() > 0){
+		if(cantidad > 0){
 			while(c.moveToNext()){
 				
 				JsonReadTask task = new JsonReadTask(
@@ -135,7 +117,8 @@ public class Visitas_Enviar extends MenuActivity {
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 	 				
-	 			HttpResponse response = httpclient.execute(httppost);
+	 			//HttpResponse response; 
+	 			httpclient.execute(httppost);
 	 		} catch (ClientProtocolException e) {
 	 			Toast.makeText(getApplicationContext(), 
 	 		 			config.msjError(e.toString())  , Toast.LENGTH_SHORT).show();

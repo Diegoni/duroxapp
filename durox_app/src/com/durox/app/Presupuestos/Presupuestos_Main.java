@@ -30,7 +30,6 @@ import com.durox.app.Visitas.Visitas_ListView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -220,7 +219,8 @@ public class Presupuestos_Main extends MenuActivity {
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 	 				
-	 			HttpResponse response = httpclient.execute(httppost);
+	 			//HttpResponse response; 
+	 			httpclient.execute(httppost);
 	 		} catch (ClientProtocolException e) {
 	 			Toast.makeText(getApplicationContext(), 
 	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();

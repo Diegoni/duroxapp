@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
-import com.durox.app.Clientes.*;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 
@@ -31,8 +27,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 	private List<Presupuesto> presupuestos = null;
 	private ArrayList<Presupuesto> arraylist;
 
-	public Presupuestos_ListView(Context context, List<Presupuesto> presupuestos) 
-	{
+	public Presupuestos_ListView(Context context, List<Presupuesto> presupuestos) {
 		mContext = context;
 		this.presupuestos = presupuestos;
 		inflater = LayoutInflater.from(mContext);
@@ -41,72 +36,64 @@ public class Presupuestos_ListView extends BaseAdapter {
 		this.arraylist.addAll(presupuestos);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView nombre;
-		TextView direccion;
+		TextView total;
+		TextView estado;
 		TextView id;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
+	public int getCount() {
 		return presupuestos.size();
 	}
 
-	public Presupuesto getItem(int position) 
-	{
+	public Presupuesto getItem(int position) {
 		return presupuestos.get(position);
 	}
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	
+	@SuppressLint("InflateParams")
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
-			view = inflater.inflate(R.layout.clientes_listviewitem, null);
+			view = inflater.inflate(R.layout.presupuestos_listviewitem, null);
 			
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
-			holder.id = (TextView) view.findViewById(R.id.txt_cIdback);
-			holder.direccion = (TextView) view.findViewById(R.id.txt_cNombre);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_pCliente);
+			holder.id = (TextView) view.findViewById(R.id.txt_pBack);
+			holder.total = (TextView) view.findViewById(R.id.txt_pTotal);
+			holder.estado = (TextView) view.findViewById(R.id.txt_pEstado);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
-		// Set the results into TextViews
 		holder.nombre.setText(presupuestos.get(position).getNombre());
 		holder.id.setText(presupuestos.get(position).getID());
-		holder.direccion.setText(presupuestos.get(position).getDireccion());
+		holder.total.setText(presupuestos.get(position).getTotal());
+		holder.estado.setText(presupuestos.get(position).getEstado());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
 
-		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
-				// Send single item click data to SingleItemView Class
+		
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				
 				Intent intent = new Intent(mContext, Presupuestos_ItemView.class);
 				
-				// Pasamos toda la informacion
 				intent.putExtra("id", (presupuestos.get(position).getID()));
 				intent.putExtra("nombre", (presupuestos.get(position).getNombre()));
-				intent.putExtra("direccion", (presupuestos.get(position).getDireccion()));
+				intent.putExtra("total", (presupuestos.get(position).getTotal()));
 				intent.putExtra("imagen", (presupuestos.get(position).getImagen()));
 				intent.putExtra("id_presupuesto", (presupuestos.get(position).getIDPresupuesto()));
 				
-				// Start SingleItemView Class
 				mContext.startActivity(intent);
 			}
 		});
@@ -114,21 +101,15 @@ public class Presupuestos_ListView extends BaseAdapter {
 		return view;
 	}
 
-	// Filter Class
-	public void filter(String charText) 
-	{
+	
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		presupuestos.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			presupuestos.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Presupuesto wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
+		} else {
+			for (Presupuesto wp : arraylist)  {
+				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)){
 					presupuestos.add(wp);
 				}
 			}

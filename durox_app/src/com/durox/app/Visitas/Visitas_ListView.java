@@ -5,20 +5,16 @@ import java.util.List;
 import java.util.Locale;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.Presupuestos.Presupuestos_Create;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class Visitas_ListView extends BaseAdapter {
@@ -62,6 +58,7 @@ public class Visitas_ListView extends BaseAdapter {
 		return position;
 	}
 
+	@SuppressLint("InflateParams")
 	public View getView(final int position, View view, ViewGroup parent) 
 	{
 		final ViewHolder holder;

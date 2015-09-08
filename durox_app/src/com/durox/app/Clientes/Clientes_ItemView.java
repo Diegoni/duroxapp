@@ -1,8 +1,6 @@
 package com.durox.app.Clientes;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Visitas.Visitas_Main;
@@ -10,20 +8,16 @@ import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("ShowToast")
 public class Clientes_ItemView extends MenuActivity {

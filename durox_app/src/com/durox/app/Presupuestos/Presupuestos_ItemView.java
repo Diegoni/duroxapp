@@ -1,28 +1,21 @@
 package com.durox.app.Presupuestos;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 
 import java.util.ArrayList;
-
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Presupuestos_model;
-import com.durox.app.Visitas.Visitas_Main;
+import com.durox.app.Presupuestos.Presupuestos_Create;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,6 +45,8 @@ public class Presupuestos_ItemView extends MenuActivity {
 	Linea_Presupuestos_ListView adapter_listView;
 	
 	String id;
+	String cIdVisita;
+	String cNombre;
 	String id_presupuesto;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +98,9 @@ public class Presupuestos_ItemView extends MenuActivity {
 				txtpreCuit.setText(c.getString(6));
 				txtpreNombreFantasia.setText(c.getString(7));
 				txtpreFecha.setText(c.getString(8));
+				
+				cIdVisita = c.getString(1);
+				cNombre = c.getString(3);
 			}
 		}
 		
@@ -116,8 +114,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 			cursorLinea = mLineas.getIDRegistro(id_presupuesto);
 		} else {
 			cursorLinea = mLineas.getRegistro(id);
-		}
-		
+		}		
 			
 		int cantidad_lineas = cursorLinea.getCount();
 			
@@ -137,11 +134,10 @@ public class Presupuestos_ItemView extends MenuActivity {
 				x = x + 1;
 			}	
 				
-			// Locate the ListView in listview_main.xml
 			list = (ListView) findViewById(R.id.detallePresupuesto);
 
 			for (int j = 0; j < producto_linea.length; j++) {
-				//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
+				
 				Linea_Presupuestos wp = new Linea_Presupuestos(
 					cantidad_linea[j],
 					producto_linea[j],
@@ -149,38 +145,50 @@ public class Presupuestos_ItemView extends MenuActivity {
 					total_linea[j]
 				);
 					
-				// Binds all strings into an array
 				arraylist.add(wp);
 			}
 				
-			// Pass results to ListViewAdapter Class
 			adapter_listView = new Linea_Presupuestos_ListView(this, arraylist);
-			
-			// Binds the Adapter to the ListView
 			list.setAdapter(adapter_listView);
 		}
 	}
+	
 	
 	
 	public void aprobar_presupuesto(View view) {
 		Intent i = getIntent();
 		
 		id_presupuesto = i.getStringExtra("id_presupuesto");
-		
-		Log.e("Paso  ", "ID "+id_presupuesto);
-		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
-		
-		Log.e("Paso  ", "db ");
-		
 		Presupuestos_model mPresupuestoUpdate = new Presupuestos_model(db);
-		
-		Log.e("Paso  ", "Presupuestos_model ");
-		
 		mPresupuestoUpdate.aprobar(id_presupuesto);
 		
-		Log.e("Paso  ", "aprobar(id_presupuesto)");
-		
 		Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
+	}
+	
+	
+	
+	public void editar_presupuesto(View view) {
+		/*//Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
+		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_ItemView.class);
+		Log.e("Paso ", "intent ");
+		
+		intent.putExtra("cNombre", cNombre);
+		Log.e("Paso ", "cNombre "+cNombre);
+		intent.putExtra("cIdVisita", cIdVisita);
+		Log.e("Paso ", "cIdVisita "+cIdVisita);
+		intent.putExtra("id_presupuesto", id_presupuesto);
+		Log.e("Paso ", "id_presupuesto "+id_presupuesto);
+		startActivity(intent);
+		Log.e("Paso ", "startActivity ");
+		*/
+		
+		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
+		/*
+		intent.putExtra("nombre", cNombre);
+		intent.putExtra("id_visita", cIdVisita);
+		intent.putExtra("truncate", "truncate");
+		*/
+		startActivity(intent);
 	}
 }

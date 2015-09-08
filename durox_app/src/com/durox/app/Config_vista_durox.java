@@ -1,17 +1,11 @@
 package com.durox.app;
 
-import com.durox.app.Documentos.Documentos_Main;
-import com.durox.app.Presupuestos.Presupuestos_Main;
-import com.durox.app.Visitas.Visitas_Main;
 import com.example.durox_app.R;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;

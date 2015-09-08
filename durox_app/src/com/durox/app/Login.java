@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.durox.app.Httppostaux;
-import com.durox.app.Documentos.Documentos_Main;
 import com.durox.app.Models.Vendedores_model;
 
 import android.app.Activity;
@@ -16,17 +15,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.example.durox_app.R;
 
@@ -72,7 +68,7 @@ public class Login extends Activity {
         //Login button action
         btnSalir.setOnClickListener(new View.OnClickListener(){
         	public void onClick(View view){
-        		Intent salida = new Intent( Intent.ACTION_MAIN); //Llamando a la activity principal
+        		//Intent salida = new Intent( Intent.ACTION_MAIN); //Llamando a la activity principal
         		finish(); 
         	}
         });

@@ -1,22 +1,12 @@
 package com.durox.app.Presupuestos;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 import com.durox.app.MenuActivity;
-import com.durox.app.Visitas.Visitas_Main;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Linea_Presupuestos_ItemView extends MenuActivity {

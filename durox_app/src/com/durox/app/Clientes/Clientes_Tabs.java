@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import com.example.durox_app.R;
-import com.durox.app.Clientes.Clientes_Main;
+@SuppressWarnings("deprecation")
+
 
 public class Clientes_Tabs extends TabActivity {
 	

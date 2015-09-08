@@ -76,7 +76,8 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_toRightOf="@+id/button2"
-        android:text="@string/presupuesto" />
+        android:onClick="editar_presupuesto"
+        android:text="@string/editar" />
 
     <ListView
         android:id="@+id/detallePresupuesto"

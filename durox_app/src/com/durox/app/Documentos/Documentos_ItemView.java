@@ -1,46 +1,30 @@
 package com.durox.app.Documentos;
 
 import com.example.durox_app.R;
-import com.example.durox_app.R.id;
-import com.example.durox_app.R.layout;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
 import com.durox.app.Config_durox;
-import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
-import com.durox.app.Models.Clientes_model;
-import com.durox.app.Models.Productos_model;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 public class Documentos_ItemView extends MenuActivity {
@@ -51,8 +35,6 @@ public class Documentos_ItemView extends MenuActivity {
 	String id;
 	String url;
 	
-	private Button btnPlayMusic;
-	private MediaPlayer mPlayer;
 	private ProgressDialog prgDialog;
 	public static final int progress_bar_type = 0;
 	public static String file_url;
@@ -115,6 +97,7 @@ public class Documentos_ItemView extends MenuActivity {
 
 
 	class DownloadMusicfromInternet extends AsyncTask<String, String, String> {
+		@SuppressWarnings("deprecation")
 		protected void onPreExecute() {
 			super.onPreExecute();
 			showDialog(progress_bar_type);
@@ -154,6 +137,7 @@ public class Documentos_ItemView extends MenuActivity {
 		}
 
 		
+		@SuppressWarnings("deprecation")
 		protected void onPostExecute(String file_url) {
 			dismissDialog(progress_bar_type);
 			Toast.makeText(getApplicationContext(), "Descarga Completa", Toast.LENGTH_LONG).show();

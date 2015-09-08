@@ -5,48 +5,50 @@ import android.util.Log;
 public class Presupuesto {
 	private String id_back;
 	private String nombre;
-	private String direccion;
+	private String total;
+	private String estado;
 	private int imagen;
 	private String id_presupuesto;
 	
 	public Presupuesto(
 			String id_back,
 			String nombre, 
-			String direccion,
+			String total,
+			String estado,
 			int imagen,
 			String id_presupuesto) {
 		this.id_back = id_back;
 		this.nombre = nombre;
-		this.direccion = direccion;
+		this.total = total;
+		this.estado = estado;
 		this.imagen = imagen;
 		this.id_presupuesto = id_presupuesto;
 		
-		Log.e("Paso creacion del objeto ", id_back+nombre+direccion+id_presupuesto);
+		Log.e("Paso creacion del objeto ", id_back+nombre+total+estado+id_presupuesto);
 	}
 	
-	public String getID() 
-	{
+	public String getID(){ 
 		return this.id_back;
 	}
 
 
-	public String getNombre() 
-	{
+	public String getNombre() {
 		return this.nombre;
 	}
 
-	public String getDireccion() 
-	{
-		return this.direccion;
+	public String getTotal() {
+		return this.total;
+	}
+	
+	public String getEstado() {
+		return this.estado;
 	}
 
-	public int getImagen() 
-	{
+	public int getImagen() {
 		return this.imagen;
 	}
 	
-	public String getIDPresupuesto() 
-	{
+	public String getIDPresupuesto() {
 		return this.id_presupuesto;
 	}
 

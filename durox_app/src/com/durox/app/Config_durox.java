@@ -1,19 +1,8 @@
 package com.durox.app;
 
-import com.durox.app.Documentos.Documentos_Main;
-import com.durox.app.Presupuestos.Presupuestos_Main;
-import com.durox.app.Visitas.Visitas_Main;
-import com.example.durox_app.R;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 public class Config_durox {
 	private String database = "Durox_app";

@@ -1,7 +1,6 @@
 package com.durox.app.Presupuestos;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
@@ -14,13 +13,10 @@ import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Vendedores_model;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -50,17 +46,18 @@ public class Presupuestos_Create extends MenuActivity {
 	String cNombre;
 	String cIdVisita;
 	String truncate;
+	String id_presupuesto;
 	
 	Config_durox config;
 
-	public void onCreate(Bundle savedInstanceState) 
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
 		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
 		cIdVisita = intent.getStringExtra("id_visita");
+		id_presupuesto = intent.getStringExtra("id_presupuesto");
 		String truncate = intent.getStringExtra("truncate");
 		
 		TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
@@ -69,21 +66,16 @@ public class Presupuestos_Create extends MenuActivity {
 		txtIDVistia.setText(cIdVisita);
 		
 		
-		
 		auto_producto = (AutoCompleteTextView) findViewById(R.id.autoProducto);
 		etCantidad = (EditText) findViewById(R.id.etCantidad);
 		etComentario = (EditText) findViewById(R.id.etComentario);
 		
 		config = new Config_durox();
-		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		mProductos = new Productos_model(db);
-		
 		c = mProductos.getRegistros();
-		
 		cantidad = c.getCount();
-		
 		p_nombre = new String[cantidad];
 		
 		int j = 0;
@@ -104,7 +96,14 @@ public class Presupuestos_Create extends MenuActivity {
 		if(truncate.equals("truncate")){
 			mLineas.truncate();
 		}else{
-			Cursor cursor = mLineas.getRegistros();
+			
+			Cursor cursor;
+			
+			if(id_presupuesto.isEmpty()){
+				cursor = mLineas.getRegistros();
+			} else {
+				cursor = mLineas.getIDRegistro(id_presupuesto);
+			}
 			
 			int cantidad_lineas = cursor.getCount();
 			
@@ -115,16 +114,8 @@ public class Presupuestos_Create extends MenuActivity {
 			
 			int x = 0;
 					
-			if(cursor.getCount() == 0)
-			{
-				//showMessage("Error", "No records found");
-				//return;
-			}
-			else
-			{
-				
-				while(cursor.moveToNext())
-				{
+			if(cursor.getCount() > 0){
+				while(cursor.moveToNext()){
 					producto_linea[x] = cursor.getString(0);
 					cantidad_linea[x] = cursor.getString(1);
 					precio_linea[x] = cursor.getString(2);
@@ -132,12 +123,9 @@ public class Presupuestos_Create extends MenuActivity {
 					x = x + 1;
 				}	
 				
-				// Locate the ListView in listview_main.xml
 				list = (ListView) findViewById(R.id.list_linea);
 
-				for (int i = 0; i < producto_linea.length; i++) 
-				{
-					//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
+				for (int i = 0; i < producto_linea.length; i++) {
 					Linea_Presupuestos wp = new Linea_Presupuestos(
 							cantidad_linea[i],
 							producto_linea[i],
@@ -145,25 +133,27 @@ public class Presupuestos_Create extends MenuActivity {
 							total_linea[i]
 					);
 					
-					// Binds all strings into an array
 					arraylist.add(wp);
 				}
 				
-				// Pass results to ListViewAdapter Class
 				adapter_listView = new Linea_Presupuestos_ListView(this, arraylist);
-				
-				// Binds the Adapter to the ListView
 				list.setAdapter(adapter_listView);
 			}
 						
-			Cursor cursorLinea = mLineas.getLineasProceso();			
+			Cursor cursorLinea;	
+			
+			if(id_presupuesto.isEmpty()){
+				cursorLinea = mLineas.getRegistros();
+			} else {
+				cursorLinea = mLineas.getIDRegistro(id_presupuesto);
+			}
 			
 			if(cursorLinea.getCount() > 0){
 				Float total = (float) 0;
 				Float subtotal = (float) 0;
 				
 				while(cursorLinea.moveToNext()){
-					subtotal = Float.parseFloat(cursorLinea.getString(0)); 
+					subtotal = Float.parseFloat(cursorLinea.getString(3)); 
 					total = total + subtotal;
 				}
 				
@@ -171,8 +161,9 @@ public class Presupuestos_Create extends MenuActivity {
 				txtTotal.setText(""+total+"");
 			}
 		}
-		
 	}
+	
+	
 	
 	public void guardar_detalle(View view){
 		String producto = auto_producto.getText().toString();
@@ -228,6 +219,7 @@ public class Presupuestos_Create extends MenuActivity {
 	}
 	
 	
+	
 	public void limpiar_detalle(View view){
 		Toast.makeText(this, config.msjOkDelete(), Toast.LENGTH_SHORT).show();
 		
@@ -239,6 +231,7 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		startActivity(intent);
 	}
+	
 	
 	
 	
@@ -261,9 +254,7 @@ public class Presupuestos_Create extends MenuActivity {
 		}
 		
 		Vendedores_model mVendedor = new Vendedores_model(db);
-		
 		Cursor cursorVendedor = mVendedor.getRegistros();
-		
 		String id_vendedor = "1";
 		
 		if(cursorVendedor.getCount() > 0){
@@ -307,9 +298,7 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		
 		Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
-		
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
-		
 		startActivity(intent);
 	}
 	
@@ -322,9 +311,7 @@ public class Presupuestos_Create extends MenuActivity {
 		String total = txtTotal.getText().toString();
 		
 		Clientes_model mCliente = new Clientes_model(db);
-		
 		Cursor cursorCliente = mCliente.getID(cNombre);
-		
 		String id_cliente = "1";
 		
 		if(cursorCliente.getCount() > 0){
@@ -334,9 +321,7 @@ public class Presupuestos_Create extends MenuActivity {
 		}
 		
 		Vendedores_model mVendedor = new Vendedores_model(db);
-		
 		Cursor cursorVendedor = mVendedor.getRegistros();
-		
 		String id_vendedor = "1";
 		
 		if(cursorVendedor.getCount() > 0){
@@ -378,11 +363,8 @@ public class Presupuestos_Create extends MenuActivity {
 			}
 		}	
 		
-		
 		Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
-		
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
-		
 		startActivity(intent);
 	}	
 }

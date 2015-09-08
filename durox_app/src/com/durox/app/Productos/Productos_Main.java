@@ -18,19 +18,15 @@ import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Clientes.Clientes_Main;
 import com.durox.app.Documentos.Documentos;
 import com.durox.app.Documentos.Documentos_ListView;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Documentos_model;
-import com.durox.app.Models.Grupos_model;
-import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -72,7 +68,6 @@ public class Productos_Main extends MenuActivity {
 	int j;	
 			
 	private String jsonResult;
-	private ListView listView;
 		
 	Clientes_model mCliente;
 	Productos_model mProductos;
