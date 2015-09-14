@@ -127,6 +127,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 		String[] cantidad_linea = new String[cantidad_lineas];
 		String[] precio_linea = new String[cantidad_lineas];
 		String[] total_linea = new String[cantidad_lineas];
+		String[] id_linea = new String[cantidad_lineas];
 			
 		int x = 0;
 					
@@ -136,6 +137,7 @@ public class Presupuestos_ItemView extends MenuActivity {
 				cantidad_linea[x] = cursorLinea.getString(1);
 				precio_linea[x] = cursorLinea.getString(2);
 				total_linea[x] = cursorLinea.getString(3);
+				id_linea[x] = cursorLinea.getString(6);
 				x = x + 1;
 			}	
 				
@@ -144,10 +146,15 @@ public class Presupuestos_ItemView extends MenuActivity {
 			for (int j = 0; j < producto_linea.length; j++) {
 				
 				Linea_Presupuestos wp = new Linea_Presupuestos(
+					id_linea[j],
 					cantidad_linea[j],
 					producto_linea[j],
 					precio_linea[j],
-					total_linea[j]
+					total_linea[j],
+					"1",
+					"1",
+					"1",
+					"1"
 				);
 					
 				arraylist.add(wp);

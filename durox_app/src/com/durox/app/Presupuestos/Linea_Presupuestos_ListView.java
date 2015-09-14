@@ -10,12 +10,13 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
 
 public class Linea_Presupuestos_ListView extends BaseAdapter {
@@ -86,23 +87,29 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 		holder.cantidad.setText(linea_presupuestos.get(position).getCantidad());
 		holder.precio.setText(linea_presupuestos.get(position).getPrecio());
 		holder.total.setText(linea_presupuestos.get(position).getTotal());
-
+		
+		
 		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
-				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Linea_Presupuestos_ItemView.class);
+		view.setOnLongClickListener(new OnLongClickListener() {
+		    public boolean onLongClick(View arg0) {
+		    	Intent intent = new Intent(mContext, Presupuestos_Create.class);
 				
 				// Pasamos toda la informacion
-				intent.putExtra("producto", (linea_presupuestos.get(position).getProducto()));
-				intent.putExtra("cantidad", (linea_presupuestos.get(position).getCantidad()));
-				intent.putExtra("precio", (linea_presupuestos.get(position).getPrecio()));
-				intent.putExtra("total", (linea_presupuestos.get(position).getTotal()));
+				intent.putExtra("id_linea", (linea_presupuestos.get(position).getIdLinea()));
+				intent.putExtra("nombre", (linea_presupuestos.get(position).getcNombre()));
+				intent.putExtra("id_visita", (linea_presupuestos.get(position).getcIdVisita()));
+				intent.putExtra("id", (linea_presupuestos.get(position).getid()));
+				intent.putExtra("id_presupuesto", (linea_presupuestos.get(position).getid_presupuesto()));
+				
+				Log.e("Linea_Presupuestos_ListView ", "cNombre "+linea_presupuestos.get(position).getcNombre());
+				Log.e("Linea_Presupuestos_ListView ", "cIdVisita "+linea_presupuestos.get(position).getcIdVisita());
+				Log.e("Linea_Presupuestos_ListView ", "id "+linea_presupuestos.get(position).getid());
+				Log.e("Linea_Presupuestos_ListView ", "id_presupuesto "+linea_presupuestos.get(position).getid_presupuesto());
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
+				
+				return false;
 			}
 		});
 

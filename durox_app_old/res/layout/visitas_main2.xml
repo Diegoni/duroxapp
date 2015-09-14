@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btnActualizar_visitas"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+   
+    <AutoCompleteTextView
+        android:id="@+id/autoClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/cliente">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <AutoCompleteTextView
+        android:id="@+id/autoEpocas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/autoClientes"
+        android:layout_toLeftOf="@+id/button1"
+        android:ems="10"
+        android:hint="@string/epoca" />
+
+    <EditText
+        android:id="@+id/etFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoEpocas"
+        android:ems="10"
+        android:hint="@string/fecha"
+        android:inputType="date" />
+
+    <RatingBar
+        android:id="@+id/ebValoracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFecha"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/autoEpocas"
+        android:layout_alignBottom="@+id/autoEpocas"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/download"
+        android:onClick="actualizar_epocas" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/save"
+        android:onClick="guardar"
+        android:text="@string/guardar" />
+
+    <EditText
+        android:id="@+id/txtcomentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnGuardar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ebValoracion"
+        android:ems="10"
+        android:hint="@string/comentarios"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

@@ -48,6 +48,7 @@ public class Presupuestos_Create extends MenuActivity {
 	String cIdVisita;
 	String truncate;
 	String id_presupuesto;
+	String id_linea;
 	String id;
 	
 	Config_durox config;
@@ -56,19 +57,35 @@ public class Presupuestos_Create extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
 		
+		Log.e("Paso ", "Accedio a Presupuestos_Create");
+		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
 		cIdVisita = intent.getStringExtra("id_visita");
 		id_presupuesto = intent.getStringExtra("id_presupuesto");
 		id = intent.getStringExtra("id");
+		id_linea = intent.getStringExtra("id_linea");
 		String truncate = intent.getStringExtra("truncate");
+		
+		Log.e("Paso ", "Intent carga");
+		
+		if(truncate == null){
+			truncate = "no"; 
+		}
+		
+		Log.e("Presupuestos_Create", "cNombre "+cNombre);
+		Log.e("Presupuestos_Create", "cIdVisita "+cIdVisita);
+		Log.e("Presupuestos_Create", "id_presupuesto "+id_presupuesto);
+		Log.e("Presupuestos_Create", "id "+id);
+		Log.e("Presupuestos_Create ", "truncate "+truncate);
 		
 		TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
 		TextView txtIDVistia = (TextView) findViewById(R.id.txt_idVisita);
 		txtNombre.setText(cNombre);
 		txtIDVistia.setText(cIdVisita);
 		
-		
+		Log.e("Paso ", "TextView");
+				
 		auto_producto = (AutoCompleteTextView) findViewById(R.id.autoProducto);
 		etCantidad = (EditText) findViewById(R.id.etCantidad);
 		etComentario = (EditText) findViewById(R.id.etComentario);
@@ -96,9 +113,23 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		mLineas = new Lineas_Presupuestos_model(db);
 		
+		Log.e("Paso ", "ArrayAdapter");
+		
+		
+		if(id_linea != null){
+			Log.e("Presupuestos_Create", "id_linea "+id_linea);
+			mLineas.deleteLinea(id_linea);
+		}
+		
 		if(truncate.equals("truncate")){
 			mLineas.truncate();
+			
+			Log.e("Paso ", "truncate si");
+			
 		}else{
+			
+			Log.e("Paso ", "truncate no");
+			
 			Cursor cursor;
 			
 			Log.e("Paso ", "IF id_presupuesto valor " + id_presupuesto);
@@ -122,6 +153,7 @@ public class Presupuestos_Create extends MenuActivity {
 			String[] cantidad_linea = new String[cantidad_lineas];
 			String[] precio_linea = new String[cantidad_lineas];
 			String[] total_linea = new String[cantidad_lineas];
+			String[] id_linea = new String[cantidad_lineas];
 			
 			int x = 0;
 					
@@ -131,6 +163,7 @@ public class Presupuestos_Create extends MenuActivity {
 					cantidad_linea[x] = cursor.getString(1);
 					precio_linea[x] = cursor.getString(2);
 					total_linea[x] = cursor.getString(3);
+					id_linea[x] = cursor.getString(6);
 					x = x + 1;
 				}	
 				
@@ -138,10 +171,15 @@ public class Presupuestos_Create extends MenuActivity {
 
 				for (int i = 0; i < producto_linea.length; i++) {
 					Linea_Presupuestos wp = new Linea_Presupuestos(
+							id_linea[i],
 							cantidad_linea[i],
 							producto_linea[i],
 							precio_linea[i],
-							total_linea[i]
+							total_linea[i],
+							cNombre,
+							cIdVisita,
+							id_presupuesto,
+							id
 					);
 					
 					arraylist.add(wp);
@@ -261,13 +299,6 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		
 		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Create.class);
-		/*
-		intent.putExtra("nombre", cNombre);
-		intent.putExtra("id_visita", cIdVisita);
-		intent.putExtra("truncate", "no");
-		intent.putExtra("id_presupuesto", id_presupuesto);
-		intent.putExtra("id", id);
-		*/
 		intent.putExtra("truncate", "no");
 		intent.putExtra("nombre", cNombre);
 		Log.e("Paso ", "nombre "+cNombre);
@@ -288,6 +319,7 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		
 		startActivity(intent);
+		
 	}
 	
 	

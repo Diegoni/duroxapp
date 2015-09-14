@@ -76,6 +76,7 @@
 	<string name="ip">"IP"</string>
 	<string name="cancelar">"Cancelar"</string>
 	<string name="estado">"Estado"</string>
+	<string name="borrar">"Borrar"</string>
 	
 	
 </resources>

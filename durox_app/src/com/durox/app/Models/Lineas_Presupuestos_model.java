@@ -45,7 +45,10 @@ public class Lineas_Presupuestos_model extends Activity{
 				+ " linea_productos_presupuestos.cantidad, "
 				+ " productos.nombre, "
 				+ " linea_productos_presupuestos.precio, "
-				+ " linea_productos_presupuestos.subtotal "
+				+ " linea_productos_presupuestos.subtotal, "
+				+ " linea_productos_presupuestos.id_presupuesto, "
+				+ " linea_productos_presupuestos.id_temporario, "
+				+ " linea_productos_presupuestos.id_linea_presupuesto "
 				+ " FROM linea_productos_presupuestos"
 				+ " INNER JOIN productos ON(linea_productos_presupuestos.id_producto = productos.id_back)"
 				+ " WHERE linea_productos_presupuestos.id_back = '0' AND linea_productos_presupuestos.id_temporario = '0'";
@@ -65,7 +68,8 @@ public class Lineas_Presupuestos_model extends Activity{
 				+ " linea_productos_presupuestos.precio, "
 				+ " linea_productos_presupuestos.subtotal, "
 				+ " linea_productos_presupuestos.id_presupuesto, "
-				+ " linea_productos_presupuestos.id_temporario "
+				+ " linea_productos_presupuestos.id_temporario, "
+				+ " linea_productos_presupuestos.id_linea_presupuesto "
 				+ " FROM linea_productos_presupuestos"
 				+ " INNER JOIN productos ON(linea_productos_presupuestos.id_producto = productos.id_back)"
 				+ " WHERE id_presupuesto = '"+id+"'";
@@ -85,7 +89,8 @@ public class Lineas_Presupuestos_model extends Activity{
 				+ " linea_productos_presupuestos.precio, "
 				+ " linea_productos_presupuestos.subtotal, "
 				+ " linea_productos_presupuestos.id_presupuesto, "
-				+ " linea_productos_presupuestos.id_temporario "
+				+ " linea_productos_presupuestos.id_temporario, "
+				+ " linea_productos_presupuestos.id_linea_presupuesto "
 				+ " FROM linea_productos_presupuestos"
 				+ " INNER JOIN productos ON(linea_productos_presupuestos.id_producto = productos.id_back)"
 				+ " WHERE id_temporario = '"+id+"'";
@@ -163,6 +168,17 @@ public class Lineas_Presupuestos_model extends Activity{
 		sql = "DELETE FROM "
 				+ " `linea_productos_presupuestos` ";
 				//+ " WHERE id_back = '0";
+		db.execSQL(sql);
+	}
+	
+	public void deleteLinea(String linea){
+		createTable();
+		
+		sql = "DELETE FROM "
+				+ " `linea_productos_presupuestos` "
+				+ " WHERE "
+				+ " id_linea_presupuesto = '"+linea+"'";
+		
 		db.execSQL(sql);
 	}
 	

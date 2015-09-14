@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lvClientes"
+        android:layout_toLeftOf="@+id/btnAgregarComentarios"
+        android:hint="@string/cliente" >
+
+        <requestFocus />
+    </EditText>
+
+    <ListView
+        android:id="@+id/lvClientes"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/btnAgregarComentarios" />
+
+    <Button
+        android:id="@+id/btnAgregarComentarios"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="actualizar_clientes"
+         android:drawableLeft="@drawable/download"
+        android:text="@string/bajar" />
+    
+</RelativeLayout>
