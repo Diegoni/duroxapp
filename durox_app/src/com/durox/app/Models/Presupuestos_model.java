@@ -236,5 +236,16 @@ public class Presupuestos_model extends Activity{
 		
 		return c;
 	}
+	
+	
+	public void update(String total, String id_presupuesto){
+		sql = "UPDATE presupuestos"
+				+ " SET total = '"+total+"' "
+				+ " WHERE id_presupuesto = '"+id_presupuesto+"'";
+		
+		Log.e("Consulta ", sql);
+		
+		db.execSQL(sql);
+	}
 
 }

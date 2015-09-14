@@ -93,24 +93,6 @@
         android:onClick="guardar_detalle"
         android:text="@string/agregar" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btm_lpLimpiar"
-        android:text="@string/borrar" />
-
-    <TextView
-        android:id="@+id/label_preIdPresupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_toRightOf="@+id/button1"
-        android:text="@string/total"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <TextView
         android:id="@+id/txt_pTotal"
         android:layout_width="wrap_content"
@@ -130,5 +112,16 @@
         android:layout_alignParentRight="true"
         android:onClick="aprobar_presupuesto"
         android:text="@string/aprobar" />
+
+    <TextView
+        android:id="@+id/label_preIdPresupuesto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btm_lpLimpiar"
+        android:layout_alignBottom="@+id/btm_lpLimpiar"
+        android:layout_marginLeft="18dp"
+        android:layout_toRightOf="@+id/btm_lpLimpiar"
+        android:text="@string/total"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

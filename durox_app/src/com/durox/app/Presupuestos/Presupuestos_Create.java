@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,12 +53,10 @@ public class Presupuestos_Create extends MenuActivity {
 	String id;
 	
 	Config_durox config;
-
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
-		
-		Log.e("Paso ", "Accedio a Presupuestos_Create");
 		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
@@ -66,8 +65,6 @@ public class Presupuestos_Create extends MenuActivity {
 		id = intent.getStringExtra("id");
 		id_linea = intent.getStringExtra("id_linea");
 		String truncate = intent.getStringExtra("truncate");
-		
-		Log.e("Paso ", "Intent carga");
 		
 		if(truncate == null){
 			truncate = "no"; 
@@ -79,12 +76,12 @@ public class Presupuestos_Create extends MenuActivity {
 		Log.e("Presupuestos_Create", "id "+id);
 		Log.e("Presupuestos_Create ", "truncate "+truncate);
 		
+		Button btnGuardar = (Button) findViewById(R.id.guardar_presupuesto);
+		Button btnAprobar = (Button) findViewById(R.id.btnAprobarPresupuesto);
 		TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
 		TextView txtIDVistia = (TextView) findViewById(R.id.txt_idVisita);
 		txtNombre.setText(cNombre);
 		txtIDVistia.setText(cIdVisita);
-		
-		Log.e("Paso ", "TextView");
 				
 		auto_producto = (AutoCompleteTextView) findViewById(R.id.autoProducto);
 		etCantidad = (EditText) findViewById(R.id.etCantidad);
@@ -113,37 +110,25 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		mLineas = new Lineas_Presupuestos_model(db);
 		
-		Log.e("Paso ", "ArrayAdapter");
-		
-		
 		if(id_linea != null){
-			Log.e("Presupuestos_Create", "id_linea "+id_linea);
 			mLineas.deleteLinea(id_linea);
 		}
 		
 		if(truncate.equals("truncate")){
 			mLineas.truncate();
-			
-			Log.e("Paso ", "truncate si");
-			
+			btnGuardar.setEnabled(false);
+			btnAprobar.setEnabled(false);
 		}else{
-			
-			Log.e("Paso ", "truncate no");
 			
 			Cursor cursor;
 			
-			Log.e("Paso ", "IF id_presupuesto valor " + id_presupuesto);
-			
 			if(id_presupuesto == null || id_presupuesto.equals(" ") || id_presupuesto == ""+null){
 				cursor = mLineas.getRegistros();
-				Log.e("Paso ", "IF id_presupuesto NULL");
 			} else {
 				if (id.equals("0")){
 					cursor = mLineas.getIDRegistro(id_presupuesto);
-					Log.e("Paso ", "IF id_presupuesto "+id_presupuesto);
 				} else {
 					cursor = mLineas.getRegistro(id);
-					Log.e("Paso ", "IF id "+id);
 				}	
 			}
 			
@@ -212,6 +197,13 @@ public class Presupuestos_Create extends MenuActivity {
 				
 				TextView txtTotal = (TextView) findViewById(R.id.txt_pTotal);
 				txtTotal.setText(""+total+"");
+				
+				btnGuardar.setEnabled(true);
+				btnAprobar.setEnabled(true);
+			} else {
+				
+				btnGuardar.setEnabled(false);
+				btnAprobar.setEnabled(false);
 			}
 		}
 	}
@@ -242,34 +234,23 @@ public class Presupuestos_Create extends MenuActivity {
 				String linea_id_temporario = "0";
 				
 				
-				
-				Log.e("Paso ", "id_presupuesto "+id_presupuesto);
 				if(id_presupuesto == null){
-				Log.e("Paso ", "id_presupuesto "+id_presupuesto);
 				}else{
 					Cursor cursorLinea;
-					Log.e("Paso ", "cursorLinea ");
 					
 					if (id.equals("0")){
 						cursorLinea = mLineas.getIDRegistro(id_presupuesto);
-						Log.e("Paso ", "getIDRegistro ");
 					} else {
 						cursorLinea = mLineas.getRegistro(id);
-						Log.e("Paso ", "getRegistro ");
 					}	
 					
 					if(cursorLinea.getCount() > 0){
-						Log.e("Paso ", "cursorLinea ");
 						while(cursorLinea.moveToNext()){
 							linea_id_presupuesto = cursorLinea.getString(4);
 							linea_id_temporario = cursorLinea.getString(5);
 						}
 					}
 				}
-				
-				Log.e("Paso ", "linea_id_back "+linea_id_back);
-				Log.e("Paso ", "linea_id_presupuesto "+linea_id_presupuesto);
-				Log.e("Paso ", "linea_id_temporario "+linea_id_temporario);
 				
 				mLineas.insert(
 						linea_id_back,			//id_back
@@ -287,39 +268,25 @@ public class Presupuestos_Create extends MenuActivity {
 						null,					//user_add
 						null 					//user_upd
 				);
-				
-				
-				
 				Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
-				
-    		}		
+			}		
 		} else {
 			Toast.makeText(this, config.msjNoRegistro("producto"), Toast.LENGTH_SHORT).show();
 		}
-		
-		
+				
 		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Create.class);
 		intent.putExtra("truncate", "no");
 		intent.putExtra("nombre", cNombre);
-		Log.e("Paso ", "nombre "+cNombre);
 		intent.putExtra("id_visita", cIdVisita);
-		Log.e("Paso ", "id_visita "+cIdVisita);
-		
+				
 		if(id_presupuesto == null){
 			intent.putExtra("id_presupuesto", " ");
-			Log.e("Paso ", "id_presupuesto " + " ");
 			intent.putExtra("id", " ");
-			Log.e("Paso ", "id "+" ");
 		}else{
 			intent.putExtra("id_presupuesto", ""+id_presupuesto);
-			Log.e("Paso ", "id_presupuesto " + ""+id_presupuesto);
 			intent.putExtra("id", ""+id);
-			Log.e("Paso ", "id "+id);
 		}
-		
-		
 		startActivity(intent);
-		
 	}
 	
 	
@@ -372,25 +339,36 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		mPresupuestos.createTable();
 		
-		mPresupuestos.insert(
-			"0", 			// id_back
-			cIdVisita, 		// id_visita 
-			id_cliente,		// id_cliente 
-			id_vendedor,	// id_vendedor 
-			"1",			// id_estado_presupuesto 
-			total,			// total 
-			"0",			// fecha 
-			"1",			// id_origen
-			"0",			// aprobado_back 
-			"0",			// aprobado_front
-			"0",			// visto_back 
-			"1",			// visto_front
-			null,			// date_add
-			null,			// date_upd 
-			null,			// eliminado 
-			null,			// user_add 
-			null			// user_upd
-		);
+		if(id_presupuesto.length() == 1){
+			Log.e("mPresupuestos.createTable() ENTRO", "id_presupuesto "+id_presupuesto);
+			Log.e("mPresupuestos.createTable() ENTRO", "id_presupuesto.length() "+id_presupuesto.length());
+			
+			mPresupuestos.insert(
+				"0", 			// id_back
+				cIdVisita, 		// id_visita 
+				id_cliente,		// id_cliente 
+				id_vendedor,	// id_vendedor 
+				"1",			// id_estado_presupuesto 
+				total,			// total 
+				"0",			// fecha 
+				"1",			// id_origen
+				"0",			// aprobado_back 
+				"0",			// aprobado_front
+				"0",			// visto_back 
+				"1",			// visto_front
+				null,			// date_add
+				null,			// date_upd 
+				null,			// eliminado 
+				null,			// user_add 
+				null			// user_upd
+			);
+		} else {
+			mPresupuestos.update(total, id_presupuesto);
+			Log.e("mPresupuestos.createTable() NO", "id_presupuesto "+id_presupuesto);
+			Log.e("mPresupuestos.createTable() NO", "id_presupuesto.length() "+id_presupuesto.length());
+		}
+		
+		
 		
 		Cursor last_insert = mPresupuestos.getLastInsert();
 		

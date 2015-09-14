@@ -1,7 +1,5 @@
 package com.durox.app.Presupuestos;
 
-import android.util.Log;
-
 public class Presupuesto {
 	private String id_back;
 	private String nombre;
@@ -23,8 +21,6 @@ public class Presupuesto {
 		this.estado = estado;
 		this.imagen = imagen;
 		this.id_presupuesto = id_presupuesto;
-		
-		Log.e("Paso creacion del objeto ", id_back+nombre+total+estado+id_presupuesto);
 	}
 	
 	public String getID(){ 
