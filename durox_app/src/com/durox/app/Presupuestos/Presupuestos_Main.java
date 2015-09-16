@@ -73,6 +73,9 @@ public class Presupuestos_Main extends MenuActivity {
 		config = new Config_durox();
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
+		setTitle("Presupuestos - Selección de la visita");
+        getActionBar().setIcon(R.drawable.menupresupuesto);
+		
 		mVendedor = new Vendedores_model(db);
 		id_vendedor = mVendedor.getID();
 		

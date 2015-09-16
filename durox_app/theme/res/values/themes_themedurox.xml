@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="themeDurox" parent="@style/_themeDurox"/>
+
+  <style name="_themeDurox" parent="Theme.AppCompat.Light">
+
+    <item name="android:editTextStyle">@style/EditTextthemeDurox</item>
+
+    <item name="android:textColorHighlight">#9933b5e5</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewthemeDurox</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxthemeDurox</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonthemeDurox</item>
+
+    <item name="android:buttonStyle">@style/ButtonthemeDurox</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonthemeDurox</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerthemeDurox</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemthemeDurox</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarthemeDurox</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarthemeDurox</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarthemeDurox</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigthemeDurox</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallthemeDurox</item>
+
+    <item name="android:buttonStyleToggle">@style/TogglethemeDurox</item>
+
+    <item name="android:listViewStyle">@style/ListViewthemeDurox</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewthemeDurox.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemthemeDurox</item>
+
+  </style>
+
+</resources>

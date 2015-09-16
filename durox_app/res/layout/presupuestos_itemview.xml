@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@drawable/fondo" >
 
     <ImageView
         android:id="@+id/imagen"
@@ -50,7 +51,7 @@
 
     <Button
         android:id="@+id/btn_preAprobar"
-        style="?android:attr/buttonStyleSmall"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -58,35 +59,13 @@
         android:onClick="aprobar_presupuesto"
         android:text="@string/aprobar" />
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_preAprobar"
-        android:layout_alignBottom="@+id/btn_preAprobar"
-        android:layout_alignParentLeft="true"
-        android:text="@string/inicio" />
-
-    <Button
-        android:id="@+id/btn_pEditar"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toRightOf="@+id/button2"
-        android:onClick="editar_presupuesto"
-        android:text="@string/editar" />
-
     <ListView
         android:id="@+id/detallePresupuesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_preAprobar"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/label_Fecha"
-        android:layout_marginTop="20dp" >
+        android:layout_below="@+id/label_Fecha" >
 
     </ListView>
 
@@ -137,7 +116,7 @@
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/label_idPresupuesto"
         android:text="@string/presupuesto"
-        android:textColor="#33CC33" />
+        android:textColor="#3c8dbc" />
 
     <TextView
         android:id="@+id/txt_preNombre"
@@ -206,12 +185,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
-        android:id="@+id/btn_GenerarPedido"
-        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btn_pEditar"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btn_preAprobar"
-        android:text="@string/pedido" />
+        android:onClick="editar_presupuesto"
+        android:text="@string/editar" />
 
 </RelativeLayout>

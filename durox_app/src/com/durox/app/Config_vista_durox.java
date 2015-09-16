@@ -23,6 +23,9 @@ public class Config_vista_durox extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.config);
         
+        setTitle("Configuración - Parámetros ");
+        getActionBar().setIcon(R.drawable.menuconfig);
+        
         etIp = (EditText) findViewById(R.id.et_config_ip);
         etDocumentos = (EditText) findViewById(R.id.et_config_documento);
         

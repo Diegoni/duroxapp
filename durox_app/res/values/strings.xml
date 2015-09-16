@@ -79,4 +79,36 @@
 	<string name="borrar">"Borrar"</string>
 	
 	
+	
+	<!-- Color del Texto General -->
+    <color name="text_default">#666666</color>
+ 
+    <!-- Colores del TextView -->
+    <color name="text_view_default">#222222</color>
+ 
+    <!-- Colores del Spinner -->
+    <color name="spinner_selection">#666666</color>
+    <color name="spinner_entries">#EF4B24</color>
+ 
+    <!-- Colores del Boton -->
+    <color name="primary">#3c8dbc</color>
+    <color name="primary_p">#367fa9</color>
+    <color name="primary_f">#367fa9</color>
+    <color name="primary_d">#9cc1e4</color>
+    
+    <color name="danger">#d9534f</color>
+    <color name="danger_p">#761c19</color>
+    <color name="danger_f">#c9302c</color>
+    
+    <color name="button_text">#FFFFFF</color>
+ 
+    <!-- Items del Spinner -->
+    <string-array name="items_array">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+        <item>Item 4</item>
+    </string-array>
+	
+	
 </resources>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
+    android:layout_height="fill_parent"
+    android:background="@drawable/fondo" >
+   
     <EditText
         android:id="@+id/search"
         android:layout_width="fill_parent"
@@ -22,13 +24,27 @@
 
     <Button
         android:id="@+id/btnAgregarComentarios"
-        style="?android:attr/buttonStyleSmall"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:drawableLeft="@drawable/download"
+        android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_clientes"
         android:text="@string/bajar" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/search"
+        android:layout_marginLeft="38dp" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/search"
+        android:layout_marginLeft="34dp" />
     
 </RelativeLayout>

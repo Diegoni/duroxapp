@@ -90,7 +90,10 @@ public class Clientes_Main extends MenuActivity {
         
         mVendedor = new Vendedores_model(db);
         id_vendedor = mVendedor.getID();
-		
+        
+        setTitle("Clientes - Lista");
+        getActionBar().setIcon(R.drawable.menuclientes);
+        
 		clientes_lista();
 	}
 	

@@ -55,6 +55,9 @@ public class Presupuestos_ItemView extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_itemview);
 		
+		setTitle("Presupuestos - Registro");
+        getActionBar().setIcon(R.drawable.menupresupuesto);
+		
 		config = new Config_durox();
 		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);

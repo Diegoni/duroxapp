@@ -4,6 +4,7 @@
     android:id="@+id/btnActualizar_visitas"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/fondo"
     tools:context="com.durox.app.Models.Direcciones_clientes_model" >
 
     <TextView
@@ -58,20 +59,12 @@
 
     <Button
         android:id="@+id/btm_lpLimpiar"
+         style="@style/btn_danger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="limpiar_detalle"
         android:text="@string/limpiar" />
-
-    <Button
-        android:id="@+id/guardar_presupuesto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnAprobarPresupuesto"
-        android:onClick="guardar_presupuesto"
-        android:text="@string/guardar" />
 
     <EditText
         android:id="@+id/etCantidad"
@@ -86,6 +79,7 @@
 
     <Button
         android:id="@+id/btnGuardarPresupuesto"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -105,6 +99,7 @@
 
     <Button
         android:id="@+id/btnAprobarPresupuesto"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/guardar_presupuesto"
@@ -123,5 +118,15 @@
         android:layout_toRightOf="@+id/btm_lpLimpiar"
         android:text="@string/total"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/guardar_presupuesto"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/etComentario"
+        android:onClick="guardar_presupuesto"
+        android:text="@string/guardar" />
 
 </RelativeLayout>

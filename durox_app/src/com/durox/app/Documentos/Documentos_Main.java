@@ -61,6 +61,9 @@ public class Documentos_Main extends MenuActivity {
 	{
 		super.onCreate(savedInstanceState);
 		
+		setTitle("Documentos - Lista");
+        getActionBar().setIcon(R.drawable.menudocumentos);
+		
 		Intent intent = getIntent();
 		String dNombre = intent.getStringExtra("nombre");
 		
@@ -219,7 +222,7 @@ public class Documentos_Main extends MenuActivity {
 				nombre[j] = cDocumentos.getString(1);
 				epoca[j] = cDocumentos.getString(2);
 				fecha[j] = cDocumentos.getString(3);
-				foto[j] = R.drawable.document; 
+				foto[j] = R.drawable.documentos; 
 				j = j + 1;
 			}				
 			

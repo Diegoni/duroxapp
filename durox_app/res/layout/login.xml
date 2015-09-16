@@ -2,7 +2,7 @@
     android:id="@+id/layout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/fondo"
     android:orientation="vertical"
     android:padding="10dip" >
 
@@ -23,14 +23,6 @@
         android:password="true"
         android:singleLine="true" />
 
-    <!-- Login button -->
-
-
-    <!-- Link to forgot passw -->
-
-
-    <!-- Link to Registration Screen -->
-
     <EditText
         android:id="@+id/edusuario"
         android:layout_width="457dp"
@@ -47,7 +39,7 @@
 
     <Button
         android:id="@+id/btn_Salir"
-        style="?android:attr/buttonStyleSmall"
+        style="@style/btn_danger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/edpassword"
@@ -67,6 +59,7 @@
 
     <Button
         android:id="@+id/Blogin"
+        style="@style/btn_primary"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/edpassword"
@@ -77,6 +70,7 @@
 
     <Button
         android:id="@+id/btn_Sin"
+        
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -84,7 +84,10 @@ public class Presupuestos_Lista extends MenuActivity {
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.presupuestos_listview);
+        
+        setTitle("Presupuestos - Lista");
+        getActionBar().setIcon(R.drawable.menupresupuesto);
         
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);

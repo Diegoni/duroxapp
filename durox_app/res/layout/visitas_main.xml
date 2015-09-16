@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btnActualizar_visitas"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondo" >
    
     <AutoCompleteTextView
         android:id="@+id/autoClientes"
@@ -37,22 +37,25 @@
 
     <Button
         android:id="@+id/btm_lpLimpiar2"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/autoEpocas"
         android:layout_alignBottom="@+id/autoEpocas"
         android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/download"
-        android:onClick="actualizar_epocas" />
+        android:drawableLeft="@drawable/downloadw"
+        android:onClick="actualizar_epocas"
+        android:text="@string/bajar" />
 
     <Button
         android:id="@+id/btnGuardar"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/save"
+        android:drawableLeft="@drawable/savew"
         android:onClick="guardar"
         android:text="@string/guardar" />
 

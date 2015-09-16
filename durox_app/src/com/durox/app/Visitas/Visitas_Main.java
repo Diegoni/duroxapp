@@ -66,6 +66,9 @@ public class Visitas_Main extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.visitas_main);
 		
+		setTitle("Visitas - Carga de nueva visita");
+        getActionBar().setIcon(R.drawable.menuvisitas);
+		
 		cargar_vista();
 	}
 

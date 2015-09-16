@@ -58,6 +58,9 @@ public class Presupuestos_Create extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
 		
+		setTitle("Presupuestos - Carga de un nuevo presupuesto");
+        getActionBar().setIcon(R.drawable.menupresupuesto);
+		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
 		cIdVisita = intent.getStringExtra("id_visita");

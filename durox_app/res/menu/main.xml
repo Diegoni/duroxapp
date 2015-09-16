@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.durox_app.MainActivity" >
-
+  
     <item android:id="@+id/item1" android:title="Clientes"></item>
     <item android:id="@+id/item2" android:title="Productos"></item>
     <item android:id="@+id/item3" android:title="Visitas"></item>

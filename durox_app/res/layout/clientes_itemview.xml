@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/razon_social"
-        android:textColor="#33CC33" />
+        android:textColor="#3c8dbc" />
 
     <TextView
         android:id="@+id/txt_idVisita"
@@ -148,6 +148,7 @@
 
     <Button
         android:id="@+id/visita"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

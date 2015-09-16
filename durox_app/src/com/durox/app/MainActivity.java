@@ -7,6 +7,7 @@ import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Epocas_model;
+import com.durox.app.Models.Estados_presupuesto_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
@@ -33,6 +34,9 @@ public class MainActivity extends MenuActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        setTitle("Durox");
+        getActionBar().setIcon(R.drawable.ic_launcher);
         
         config = new Config_durox();
         
@@ -85,7 +89,9 @@ public class MainActivity extends MenuActivity {
 	   Vendedores_model mVendedores = new Vendedores_model(db);
 	   		mVendedores.createTable();
 	   Visitas_model mVisitas = new Visitas_model(db);
-	   		mVisitas.createTable();  
+	   		mVisitas.createTable(); 
+	   Estados_presupuesto_model mEstados = new Estados_presupuesto_model(db);
+	   		mEstados.createTable();		   		
    } 
 
 }

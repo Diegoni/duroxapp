@@ -51,9 +51,11 @@ public class Login extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        
-        
         setContentView(R.layout.login);
+        
+        setTitle("Login - Ingrese usuario y contraseña");
+        getActionBar().setIcon(R.drawable.menulogin);
+        
         post = new Httppostaux();
         
         user = (EditText) findViewById(R.id.edusuario);

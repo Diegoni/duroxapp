@@ -16,5 +16,42 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme"
+           parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar"
+           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">#367fa9</item>
+    </style>
+    
+    <style name="btn_primary" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/button_primary</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:layout_marginLeft">5dip</item>
+	  <item name="android:layout_marginRight">5dip</item>
+	  <item name="android:paddingLeft">10dip</item>
+	  <item name="android:paddingRight">10dip</item>
+	  <item name="android:textColor">#FFFFFF</item>
+  	</style>
+  	
+    <style name="btn_danger" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/button_danger</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:layout_marginLeft">5dip</item>
+	  <item name="android:layout_marginRight">5dip</item>
+	  <item name="android:paddingLeft">10dip</item>
+	  <item name="android:paddingRight">10dip</item>
+	  <item name="android:textColor">#FFFFFF</item>
+  	</style>
+  	
+    
+ 
 
 </resources>

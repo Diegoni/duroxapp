@@ -33,6 +33,9 @@ public class Productos_ItemView extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productos_itemview);
 		
+		setTitle("Productos - Registro");
+        getActionBar().setIcon(R.drawable.menuproductos);
+		
 		config = new Config_durox();
 		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);

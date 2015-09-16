@@ -86,6 +86,9 @@ public class Productos_Main extends MenuActivity {
 		super.onCreate(savedInstanceState);
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+        
+        setTitle("Productos - Lista");
+        getActionBar().setIcon(R.drawable.menuproductos);
 		
 		productos_lista();
 		
@@ -255,7 +258,7 @@ public class Productos_Main extends MenuActivity {
 				id_pback[j] = c.getString(1);
 				p_nombre[j] = c.getString(4);
 				detalle[j] = c.getString(5);
-				imagen[j] = R.drawable.articulo; 
+				imagen[j] = R.drawable.productos; 
 				j = j + 1;
 			}	
 			
