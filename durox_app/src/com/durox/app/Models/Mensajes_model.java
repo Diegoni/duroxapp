@@ -3,29 +3,28 @@ package com.durox.app.Models;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-public class Vendedores_model extends Activity{
+public class Mensajes_model extends Activity{
 	
 	SQLiteDatabase db;
 	String sql;
 	Cursor c;
 	String id;
 	
-	public Vendedores_model(SQLiteDatabase db) {
+	public Mensajes_model(SQLiteDatabase db) {
 		this.db = db;
 	}
 	
 	
 	public void createTable(){
-		sql = "CREATE TABLE IF NOT EXISTS `vendedores`("
-				+ "id_vendedor INTEGER PRIMARY KEY AUTOINCREMENT, "
+		sql = "CREATE TABLE IF NOT EXISTS `mensajes`("
+				+ "id_mensaje INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ "id_back INT, "
-				+ "nombre VARCHAR, "
-				+ "apellido VARCHAR, "
-				+ "pass VARCHAR, "
-				+ "imagen VARCHAR, "
+				+ "asunto VARCHAR, "
+				+ "mensaje VARCHAR, "
 				+ "id_origen VARCHAR, "
-				+ "id_db VARCHAR, "
+				+ "id_mensaje_padre VARCHAR, "
 				+ "visto VARCHAR, "
 				+ "date_add VARCHAR, "
 				+ "date_upd VARCHAR, "
@@ -37,12 +36,30 @@ public class Vendedores_model extends Activity{
 	}
 	
 	
-	public Cursor getRegistros(){
+	public Cursor getMensajes(String e){
 		createTable();
 		
-		sql = "SELECT "
-				+ " * "
-				+ " FROM `vendedores`";
+		if(e.equals("entrada")){
+			sql = "SELECT "
+					+ "id_back, "
+					+ "asunto, "
+					+ "mensaje, "
+					+ "date_add "
+				+ " FROM "
+					+ "`mensajes` "
+				+ " WHERE "
+					+ "	id_origen = 2";
+		}else{
+			sql = "SELECT "
+					+ "id_back, "
+					+ "asunto, "
+					+ "mensaje, "
+					+ "date_add "
+				+ " FROM "
+					+ "`mensajes` "
+				+ " WHERE "
+					+ "	id_origen = 1";
+		}
 		
 		c = db.rawQuery(sql, null);
 		
@@ -52,9 +69,12 @@ public class Vendedores_model extends Activity{
 	
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
-				+ " * "
-			+ " FROM vendedores "
-			+ " WHERE vendedores.id_back = '"+id+"' ";
+				+ "id_back, "
+				+ "asunto, "
+				+ "mensaje, "
+				+ "date_add "
+			+ " FROM mensajes "
+			+ " WHERE mensajes.id_back = '"+id+"' ";
 			
 		
 		c = db.rawQuery(sql, null);
@@ -65,28 +85,25 @@ public class Vendedores_model extends Activity{
 		
 	public void insert(
 			String id_back,
-			String nombre,
-			String apellido,
-			String pass,
-			String imagen,
+			String asunto,
+			String mensaje,
 			String id_origen,
-			String id_db,
+			String id_mensaje_padre,
 			String visto,
 			String date_add,
 			String date_upd,
 			String eliminado,
 			String user_add,
 			String user_upd){
+		
 		createTable();
 		
-		sql = "INSERT INTO `vendedores` ("
+		sql = "INSERT INTO `mensajes` ("
 				+ "`id_back`, "
-				+ "`nombre`, "
-				+ "`apellido`, "
-				+ "`pass`, "
-				+ "`imagen`, "
+				+ "`asunto`, "
+				+ "`mensaje`, "
 				+ "`id_origen`, "
-				+ "`id_db`, "
+				+ "`id_mensaje_padre`, "
 				+ "`visto`, "
 				+ "`date_add`, "
 				+ "`date_upd`, "
@@ -95,12 +112,10 @@ public class Vendedores_model extends Activity{
 				+ "`user_upd` "
 			+ ") VALUES ("
 				+ "'"+id_back+"', "
-				+ "'"+nombre+"', "
-				+ "'"+apellido+"', "
-				+ "'"+pass+"', "
-				+ "'"+imagen+"', "
+				+ "'"+asunto+"', "
+				+ "'"+mensaje+"', "
 				+ "'"+id_origen+"', "
-				+ "'"+id_db+"', "
+				+ "'"+id_mensaje_padre+"', "
 				+ "'"+visto+"', "
 				+ "'"+date_add+"', "
 				+ "'"+date_upd+"', "
@@ -114,7 +129,7 @@ public class Vendedores_model extends Activity{
 	
 	
 	public void truncate(){
-		sql = "DELETE FROM `vendedores`";
+		sql = "DELETE FROM `mensajes`";
 		db.execSQL(sql);
 	}
 	
@@ -122,7 +137,7 @@ public class Vendedores_model extends Activity{
 	public String getID(){
 		sql = "SELECT "
 				+ " id_back "
-				+ " FROM `vendedores`";
+				+ " FROM `mensajes`";
 		
 		c = db.rawQuery(sql, null);
 		
@@ -135,6 +150,21 @@ public class Vendedores_model extends Activity{
 		}
 		
 		return id;
+	}
+	
+	
+	public Cursor getNuevos(){
+		createTable();
+		
+		sql = "SELECT "
+				+ "	* FROM "
+				+ " `mensajes` "
+				+ " WHERE id_back = '0'";
+		c = db.rawQuery(sql, null);
+		
+		Log.e("Consulta ", sql);
+		
+		return c;
 	}
 
 }

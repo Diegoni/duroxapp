@@ -7,6 +7,7 @@
     <item android:id="@+id/item3" android:title="Visitas"></item>
     <item android:id="@+id/item4" android:title="Presupuestos"></item>
     <item android:id="@+id/item5" android:title="Documentos"></item>
-    <item android:id="@+id/item6" android:title="Config"></item>
+    <item android:id="@+id/item6" android:title="Mi Perfil"></item>
+    <item android:id="@+id/item7" android:title="Config"></item>
     
 </menu>

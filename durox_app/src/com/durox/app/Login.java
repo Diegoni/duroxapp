@@ -113,7 +113,7 @@ public class Login extends Activity {
         			
         			if(c.getCount() > 0){
         				while(c.moveToNext()){
-        					if(new String (usuario).equals(c.getString(2)) && new String (passw).equals(c.getString(3))){
+        					if(new String (usuario).equals(c.getString(2)) && new String (passw).equals(c.getString(4))){
         						Toast.makeText(getApplicationContext(),
             							config.msjOkLogin(usuario), Toast.LENGTH_SHORT).show();
         						okLogin();

@@ -51,7 +51,21 @@ public class MainActivity extends MenuActivity {
 		if(user != null){
 			Vendedores_model mVendedor = new Vendedores_model(db);
 			
-			mVendedor.insert(id_vendedor, user, pass);
+			mVendedor.insert(
+				id_vendedor, 	// id_back, 
+				user, 			// nombre, 
+				"",				// apellido, 
+				pass, 
+				"", 			// imagen, 
+				"", 			// id_origen, 
+				"", 			// id_db, 
+				"", 			// visto, 
+				"", 			// date_add, 
+				"", 			// date_upd, 
+				"", 			// eliminado, 
+				"", 			// user_add, 
+				"" 			// user_upd
+			);
 		}
 		
 		crearTablas();

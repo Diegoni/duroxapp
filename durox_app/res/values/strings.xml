@@ -77,6 +77,11 @@
 	<string name="cancelar">"Cancelar"</string>
 	<string name="estado">"Estado"</string>
 	<string name="borrar">"Borrar"</string>
+	<string name="asunto">"Asunto"</string>
+	<string name="mensaje">"Mensaje"</string>
+	<string name="enviar">"Enviar"</string>
+	<string name="enviados">"Enviados"</string>
+	<string name="entrada">"Entrada"</string>
 	
 	
 	

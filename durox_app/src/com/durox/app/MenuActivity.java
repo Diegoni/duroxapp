@@ -6,6 +6,7 @@ import com.durox.app.Clientes.Clientes_Main;
 import com.durox.app.Documentos.Documentos_Main;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos_Main;
+import com.durox.app.Vendedores.Mensajes_Main;
 import com.durox.app.Visitas.Visitas_Main;
 
 import android.app.Activity;
@@ -55,6 +56,13 @@ public class MenuActivity extends Activity {
         	  
             return true;
         case R.id.item6: 
+            Toast.makeText(this, "Mi Perfil", Toast.LENGTH_SHORT).show(); 
+            Intent intentVendedores = new Intent(this, Mensajes_Main.class);
+     		startActivity(intentVendedores);
+    		
+            return true;            
+        
+        case R.id.item7: 
             Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show(); 
             Intent intentLogin = new Intent(this, Config_vista_durox.class);
      		startActivity(intentLogin);

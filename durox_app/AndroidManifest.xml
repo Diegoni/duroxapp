@@ -18,7 +18,7 @@
         android:theme="@style/CustomActionBarTheme"
         >
        <activity
-            android:name="com.durox.app.Login"
+            android:name="com.durox.app.Vendedores.Mensajes_Main"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,7 +73,13 @@
         </activity>
         <activity android:name="com.durox.app.Documentos.Documentos_Main" >
         </activity>
-         <activity android:name="com.durox.app.Documentos.Documentos_ItemView" >
+        <activity android:name="com.durox.app.Documentos.Documentos_ItemView" >
+        </activity>
+        <!-- 
+        <activity android:name="com.durox.app.Vendedores.Mensajes_Main" >
+        </activity>
+         -->
+        <activity android:name="com.durox.app.Vendedores.Mensajes_ItemView" >
         </activity>
         <activity android:name="com.durox.app.AndroidActivity" >
         </activity>

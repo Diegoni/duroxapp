@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txt_idVisita"
-        android:ems="20"
+        android:ems="30"
         android:hint="@string/producto" >
 
         <requestFocus />

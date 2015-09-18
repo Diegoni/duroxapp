@@ -74,7 +74,6 @@ public class Productos_Main extends MenuActivity {
 		
 	TextView content;
 		
-		
 	Documentos_model mDocumentos;
 	Cursor cDocumentos;
 		

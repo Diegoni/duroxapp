@@ -154,7 +154,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/car"
+        android:drawableLeft="@drawable/carw"
         android:onClick="visitas_crear"
         android:text="@string/visita" />
 
