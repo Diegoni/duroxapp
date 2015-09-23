@@ -237,7 +237,6 @@ public class Presupuestos_Lista extends MenuActivity {
 		}
 		
 		// Importamos los presupuestos
-		
 		JsonReadTask taskpresupuestos = new JsonReadTask();
 		String urlPresupuestos = config.getIp(db)+"/actualizaciones/getPresupuestos/";
 		taskpresupuestos.execute(new String[] { urlPresupuestos });
