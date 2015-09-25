@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class Config_durox {
-	private String database = "Durox_app";
+	private String database = "Durox_tres";
 	
 	private String ip;
 	private String documentos;

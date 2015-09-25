@@ -103,6 +103,8 @@ public class Tipos_model extends Activity{
 		
 		c = db.rawQuery(sql, null);
 		
+		Log.e("Paso ", "sql "+sql);
+		
 		return c;
 	}
 

@@ -173,6 +173,46 @@ public class Clientes_Main extends MenuActivity {
 	---------------------------------------------------------------------------------*/    	
 
 	public void actualizar_clientes(View view) {
+		Clientes_model mClientes = new Clientes_model(db);
+		Cursor cursorCliente = mClientes.getNuevos();
+		
+		if(cursorCliente.getCount() > 0) {
+			while(cursorCliente.moveToNext()){
+				JsonSetTask task = new JsonSetTask(
+					cursorCliente.getString(0), //+ "id_back, "
+					cursorCliente.getString(1), //+ "nombre, "
+					cursorCliente.getString(2), //+ "apellido, "
+					cursorCliente.getString(3), //+ "cuit, "
+					cursorCliente.getString(4), //+ "id_grupo_cliente, "
+					cursorCliente.getString(5), //+ "id_iva, "
+					cursorCliente.getString(6), //+ "nombre_fantasia, "
+					cursorCliente.getString(7), //+ "razon_social, "
+					cursorCliente.getString(8) //+ "web "
+				);
+				
+				String url2 = config.getIp(db)+"/actualizaciones/setClientes/";
+		 		task.execute(new String[] { url2 });
+    		}
+		} 
+		
+		Telefonos_clientes_model mTelefonos = new Telefonos_clientes_model(db);
+		Cursor cursorTelefonos = mTelefonos.getNuevos();
+		
+		if(cursorTelefonos.getCount() > 0){
+			while(cursorTelefonos.moveToNext()){
+				JsonSetTelefonos tasktel = new JsonSetTelefonos(
+						cursorTelefonos.getString(0),
+						cursorTelefonos.getString(1),
+						cursorTelefonos.getString(2),
+						cursorTelefonos.getString(3)
+				);
+				
+				String urltel = config.getIp(db)+"/actualizaciones/setTelefonos/";
+				tasktel.execute(new String[] { urltel });
+			}
+		}
+		
+		
 		new asyncciente().execute();
 	}
 	
@@ -264,24 +304,6 @@ public class Clientes_Main extends MenuActivity {
 			if(result.equals("ok")){
 				if(carga == "clientes"){
 					CargarClientes();
-				}else if(carga == "grupos"){
-					CargarGrupos();
-				}else if(carga == "tipos"){
-					CargarTipos();	
-				}else if(carga == "telefonos"){
-					CargarTelefonos();	
-				}else if(carga == "sin_telefonos"){
-					CargarSinTelefonos();
-				}else if(carga == "mails"){
-					CargarMails();	
-				}else if(carga == "sin_mails"){
-					CargarSinMails();
-				}else if(carga == "direcciones"){
-					CargarDirecciones();	
-				}else if(carga == "sin_direcciones"){
-					CargarSinDirecciones();	
-				}else if(carga == "iva"){
-					CargarIva();
 				}
 			}else{
 				Toast.makeText(getApplicationContext(), 
@@ -831,49 +853,123 @@ public class Clientes_Main extends MenuActivity {
 	 
 	 
 	 
-	public void CargarGrupos() {
+
+	private class JsonSetTask extends AsyncTask<String, Void, String> {
+		String id_back;
+		String nombre;
+		String apellido; 
+		String cuit;
+		String id_grupo_cliente; 
+		String id_iva;
+		String nombre_fantasia; 
+		String razon_social;
+		String web;
 		
+ 		public JsonSetTask(
+ 				String id_back,
+				String nombre, 
+				String apellido, 
+				String cuit,
+				String id_grupo_cliente, 
+				String id_iva, 
+		 		String nombre_fantasia, 
+				String razon_social,
+				String web) {
+ 			this.id_back = id_back;
+ 			this.nombre = nombre;
+ 			this.apellido = apellido; 
+ 			this.cuit = cuit;
+ 			this.id_grupo_cliente = id_grupo_cliente; 
+			this.id_iva = id_iva;
+			this.nombre_fantasia = nombre_fantasia; 
+			this.razon_social = razon_social;
+			this.web = web;
+		}
+ 		
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 			 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_back", id_back));
+	 		pairs.add(new BasicNameValuePair("nombre", nombre));
+	 		pairs.add(new BasicNameValuePair("apellido", apellido)); 
+	 		pairs.add(new BasicNameValuePair("cuit", cuit));
+	 		pairs.add(new BasicNameValuePair("id_grupo_cliente", id_grupo_cliente)); 
+	 		pairs.add(new BasicNameValuePair("id_iva", id_iva));
+	 		pairs.add(new BasicNameValuePair("nombre_fantasia", nombre_fantasia)); 
+	 		pairs.add(new BasicNameValuePair("razon_social", razon_social));
+	 		pairs.add(new BasicNameValuePair("web", web));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+	 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
 	}
-	 	
-	 	
-	public void CargarIva() {
+	
+	
+	
+	private class JsonSetTelefonos extends AsyncTask<String, Void, String> {
+		String id_back;
+		String telefono;
+		String cod_area; 
+		String id_tipo;
 		
-	}
-	
-	
-	public void CargarTipos() {
-		
-	}
-	
-	
-	public void CargarTelefonos() {
-		
-	}
-	
-	
-	
-	public void CargarSinTelefonos() {
-		
-	}
-	
-	
-	public void CargarMails() {
-		
-	}
-	
-	
-	public void CargarSinMails() {
-		
-	}
-	
-	
-	public void CargarDirecciones() {
-		
-	}
-	
-	
-	public void CargarSinDirecciones() {
-		
+ 		public JsonSetTelefonos(
+ 				String id_back,
+				String telefono, 
+				String cod_area, 
+				String id_tipo) {
+ 			this.id_back = id_back;
+ 			this.telefono = telefono;
+ 			this.cod_area = cod_area; 
+ 			this.id_tipo = id_tipo;
+		}
+ 		
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 			 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_back", id_back));
+	 		pairs.add(new BasicNameValuePair("telefono", telefono));
+	 		pairs.add(new BasicNameValuePair("cod_area", cod_area)); 
+	 		pairs.add(new BasicNameValuePair("id_tipo", id_tipo));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+	 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
 	}
 	 
 }

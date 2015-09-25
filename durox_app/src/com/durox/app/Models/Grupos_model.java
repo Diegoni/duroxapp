@@ -75,5 +75,17 @@ public class Grupos_model extends Activity{
 		sql = "DELETE FROM `grupos_clientes`";
 		db.execSQL(sql);
 	}
+	
+	
+	public Cursor getID(String grupo){
+		sql = "SELECT "
+				+ "id_back"
+				+ " FROM grupos_clientes"
+				+ " WHERE grupo = '"+grupo+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
 
 }

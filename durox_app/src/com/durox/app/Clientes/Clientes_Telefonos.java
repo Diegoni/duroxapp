@@ -28,13 +28,14 @@ public class Clientes_Telefonos extends MenuActivity {
 	Telefonos_ListView adapter;
 	EditText editsearch;
 		
-	String[] c_nombre;
-	String[] direccion;
+	String[] telefono;
+	String[] cod_area;
+	String[] tipo;
 	int[] foto;
 	String[] id_back;
 		
 	int[] imagen;
-	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
+	ArrayList<Telefonos> arraylist = new ArrayList<Telefonos>();
 	SQLiteDatabase db;
 			
 	String truncate;
@@ -69,25 +70,25 @@ public class Clientes_Telefonos extends MenuActivity {
 		// Traigo los resultados 
 		String id = intent.getStringExtra("id");
     	 	
-		c = mTelefono.getRegistro(id);
+		c = mTelefono.getTelefonosCliente(id);
 		
 		int cantidad_clientes = c.getCount();
 		
 		id_back = new String[cantidad_clientes];
-		c_nombre = new String[cantidad_clientes];
-		direccion = new String[cantidad_clientes];
+		telefono = new String[cantidad_clientes];
+		cod_area = new String[cantidad_clientes];
+		tipo = new String[cantidad_clientes];
 		foto = new int[cantidad_clientes];
 	    
 		int j = 0;
 		
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
-				id_back[j] = c.getString(3);
-				c_nombre[j] = c.getString(5);
-    			direccion[j] = c.getString(2);
-    			foto[j] = R.drawable.phonecell; 
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id_back[j] = c.getString(1);
+				telefono[j] = c.getString(2);
+				cod_area[j] = c.getString(3);
+				tipo[j] = c.getString(5);
+				foto[j] = R.drawable.phonecell; 
     		
     			j = j + 1;
     		}	
@@ -95,12 +96,13 @@ public class Clientes_Telefonos extends MenuActivity {
 			list = (ListView) findViewById(R.id.lv_Perfiles);
     		arraylist.clear();
 
-    		for (int i = 0; i < c_nombre.length; i++) 
-    		{
-    			Clientes wp = new Clientes(
+    		for (int i = 0; i < telefono.length; i++) {
+    			Telefonos wp = new Telefonos(
     					id_back[i],
-    					c_nombre[i],
-    					direccion[i], 
+    					telefono[i],
+    					cod_area[i], 
+    					tipo[i],
+    					id,
     					foto[i]
     			);
     			arraylist.add(wp);

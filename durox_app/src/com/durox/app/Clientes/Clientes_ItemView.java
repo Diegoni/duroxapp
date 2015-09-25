@@ -35,6 +35,7 @@ public class Clientes_ItemView extends MenuActivity {
 	SQLiteDatabase db;
 	Clientes_model mCliente;
 	Cursor c;
+	String id;
 	Config_durox config;
 	
 	public void onCreate(Bundle savedInstanceState) 
@@ -65,7 +66,7 @@ public class Clientes_ItemView extends MenuActivity {
 		Intent i = getIntent();
 				
 		// Traigo los resultados 
-		String id = i.getStringExtra("id");
+		id = i.getStringExtra("id");
 		imagen = i.getIntExtra("imagen", imagen);
 		
 		mCliente = new Clientes_model(db);
@@ -90,7 +91,7 @@ public class Clientes_ItemView extends MenuActivity {
 		
 		Telefonos_clientes_model mTelefonos = new Telefonos_clientes_model(db);
 		
-		Cursor cTelefonos = mTelefonos.getRegistro(id);
+		Cursor cTelefonos = mTelefonos.getTelefonosCliente(id);
 		
 		Log.e("Resultado  ", ""+cTelefonos.getCount());
 		
@@ -117,6 +118,15 @@ public class Clientes_ItemView extends MenuActivity {
 		Intent intent = new Intent(this, Visitas_Main.class);
 		
 		intent.putExtra("nombre", nombre);
+		
+		startActivity(intent);
+	}
+	
+	
+	public void clientes_edit(View view) {
+		Intent intent = new Intent(this, Clientes_Edit.class);
+		
+		intent.putExtra("id", id);
 		
 		startActivity(intent);
 	}

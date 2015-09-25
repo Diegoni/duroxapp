@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
 
 public class Telefonos_ListView extends BaseAdapter {
@@ -25,35 +27,32 @@ public class Telefonos_ListView extends BaseAdapter {
 	// Declare Variables
 	Context mContext;
 	LayoutInflater inflater;
-	private List<Clientes> clientes = null;
-	private ArrayList<Clientes> arraylist;
+	private List<Telefonos> telefonos = null;
+	private ArrayList<Telefonos> arraylist;
 
-	public Telefonos_ListView(Context context, List<Clientes> clientes) 
+	public Telefonos_ListView(Context context, List<Telefonos> telefonos) 
 	{
 		mContext = context;
-		this.clientes = clientes;
+		this.telefonos = telefonos;
 		inflater = LayoutInflater.from(mContext);
-		this.arraylist = new ArrayList<Clientes>();
+		this.arraylist = new ArrayList<Telefonos>();
 		this.arraylist.clear();
-		this.arraylist.addAll(clientes);
+		this.arraylist.addAll(telefonos);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView nombre;
 		TextView direccion;
 		TextView id;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
-		return clientes.size();
+	public int getCount() {
+		return telefonos.size();
 	}
 
-	public Clientes getItem(int position) 
-	{
-		return clientes.get(position);
+	public Telefonos getItem(int position) {
+		return telefonos.get(position);
 	}
 
 	public long getItemId(int position) 
@@ -84,55 +83,62 @@ public class Telefonos_ListView extends BaseAdapter {
 		}
 		
 		// Set the results into TextViews
-		holder.nombre.setText(clientes.get(position).getNombre());
-		holder.id.setText(clientes.get(position).getID());
-		holder.direccion.setText(clientes.get(position).getDireccion());
-		holder.imagen.setImageResource(clientes.get(position).getImagen());
-
-		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
+		holder.nombre.setText(telefonos.get(position).getTipo());
+		holder.id.setText(telefonos.get(position).getCodArea());
+		holder.direccion.setText(telefonos.get(position).getTelefono());
+		holder.imagen.setImageResource(telefonos.get(position).getImagen());
+		
+		
+		view.setOnLongClickListener(new OnLongClickListener(){	
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent(mContext, Clientes_Edit_Telefono.class);
 				
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + clientes.get(position).getDireccion()));
-				mContext.startActivity(intent);
-				
-				/*
-				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Clientes_Tabs.class);
+				Log.e("Paso ", "id "+telefonos.get(position).getID());
+				Log.e("Paso ", "telefono "+telefonos.get(position).getTelefono());
+				Log.e("Paso ", "cod_area "+telefonos.get(position).getCodArea());
+				Log.e("Paso ", "tipo "+telefonos.get(position).getTipo());
+				Log.e("Paso ", "id_cliente "+telefonos.get(position).getIdCliente());
+				Log.e("Paso ", "imagen "+telefonos.get(position).getImagen());
 				
 				// Pasamos toda la informacion
-				intent.putExtra("id", (clientes.get(position).getID()));
-				intent.putExtra("nombre", (clientes.get(position).getNombre()));
-				intent.putExtra("direccion", (clientes.get(position).getDireccion()));
-				intent.putExtra("imagen", (clientes.get(position).getImagen()));
+				intent.putExtra("id", (telefonos.get(position).getID()));
+				intent.putExtra("telefono", (telefonos.get(position).getTelefono()));
+				intent.putExtra("cod_area", (telefonos.get(position).getCodArea()));
+				intent.putExtra("tipo", (telefonos.get(position).getTipo()));
+				intent.putExtra("id_cliente", (telefonos.get(position).getIdCliente()));
+				intent.putExtra("imagen", (telefonos.get(position).getImagen()));
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
-				*/
+			
+				return false;
+			}
+		});
+
+		// Detecta que item de la lista le hicieron clic
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				String tel = telefonos.get(position).getCodArea()+telefonos.get(position).getTelefono();
+				
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tel));
+				mContext.startActivity(intent);
 			}
 		});
 
 		return view;
 	}
 
-	// Filter Class
-	public void filter(String charText) 
-	{
+
+	
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
-		clientes.clear();
-		if (charText.length() == 0) 
-		{
-			clientes.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Clientes wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
-					clientes.add(wp);
+		telefonos.clear();
+		if (charText.length() == 0) {
+			telefonos.addAll(arraylist);
+		} else {
+			for (Telefonos wp : arraylist) {
+				if (wp.getTipo().toLowerCase(Locale.getDefault()).contains(charText)) {
+					telefonos.add(wp);
 				}
 			}
 		}

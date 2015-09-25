@@ -7,6 +7,7 @@ import com.durox.app.Models.Mails_clientes_model;
 import java.util.ArrayList;
 import java.util.Locale;
 
+
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 
@@ -14,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;

@@ -18,22 +18,22 @@ public class Clientes_model extends Activity{
 	public void createTable(){
 		sql = "CREATE TABLE IF NOT EXISTS `clientes`("
 				+ "id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "id_back INT,"
+				+ "id_back VARCHAR,"
+				+ "modificado VARCHAR,"
 				+ "nombre VARCHAR,"
 				+ "apellido VARCHAR,"
-				+ "domicilio VARCHAR,"
-				+ "cuit BIGINT,"
-				+ "id_grupo_cliente INT,"
-				+ "id_iva INT,"
+				+ "cuit VARCHAR,"
+				+ "id_grupo_cliente VARCHAR,"
+				+ "id_iva VARCHAR,"
 				+ "imagen VARCHAR,"
 				+ "nombre_fantasia VARCHAR,"
 				+ "razon_social VARCHAR,"
 				+ "web VARCHAR,"
-				+ "date_add DATETIME,"
-				+ "date_upd DATETIME,"
-				+ "eliminado INT,"
-				+ "user_add INT,"
-				+ "user_upd INT"
+				+ "date_add VARCHAR,"
+				+ "date_upd VARCHAR,"
+				+ "eliminado VARCHAR,"
+				+ "user_add VARCHAR,"
+				+ "user_upd VARCHAR"
 				+ ");";
 		
 		db.execSQL(sql);
@@ -47,7 +47,7 @@ public class Clientes_model extends Activity{
 				+ "id_back,"
 				+ "nombre,"
 				+ "apellido,"
-				+ "domicilio,"
+				+ "modificado, "
 				+ "cuit,"
 				+ "id_grupo_cliente,"
 				+ "id_iva,"
@@ -74,7 +74,7 @@ public class Clientes_model extends Activity{
 				+ "clientes.id_back,"
 				+ "clientes.nombre,"
 				+ "clientes.apellido,"
-				+ "clientes.domicilio,"
+				+ "clientes.modificado,"
 				+ "clientes.cuit,"
 				+ "grupos_clientes.grupo,"
 				+ "iva.iva,"
@@ -103,7 +103,7 @@ public class Clientes_model extends Activity{
 			int id_back,
 			String nombre,
 			String apellido,
-			String domicilio,
+			String modificado,
 			String cuit,
 			int id_grupo_cliente,
 			int id_iva,
@@ -118,6 +118,7 @@ public class Clientes_model extends Activity{
 			int user_upd){
 		sql = "INSERT INTO `clientes` ("
 				+ "`id_back`, "
+				+ "`modificado`, "
 				+ "`nombre`, "
 				+ "`apellido`, "
 				+ "`cuit`, "
@@ -134,6 +135,7 @@ public class Clientes_model extends Activity{
 				+ "`user_upd`"
 			+ ") VALUES ("
 				+ "'"+id_back+"', "
+				+ "'0', "
 				+ "'"+nombre+"', "
 				+ "'"+apellido+"', "
 				+ "'"+cuit+"', "
@@ -153,10 +155,12 @@ public class Clientes_model extends Activity{
  		db.execSQL(sql);
  	}
 	
+	
 	public void truncate(){
 		sql = "DELETE FROM `clientes`";
 		db.execSQL(sql);
 	}
+	
 	
 	public Cursor getID(String razon_social){
 		sql = "SELECT "
@@ -169,4 +173,53 @@ public class Clientes_model extends Activity{
 		return c;
 	}
 
+	
+	public void edit(
+			String id_back,
+			String razon_social,
+			String nombre_fantasia,
+			String nombre,
+			String apellido,
+			String id_grupo_cliente,
+			String id_iva,
+			String web,
+			String cuit
+		){
+		
+		sql = "UPDATE `clientes`"
+			+ " SET "
+				+ " modificado 		= '1',"
+				+ " razon_social 	= '"+razon_social+"',"
+				+ " nombre_fantasia = '"+nombre_fantasia+"',"
+				+ " nombre 			= '"+nombre+"',"
+				+ " apellido 		= '"+apellido+"',"
+				+ " id_grupo_cliente = '"+id_grupo_cliente+"',"
+				+ " id_iva 			= '"+id_iva+"',"
+				+ " web 			= '"+web+"',"
+				+ " cuit 			= '"+cuit+"'"
+			+ " WHERE "
+				+ " id_back = '"+id_back+"'";
+		
+		db.execSQL(sql);
+	}
+	
+	
+	public Cursor getNuevos(){
+		sql = "SELECT "				
+				+ "id_back, "
+				+ "nombre, "
+				+ "apellido, "
+				+ "cuit, "
+				+ "id_grupo_cliente, "
+				+ "id_iva, "
+				+ "nombre_fantasia, "
+				+ "razon_social, "
+				+ "web "
+			+ " FROM clientes"
+			+ " WHERE modificado = '1'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
 }

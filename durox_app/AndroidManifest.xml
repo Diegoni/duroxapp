@@ -18,7 +18,7 @@
         android:theme="@style/CustomActionBarTheme"
         >
        <activity
-            android:name="com.durox.app.Vendedores.Mensajes_Main"
+            android:name="com.durox.app.Login"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,11 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 
-        <activity android:name="com.durox.app.Login" >
-        MainActivity
-        </activity>
-         -->
         <activity android:name="com.durox.app.HiScreen" >
         </activity>
         <activity android:name="com.durox.app.Config_vista_durox" >
@@ -40,6 +35,10 @@
         <activity android:name="com.durox.app.Clientes.Clientes_Main" >
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_ItemView" >
+        </activity>
+        <activity android:name="com.durox.app.Clientes.Clientes_Edit" >
+        </activity>
+        <activity android:name="com.durox.app.Clientes.Clientes_Edit_Telefono" >
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Mails" >
         </activity>
@@ -75,10 +74,8 @@
         </activity>
         <activity android:name="com.durox.app.Documentos.Documentos_ItemView" >
         </activity>
-        <!-- 
         <activity android:name="com.durox.app.Vendedores.Mensajes_Main" >
         </activity>
-         -->
         <activity android:name="com.durox.app.Vendedores.Mensajes_ItemView" >
         </activity>
         <activity android:name="com.durox.app.AndroidActivity" >

@@ -20,6 +20,7 @@ public class Telefonos_clientes_model extends Activity{
 		sql = "CREATE TABLE IF NOT EXISTS `telefonos`("
 				+ "id_telefono INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR,"
+				+ "modificado VARCHAR,"
 				+ "id_tipo VARCHAR,"
 				+ "telefono VARCHAR,"
 				+ "cod_area VARCHAR,"
@@ -72,7 +73,7 @@ public class Telefonos_clientes_model extends Activity{
 	}
 	
 	
-	public Cursor getRegistro(String id){
+	public Cursor getTelefonosCliente(String id){
 		sql = "SELECT "
 				+ " sin_clientes_telefonos.id_cliente,"
 				+ " telefonos.id_back,"
@@ -190,6 +191,41 @@ public class Telefonos_clientes_model extends Activity{
 				+ "id_back"
 				+ " FROM telefonos"
 				+ " WHERE telefono = '"+telefono+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public void edit(
+			String id_back,
+			String telefono,
+			String cod_area,
+			String id_tipo
+		){
+		
+		sql = "UPDATE `telefonos`"
+			+ " SET "
+				+ " modificado 		= '1',"
+				+ " telefono 		= '"+telefono+"',"
+				+ " cod_area		= '"+cod_area+"',"
+				+ " id_tipo 		= '"+id_tipo+"'"
+			+ " WHERE "
+				+ " id_back = '"+id_back+"'";
+		
+		db.execSQL(sql);
+	}
+	
+	
+	public Cursor getNuevos(){
+		sql = "SELECT "				
+				+ "id_back, "
+				+ "telefono, "
+				+ "cod_area, "
+				+ "id_tipo "
+			+ " FROM telefonos"
+			+ " WHERE modificado = '1'";
 		
 		c = db.rawQuery(sql, null);
 		

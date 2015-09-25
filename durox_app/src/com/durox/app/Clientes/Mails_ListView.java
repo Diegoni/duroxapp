@@ -27,8 +27,7 @@ public class Mails_ListView extends BaseAdapter {
 	private List<Clientes> clientes = null;
 	private ArrayList<Clientes> arraylist;
 
-	public Mails_ListView(Context context, List<Clientes> clientes) 
-	{
+	public Mails_ListView(Context context, List<Clientes> clientes) {
 		mContext = context;
 		this.clientes = clientes;
 		inflater = LayoutInflater.from(mContext);
@@ -37,35 +36,29 @@ public class Mails_ListView extends BaseAdapter {
 		this.arraylist.addAll(clientes);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView nombre;
 		TextView direccion;
 		TextView id;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
+	public int getCount() {
 		return clientes.size();
 	}
 
-	public Clientes getItem(int position) 
-	{
+	public Clientes getItem(int position) {
 		return clientes.get(position);
 	}
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.clientes_listviewitem, null);
 			
@@ -76,9 +69,7 @@ public class Mails_ListView extends BaseAdapter {
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
@@ -89,10 +80,8 @@ public class Mails_ListView extends BaseAdapter {
 		holder.imagen.setImageResource(clientes.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
 				
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");

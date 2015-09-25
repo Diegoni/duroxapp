@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".Presupuestos_Lista" >
+
+    <AutoCompleteTextView
+        android:id="@+id/ac_tipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_cod_area"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/et_cod_area"
+        android:ems="10"
+        android:hint="@string/tipo" />
+
+    <EditText
+        android:id="@+id/et_cod_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/et_telefono"
+        android:layout_toRightOf="@+id/textView2"
+        android:ems="10"
+        android:hint="@string/cod_area"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ac_tipo"
+        android:layout_alignBottom="@+id/ac_tipo"
+        android:layout_alignParentLeft="true"
+        android:text="@string/tipo"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_cod_area"
+        android:layout_alignBottom="@+id/et_cod_area"
+        android:layout_alignParentLeft="true"
+        android:text="@string/cod_area"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_telefono"
+        android:layout_alignBottom="@+id/et_telefono"
+        android:layout_alignParentLeft="true"
+        android:text="@string/telefono"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+     <Button
+         android:id="@+id/btn_editar"
+         style="@style/btn_primary"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+         android:onClick="telefonos_editar"
+         android:text="@string/editar" />
+    
+    <Button
+        android:id="@+id/btn_cancelar"
+         style="@style/btn_danger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_editar"
+        android:layout_alignBottom="@+id/btn_editar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/et_apellido"
+         android:onClick="cancelar"
+        android:text="@string/cancelar" />
+
+    <EditText
+        android:id="@+id/et_telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="41dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:ems="10"
+        android:hint="@string/telefono"
+        android:inputType="phone" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/label_razon_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txt_razon_social"
+        android:layout_alignBottom="@+id/txt_razon_social"
+        android:layout_alignParentLeft="true"
+        android:text="@string/razon_social"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txt_razon_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="@string/razon_social"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#3c8dbc" />
+
+</RelativeLayout>

@@ -75,5 +75,17 @@ public class Iva_model extends Activity{
 		sql = "DELETE FROM `iva`";
 		db.execSQL(sql);
 	}
+	
+	
+	public Cursor getID(String iva){
+		sql = "SELECT "
+				+ "id_back"
+				+ " FROM iva"
+				+ " WHERE iva = '"+iva+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
 
 }

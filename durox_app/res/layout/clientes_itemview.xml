@@ -151,8 +151,8 @@
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cDateupd"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:drawableLeft="@drawable/carw"
         android:onClick="visitas_crear"
@@ -183,5 +183,17 @@
         android:layout_below="@+id/textView3"
         android:text="@string/nombre_fantasia"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/btn_editar"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/visita"
+        android:layout_alignBottom="@+id/visita"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/visita"
+        android:onClick="clientes_edit"
+        android:text="@string/editar" />
 
 </RelativeLayout>

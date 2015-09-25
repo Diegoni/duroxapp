@@ -76,8 +76,7 @@ public class Mensajes_Main extends MenuActivity {
 	Button btn_entrada;
 	Button btn_enviados;
 	
-	public void onCreate(Bundle savedInstanceState) 
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
@@ -97,7 +96,7 @@ public class Mensajes_Main extends MenuActivity {
 	Clases Para Leer el Json y actualizar tablas
 	---------------------------------------------------------------------------------*/    
 	
-	// Async Task to access the web
+	
 	private class JsonReadTask extends AsyncTask<String, Void, String> {
 		String carga;
 		
@@ -139,7 +138,6 @@ public class Mensajes_Main extends MenuActivity {
 					answer.append(rLine);
 				}
 			} catch (IOException e) {
-				// e.printStackTrace();
 				Toast.makeText(getApplicationContext(), 
 				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
 			}
@@ -157,9 +155,9 @@ public class Mensajes_Main extends MenuActivity {
 				Toast.makeText(getApplicationContext(), 
 						result, Toast.LENGTH_LONG).show();
 			}
-			
 		}
 	}
+	
 	
 	
 	public void actualizar_mensajes(View view) {
@@ -171,16 +169,18 @@ public class Mensajes_Main extends MenuActivity {
         
         Mensajes_model mMensaje = new Mensajes_model(db);
         Cursor cMensaje = mMensaje.getNuevos();
+        
+        Log.e("Paso ","cMensaje.getCount() "+cMensaje.getCount());
     	
 		if(cMensaje.getCount() > 0) {
 			while(cMensaje.moveToNext()){
 				JsonSetTask task = new JsonSetTask(
-					cMensaje.getString(0),		//+ 0"id_mensaje VARCHAR, "
-					cMensaje.getString(2),		//+ 2"asunto VARCHAR, "
-					cMensaje.getString(3),		//+ 3"mensaje VARCHAR, "
-					cMensaje.getString(4),		//+ 4"id_origen VARCHAR, "
-					cMensaje.getString(5),		//+ 5"id_mensaje_padre VARCHAR, "
-					cMensaje.getString(6)		//+ 6"visto VARCHAR, "
+					cMensaje.getString(0),		// 0 "id_mensaje VARCHAR, "
+					cMensaje.getString(2),		// 2 "asunto VARCHAR, "
+					cMensaje.getString(3),		// 3 "mensaje VARCHAR, "
+					cMensaje.getString(4),		// 4 "id_origen VARCHAR, "
+					cMensaje.getString(5),		// 5 "id_mensaje_padre VARCHAR, "
+					cMensaje.getString(6)		// 6 "visto VARCHAR, "
 				);
 				
 				String url2 = config.getIp(db)+"/actualizaciones/setMensajes/";
@@ -224,6 +224,8 @@ public class Mensajes_Main extends MenuActivity {
  		protected String doInBackground(String... params) {
 	 		HttpClient httpclient = new DefaultHttpClient();
 	 		HttpPost httppost = new HttpPost(params[0]);
+	 		
+	 		Log.e("Paso ","doInBackground ");
 	 			 		
 	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 	 		pairs.add(new BasicNameValuePair("id_mensaje", id_mensaje));
@@ -236,7 +238,6 @@ public class Mensajes_Main extends MenuActivity {
 	 		 				 			
 	 		try { 				
 	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
-	 			//HttpResponse response;	
 	 			httpclient.execute(httppost);
 	 		} catch (ClientProtocolException e) {
 	 			Toast.makeText(getApplicationContext(), 
@@ -277,7 +278,7 @@ public class Mensajes_Main extends MenuActivity {
 				String date_upd = jsonChildNode.optString("date_upd");
 				String eliminado = jsonChildNode.optString("eliminado");
 				String user_add = jsonChildNode.optString("user_add");
-				String user_upd = jsonChildNode.optString("user_upd");
+				String user_upd	= jsonChildNode.optString("user_upd");
 				
 				mMensajes.insert(
 						id_back, 
@@ -296,11 +297,11 @@ public class Mensajes_Main extends MenuActivity {
 			}
 			
 			Toast.makeText(getApplicationContext(), 
-					config.msjRegistrosActualizados(" mensajes "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+				config.msjRegistrosActualizados(" mensajes "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
 			
 		} catch (JSONException e) {
 			Toast.makeText(getApplicationContext(), 
-			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+				config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
 		mensajes_lista("entrada");   
 	}
@@ -354,7 +355,6 @@ public class Mensajes_Main extends MenuActivity {
 				j = j + 1;
 			}	
 			
-			// Locate the ListView in listview_main.xml
 			list = (ListView) findViewById(R.id.listview);
 			arraylist.clear();
 			
@@ -398,6 +398,4 @@ public class Mensajes_Main extends MenuActivity {
 			});
 		}		
 	}
-
-
 }
