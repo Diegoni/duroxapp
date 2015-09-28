@@ -51,7 +51,7 @@ public class Clientes_Edit_Direccion extends MenuActivity {
 		setContentView(R.layout.activity_main3);
 		
 		config = new Config_durox();
-		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+		db = openOrCreateDatabase(config.getDatabase(), android.content.Context.MODE_PRIVATE, null);
 		
 		Intent i = getIntent();
 		

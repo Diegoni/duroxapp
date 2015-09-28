@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.durox_app.MainActivity" >
   
-    <item android:id="@+id/item1" android:title="Clientes"></item>
-    <item android:id="@+id/item2" android:title="Productos"></item>
-    <item android:id="@+id/item3" android:title="Visitas"></item>
-    <item android:id="@+id/item4" android:title="Presupuestos"></item>
-    <item android:id="@+id/item5" android:title="Documentos"></item>
-    <item android:id="@+id/item6" android:title="Mi Perfil"></item>
-    <item android:id="@+id/item7" android:title="Config"></item>
+    <item android:id="@+id/item1" android:title="@string/cliente"></item>
+    <item android:id="@+id/item2" android:title="@string/productos"></item>
+    <item android:id="@+id/item3" android:title="@string/visita"></item>
+    <item android:id="@+id/item4" android:title="@string/presupuesto"></item>
+    <item android:id="@+id/item5" android:title="@string/documento"></item>
+    <item android:id="@+id/item6" android:title="@string/perfil"></item>
+    <item android:id="@+id/item7" android:title="@string/config"></item>
     
 </menu>

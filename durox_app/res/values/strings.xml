@@ -86,6 +86,9 @@
 	<string name="tipo">"Tipo"</string>
 	<string name="departamento">"Departamento"</string>
 	<string name="provincia">"Provincia"</string>
+	<string name="perfil">"Perfil"</string>
+	<string name="config">"Config"</string>
+	
 	
 	
 	<!-- Color del Texto General -->
