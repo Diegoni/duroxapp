@@ -23,11 +23,13 @@ import org.json.JSONObject;
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Departamentos_model;
 import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Mails_clientes_model;
+import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
@@ -212,6 +214,24 @@ public class Clientes_Main extends MenuActivity {
 			}
 		}
 		
+		Direcciones_clientes_model mDireccion = new Direcciones_clientes_model(db);
+		Cursor cursorDireccion = mDireccion.getNuevos();
+		
+		if(cursorDireccion.getCount() > 0){
+			while(cursorDireccion.moveToNext()){
+				JsonSetDireccion tasktel = new JsonSetDireccion(
+						cursorDireccion.getString(0),
+						cursorDireccion.getString(1),
+						cursorDireccion.getString(2),
+						cursorDireccion.getString(3),
+						cursorDireccion.getString(4)
+				);
+				
+				String urltel = config.getIp(db)+"/actualizaciones/setDirecciones/";
+				tasktel.execute(new String[] { urltel });
+			}
+		}
+		
 		
 		new asyncciente().execute();
 	}
@@ -325,6 +345,8 @@ public class Clientes_Main extends MenuActivity {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 	 		
+	 		Log.e("Paso ", "Clientes total "+ jsonMainNode.length());
+	 		
 	 		mModel.createTable();
 	 			
 	 		if(jsonMainNode.length() > 0){
@@ -389,6 +411,8 @@ public class Clientes_Main extends MenuActivity {
 		try {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("grupos");
+	 		
+	 		Log.e("Paso ", "Grupos total "+ jsonMainNode.length());
 	 			
 	 		mGrupos.createTable();
 	  			
@@ -438,6 +462,8 @@ public class Clientes_Main extends MenuActivity {
 	 	try {
 	  		JSONObject jsonResponse = new JSONObject(jsonResult);
 	  		JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+	  		
+	  		Log.e("Paso ", "iva total "+ jsonMainNode.length());
 	  			
 	  		mIva.createTable();
 	  		
@@ -475,9 +501,6 @@ public class Clientes_Main extends MenuActivity {
 	  		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 	  	}
 		
-	 	
-	 	
-	 	
 	 	
 	 	
 	 	
@@ -849,6 +872,81 @@ public class Clientes_Main extends MenuActivity {
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
 		
+		
+		
+		subjet = "departamentos";
+		Departamentos_model mDepartamentos = new Departamentos_model(db); 
+	 	
+		try {
+	 		JSONObject jsonResponse = new JSONObject(jsonResult);
+	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("departamentos");
+	 			
+	 		mDepartamentos.createTable();
+	  			
+	  		if(jsonMainNode.length() > 0){
+	  			mDepartamentos.truncate();
+	  		}
+	  		
+	  		for (int i = 0; i < jsonMainNode.length(); i++) {
+	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	  			  				
+	  			String id_back = jsonChildNode.optString("id_departamento");
+	  			String id_provincia = jsonChildNode.optString("id_provincia");
+	  			String nombre_departamento = jsonChildNode.optString("nombre_departamento");
+	  				 				
+	  			mDepartamentos.insert(
+	  				id_back, 
+	  				id_provincia, 
+	  				nombre_departamento);
+	  		}
+	  			
+	  		Toast.makeText(getApplicationContext(), 
+	  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	  			
+	  	} catch (JSONException e) {
+	  		Toast.makeText(getApplicationContext(), 
+	  			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	  	}
+		
+		
+		
+		
+		subjet = "provincias";
+		Provincias_model mProvincias = new Provincias_model(db); 
+	 	
+		try {
+	 		JSONObject jsonResponse = new JSONObject(jsonResult);
+	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("provincias");
+	 			
+	 		mProvincias.createTable();
+	  			
+	  		if(jsonMainNode.length() > 0){
+	  			mProvincias.truncate();
+	  		}
+	  		
+	  		Log.e("Paso ", "Provincias total "+ jsonMainNode.length());
+	  			  		
+	  		for (int i = 0; i < jsonMainNode.length(); i++) {
+	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	  			  				
+	  			String id_back = jsonChildNode.optString("id_provincia");
+	  			String id_pais = jsonChildNode.optString("id_pais");
+	  			String nombre_provincia = jsonChildNode.optString("nombre_provincia");
+	  				 				
+	  			mProvincias.insert(
+	  				id_back, 
+	  				id_pais, 
+	  				nombre_provincia);
+	  		}
+	  			
+	  		Toast.makeText(getApplicationContext(), 
+	  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	  			
+	  	} catch (JSONException e) {
+	  		Toast.makeText(getApplicationContext(), 
+	  			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	  	}
+		
 	}
 	 
 	 
@@ -950,6 +1048,61 @@ public class Clientes_Main extends MenuActivity {
 	 		pairs.add(new BasicNameValuePair("telefono", telefono));
 	 		pairs.add(new BasicNameValuePair("cod_area", cod_area)); 
 	 		pairs.add(new BasicNameValuePair("id_tipo", id_tipo));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+	 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	
+	
+	private class JsonSetDireccion extends AsyncTask<String, Void, String> {
+		String id_back;
+		String direccion;
+		String id_departamento; 
+		String id_tipo;
+		String id_provincia;
+		
+ 		public JsonSetDireccion(
+ 				String id_back,
+				String direccion, 
+				String id_departamento, 
+				String id_tipo,
+				String id_provincia) {
+ 			this.id_back = id_back;
+ 			this.direccion = direccion;
+ 			this.id_departamento = id_departamento; 
+ 			this.id_tipo = id_tipo;
+ 			this.id_provincia = id_provincia;
+		}
+ 		
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 			 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_back", id_back));
+	 		pairs.add(new BasicNameValuePair("direccion", direccion));
+	 		pairs.add(new BasicNameValuePair("id_departamento", id_departamento)); 
+	 		pairs.add(new BasicNameValuePair("id_tipo", id_tipo));
+	 		pairs.add(new BasicNameValuePair("id_provincia", id_provincia));
 	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
 	 			
 	 		try { 				

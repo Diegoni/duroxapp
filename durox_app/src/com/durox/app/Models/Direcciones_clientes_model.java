@@ -20,6 +20,7 @@ public class Direcciones_clientes_model extends Activity{
 		sql = "CREATE TABLE IF NOT EXISTS `direcciones`("
 				+ "id_direccion INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR,"
+				+ "modificado VARCHAR,"
 				+ "id_tipo VARCHAR,"
 				+ "direccion VARCHAR,"
 				+ "id_departamento VARCHAR,"
@@ -53,6 +54,7 @@ public class Direcciones_clientes_model extends Activity{
 		db.execSQL(sql);
 		
 		Log.e("Consulta  ", sql);
+		
 	}
 	
 	public Cursor getRegistros(){
@@ -208,6 +210,92 @@ public class Direcciones_clientes_model extends Activity{
 				+ " WHERE direccion = '"+direccion+"'";
 		
 		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public void edit(
+			String id_back,
+			String direccion,
+			String id_departamento,
+			String id_provincia,
+			String id_tipo
+		){
+		
+		sql = "UPDATE `direcciones`"
+			+ " SET "
+				+ " modificado 		= '1',"
+				+ " direccion 		= '"+direccion+"',"
+				+ " id_departamento	= '"+id_departamento+"',"
+				+ " id_provincia	= '"+id_provincia+"',"
+				+ " id_tipo 		= '"+id_tipo+"'"
+			+ " WHERE "
+				+ " id_back = '"+id_back+"'";
+		
+		db.execSQL(sql);
+	}
+	
+	
+	public Cursor getNuevos(){
+		sql = "SELECT "				
+				+ "id_back, "
+				+ "direccion, "
+				+ "id_departamento, "
+				+ "id_tipo, "
+				+ "id_provincia "
+			+ " FROM direcciones"
+			+ " WHERE modificado = '1'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public Cursor getDireccionesCliente(String id){
+		sql = "SELECT "
+				+ " sin_clientes_direcciones.id_cliente,"
+				+ " direcciones.id_back, "
+				+ " direcciones.direccion, "
+				+ " departamentos.nombre_departamento, "
+				+ " tipos.tipo "
+			+ " FROM "
+				+ " `sin_clientes_direcciones` "
+			+ " INNER JOIN "
+				+ " direcciones ON(sin_clientes_direcciones.id_direccion = direcciones.id_back) "
+			+ " INNER JOIN "
+				+ " tipos ON(direcciones.id_tipo = tipos.id_back)"
+			+ " INNER JOIN "
+				+ " departamentos ON(direcciones.id_departamento = departamentos.id_back)"
+			+ " WHERE "
+				+ " sin_clientes_direcciones.id_cliente = '"+id+"' ";
+			
+		Log.e("Consulta  ", sql);
+		
+		c = db.rawQuery(sql, null);
+		
+		
+		return c;
+	}
+	
+	
+	public Cursor getProvincia(String id){
+		sql = "SELECT "
+				+ " provincias.id_back,"
+				+ " provincias.nombre_provincia "
+			+ " FROM "
+				+ " `direcciones` "
+			+ " INNER JOIN "
+				+ " provincias ON(direcciones.id_provincia = provincias.id_back) "
+			+ " WHERE "
+				+ " direcciones.id_back = '"+id+"' ";
+			
+		Log.e("Consulta  ", sql);
+		
+		c = db.rawQuery(sql, null);
+		
+		Log.e("Consulta  ", ""+c.getCount());
 		
 		return c;
 	}

@@ -28,13 +28,14 @@ public class Clientes_Direcciones extends MenuActivity {
 	Direcciones_ListView adapter;
 	EditText editsearch;
 		
-	String[] c_nombre;
 	String[] direccion;
+	String[] id_departamento;
+	String[] tipo;
 	int[] foto;
 	String[] id_back;
 		
 	int[] imagen;
-	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
+	ArrayList<Direcciones> arraylist = new ArrayList<Direcciones>();
 	SQLiteDatabase db;
 			
 	String truncate;
@@ -42,7 +43,7 @@ public class Clientes_Direcciones extends MenuActivity {
 	Cursor c;
 	int j;	
 			
-	Direcciones_clientes_model mDirecciones;
+	Direcciones_clientes_model mDireccion;
 	TextView content;
 			
 	Documentos_model mDocumentos;
@@ -62,51 +63,52 @@ public class Clientes_Direcciones extends MenuActivity {
 	public void clientes_lista(){
 		setContentView(R.layout.perfil_listview);
  		
-		mDirecciones = new Direcciones_clientes_model(db);
+		mDireccion = new Direcciones_clientes_model(db);
 		
 		Intent intent = getIntent();
 		
 		// Traigo los resultados 
 		String id = intent.getStringExtra("id");
     	 	
-		c = mDirecciones.getRegistro(id);
+		c = mDireccion.getDireccionesCliente(id);
 		
 		int cantidad_clientes = c.getCount();
 		
 		id_back = new String[cantidad_clientes];
-		c_nombre = new String[cantidad_clientes];
 		direccion = new String[cantidad_clientes];
+		id_departamento = new String[cantidad_clientes];
+		tipo = new String[cantidad_clientes];
 		foto = new int[cantidad_clientes];
 	    
 		int j = 0;
 		
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
-				id_back[j] = c.getString(2);
-				c_nombre[j] = c.getString(7);
-    			direccion[j] = c.getString(1);
-    			foto[j] = R.drawable.address; 
-    		
-    			j = j + 1;
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id_back[j] = c.getString(1);
+				direccion[j] = c.getString(2);
+				id_departamento[j] = c.getString(3);
+				tipo[j] = c.getString(4);
+				foto[j] = R.drawable.address; 
+				
+				j = j + 1;
     		}	
 			
 			list = (ListView) findViewById(R.id.lv_Perfiles);
     		arraylist.clear();
 
-    		for (int i = 0; i < c_nombre.length; i++) 
-    		{
-    			Clientes wp = new Clientes(
+    		for (int i = 0; i < direccion.length; i++) {
+    			Direcciones wp = new Direcciones(
     					id_back[i],
-    					c_nombre[i],
-    					direccion[i], 
+    					direccion[i],
+    					id_departamento[i], 
+    					tipo[i],
+    					id,
     					foto[i]
     			);
     			arraylist.add(wp);
     		}
 
-    		adapter = new Direcciones_ListView(this, arraylist);
+    		adapter = new  Direcciones_ListView(this, arraylist);
     		list.setAdapter(adapter);
     		
     		editsearch = (EditText) findViewById(R.id.search);

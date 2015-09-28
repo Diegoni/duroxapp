@@ -84,7 +84,8 @@
 	<string name="entrada">"Entrada"</string>
 	<string name="cod_area">"Código Área"</string>
 	<string name="tipo">"Tipo"</string>
-	
+	<string name="departamento">"Departamento"</string>
+	<string name="provincia">"Provincia"</string>
 	
 	
 	<!-- Color del Texto General -->

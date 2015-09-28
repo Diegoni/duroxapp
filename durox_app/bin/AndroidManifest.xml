@@ -46,6 +46,8 @@
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Direcciones" >
         </activity>
+        <activity android:name="com.durox.app.Clientes.Clientes_Edit_Direccion" >
+        </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Tabs" >
         </activity>
         <activity android:name="com.durox.app.Visitas.Visitas_Main" >

@@ -21,6 +21,7 @@ public class Mails_clientes_model extends Activity{
 		sql = "CREATE TABLE IF NOT EXISTS `mails`("
 				+ "id_mail INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "id_back VARCHAR,"
+				+ "modificado VARCHAR,"
 				+ "id_tipo VARCHAR,"
 				+ "mail VARCHAR,"
 				+ "date_add VARCHAR,"

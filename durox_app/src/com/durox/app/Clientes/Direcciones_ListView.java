@@ -9,6 +9,7 @@ import java.util.Locale;
 import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,55 +17,49 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
 
-@SuppressLint("InflateParams")
 public class Direcciones_ListView extends BaseAdapter {
 
 	// Declare Variables
 	Context mContext;
 	LayoutInflater inflater;
-	private List<Clientes> clientes = null;
-	private ArrayList<Clientes> arraylist;
+	private List<Direcciones> direcciones = null;
+	private ArrayList<Direcciones> arraylist;
 
-	public Direcciones_ListView(Context context, List<Clientes> clientes) 
-	{
+	public Direcciones_ListView(Context context, List<Direcciones> direcciones) {
 		mContext = context;
-		this.clientes = clientes;
+		this.direcciones = direcciones;
 		inflater = LayoutInflater.from(mContext);
-		this.arraylist = new ArrayList<Clientes>();
+		this.arraylist = new ArrayList<Direcciones>();
 		this.arraylist.clear();
-		this.arraylist.addAll(clientes);
+		this.arraylist.addAll(direcciones);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView nombre;
 		TextView direccion;
 		TextView id;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
-		return clientes.size();
+	public int getCount() {
+		return direcciones.size();
 	}
 
-	public Clientes getItem(int position) 
-	{
-		return clientes.get(position);
+	public Direcciones getItem(int position) {
+		return direcciones.get(position);
 	}
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	@SuppressLint("InflateParams")
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.clientes_listviewitem, null);
 			
@@ -75,58 +70,58 @@ public class Direcciones_ListView extends BaseAdapter {
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
 		// Set the results into TextViews
-		holder.nombre.setText(clientes.get(position).getNombre());
-		holder.id.setText(clientes.get(position).getID());
-		holder.direccion.setText(clientes.get(position).getDireccion());
-		holder.imagen.setImageResource(clientes.get(position).getImagen());
-
-		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
-				/*
-				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Clientes_Tabs.class);
-				
+		holder.nombre.setText(direcciones.get(position).getTipo());
+		holder.id.setText(direcciones.get(position).getIdDepartamento()+" -");
+		holder.direccion.setText(direcciones.get(position).getDireccion());
+		holder.imagen.setImageResource(direcciones.get(position).getImagen());
+		
+		
+		view.setOnLongClickListener(new OnLongClickListener(){	
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent(mContext, Clientes_Edit_Direccion.class);
+			
 				// Pasamos toda la informacion
-				intent.putExtra("id", (clientes.get(position).getID()));
-				intent.putExtra("nombre", (clientes.get(position).getNombre()));
-				intent.putExtra("direccion", (clientes.get(position).getDireccion()));
-				intent.putExtra("imagen", (clientes.get(position).getImagen()));
+				intent.putExtra("id", (direcciones.get(position).getID()));
+				intent.putExtra("direccion", (direcciones.get(position).getDireccion()));
+				intent.putExtra("departamento", (direcciones.get(position).getIdDepartamento()));
+				intent.putExtra("tipo", (direcciones.get(position).getTipo()));
+				intent.putExtra("id_cliente", (direcciones.get(position).getIdCliente()));
+				intent.putExtra("imagen", (direcciones.get(position).getImagen()));
 				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
-				*/
+			
+				return false;
+			}
+		});
+
+		// Detecta que item de la lista le hicieron clic
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				
 			}
 		});
 
 		return view;
 	}
 
+
+	
 	// Filter Class
-	public void filter(String charText) 
-	{
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
-		clientes.clear();
-		if (charText.length() == 0) 
-		{
-			clientes.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Clientes wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
-					clientes.add(wp);
+		direcciones.clear();
+		if (charText.length() == 0) {
+			direcciones.addAll(arraylist);
+		} else {
+			for (Direcciones wp : arraylist) {
+				if (wp.getTipo().toLowerCase(Locale.getDefault()).contains(charText)) {
+					direcciones.add(wp);
 				}
 			}
 		}

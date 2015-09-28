@@ -4,6 +4,7 @@ package com.durox.app;
 
 import com.example.durox_app.R;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Departamentos_model;
 import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Epocas_model;
@@ -15,6 +16,7 @@ import com.durox.app.Models.Mails_clientes_model;
 import com.durox.app.Models.Pedidos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
+import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
@@ -105,7 +107,11 @@ public class MainActivity extends MenuActivity {
 	   Visitas_model mVisitas = new Visitas_model(db);
 	   		mVisitas.createTable(); 
 	   Estados_presupuesto_model mEstados = new Estados_presupuesto_model(db);
-	   		mEstados.createTable();		   		
+	   		mEstados.createTable();		
+	   Departamentos_model mDepartamentos = new Departamentos_model(db);
+	   		mDepartamentos.createTable();
+	   Provincias_model mProvincias = new Provincias_model(db);
+	   		mProvincias.createTable();		
    } 
 
 }
