@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".Presupuestos_Lista" >
+
+    <Button
+        android:id="@+id/btn_editar"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="mails_editar"
+        android:text="@string/editar" />
+
+    <Button
+        android:id="@+id/btn_cancelar"
+        style="@style/btn_danger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_editar"
+        android:layout_alignBottom="@+id/btn_editar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/et_apellido"
+        android:onClick="cancelar"
+        android:text="@string/cancelar" />
+
+    <TextView
+        android:id="@+id/label_razon_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_razon_social"
+        android:layout_alignLeft="@+id/btn_cancelar"
+        android:text="@string/razon_social"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/label_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_razon_social"
+        android:layout_marginTop="48dp"
+        android:text="@string/email"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/label_email"
+        android:layout_alignBottom="@+id/label_email"
+        android:layout_alignRight="@+id/btn_editar"
+        android:layout_toRightOf="@+id/label_razon_social"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/txt_razon_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:text="@string/razon_social"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#3c8dbc" />
+
+    <AutoCompleteTextView
+        android:id="@+id/ac_tipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_email"
+        android:layout_alignRight="@+id/et_email"
+        android:layout_below="@+id/et_email"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="@string/tipo" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ac_tipo"
+        android:layout_alignBottom="@+id/ac_tipo"
+        android:layout_alignParentLeft="true"
+        android:text="@string/tipo"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

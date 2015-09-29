@@ -81,10 +81,8 @@ public class Clientes_Mails extends MenuActivity {
 	    
 		int j = 0;
 		
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
 				id_back[j] = c.getString(1);
 				c_nombre[j] = c.getString(3);
     			direccion[j] = c.getString(2);
@@ -96,8 +94,7 @@ public class Clientes_Mails extends MenuActivity {
 			list = (ListView) findViewById(R.id.lv_Perfiles);
     		arraylist.clear();
 
-    		for (int i = 0; i < c_nombre.length; i++) 
-    		{
+    		for (int i = 0; i < c_nombre.length; i++) {
     			Clientes wp = new Clientes(
     					id_back[i],
     					c_nombre[i],

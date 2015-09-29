@@ -101,20 +101,14 @@ public class Mails_ListView extends BaseAdapter {
 	}
 
 	// Filter Class
-	public void filter(String charText) 
-	{
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		clientes.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			clientes.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Clientes wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
+		} else{
+			for (Clientes wp : arraylist){
+				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)){
 					clientes.add(wp);
 				}
 			}

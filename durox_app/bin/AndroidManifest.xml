@@ -41,6 +41,8 @@
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Mails" >
         </activity>
+        <activity android:name="com.durox.app.Clientes.Clientes_Edit_Mail" >
+        </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Telefonos" >
         </activity>
         <activity android:name="com.durox.app.Clientes.Clientes_Direcciones" >

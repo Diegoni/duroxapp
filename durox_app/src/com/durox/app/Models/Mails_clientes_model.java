@@ -84,7 +84,7 @@ public class Mails_clientes_model extends Activity{
 				+ " tipos ON(mails.id_tipo = tipos.id_back)"
 			+ " WHERE "
 				+ " sin_clientes_mails.id_cliente = '"+id+"' ";
-			
+		
 		Log.e("Consulta  ", sql);
 		
 		c = db.rawQuery(sql, null);
@@ -184,6 +184,23 @@ public class Mails_clientes_model extends Activity{
 		c = db.rawQuery(sql, null);
 		
 		return c;
+	}
+	
+	public void edit(
+			String id_back,
+			String mail,
+			String id_tipo
+		){
+		
+		sql = "UPDATE `mails`"
+			+ " SET "
+				+ " modificado 		= '1',"
+				+ " mail 			= '"+mail+"',"
+				+ " id_tipo 		= '"+id_tipo+"'"
+			+ " WHERE "
+				+ " id_back = '"+id_back+"'";
+		
+		db.execSQL(sql);
 	}
 
 }
