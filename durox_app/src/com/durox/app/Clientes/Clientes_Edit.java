@@ -178,23 +178,34 @@ public class Clientes_Edit extends MenuActivity {
 				if(id.equals("0")){
 					Log.e("Paso ", "insert cliente");
 					
-					mCliente.insert(
-						"0",			// id_back, 
-						nombre, 
-						apellido, 
-						"1",			// modificado, 
-						cuit, 
-						id_grupo,		// id_grupo_cliente, 
-						id_iva, 
-						"0",			// imagen, 
-						nombre_fantasia, 
-						razon_social, 
-						web, 
-						"0",			// date_add, 
-						"0",			// date_upd, 
-						"0",			// eliminado, 
-						"0",			// user_add, 
-						"0");			// user_upd);
+					Cursor cRazon = mCliente.getID(razon_social);
+					
+					if(cRazon.getCount() > 0){
+						et_razon_social.setFocusable(true);
+						Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+						mCliente.insert(
+							"0",			// id_back, 
+							nombre, 
+							apellido, 
+							"1",			// modificado, 
+							cuit, 
+							id_grupo,		// id_grupo_cliente, 
+							id_iva, 
+							"0",			// imagen, 
+							nombre_fantasia, 
+							razon_social, 
+							web, 
+							"0",			// date_add, 
+							"0",			// date_upd, 
+							"0",			// eliminado, 
+							"0",			// user_add, 
+							"0");			// user_upd);
+						
+						Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
+				    	Intent intentClientes = new Intent(this, Clientes_Main.class);
+						startActivity(intentClientes);
+					}
 					
 				}else{	
 					mCliente.edit(
@@ -207,11 +218,11 @@ public class Clientes_Edit extends MenuActivity {
 						id_iva, 
 						web, 
 						cuit);
+					
+					Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
+			    	Intent intentClientes = new Intent(this, Clientes_Main.class);
+					startActivity(intentClientes);
 				}
-				
-				Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
-		    	Intent intentClientes = new Intent(this, Clientes_Main.class);
-				startActivity(intentClientes);
 			}
 		}		
 	}

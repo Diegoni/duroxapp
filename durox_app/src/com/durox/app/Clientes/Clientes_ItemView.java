@@ -73,10 +73,8 @@ public class Clientes_ItemView extends MenuActivity {
 		
 		c = mCliente.getRegistro(id);
 				
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
 				txtnombre.setText(c.getString(3)+" "+c.getString(2));
 				txtcuit.setText(c.getString(5));
 				txtgrupo.setText(c.getString(6));
@@ -112,8 +110,8 @@ public class Clientes_ItemView extends MenuActivity {
 	
 	
 	public void visitas_crear(View view) {
-		Intent i = getIntent();
-		nombre = i.getStringExtra("nombre");
+		TextView txtrazon_social = (TextView) findViewById(R.id.txt_cRazon_social);
+		nombre = txtrazon_social.getText().toString();
 		
 		Intent intent = new Intent(this, Visitas_Main.class);
 		

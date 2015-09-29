@@ -146,5 +146,16 @@ public class Productos_model extends Activity{
 		
 		return c;
 	}
+	
+	public Cursor getID(String nombre){
+		sql = "SELECT "
+				+ "id_back"
+				+ " FROM productos"
+				+ " WHERE nombre = '"+nombre+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
 
 }

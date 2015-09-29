@@ -131,4 +131,9 @@ public class Config_durox {
 		return msj;
 	}
 	
+	public String msjDuplicado(){
+		String msj = "El Registros ya existe";
+		return msj;
+	}
+	
 }

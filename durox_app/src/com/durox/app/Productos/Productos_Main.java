@@ -201,23 +201,29 @@ public class Productos_Main extends MenuActivity {
 				String user_add = jsonChildNode.optString("user_add");
 				String user_upd = jsonChildNode.optString("user_upd");
 				
-				mProductos.insert(
-						id_back,
-						codigo,
-						codigo_lote,
-						nombre,
-						precio,
-						precio_iva,
-						precio_min,
-						precio_min_iva,
-						id_iva,
-						ficha_tecnica,
-						date_add,
-						date_upd,
-						eliminado,
-						user_add,
-						user_upd
-				);
+				Cursor cUnico = mProductos.getID(nombre);
+				
+				if(cUnico.getCount() > 0){
+					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+				}else{
+					mProductos.insert(
+							id_back,
+							codigo,
+							codigo_lote,
+							nombre,
+							precio,
+							precio_iva,
+							precio_min,
+							precio_min_iva,
+							id_iva,
+							ficha_tecnica,
+							date_add,
+							date_upd,
+							eliminado,
+							user_add,
+							user_upd
+					);
+				}
 			}
 			
 			Toast.makeText(getApplicationContext(), 

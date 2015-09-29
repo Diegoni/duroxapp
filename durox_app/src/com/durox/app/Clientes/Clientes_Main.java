@@ -117,10 +117,8 @@ public class Clientes_Main extends MenuActivity {
 	    
 		int j = 0;
 		
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
 				id_back[j] = c.getString(1);
 				c_nombre[j] = c.getString(10);
     			direccion[j] = c.getString(3)+" "+c.getString(2);
@@ -388,25 +386,31 @@ public class Clientes_Main extends MenuActivity {
 	 			String eliminado = jsonChildNode.optString("eliminado");
 	 			String  user_add = jsonChildNode.optString("user_add");
 	 			String user_upd = jsonChildNode.optString("user_upd");
-	 			 				
-	 			mModel.insert(
-	 				id_back,
-	 				nombre,
-	 				apellido,
-	 				"0",				// modificado
-	 				cuit,
-	 				id_grupo_cliente,
-	 				id_iva,
-	 				imagen,
-	 				nombre_fantasia,
-	 				razon_social,
-	 				web,
-	 				date_add,
-	 				date_upd,
-	 				eliminado,
-	 				user_add,
-	 				user_upd
-	 			);
+	 			
+	 			Cursor cUnico = mModel.getID(razon_social);
+				
+				if(cUnico.getCount() > 0){
+					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+				}else{
+	 			 	mModel.insert(
+		 				id_back,
+		 				nombre,
+		 				apellido,
+		 				"0",				// modificado
+		 				cuit,
+		 				id_grupo_cliente,
+		 				id_iva,
+		 				imagen,
+		 				nombre_fantasia,
+		 				razon_social,
+		 				web,
+		 				date_add,
+		 				date_upd,
+		 				eliminado,
+		 				user_add,
+		 				user_upd
+		 			);
+				}
 	 		}
 	 		
 	 		Toast.makeText(getApplicationContext(), 
@@ -446,16 +450,22 @@ public class Clientes_Main extends MenuActivity {
 	  			String eliminado = jsonChildNode.optString("eliminado");
 	  			String user_add = jsonChildNode.optString("user_add");
 	  			String user_upd = jsonChildNode.optString("user_upd");
-	  				 				
-	  			mGrupos.insert(
-	  				id_back,
-	  				grupo,
-	  				date_add,
-	  				date_upd,
-	  				eliminado,
-	  				user_add,
-	  				user_upd
-	  			);
+	  			
+	  			Cursor cUnico = mModel.getID(grupo);
+				
+				if(cUnico.getCount() > 0){
+					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+				}else{
+	  				mGrupos.insert(
+		  				id_back,
+		  				grupo,
+		  				date_add,
+		  				date_upd,
+		  				eliminado,
+		  				user_add,
+		  				user_upd
+		  			);
+				}
 	  		}
 	  			
 	  		Toast.makeText(getApplicationContext(), 
@@ -497,16 +507,22 @@ public class Clientes_Main extends MenuActivity {
 	  			String eliminado = jsonChildNode.optString("eliminado");
 	  			String user_add = jsonChildNode.optString("user_add");
 	  			String user_upd = jsonChildNode.optString("user_upd");
-	  			 				
-	  			mIva.insert(
-	  				id_back,
-	  				iva,
-	  				date_add,
-	  				date_upd,
-	  				eliminado,
-	  				user_add,
-	  				user_upd
-	  			);
+	  			
+	  			Cursor cUnico = mModel.getID(iva);
+				
+				if(cUnico.getCount() > 0){
+					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+				}else{
+	  			 	mIva.insert(
+		  				id_back,
+		  				iva,
+		  				date_add,
+		  				date_upd,
+		  				eliminado,
+		  				user_add,
+		  				user_upd
+		  			);
+				}
 	  		}
 	  		
 	  		Toast.makeText(getApplicationContext(), 
@@ -545,16 +561,21 @@ public class Clientes_Main extends MenuActivity {
 		  		String user_add = jsonChildNode.optString("user_add");
 		  		String user_upd = jsonChildNode.optString("user_upd");
 		  		
-		  		mTipos.insert(
-		  			id_back, 
-		  			tipo, 
-		  			date_add, 
-		  			date_upd, 
-		  			eliminado, 
-		  			user_add, 
-		  			user_upd
-		  		);
-		  		
+		  		Cursor cUnico = mModel.getID(tipo);
+				
+				if(cUnico.getCount() > 0){
+					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+				}else{
+		  			mTipos.insert(
+			  			id_back, 
+			  			tipo, 
+			  			date_add, 
+			  			date_upd, 
+			  			eliminado, 
+			  			user_add, 
+			  			user_upd
+			  		);
+				}
 		  	}
 		  			
 		  	Toast.makeText(getApplicationContext(), 
