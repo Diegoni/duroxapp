@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editText4"
         android:layout_toRightOf="@+id/textView1"
-        android:ems="20"
+        android:ems="10"
         android:hint="@string/razon_social" >
 
 		<requestFocus />

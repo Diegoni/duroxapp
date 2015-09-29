@@ -13,9 +13,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,8 +30,7 @@ public class Clientes_Edit extends MenuActivity {
 	Config_durox config;
 	SQLiteDatabase db;
 	Cursor cursor;
-	
-	
+		
 	EditText et_razon_social;
 	EditText et_nombre_fantasia;
 	EditText et_nombre;
@@ -38,6 +39,7 @@ public class Clientes_Edit extends MenuActivity {
 	AutoCompleteTextView ac_iva;
 	EditText et_web;
 	EditText et_cuit;
+	Button btn_editar;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class Clientes_Edit extends MenuActivity {
 		ac_iva = (AutoCompleteTextView) findViewById(R.id.ac_iva);
 		et_web = (EditText) findViewById(R.id.et_web);
 		et_cuit = (EditText) findViewById(R.id.et_cuit);
+		btn_editar = (Button) findViewById(R.id.btn_editar);
 		
 		config = new Config_durox();
 	    db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
@@ -58,22 +61,26 @@ public class Clientes_Edit extends MenuActivity {
 		Intent i = getIntent();
 		id = i.getStringExtra("id");
 		
-		mCliente = new Clientes_model(db);
-		cursor = mCliente.getRegistro(id);
-		
-		if(cursor.getCount() > 0){
-			while(cursor.moveToNext()){
-				et_razon_social.setText(cursor.getString(10));
-				et_nombre_fantasia.setText(cursor.getString(9));
-				et_nombre.setText(cursor.getString(2));
-				et_apellido.setText(cursor.getString(3));
-				ac_grupo.setText(cursor.getString(6));
-				ac_iva.setText(cursor.getString(7));
-				et_web.setText(cursor.getString(11));
-				et_cuit.setText(cursor.getString(5));
+		if(id.equals("0")){
+			btn_editar.setText("Agregar");
+		} else {
+			mCliente = new Clientes_model(db);
+			cursor = mCliente.getRegistro(id);
+			
+			if(cursor.getCount() > 0){
+				while(cursor.moveToNext()){
+					et_razon_social.setText(cursor.getString(10));
+					et_nombre_fantasia.setText(cursor.getString(9));
+					et_nombre.setText(cursor.getString(2));
+					et_apellido.setText(cursor.getString(3));
+					ac_grupo.setText(cursor.getString(6));
+					ac_iva.setText(cursor.getString(7));
+					et_web.setText(cursor.getString(11));
+					et_cuit.setText(cursor.getString(5));
+				}
 			}
 		}
-		
+				
 		// Autocomplete Grupos
 		Grupos_model mGrupos = new Grupos_model(db);
 		Cursor cursor_grupos = mGrupos.getRegistros();
@@ -168,15 +175,39 @@ public class Clientes_Edit extends MenuActivity {
 				ac_iva.setFocusable(true);
 			}else{
 				mCliente = new Clientes_model(db);
-				mCliente.edit(
-					id, 
-					razon_social, 
-					nombre_fantasia, 
-					nombre, apellido, 
-					id_grupo, 
-					id_iva, 
-					web, 
-					cuit);
+				if(id.equals("0")){
+					Log.e("Paso ", "insert cliente");
+					
+					mCliente.insert(
+						"0",			// id_back, 
+						nombre, 
+						apellido, 
+						"1",			// modificado, 
+						cuit, 
+						id_grupo,		// id_grupo_cliente, 
+						id_iva, 
+						"0",			// imagen, 
+						nombre_fantasia, 
+						razon_social, 
+						web, 
+						"0",			// date_add, 
+						"0",			// date_upd, 
+						"0",			// eliminado, 
+						"0",			// user_add, 
+						"0");			// user_upd);
+					
+				}else{	
+					mCliente.edit(
+						id, 
+						razon_social, 
+						nombre_fantasia, 
+						nombre, 
+						apellido, 
+						id_grupo, 
+						id_iva, 
+						web, 
+						cuit);
+				}
 				
 				Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
 		    	Intent intentClientes = new Intent(this, Clientes_Main.class);

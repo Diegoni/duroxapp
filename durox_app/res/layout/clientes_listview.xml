@@ -4,34 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/fondo" >
-   
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lvClientes"
-        android:layout_toLeftOf="@+id/btnAgregarComentarios"
-        android:hint="@string/cliente" >
-
-        <requestFocus />
-    </EditText>
-
-    <ListView
-        android:id="@+id/lvClientes"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/btnAgregarComentarios" />
-
-    <Button
-        android:id="@+id/btnAgregarComentarios"
-        style="@style/btn_primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:drawableLeft="@drawable/downloadw"
-        android:onClick="actualizar_clientes"
-        android:text="@string/bajar" />
 
     <Space
         android:layout_width="wrap_content"
@@ -46,5 +18,46 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/search"
         android:layout_marginLeft="34dp" />
+
+    <Button
+        android:id="@+id/btnAgregarComentarios"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/downloadw"
+        android:onClick="actualizar_clientes"
+        android:text="@string/bajar" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnAgregarComentarios"
+        android:ems="10"
+        android:hint="@string/cliente" />
+
+    <ListView
+        android:id="@+id/lvClientes"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/btnAgregarComentarios"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/search" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAgregarComentarios"
+        android:layout_alignBottom="@+id/btnAgregarComentarios"
+        android:layout_alignParentLeft="true"
+        android:onClick="agregar"
+        android:text="@string/agregar" />
     
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.durox.app.Models;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Clientes_model extends Activity{
 	
@@ -68,6 +69,37 @@ public class Clientes_model extends Activity{
 	}
 	
 	
+	public Cursor getClientesVisitas(){
+		createTable();
+		
+		sql = "SELECT "
+				+ "id_cliente,"
+				+ "id_back,"
+				+ "nombre,"
+				+ "apellido,"
+				+ "modificado, "
+				+ "cuit,"
+				+ "id_grupo_cliente,"
+				+ "id_iva,"
+				+ "imagen,"
+				+ "nombre_fantasia,"
+				+ "razon_social,"
+				+ "web,"
+				+ "date_add,"
+				+ "date_upd,"
+				+ "eliminado,"
+				+ "user_add,"
+				+ "user_upd"
+			+ " FROM clientes "
+			+ " WHERE "
+				+ "id_back != '0'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
 				+ "clientes.id_cliente,"
@@ -100,13 +132,13 @@ public class Clientes_model extends Activity{
 	
 	
 	public void insert(
-			int id_back,
+			String id_back,
 			String nombre,
 			String apellido,
 			String modificado,
 			String cuit,
-			int id_grupo_cliente,
-			int id_iva,
+			String id_grupo_cliente,
+			String id_iva,
 			String imagen,
 			String nombre_fantasia,
 			String razon_social,
@@ -114,8 +146,8 @@ public class Clientes_model extends Activity{
 			String date_add,
 			String date_upd,
 			String eliminado,
-			int  user_add,
-			int user_upd){
+			String  user_add,
+			String user_upd){
 		sql = "INSERT INTO `clientes` ("
 				+ "`id_back`, "
 				+ "`modificado`, "
@@ -135,7 +167,7 @@ public class Clientes_model extends Activity{
 				+ "`user_upd`"
 			+ ") VALUES ("
 				+ "'"+id_back+"', "
-				+ "'0', "
+				+ "'"+modificado+"', "
 				+ "'"+nombre+"', "
 				+ "'"+apellido+"', "
 				+ "'"+cuit+"', "
@@ -151,6 +183,8 @@ public class Clientes_model extends Activity{
 				+ "'"+user_add+"', "
 				+ "'"+user_upd+"' "
  			    + ");";
+		
+		Log.e("SQL ", sql);
  			    
  		db.execSQL(sql);
  	}

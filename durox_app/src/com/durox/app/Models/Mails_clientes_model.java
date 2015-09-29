@@ -95,6 +95,30 @@ public class Mails_clientes_model extends Activity{
 	}
 	
 	
+	public Cursor getMailsCliente(String id){
+		sql = "SELECT "
+				+ " sin_clientes_mails.id_cliente,"
+				+ " mails.id_back, "
+				+ " mails.mail,"
+				+ " tipos.tipo "
+			+ " FROM "
+				+ " `sin_clientes_mails` "
+			+ " INNER JOIN "
+				+ " mails ON(sin_clientes_mails.id_mail = mails.id_back) "
+			+ " INNER JOIN "
+				+ " tipos ON(mails.id_tipo = tipos.id_back)"
+			+ " WHERE "
+				+ " sin_clientes_mails.id_cliente = '"+id+"' ";
+			
+		Log.e("Consulta  ", sql);
+		
+		c = db.rawQuery(sql, null);
+		
+		
+		return c;
+	}
+	
+	
 	public void insert(
 			String id_back,
 			String id_tipo,
@@ -201,6 +225,20 @@ public class Mails_clientes_model extends Activity{
 				+ " id_back = '"+id_back+"'";
 		
 		db.execSQL(sql);
+	}
+	
+	
+	public Cursor getNuevos(){
+		sql = "SELECT "				
+				+ "id_back, "
+				+ "mail, "
+				+ "id_tipo "
+			+ " FROM mails"
+			+ " WHERE modificado = '1'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
 	}
 
 }

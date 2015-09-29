@@ -86,7 +86,7 @@ public class Visitas_Main extends MenuActivity {
 		
 		mClientes = new Clientes_model(db);
 		
-		c = mClientes.getRegistros();
+		c = mClientes.getClientesVisitas();
 		
 		cantidad = c.getCount();
 		

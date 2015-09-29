@@ -37,6 +37,7 @@ import com.example.durox_app.R;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -232,6 +233,22 @@ public class Clientes_Main extends MenuActivity {
 			}
 		}
 		
+		Mails_clientes_model mMails = new Mails_clientes_model(db);
+		Cursor cursorMails = mMails.getNuevos();
+		
+		if(cursorMails.getCount() > 0){
+			while(cursorMails.moveToNext()){
+				JsonSetMails tasktel = new JsonSetMails(
+						cursorMails.getString(0),
+						cursorMails.getString(1),
+						cursorMails.getString(2)
+				);
+				
+				String urltel = config.getIp(db)+"/actualizaciones/setMails/";
+				tasktel.execute(new String[] { urltel });
+			}
+		}
+		
 		
 		new asyncciente().execute();
 	}
@@ -356,13 +373,12 @@ public class Clientes_Main extends MenuActivity {
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {
 	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 	 				
-	 			int id_back = jsonChildNode.optInt("id_cliente");
+	 			String id_back = jsonChildNode.optString("id_cliente");
 	 			String nombre = jsonChildNode.optString("nombre");
 	 			String apellido = jsonChildNode.optString("apellido");
-	 			String domicilio = jsonChildNode.optString("domicilio");
 	 			String cuit = jsonChildNode.optString("cuit");
-	 			int id_grupo_cliente = jsonChildNode.optInt("id_grupo_cliente");
-	 			int id_iva = jsonChildNode.optInt("id_iva"); 
+	 			String id_grupo_cliente = jsonChildNode.optString("id_grupo_cliente");
+	 			String id_iva = jsonChildNode.optString("id_iva"); 
 	 			String imagen = jsonChildNode.optString("imagen");
 	 			String nombre_fantasia = jsonChildNode.optString("nombre_fantasia");
 	 			String razon_social = jsonChildNode.optString("razon_social");
@@ -370,14 +386,14 @@ public class Clientes_Main extends MenuActivity {
 	 			String date_add = jsonChildNode.optString("date_add");
 	 			String date_upd = jsonChildNode.optString("date_upd");
 	 			String eliminado = jsonChildNode.optString("eliminado");
-	 			int  user_add = jsonChildNode.optInt("user_add");
-	 			int user_upd = jsonChildNode.optInt("user_upd");
+	 			String  user_add = jsonChildNode.optString("user_add");
+	 			String user_upd = jsonChildNode.optString("user_upd");
 	 			 				
 	 			mModel.insert(
 	 				id_back,
 	 				nombre,
 	 				apellido,
-	 				domicilio,
+	 				"0",				// modificado
 	 				cuit,
 	 				id_grupo_cliente,
 	 				id_iva,
@@ -1123,6 +1139,59 @@ public class Clientes_Main extends MenuActivity {
 	  
 		protected void onPostExecute(String result) {
 	 	}
+	}
+	
+	
+	
+	private class JsonSetMails extends AsyncTask<String, Void, String> {
+		String id_back;
+		String mail;
+		String id_tipo;
+		
+ 		public JsonSetMails(
+ 				String id_back,
+				String mail, 
+				String id_tipo) {
+ 			this.id_back = id_back;
+ 			this.mail = mail; 
+ 			this.id_tipo = id_tipo;
+ 		}
+ 		
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 			 		
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_back", id_back));
+	 		pairs.add(new BasicNameValuePair("mail", mail));
+	 		pairs.add(new BasicNameValuePair("id_tipo", id_tipo));
+	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
+	 			
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 				
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 			
+	 		} catch (IOException e) {
+	 			Toast.makeText(getApplicationContext(), 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 			
+	 		return null;
+	 	}
+	  
+		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	public void agregar(View view) {
+		Intent intentClientes = new Intent(this, Clientes_Edit.class);
+		intentClientes.putExtra("id", "0");
+		startActivity(intentClientes);
 	}
 	 
 }

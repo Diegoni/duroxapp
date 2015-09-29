@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,7 +26,7 @@ import android.widget.Toast;
 @SuppressLint("ShowToast")
 public class Clientes_Edit_Mail extends MenuActivity {
 	String id;
-	Mails_clientes_model mMails;
+	Mails_clientes_model mMail;
 	Config_durox config;
 	SQLiteDatabase db;
 	Cursor cursor;
@@ -34,13 +35,13 @@ public class Clientes_Edit_Mail extends MenuActivity {
 	AutoCompleteTextView ac_tipo;
 	TextView razon_social;
 	
-	String mail;
 	String tipo;
+	String mail;
 	String id_cliente;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main2);
+		setContentView(R.layout.activity_main4);
 		
 		config = new Config_durox();
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
@@ -48,11 +49,11 @@ public class Clientes_Edit_Mail extends MenuActivity {
 		Intent i = getIntent();
 		
 		id = i.getStringExtra("id");
-		mail = i.getStringExtra("mail");
+		mail = i.getStringExtra("mails");
 		tipo = i.getStringExtra("tipo");
 		id_cliente = i.getStringExtra("id_cliente");
 		
-		et_mail = (EditText) findViewById(R.id.et_telefono);
+		et_mail = (EditText) findViewById(R.id.et_email);
 		ac_tipo = (AutoCompleteTextView) findViewById(R.id.ac_tipo);
 		razon_social = (TextView) findViewById(R.id.txt_razon_social);
 		
@@ -101,10 +102,13 @@ public class Clientes_Edit_Mail extends MenuActivity {
 		String txt_id_tipo = ac_tipo.getText().toString();
 		String id_tipo = "0";
 		
+		Log.e("Paso ", "id_tipo "+txt_id_tipo);
+				
 		Tipos_model mTipo = new Tipos_model(db);
 		Cursor cursor_tipos = mTipo.getID(txt_id_tipo);
 		int j = 0;
-				
+		
+		
 		if(cursor_tipos.getCount() > 0){
 			while(cursor_tipos.moveToNext()){
 				id_tipo = cursor_tipos.getString(0);
@@ -117,8 +121,8 @@ public class Clientes_Edit_Mail extends MenuActivity {
 			ac_tipo.setText("");
 			ac_tipo.setFocusable(true);			
 		}else{
-			mMails = new Mails_clientes_model(db);
-			mMails.edit(
+			mMail = new Mails_clientes_model(db);
+			mMail.edit(
 				id, 
 				txt_mail, 
 				id_tipo

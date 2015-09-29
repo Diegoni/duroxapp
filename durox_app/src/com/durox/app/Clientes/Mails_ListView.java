@@ -10,6 +10,7 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +18,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
 
 public class Mails_ListView extends BaseAdapter {
 
-	// Declare Variables
 	Context mContext;
 	LayoutInflater inflater;
-	private List<Clientes> clientes = null;
-	private ArrayList<Clientes> arraylist;
+	private List<Mails> mails = null;
+	private ArrayList<Mails> arraylist;
 
-	public Mails_ListView(Context context, List<Clientes> clientes) {
+	public Mails_ListView(Context context, List<Mails> mails) {
 		mContext = context;
-		this.clientes = clientes;
+		this.mails = mails;
 		inflater = LayoutInflater.from(mContext);
-		this.arraylist = new ArrayList<Clientes>();
+		this.arraylist = new ArrayList<Mails>();
 		this.arraylist.clear();
-		this.arraylist.addAll(clientes);
+		this.arraylist.addAll(mails);
 	}
 
 	public class ViewHolder {
@@ -44,11 +45,11 @@ public class Mails_ListView extends BaseAdapter {
 	}
 	
 	public int getCount() {
-		return clientes.size();
+		return mails.size();
 	}
 
-	public Clientes getItem(int position) {
-		return clientes.get(position);
+	public Mails getItem(int position) {
+		return mails.get(position);
 	}
 
 	public long getItemId(int position) {
@@ -74,15 +75,39 @@ public class Mails_ListView extends BaseAdapter {
 		}
 		
 		// Set the results into TextViews
-		holder.nombre.setText(clientes.get(position).getNombre());
-		holder.id.setText(clientes.get(position).getID());
-		holder.direccion.setText(clientes.get(position).getDireccion());
-		holder.imagen.setImageResource(clientes.get(position).getImagen());
+		holder.nombre.setText(mails.get(position).getTipo());
+		holder.id.setText(mails.get(position).getIdCliente());
+		holder.direccion.setText(mails.get(position).getMail());
+		holder.imagen.setImageResource(mails.get(position).getImagen());
+		
+		
+		view.setOnLongClickListener(new OnLongClickListener(){	
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent(mContext, Clientes_Edit_Mail.class);
+				
+				Log.e("Paso ", "id "+mails.get(position).getID());
+				Log.e("Paso ", "mails "+mails.get(position).getMail());
+				Log.e("Paso ", "tipo "+mails.get(position).getTipo());
+				Log.e("Paso ", "id_cliente "+mails.get(position).getIdCliente());
+				Log.e("Paso ", "imagen "+mails.get(position).getImagen());
+				
+				// Pasamos toda la informacion
+				intent.putExtra("id", (mails.get(position).getID()));
+				intent.putExtra("mails", (mails.get(position).getMail()));
+				intent.putExtra("tipo", (mails.get(position).getTipo()));
+				intent.putExtra("id_cliente", (mails.get(position).getIdCliente()));
+				intent.putExtra("imagen", (mails.get(position).getImagen()));
+				
+				// Start SingleItemView Class
+				mContext.startActivity(intent);
+			
+				return false;
+			}
+		});
 
 		// Detecta que item de la lista le hicieron clic
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
 				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
@@ -100,16 +125,17 @@ public class Mails_ListView extends BaseAdapter {
 		return view;
 	}
 
-	// Filter Class
+
+	
 	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
-		clientes.clear();
+		mails.clear();
 		if (charText.length() == 0) {
-			clientes.addAll(arraylist);
-		} else{
-			for (Clientes wp : arraylist){
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)){
-					clientes.add(wp);
+			mails.addAll(arraylist);
+		} else {
+			for (Mails wp : arraylist) {
+				if (wp.getTipo().toLowerCase(Locale.getDefault()).contains(charText)) {
+					mails.add(wp);
 				}
 			}
 		}
