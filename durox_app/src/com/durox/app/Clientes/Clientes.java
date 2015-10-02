@@ -17,24 +17,20 @@ public class Clientes {
 		this.imagen = imagen;
 	}
 	
-	public String getID() 
-	{
+	public String getID() {
 		return this.id_back;
 	}
 
 
-	public String getNombre() 
-	{
+	public String getNombre() {
 		return this.nombre;
 	}
 
-	public String getDireccion() 
-	{
+	public String getDireccion() {
 		return this.direccion;
 	}
 
-	public int getImagen() 
-	{
+	public int getImagen() {
 		return this.imagen;
 	}
 }

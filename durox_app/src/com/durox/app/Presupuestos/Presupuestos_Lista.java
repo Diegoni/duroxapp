@@ -56,6 +56,7 @@ public class Presupuestos_Lista extends MenuActivity {
 	String[] p_nombre;
 	String[] total;
 	String[] estado;
+	String[] fecha;
 	int[] foto;
 	String[] id_presupuesto;
 	String[] id_back;
@@ -113,6 +114,7 @@ public class Presupuestos_Lista extends MenuActivity {
 		c_nombre = new String[cantidad_presupuestos];
 		total = new String[cantidad_presupuestos];
 		estado = new String[cantidad_presupuestos];
+		fecha = new String[cantidad_presupuestos];
 		foto = new int[cantidad_presupuestos];
 		
 		int j = 0;
@@ -124,6 +126,7 @@ public class Presupuestos_Lista extends MenuActivity {
 				id_presupuesto[j] = c.getString(5);
     			total[j] = c.getString(3);
     			estado[j] = c.getString(6);
+    			fecha[j] = c.getString(4);
     			foto[j] = R.drawable.presupuesto; 
     		
     			j = j + 1;
@@ -138,6 +141,7 @@ public class Presupuestos_Lista extends MenuActivity {
     					c_nombre[i],
     					total[i],
     					estado[i], 
+    					fecha[i],
     					foto[i],
     					id_presupuesto[i]
     			);

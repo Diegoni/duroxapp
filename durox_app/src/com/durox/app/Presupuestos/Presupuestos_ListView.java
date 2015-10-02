@@ -10,6 +10,7 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 		TextView nombre;
 		TextView total;
 		TextView estado;
+		TextView fecha;
 		TextView id;
 		ImageView imagen;
 	}
@@ -69,6 +71,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 			holder.id = (TextView) view.findViewById(R.id.txt_pBack);
 			holder.total = (TextView) view.findViewById(R.id.txt_pTotal);
 			holder.estado = (TextView) view.findViewById(R.id.txt_pEstado);
+			holder.fecha = (TextView) view.findViewById(R.id.txt_pFecha);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
@@ -80,21 +83,22 @@ public class Presupuestos_ListView extends BaseAdapter {
 		holder.id.setText(presupuestos.get(position).getID());
 		holder.total.setText(presupuestos.get(position).getTotal());
 		holder.estado.setText(presupuestos.get(position).getEstado());
+		holder.fecha.setText(presupuestos.get(position).getFecha());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
 
 		
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				
 				Intent intent = new Intent(mContext, Presupuestos_ItemView.class);
-				
+					
 				intent.putExtra("id", (presupuestos.get(position).getID()));
 				intent.putExtra("nombre", (presupuestos.get(position).getNombre()));
 				intent.putExtra("total", (presupuestos.get(position).getTotal()));
 				intent.putExtra("imagen", (presupuestos.get(position).getImagen()));
 				intent.putExtra("id_presupuesto", (presupuestos.get(position).getIDPresupuesto()));
-				
+					
 				mContext.startActivity(intent);
+				
 			}
 		});
 

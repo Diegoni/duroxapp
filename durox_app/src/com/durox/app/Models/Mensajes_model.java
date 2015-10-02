@@ -17,6 +17,7 @@ public class Mensajes_model extends Activity{
 	}
 	
 	
+	
 	public void createTable(){
 		sql = "CREATE TABLE IF NOT EXISTS `mensajes`("
 				+ "id_mensaje INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -34,6 +35,7 @@ public class Mensajes_model extends Activity{
 				+ ");";
 		db.execSQL(sql);
 	}
+	
 	
 	
 	public Cursor getMensajes(String e){
@@ -67,6 +69,7 @@ public class Mensajes_model extends Activity{
 	}
 		
 	
+	
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
 				+ "id_back, "
@@ -83,6 +86,7 @@ public class Mensajes_model extends Activity{
 	}
 	
 		
+	
 	public void insert(
 			String id_back,
 			String asunto,
@@ -125,13 +129,17 @@ public class Mensajes_model extends Activity{
 			    + ");";
  			    
  		db.execSQL(sql);
+ 		
+ 		Log.e("Consulta ", sql);
  	}
+	
 	
 	
 	public void truncate(){
 		sql = "DELETE FROM `mensajes`";
 		db.execSQL(sql);
 	}
+	
 	
 	
 	public String getID(){
@@ -153,6 +161,7 @@ public class Mensajes_model extends Activity{
 	}
 	
 	
+	
 	public Cursor getNuevos(){
 		createTable();
 		
@@ -166,5 +175,4 @@ public class Mensajes_model extends Activity{
 		
 		return c;
 	}
-
 }

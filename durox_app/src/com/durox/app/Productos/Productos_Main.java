@@ -207,21 +207,21 @@ public class Productos_Main extends MenuActivity {
 					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
 				}else{
 					mProductos.insert(
-							id_back,
-							codigo,
-							codigo_lote,
-							nombre,
-							precio,
-							precio_iva,
-							precio_min,
-							precio_min_iva,
-							id_iva,
-							ficha_tecnica,
-							date_add,
-							date_upd,
-							eliminado,
-							user_add,
-							user_upd
+						id_back,
+						codigo,
+						codigo_lote,
+						nombre,
+						precio,
+						precio_iva,
+						precio_min,
+						precio_min_iva,
+						id_iva,
+						ficha_tecnica,
+						date_add,
+						date_upd,
+						eliminado,
+						user_add,
+						user_upd
 					);
 				}
 			}

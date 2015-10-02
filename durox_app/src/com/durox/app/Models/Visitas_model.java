@@ -54,9 +54,14 @@ public class Visitas_model extends Activity{
 				+ "clientes.razon_social, "
 				+ "epocas_visitas.epoca, "
 				+ "visitas.fecha "
-				+ " FROM `visitas` "
-				+ " INNER JOIN clientes ON(visitas.id_cliente = clientes.id_back) "
-				+ " INNER JOIN epocas_visitas ON(visitas.id_epoca_visita = epocas_visitas.id_back) ";
+			+ " FROM "
+				+ " `visitas` "
+			+ " INNER JOIN "
+				+ " clientes ON(visitas.id_cliente = clientes.id_back) "
+			+ " INNER JOIN "
+				+ " epocas_visitas ON(visitas.id_epoca_visita = epocas_visitas.id_back) "
+			+ " ORDER BY "
+				+ "	visitas.fecha DESC";
 		
 		c = db.rawQuery(sql, null);
 		

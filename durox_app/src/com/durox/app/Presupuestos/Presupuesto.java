@@ -5,6 +5,7 @@ public class Presupuesto {
 	private String nombre;
 	private String total;
 	private String estado;
+	private String fecha;
 	private int imagen;
 	private String id_presupuesto;
 	
@@ -13,12 +14,14 @@ public class Presupuesto {
 			String nombre, 
 			String total,
 			String estado,
+			String fecha,
 			int imagen,
 			String id_presupuesto) {
 		this.id_back = id_back;
 		this.nombre = nombre;
 		this.total = total;
 		this.estado = estado;
+		this.fecha = fecha;
 		this.imagen = imagen;
 		this.id_presupuesto = id_presupuesto;
 	}
@@ -38,6 +41,10 @@ public class Presupuesto {
 	
 	public String getEstado() {
 		return this.estado;
+	}
+	
+	public String getFecha() {
+		return this.fecha;
 	}
 
 	public int getImagen() {

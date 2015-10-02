@@ -9,12 +9,14 @@ import com.durox.app.Presupuestos.Presupuestos_Create;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class Visitas_ListView extends BaseAdapter {
@@ -24,7 +26,7 @@ public class Visitas_ListView extends BaseAdapter {
 	LayoutInflater inflater;
 	private List<Visitas> visitas = null;
 	private ArrayList<Visitas> arraylist;
-
+	
 	public Visitas_ListView(Context context, ArrayList<Visitas> arraylist2) 
 	{
 		mContext = context;
@@ -87,24 +89,30 @@ public class Visitas_ListView extends BaseAdapter {
 		holder.imagen.setImageResource(visitas.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
-				// Send single item click data to SingleItemView Class
-				Intent intent = new Intent(mContext, Presupuestos_Create.class);
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
 				
-				// Pasamos toda la informacion
-				intent.putExtra("id_visita", (visitas.get(position).getVisita()));
-				intent.putExtra("nombre", (visitas.get(position).getNombre()));
-				intent.putExtra("epoca", (visitas.get(position).getEpoca()));
-				intent.putExtra("fecha", (visitas.get(position).getFecha()));
-				intent.putExtra("imagen", (visitas.get(position).getImagen()));
-				intent.putExtra("truncate", "truncate");
+				String id = visitas.get(position).getVisita();
 				
-				// Start SingleItemView Class
-				mContext.startActivity(intent);
+				Log.e("Paso ", "id "+id);
 				
+				if(id.equals("0")){
+					Toast.makeText(mContext, "Por favor actualice", Toast.LENGTH_SHORT).show(); 
+				}else{
+					// Send single item click data to SingleItemView Class
+					Intent intent = new Intent(mContext, Presupuestos_Create.class);
+					
+					// Pasamos toda la informacion
+					intent.putExtra("id_visita", (visitas.get(position).getVisita()));
+					intent.putExtra("nombre", (visitas.get(position).getNombre()));
+					intent.putExtra("epoca", (visitas.get(position).getEpoca()));
+					intent.putExtra("fecha", (visitas.get(position).getFecha()));
+					intent.putExtra("imagen", (visitas.get(position).getImagen()));
+					intent.putExtra("truncate", "truncate");
+					
+					// Start SingleItemView Class
+					mContext.startActivity(intent);
+				}
 			}
 		});
 
