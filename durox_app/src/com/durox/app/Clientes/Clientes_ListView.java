@@ -27,8 +27,8 @@ public class Clientes_ListView extends BaseAdapter {
 	private List<Clientes> clientes = null;
 	private ArrayList<Clientes> arraylist;
 
-	public Clientes_ListView(Context context, List<Clientes> clientes) 
-	{
+	
+	public Clientes_ListView(Context context, List<Clientes> clientes) {
 		mContext = context;
 		this.clientes = clientes;
 		inflater = LayoutInflater.from(mContext);
@@ -36,69 +36,64 @@ public class Clientes_ListView extends BaseAdapter {
 		this.arraylist.clear();
 		this.arraylist.addAll(clientes);
 	}
+	
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
+		TextView razon_social;
 		TextView nombre;
-		TextView direccion;
 		TextView id;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
+	
+	public int getCount() {
 		return clientes.size();
 	}
+	
 
-	public Clientes getItem(int position) 
-	{
+	public Clientes getItem(int position) {
 		return clientes.get(position);
 	}
+	
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
+	
 
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.clientes_listviewitem, null);
 			
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.txt_cRazon_social);
+			holder.razon_social = (TextView) view.findViewById(R.id.txt_cRazon_social);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_cNombre);
 			holder.id = (TextView) view.findViewById(R.id.txt_cIdback);
-			holder.direccion = (TextView) view.findViewById(R.id.txt_cNombre);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
 		// Set the results into TextViews
+		holder.razon_social.setText(clientes.get(position).getRazonSocial());
 		holder.nombre.setText(clientes.get(position).getNombre());
 		holder.id.setText(clientes.get(position).getID());
-		holder.direccion.setText(clientes.get(position).getDireccion());
 		holder.imagen.setImageResource(clientes.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
-			public void onClick(View arg0) 
-			{
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
 				// Send single item click data to SingleItemView Class
 				Intent intent = new Intent(mContext, Clientes_Tabs.class);
 				
 				// Pasamos toda la informacion
-				intent.putExtra("id", (clientes.get(position).getID()));
+				intent.putExtra("razon_social", (clientes.get(position).getRazonSocial()));
 				intent.putExtra("nombre", (clientes.get(position).getNombre()));
-				intent.putExtra("direccion", (clientes.get(position).getDireccion()));
+				intent.putExtra("id", (clientes.get(position).getID()));
 				intent.putExtra("imagen", (clientes.get(position).getImagen()));
 				
 				// Start SingleItemView Class
@@ -108,23 +103,27 @@ public class Clientes_ListView extends BaseAdapter {
 
 		return view;
 	}
-
-	// Filter Class
-	public void filter(String charText) 
-	{
+	
+	
+	public void filter(String charText, CharSequence filtro) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		clientes.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			clientes.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Clientes wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
-					clientes.add(wp);
+		} else {
+			for (Clientes wp : arraylist) {
+				if(filtro.equals("") || filtro.equals("razon social")){
+					if (wp.getRazonSocial().toLowerCase(Locale.getDefault()).contains(charText)) {
+						clientes.add(wp);
+					}
+				} else if(filtro.equals("nombre") || filtro.equals("apellido")){
+					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+						clientes.add(wp);
+					}
+				} else {
+					if (wp.getID().toLowerCase(Locale.getDefault()).contains(charText)) {
+						clientes.add(wp);
+					}
 				}
 			}
 		}

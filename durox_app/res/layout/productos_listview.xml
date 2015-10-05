@@ -4,32 +4,52 @@
     android:layout_height="fill_parent"
     android:background="@drawable/fondo" >
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/listview"
-        android:layout_toLeftOf="@+id/btnAgregarComentarios"
-        android:hint="@string/producto" >
-
-        <requestFocus />
-    </EditText>
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/btnAgregarComentarios" />
-
     <Button
         android:id="@+id/btnAgregarComentarios"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_productos"
         android:text="@string/bajar" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/producto" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/btnAgregarComentarios"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/search" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/btn_orden"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/ordenar" />
+
+      <Button
+          android:id="@+id/btn_filtro"
+          style="@style/btn_primary"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/listview"
+          android:layout_toRightOf="@+id/btn_orden"
+          android:text="@string/filtro" />
 
 </RelativeLayout>

@@ -29,8 +29,8 @@ public class Config_durox {
 		c = db.rawQuery(sql, null);
 				
 		if(c.getCount() == 0){
-			ip =  "http://192.168.1.207/durox/index.php";
-			documentos = "http://192.168.1.207/durox/documentos";
+			ip =  "http://192.168.0.134/durox/index.php";
+			documentos = "http://192.168.0.134/durox/documentos";
 
 			sql = "INSERT INTO `config` ("
 					+ "`ip`, "

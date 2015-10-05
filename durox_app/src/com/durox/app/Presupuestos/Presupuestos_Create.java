@@ -94,7 +94,7 @@ public class Presupuestos_Create extends MenuActivity {
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		mProductos = new Productos_model(db);
-		c = mProductos.getRegistros();
+		c = mProductos.getRegistros("");
 		cantidad = c.getCount();
 		p_nombre = new String[cantidad];
 		

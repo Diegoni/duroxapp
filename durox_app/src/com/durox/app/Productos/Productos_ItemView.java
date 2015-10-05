@@ -18,7 +18,7 @@ public class Productos_ItemView extends MenuActivity {
 	ImageView imgimagen;
 	
 	String nombre;
-	String detalle;
+	String precio;
 	String id;
 	int imagen;
 	
@@ -64,17 +64,15 @@ public class Productos_ItemView extends MenuActivity {
 		// Traigo los resultados 
 		id = i.getStringExtra("id");
 		nombre = i.getStringExtra("nombre");
-		detalle = i.getStringExtra("detalle");
+		precio = i.getStringExtra("precio");
 		imagen = i.getIntExtra("imagen", imagen);
 		
 		mProducto = new Productos_model(db);
 		
 		c = mProducto.getRegistro(id);
 				
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-    		{
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
 				txt_pNombre.setText(c.getString(4));
 				txt_pCodigo.setText(c.getString(2));
 				txt_pCodigoLote.setText(c.getString(3));

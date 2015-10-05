@@ -2,33 +2,35 @@ package com.durox.app.Clientes;
 
 public class Clientes {
 	private String id_back;
+	private String razon_social;
 	private String nombre;
-	private String direccion;
 	private int imagen;
 	
 	public Clientes(
 			String id_back,
-			String nombre, 
-			String direccion,
+			String razon_social, 
+			String nombre,
 			int imagen) {
 		this.id_back = id_back;
+		this.razon_social = razon_social;
 		this.nombre = nombre;
-		this.direccion = direccion;
 		this.imagen = imagen;
 	}
+	
 	
 	public String getID() {
 		return this.id_back;
 	}
 
 
+	public String getRazonSocial() {
+		return this.razon_social;
+	}
+	
 	public String getNombre() {
 		return this.nombre;
 	}
-
-	public String getDireccion() {
-		return this.direccion;
-	}
+	
 
 	public int getImagen() {
 		return this.imagen;

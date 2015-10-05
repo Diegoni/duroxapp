@@ -40,28 +40,75 @@ public class Clientes_model extends Activity{
 		db.execSQL(sql);
 	}
 	
-	public Cursor getRegistros(){
+	public Cursor getRegistros(CharSequence orden){
 		createTable();
 		
-		sql = "SELECT "
-				+ "id_cliente,"
-				+ "id_back,"
-				+ "nombre,"
-				+ "apellido,"
-				+ "modificado, "
-				+ "cuit,"
-				+ "id_grupo_cliente,"
-				+ "id_iva,"
-				+ "imagen,"
-				+ "nombre_fantasia,"
-				+ "razon_social,"
-				+ "web,"
-				+ "date_add,"
-				+ "date_upd,"
-				+ "eliminado,"
-				+ "user_add,"
-				+ "user_upd"
-				+ " FROM clientes";
+		if(orden.equals("") || orden.equals("razon social")){
+			sql = "SELECT "
+					+ "id_cliente,"
+					+ "id_back,"
+					+ "nombre,"
+					+ "apellido,"
+					+ "modificado, "
+					+ "cuit,"
+					+ "id_grupo_cliente,"
+					+ "id_iva,"
+					+ "imagen,"
+					+ "nombre_fantasia,"
+					+ "razon_social,"
+					+ "web,"
+					+ "date_add,"
+					+ "date_upd,"
+					+ "eliminado,"
+					+ "user_add,"
+					+ "user_upd"
+				+ " FROM clientes "
+					+ " ORDER BY razon_social";
+		} else if(orden.equals("id")){
+			sql = "SELECT "
+					+ "id_cliente,"
+					+ "id_back,"
+					+ "nombre,"
+					+ "apellido,"
+					+ "modificado, "
+					+ "cuit,"
+					+ "id_grupo_cliente,"
+					+ "id_iva,"
+					+ "imagen,"
+					+ "nombre_fantasia,"
+					+ "razon_social,"
+					+ "web,"
+					+ "date_add,"
+					+ "date_upd,"
+					+ "eliminado,"
+					+ "user_add,"
+					+ "user_upd"
+				+ " FROM clientes "
+					+ " ORDER BY id_back ";
+		} else {
+			sql = "SELECT "
+					+ "id_cliente,"
+					+ "id_back,"
+					+ "nombre,"
+					+ "apellido,"
+					+ "modificado, "
+					+ "cuit,"
+					+ "id_grupo_cliente,"
+					+ "id_iva,"
+					+ "imagen,"
+					+ "nombre_fantasia,"
+					+ "razon_social,"
+					+ "web,"
+					+ "date_add,"
+					+ "date_upd,"
+					+ "eliminado,"
+					+ "user_add,"
+					+ "user_upd"
+				+ " FROM clientes "
+					+ " ORDER BY "+orden+" ";
+		}
+		
+		Log.e("Consulta", sql);		
 		
 		c = db.rawQuery(sql, null);
 		

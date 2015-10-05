@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >  
+
+    <item  
+        android:id="@+id/razon_social"  
+        android:title="razon social"/>  
+
+    <item  
+        android:id="@+id/nombre"  
+        android:title="nombre"/>  
+        
+    <item  
+        android:id="@+id/apellido"  
+        android:title="apellido"/>  
+
+    <item  
+        android:id="@+id/id"  
+        android:title="id"/>  
+
+</menu>  

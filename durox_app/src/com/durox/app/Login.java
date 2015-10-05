@@ -37,7 +37,7 @@ public class Login extends Activity {
     
     Httppostaux post;
     // String URL_connect="http://www.scandroidtest.site90.com/acces.php";
-    String IP_Server = "192.168.1.207"; //IP DE NUESTRO PC
+    String IP_Server = "192.168.0.134"; //IP DE NUESTRO PC
     String URL_connect = "http://"+IP_Server+"/durox/index.php/actualizaciones/getLogin/"; //ruta en donde estan nuestros archivos
   
     boolean result_back;

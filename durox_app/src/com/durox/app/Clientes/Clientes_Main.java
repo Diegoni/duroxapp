@@ -33,6 +33,7 @@ import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
+import com.durox.app.Productos.Productos_Main;
 import com.example.durox_app.R;
 
 import android.app.ProgressDialog;
@@ -45,9 +46,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,12 +63,12 @@ public class Clientes_Main extends MenuActivity {
 	Clientes_ListView adapter;
 	EditText editsearch;
 	
-	String[] c_nombre;
-	String[] direccion;
-	int[] foto;
 	String[] id_back;
-	
+	String[] razon_social;
+	String[] nombre;
 	int[] imagen;
+	
+	
 	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
 	SQLiteDatabase db;
 		
@@ -86,6 +91,12 @@ public class Clientes_Main extends MenuActivity {
 	Config_durox config;
 	private ProgressDialog pDialog;
 	
+	private Button btn_orden;
+	private Button btn_filtro;
+	
+	CharSequence orden;
+	CharSequence filtro;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         config = new Config_durox();
@@ -97,32 +108,82 @@ public class Clientes_Main extends MenuActivity {
         setTitle("Clientes - Lista");
         getActionBar().setIcon(R.drawable.menuclientes);
         
-		clientes_lista();
+        setContentView(R.layout.clientes_listview);
+        
+        orden = "";
+        filtro = "razon social";
+        
+		clientes_lista(orden, filtro);
+		
+		btn_orden = (Button) findViewById(R.id.btn_orden);
+	    btn_orden.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				PopupMenu popup = new PopupMenu(Clientes_Main.this, btn_orden);
+				popup.getMenuInflater().inflate(R.menu.popup_cliente, popup.getMenu());
+
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						orden = item.getTitle();
+							
+						clientes_lista(orden, filtro);
+							
+						Toast.makeText(Clientes_Main.this, "Orden : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		                        return true;
+					}
+				});
+			        
+				popup.show();
+			}
+		});
+	        
+	        
+	    btn_filtro = (Button) findViewById(R.id.btn_filtro);
+	    btn_filtro.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					PopupMenu popup = new PopupMenu(Clientes_Main.this, btn_filtro);
+					popup.getMenuInflater().inflate(R.menu.popup_cliente, popup.getMenu());
+
+					popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+						public boolean onMenuItemClick(MenuItem item) {
+							filtro = item.getTitle();
+							
+							clientes_lista(orden, filtro);
+							
+							Toast.makeText(Clientes_Main.this, "Filtro : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+			                        return true;
+						}
+					});
+			        
+					popup.show();
+				}
+			});
 	}
 	
 	
-	public void clientes_lista(){
-		setContentView(R.layout.clientes_listview);
- 		
+	public void clientes_lista(CharSequence orden, final CharSequence filtro){
 		mCliente = new Clientes_model(db);
     	
-    	c = mCliente.getRegistros();
+    	c = mCliente.getRegistros(orden);
 		
 		int cantidad_clientes = c.getCount();
 		
 		id_back = new String[cantidad_clientes];
-		c_nombre = new String[cantidad_clientes];
-		direccion = new String[cantidad_clientes];
-		foto = new int[cantidad_clientes];
+		razon_social = new String[cantidad_clientes];
+		nombre = new String[cantidad_clientes];
+		imagen = new int[cantidad_clientes];
 	    
 		int j = 0;
 		
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
 				id_back[j] = c.getString(1);
-				c_nombre[j] = c.getString(10);
-    			direccion[j] = c.getString(3)+" "+c.getString(2);
-    			foto[j] = R.drawable.clientes; 
+				razon_social[j] = c.getString(10);
+    			nombre[j] = c.getString(3)+" "+c.getString(2);
+    			imagen[j] = R.drawable.clientes; 
+    			
+    			Log.e("Cliente ", id_back[j]+" "+razon_social[j]+" "+c.getString(3)+" "+c.getString(2));
     		
     			j = j + 1;
     		}	
@@ -130,13 +191,12 @@ public class Clientes_Main extends MenuActivity {
 			list = (ListView) findViewById(R.id.lvClientes);
     		arraylist.clear();
 
-    		for (int i = 0; i < c_nombre.length; i++) 
-    		{
+    		for (int i = 0; i < razon_social.length; i++) {
     			Clientes wp = new Clientes(
     					id_back[i],
-    					c_nombre[i],
-    					direccion[i], 
-    					foto[i]
+    					razon_social[i],
+    					nombre[i], 
+    					imagen[i]
     			);
     			arraylist.add(wp);
     		}
@@ -145,10 +205,12 @@ public class Clientes_Main extends MenuActivity {
     		list.setAdapter(adapter);
     		
     		editsearch = (EditText) findViewById(R.id.search);
+    		editsearch.setHint(filtro);
+    		
     		editsearch.addTextChangedListener(new TextWatcher() {
     			public void afterTextChanged(Editable arg0) {
     				String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-    				adapter.filter(text);
+    				adapter.filter(text, filtro);
     			}
 
     			public void beforeTextChanged(
@@ -274,7 +336,7 @@ public class Clientes_Main extends MenuActivity {
         }
        
         protected void onPostExecute(String result) {
-        	clientes_lista();
+        	clientes_lista(orden, filtro);
         }
 	}
 	

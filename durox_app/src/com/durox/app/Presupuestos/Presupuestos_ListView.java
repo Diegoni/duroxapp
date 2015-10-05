@@ -10,7 +10,6 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,6 @@ public class Presupuestos_ListView extends BaseAdapter {
 		holder.estado.setText(presupuestos.get(position).getEstado());
 		holder.fecha.setText(presupuestos.get(position).getFecha());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
-
 		
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -97,8 +95,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 				intent.putExtra("imagen", (presupuestos.get(position).getImagen()));
 				intent.putExtra("id_presupuesto", (presupuestos.get(position).getIDPresupuesto()));
 					
-				mContext.startActivity(intent);
-				
+				mContext.startActivity(intent);		
 			}
 		});
 

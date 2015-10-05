@@ -36,9 +36,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,13 +54,9 @@ public class Productos_Main extends MenuActivity {
 	Documentos_ListView adapterd;
 	EditText editsearch;
 	
-	String[] c_nombre;
-	String[] p_nombre;
-	String[] direccion;
-	String[] detalle;
-	int[] foto;
+	String[] nombre;
 	String[] id_back;
-	String[] id_pback;
+	String[] precio;
 	int[] imagen;
 	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
 	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
@@ -80,6 +80,13 @@ public class Productos_Main extends MenuActivity {
 	Config_durox config;
 	ProgressDialog pDialog;
 	
+	CharSequence orden;
+	CharSequence filtro;
+	
+	private Button btn_orden;
+	private Button btn_filtro; 
+	
+	
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
@@ -88,8 +95,60 @@ public class Productos_Main extends MenuActivity {
         
         setTitle("Productos - Lista");
         getActionBar().setIcon(R.drawable.menuproductos);
+        
+        setContentView(R.layout.productos_listview);
+        
+        orden = "";
+        filtro = "nombre";
+        
+        productos_lista(orden, filtro);
 		
-		productos_lista();
+        btn_orden = (Button) findViewById(R.id.btn_orden);
+        btn_orden.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				PopupMenu popup = new PopupMenu(Productos_Main.this, btn_orden);
+				popup.getMenuInflater().inflate(R.menu.popup_producto, popup.getMenu());
+
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						orden = item.getTitle();
+						
+						productos_lista(orden, filtro);
+						
+						Toast.makeText(Productos_Main.this, "Orden : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		                        return true;
+					}
+				});
+		        
+				popup.show();
+			}
+		});
+        
+        
+        btn_filtro = (Button) findViewById(R.id.btn_filtro);
+        btn_filtro.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				PopupMenu popup = new PopupMenu(Productos_Main.this, btn_filtro);
+				popup.getMenuInflater().inflate(R.menu.popup_producto, popup.getMenu());
+
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						filtro = item.getTitle();
+						
+						productos_lista(orden, filtro);
+						
+						Toast.makeText(Productos_Main.this, "Filtro : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		                        return true;
+					}
+				});
+		        
+				popup.show();
+			}
+		});
 		
 	}
 	
@@ -233,36 +292,31 @@ public class Productos_Main extends MenuActivity {
 			Toast.makeText(getApplicationContext(), 
 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
-		productos_lista();   
+		productos_lista(orden, filtro);   
 	}
 	
 	
 	
-	public void productos_lista(){
-		setContentView(R.layout.productos_listview);
+	public void productos_lista(CharSequence order, final CharSequence filtro){
 		
 		mProductos = new Productos_model(db);
-		
 		mProductos.createTable();
-				
-		c = mProductos.getRegistros();
+		c = mProductos.getRegistros(order);
 		
 		int cantidad_productos = c.getCount();
 		
-		p_nombre = new String[cantidad_productos];
-		id_pback = new String[cantidad_productos];
-		detalle = new String[cantidad_productos];
+		nombre = new String[cantidad_productos];
+		id_back = new String[cantidad_productos];
+		precio = new String[cantidad_productos];
 		imagen = new int[cantidad_productos];
 		
 		j = 0;
 			
-		if(c.getCount() > 0)
-		{
-			while(c.moveToNext())
-			{
-				id_pback[j] = c.getString(1);
-				p_nombre[j] = c.getString(4);
-				detalle[j] = c.getString(5);
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id_back[j] = c.getString(1);
+				nombre[j] = c.getString(4);
+				precio[j] = c.getString(5);
 				imagen[j] = R.drawable.productos; 
 				j = j + 1;
 			}	
@@ -271,13 +325,11 @@ public class Productos_Main extends MenuActivity {
 			list = (ListView) findViewById(R.id.listview);
 			arraylistp.clear();
 			
-			for (int i = 0; i < p_nombre.length; i++) 
-			{
-				//WorldPopulation wp = new WorldPopulation(rank[i], country[i],
+			for (int i = 0; i < nombre.length; i++) {
 				Productos wp = new Productos(
-						id_pback[i],
-						p_nombre[i],
-						detalle[i], 
+						id_back[i],
+						nombre[i],
+						precio[i], 
 						imagen[i]
 				);
 				
@@ -293,15 +345,15 @@ public class Productos_Main extends MenuActivity {
 			
 			// Locate the EditText in listview_main.xml
 			editsearch = (EditText) findViewById(R.id.search);
+			editsearch.setHint(filtro);
 			
 			// Capture Text in EditText
 			editsearch.addTextChangedListener(new TextWatcher() {
 			
 				@Override
-				public void afterTextChanged(Editable arg0) 
-				{
+				public void afterTextChanged(Editable arg0) {
 					String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-					adapterp.filter(text);
+					adapterp.filter(text, filtro);
 				}
 			
 				@Override

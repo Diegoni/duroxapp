@@ -24,9 +24,7 @@ public class Productos_ListView extends BaseAdapter {
 	private List<Productos> productos = null;
 	private ArrayList<Productos> arraylist;
 
-	public Productos_ListView(Context context,
-			List<Productos> productos) 
-	{
+	public Productos_ListView(Context context, List<Productos> productos) {
 		mContext = context;
 		this.productos = productos;
 		inflater = LayoutInflater.from(mContext);
@@ -34,71 +32,64 @@ public class Productos_ListView extends BaseAdapter {
 		this.arraylist.addAll(productos);
 	}
 
-	public class ViewHolder 
-	{
-		TextView txt_pID;
+	public class ViewHolder {
+		TextView id_back;
 		TextView nombre;
-		TextView detalle;
+		TextView precio;
 		ImageView imagen;
 	}
 
-	public int getCount() 
-	{
+	
+	public int getCount() {
 		return productos.size();
 	}
+	
 
-	public Productos getItem(int position) 
-	{
+	public Productos getItem(int position) {
 		return productos.get(position);
 	}
+	
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
+	
 
 	@SuppressLint("InflateParams")
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
 		
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.productos_listviewitem, null);
 	
 			// Locate the TextViews in listview_item.xml
-			holder.nombre = (TextView) view.findViewById(R.id.txt_pNombre);
-			holder.txt_pID = (TextView) view.findViewById(R.id.txt_pId);
-			holder.detalle = (TextView) view.findViewById(R.id.txt_pCodigo);
+			holder.nombre = (TextView) view.findViewById(R.id.txt_producto);
+			holder.id_back = (TextView) view.findViewById(R.id.txt_id_back);
+			holder.precio = (TextView) view.findViewById(R.id.txt_precio);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		} 
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
 		// Set the results into TextViews
 		holder.nombre.setText(productos.get(position).getNombre());
-		holder.txt_pID.setText(productos.get(position).getID());
-		holder.detalle.setText(productos.get(position).getDetalle());
+		holder.id_back.setText(productos.get(position).getID());
+		holder.precio.setText(productos.get(position).getPrecio());
 		holder.imagen.setImageResource(productos.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
-		view.setOnClickListener(new OnClickListener() 
-		{
+		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				
-				// Send single item click data to SingleItemView Class
-				//Intent intent = new Intent(mContext, Productos_ItemView.class); // Arreglar esto
 				Intent intent = new Intent(mContext, Productos_ItemView.class);
 				
 				// Pasamos todos los datos de producto
 				intent.putExtra("nombre", (productos.get(position).getNombre()));
 				intent.putExtra("id", (productos.get(position).getID()));
-				intent.putExtra("detalle", (productos.get(position).getDetalle()));// esto esta mal
+				intent.putExtra("precio", (productos.get(position).getPrecio()));
 				intent.putExtra("imagen", (productos.get(position).getImagen()));
 		
 				// Start SingleItemView Class
@@ -111,21 +102,26 @@ public class Productos_ListView extends BaseAdapter {
 	}
 
 	// Filter Class
-	public void filter(String charText) 
-	{
+	public void filter(String charText, CharSequence filtro) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		productos.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			productos.addAll(arraylist);
-		}
-		else 
-		{
-			for (Productos wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
-					productos.add(wp);
+		} else {
+			for (Productos wp : arraylist) {
+				
+				if(filtro.equals("") || filtro.equals("nombre")){
+					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+						productos.add(wp);
+					}
+				} else if(filtro.equals("id")){
+					if (wp.getID().toLowerCase(Locale.getDefault()).contains(charText)) {
+						productos.add(wp);
+					}
+				}else {
+					if (wp.getPrecio().toLowerCase(Locale.getDefault()).contains(charText)) {
+						productos.add(wp);
+					}
 				}
 			}
 		}

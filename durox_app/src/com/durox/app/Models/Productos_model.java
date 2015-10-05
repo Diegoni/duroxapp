@@ -37,10 +37,18 @@ public class Productos_model extends Activity{
 		db.execSQL(sql);
 	}
 	
-	public Cursor getRegistros(){
+	public Cursor getRegistros(CharSequence order){
 		createTable();
 		
-		sql = "SELECT * FROM productos";
+		if(order.equals("")){
+			sql = "SELECT * FROM productos";
+		}else if(order.equals("id")){
+			sql = "SELECT * FROM productos ORDER BY id_back";
+		}else{
+			sql = "SELECT * FROM productos ORDER BY "+order+"";
+		}
+		
+		
 		
 		c = db.rawQuery(sql, null);
 		
