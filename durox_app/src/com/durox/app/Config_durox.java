@@ -9,6 +9,7 @@ public class Config_durox {
 	
 	private String ip;
 	private String documentos;
+	private String fichaProductos;
 	boolean actualizando = true;
 	
 	String sql;
@@ -19,7 +20,8 @@ public class Config_durox {
 		sql = "CREATE TABLE IF NOT EXISTS `config`("
 				+ "id_config INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "ip VARCHAR,"
-				+ "documentos VARCHAR"
+				+ "documentos VARCHAR, "
+				+ "fichaProductos VARCHAR"
 				+ ");";
 		
 		db.execSQL(sql);
@@ -29,15 +31,18 @@ public class Config_durox {
 		c = db.rawQuery(sql, null);
 				
 		if(c.getCount() == 0){
-			ip =  "http://192.168.0.134/durox/index.php";
-			documentos = "http://192.168.0.134/durox/documentos";
+			ip =  "http://192.168.1.219/durox/index.php";
+			documentos = "http://192.168.1.219/durox/documentos";
+			fichaProductos = "http://192.168.1.219/Durox/img/productos/documentos/";
 
 			sql = "INSERT INTO `config` ("
 					+ "`ip`, "
-					+ "`documentos` "
+					+ "`documentos`, "
+					+ "`fichaProductos`, "
 				+ ") VALUES ("
 					+ "'"+ip+"', "
-					+ "'"+documentos+"' "
+					+ "'"+documentos+"', "
+					+ "'"+fichaProductos+"' "
 					+ ");";
 	 		db.execSQL(sql);
 		}else{
@@ -63,6 +68,24 @@ public class Config_durox {
 		createConfig();
 		
 		sql = "UPDATE `config` SET ip = '"+ip+"'"; 
+		Log.e("Consulta ", sql);
+		
+		db.execSQL(sql);
+		
+		this.ip = ip;
+	}
+	
+	public String getFichaProductos(SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		return this.fichaProductos;
+	}
+	
+	public void setFichaProductos(String ip, SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		
+		sql = "UPDATE `config` SET fichaProductos = '"+ip+"'"; 
 		Log.e("Consulta ", sql);
 		
 		db.execSQL(sql);

@@ -32,6 +32,7 @@
         android:layout_marginTop="150dp"
         android:ems="10"
         android:hint="@string/usuario"
+        android:inputType="textPersonName"
         android:singleLine="true" >
 
         <requestFocus />
@@ -77,5 +78,6 @@
         android:layout_alignBottom="@+id/textView1"
         android:layout_alignLeft="@+id/btn_Salir"
         android:drawableLeft="@drawable/refresh" />
+
 
 </RelativeLayout>

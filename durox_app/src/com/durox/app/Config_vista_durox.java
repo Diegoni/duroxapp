@@ -17,6 +17,7 @@ public class Config_vista_durox extends MenuActivity {
 	
 	EditText etIp;
 	EditText etDocumentos;
+	EditText etProductos;
 	
 	
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class Config_vista_durox extends MenuActivity {
         
         etIp = (EditText) findViewById(R.id.et_config_ip);
         etDocumentos = (EditText) findViewById(R.id.et_config_documento);
+        etProductos = (EditText) findViewById(R.id.et_config_productos);
         
         config = new Config_durox();
         
@@ -35,12 +37,14 @@ public class Config_vista_durox extends MenuActivity {
         
         etIp.setText(config.getIp(db));
         etDocumentos.setText(config.getDocumentos(db));
+        etProductos.setText(config.getFichaProductos(db));
     }
     
     
     public void guardar(View view){
     	config.setIP(etIp.getText().toString(), db);
     	config.setDocumentos(etDocumentos.getText().toString(), db);
+    	config.setFichaProductos(etProductos.getText().toString(), db);
     	
     	Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
     	

@@ -22,6 +22,7 @@ import com.durox.app.Documentos.Documentos;
 import com.durox.app.Documentos.Documentos_ListView;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Documentos_model;
+import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
@@ -57,6 +58,8 @@ public class Productos_Main extends MenuActivity {
 	String[] nombre;
 	String[] id_back;
 	String[] precio;
+	String[] moneda;
+	String[] codigo;
 	int[] imagen;
 	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
 	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
@@ -85,6 +88,8 @@ public class Productos_Main extends MenuActivity {
 	
 	private Button btn_orden;
 	private Button btn_filtro; 
+	
+	String subjet;
 	
 	
 	public void onCreate(Bundle savedInstanceState) 
@@ -231,14 +236,16 @@ public class Productos_Main extends MenuActivity {
 		
 		
 	public void CargarProductos() {
+		
+		subjet = "productos";
+		//Grupos_model mGrupos = new Grupos_model(db); 
+		
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
-			JSONArray jsonMainNode = jsonResponse.optJSONArray("productos");
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 			 			
 			if(jsonMainNode.length() > 0){
 				mProductos.truncate();
-				Toast.makeText(getApplicationContext(), 
-			 			config.msjActualizandoRegistros(), Toast.LENGTH_SHORT).show();
 			}
 			  
 			for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -253,6 +260,7 @@ public class Productos_Main extends MenuActivity {
 				String precio_min = jsonChildNode.optString("precio_min");
 				String precio_min_iva = jsonChildNode.optString("precio_min_iva");
 				String id_iva = jsonChildNode.optString("id_iva");
+				String id_moneda = jsonChildNode.optString("id_moneda");
 				String ficha_tecnica = jsonChildNode.optString("ficha_tecnica");
 				String date_add = jsonChildNode.optString("date_add");
 				String date_upd = jsonChildNode.optString("date_upd");
@@ -275,6 +283,7 @@ public class Productos_Main extends MenuActivity {
 						precio_min,
 						precio_min_iva,
 						id_iva,
+						id_moneda,
 						ficha_tecnica,
 						date_add,
 						date_upd,
@@ -286,12 +295,65 @@ public class Productos_Main extends MenuActivity {
 			}
 			
 			Toast.makeText(getApplicationContext(), 
-					config.msjRegistrosActualizados(" productos "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
 			
 		} catch (JSONException e) {
 			Toast.makeText(getApplicationContext(), 
 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
 		}
+		
+		
+		
+		subjet = "monedas";
+		Monedas_model mMonedas = new Monedas_model(db); 
+		
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+			 			
+			if(jsonMainNode.length() > 0){
+				mMonedas.truncate();
+			}
+			  
+			for (int i = 0; i < jsonMainNode.length(); i++) {
+				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+				
+				String id_back = jsonChildNode.optString("id_moneda");
+				String moneda = jsonChildNode.optString("moneda");
+				String abreviatura = jsonChildNode.optString("abreviatura");
+				String simbolo = jsonChildNode.optString("simbolo");
+				String valor = jsonChildNode.optString("valor");
+				String id_pais = jsonChildNode.optString("id_pais");
+				String date_add = jsonChildNode.optString("date_add");
+				String date_upd = jsonChildNode.optString("date_upd");
+				String eliminado = jsonChildNode.optString("eliminado");
+				String user_add = jsonChildNode.optString("user_add");
+				String user_upd = jsonChildNode.optString("user_upd");
+				
+				mMonedas.insert(
+					id_back, 
+					moneda, 
+					abreviatura, 
+					simbolo, 
+					valor, 
+					id_pais, 
+					date_add, 
+					date_upd, 
+					eliminado, 
+					user_add, 
+					user_upd
+				);
+				
+			}
+			
+			Toast.makeText(getApplicationContext(), 
+					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			
+		} catch (JSONException e) {
+			Toast.makeText(getApplicationContext(), 
+			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+		}
+		
 		productos_lista(orden, filtro);   
 	}
 	
@@ -308,18 +370,23 @@ public class Productos_Main extends MenuActivity {
 		nombre = new String[cantidad_productos];
 		id_back = new String[cantidad_productos];
 		precio = new String[cantidad_productos];
+		moneda = new String[cantidad_productos];
+		codigo = new String[cantidad_productos];
 		imagen = new int[cantidad_productos];
 		
 		j = 0;
 			
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
-				id_back[j] = c.getString(1);
-				nombre[j] = c.getString(4);
-				precio[j] = c.getString(5);
+				id_back[j] = c.getString(0);
+				nombre[j] = c.getString(1);
+				precio[j] = c.getString(2);
+				moneda[j] = c.getString(4)+" "+c.getString(3);
+				codigo[j] = c.getString(5);
 				imagen[j] = R.drawable.productos; 
 				j = j + 1;
 			}	
+		
 			
 			// Locate the ListView in listview_main.xml
 			list = (ListView) findViewById(R.id.listview);
@@ -330,6 +397,8 @@ public class Productos_Main extends MenuActivity {
 						id_back[i],
 						nombre[i],
 						precio[i], 
+						moneda[i],
+						codigo[i],
 						imagen[i]
 				);
 				

@@ -13,6 +13,7 @@ import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Mails_clientes_model;
+import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Pedidos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
@@ -111,7 +112,9 @@ public class MainActivity extends MenuActivity {
 	   Departamentos_model mDepartamentos = new Departamentos_model(db);
 	   		mDepartamentos.createTable();
 	   Provincias_model mProvincias = new Provincias_model(db);
-	   		mProvincias.createTable();		
+	   		mProvincias.createTable();	
+	   Monedas_model mMonedas = new Monedas_model(db);
+	   		mMonedas.createTable();
    } 
 
 }

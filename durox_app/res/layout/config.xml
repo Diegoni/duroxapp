@@ -9,7 +9,7 @@
         android:id="@+id/et_config_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/et_config_documento"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
@@ -22,20 +22,61 @@
         android:id="@+id/et_config_documento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/et_config_ip"
+        android:layout_toRightOf="@+id/textView2"
         android:ems="10"
         android:hint="@string/documento" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_config_ip"
+        android:layout_alignBottom="@+id/et_config_ip"
+        android:layout_alignParentLeft="true"
+        android:text="@string/ip"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_config_documento"
+        android:layout_alignBottom="@+id/et_config_documento"
+        android:layout_alignParentLeft="true"
+        android:text="@string/documento"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_config_productos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_config_documento"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/et_config_documento"
+        android:ems="10"
+        android:hint="@string/productos"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btn_config_guardar"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_config_documento"
+        android:layout_below="@+id/et_config_productos"
         android:layout_centerHorizontal="true"
-       	android:onClick="guardar"
+        android:onClick="guardar"
         android:text="@string/guardar" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_config_productos"
+        android:layout_alignBottom="@+id/et_config_productos"
+        android:layout_alignParentLeft="true"
+        android:text="@string/productos"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

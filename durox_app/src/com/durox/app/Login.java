@@ -36,9 +36,7 @@ public class Login extends Activity {
     Button btn_Sin;
     
     Httppostaux post;
-    // String URL_connect="http://www.scandroidtest.site90.com/acces.php";
-    String IP_Server = "192.168.0.134"; //IP DE NUESTRO PC
-    String URL_connect = "http://"+IP_Server+"/durox/index.php/actualizaciones/getLogin/"; //ruta en donde estan nuestros archivos
+    String URL_connect;
   
     boolean result_back;
     private ProgressDialog pDialog;
@@ -48,11 +46,19 @@ public class Login extends Activity {
     int intentos;
     int segundos;
     
+    Config_durox config;
+	SQLiteDatabase db;
+    
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         
+        config = new Config_durox();
+        db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+        URL_connect = config.getIp(db)+"/actualizaciones/getLogin/"; 
+        
+        Log.e("Paso ", "URL_connect "+URL_connect);
+        	
         setTitle("Login - Ingrese usuario y contraseña");
         getActionBar().setIcon(R.drawable.menulogin);
         

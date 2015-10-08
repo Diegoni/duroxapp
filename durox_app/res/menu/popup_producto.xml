@@ -9,7 +9,11 @@
         android:title="id"/>  
 
     <item  
+        android:id="@+id/codigo"  
+        android:title="codigo"/> 
+        
+    <item  
         android:id="@+id/precio"  
-        android:title="precio"/>  
+        android:title="precio"/> 
 
 </menu>  

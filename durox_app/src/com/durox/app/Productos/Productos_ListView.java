@@ -36,6 +36,8 @@ public class Productos_ListView extends BaseAdapter {
 		TextView id_back;
 		TextView nombre;
 		TextView precio;
+		TextView moneda;
+		TextView codigo;
 		ImageView imagen;
 	}
 
@@ -67,6 +69,8 @@ public class Productos_ListView extends BaseAdapter {
 			holder.nombre = (TextView) view.findViewById(R.id.txt_producto);
 			holder.id_back = (TextView) view.findViewById(R.id.txt_id_back);
 			holder.precio = (TextView) view.findViewById(R.id.txt_precio);
+			holder.moneda = (TextView) view.findViewById(R.id.txt_moneda);
+			holder.codigo = (TextView) view.findViewById(R.id.txt_codigo);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
@@ -78,6 +82,8 @@ public class Productos_ListView extends BaseAdapter {
 		holder.nombre.setText(productos.get(position).getNombre());
 		holder.id_back.setText(productos.get(position).getID());
 		holder.precio.setText(productos.get(position).getPrecio());
+		holder.moneda.setText(productos.get(position).getMoneda());
+		holder.codigo.setText(productos.get(position).getCodigo());
 		holder.imagen.setImageResource(productos.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
@@ -116,6 +122,10 @@ public class Productos_ListView extends BaseAdapter {
 					}
 				} else if(filtro.equals("id")){
 					if (wp.getID().toLowerCase(Locale.getDefault()).contains(charText)) {
+						productos.add(wp);
+					}
+				} else if(filtro.equals("codigo")){
+					if (wp.getCodigo().toLowerCase(Locale.getDefault()).contains(charText)) {
 						productos.add(wp);
 					}
 				}else {

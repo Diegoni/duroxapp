@@ -3,6 +3,7 @@ package com.durox.app.Models;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Productos_model extends Activity{
 	
@@ -26,11 +27,12 @@ public class Productos_model extends Activity{
 				+ "precio_iva VARCHAR,"
 				+ "precio_min VARCHAR,"
 				+ "precio_min_iva VARCHAR,"
-				+ "id_iva INT,"
+				+ "id_iva VARCHAR,"
+				+ "id_moneda VARCHAR,"
 				+ "ficha_tecnica VARCHAR,"
 				+ "date_add VARCHAR,"
 				+ "date_upd VARCHAR,"
-				+ "eliminado INT,"
+				+ "eliminado VARCHAR,"
 				+ "user_add VARCHAR,"
 				+ "user_upd VARCHAR"
 				+ ");";
@@ -41,14 +43,49 @@ public class Productos_model extends Activity{
 		createTable();
 		
 		if(order.equals("")){
-			sql = "SELECT * FROM productos";
+			sql = "SELECT "
+					+ "productos.id_back, "
+					+ "productos.nombre, "
+					+ "productos.precio, "
+					+ "monedas.simbolo, "
+					+ "monedas.abreviatura, "
+					+ "productos.codigo "
+				+ "FROM "
+					+ "productos "
+				+ "INNER JOIN "
+					+ "monedas ON(productos.id_moneda = monedas.id_back)";
 		}else if(order.equals("id")){
-			sql = "SELECT * FROM productos ORDER BY id_back";
+			sql = "SELECT "
+					+ "productos.id_back, "
+					+ "productos.nombre, "
+					+ "productos.precio, "
+					+ "monedas.simbolo, "
+					+ "monedas.abreviatura, "
+					+ "productos.codigo "
+				+ "FROM "
+					+ "productos "
+				+ "INNER JOIN "
+					+ "monedas ON(productos.id_moneda = monedas.id_back)"
+				+ " ORDER BY "
+					+ "id_back ";
+			
 		}else{
-			sql = "SELECT * FROM productos ORDER BY "+order+"";
+			sql = "SELECT "
+					+ "productos.id_back, "
+					+ "productos.nombre, "
+					+ "productos.precio, "
+					+ "monedas.simbolo, "
+					+ "monedas.abreviatura, "
+					+ "productos.codigo "
+				+ "FROM "
+					+ "productos "
+				+ "INNER JOIN "
+					+ "monedas ON(productos.id_moneda = monedas.id_back)"
+				+ " ORDER BY "
+					+order+"";
 		}
 		
-		
+		Log.e("Consulta  ", sql);
 		
 		c = db.rawQuery(sql, null);
 		
@@ -57,7 +94,6 @@ public class Productos_model extends Activity{
 	
 	public Cursor getRegistro(String id){
 		sql = "SELECT "
-				+ "productos.id_producto, "
 				+ "productos.id_back, "
 				+ "productos.codigo, "
 				+ "productos.codigo_lote, "
@@ -72,8 +108,14 @@ public class Productos_model extends Activity{
 				+ "productos.date_upd, "
 				+ "productos.eliminado, "
 				+ "productos.user_add, "
-				+ "productos.user_upd "
-			+ " FROM productos "
+				+ "productos.user_upd, "
+				+ "monedas.moneda, "
+				+ "monedas.abreviatura, "
+				+ "monedas.simbolo "
+			+ "FROM "
+				+ "productos "
+			+ "INNER JOIN "
+				+ "monedas ON(productos.id_moneda = monedas.id_back)"
 			+ " WHERE productos.id_back = '"+id+"'";
 		
 		c = db.rawQuery(sql, null);
@@ -92,6 +134,7 @@ public class Productos_model extends Activity{
 					String precio_min,
 					String precio_min_iva,
 					String id_iva,
+					String id_moneda,
 					String ficha_tecnica,
 					String date_add,
 					String date_upd,
@@ -109,6 +152,7 @@ public class Productos_model extends Activity{
 				+"precio_min,"
 				+"precio_min_iva,"
 				+"id_iva,"
+				+"id_moneda,"
 				+"ficha_tecnica,"
 				+"date_add,"
 				+"date_upd,"
@@ -125,6 +169,7 @@ public class Productos_model extends Activity{
 				+"'"+precio_min+"',"
 				+"'"+precio_min_iva+"',"
 				+"'"+id_iva+"',"
+				+"'"+id_moneda+"',"
 				+"'"+ficha_tecnica+"',"
 				+"'"+date_add+"',"
 				+"'"+date_upd+"',"
@@ -132,6 +177,8 @@ public class Productos_model extends Activity{
 				+"'"+user_add+"',"
 				+"'"+user_upd+"'"
 				+");";
+		
+		Log.e("Consulta ", sql);
 			
  		db.execSQL(sql);
 

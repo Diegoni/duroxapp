@@ -33,7 +33,6 @@ import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
-import com.durox.app.Productos.Productos_Main;
 import com.example.durox_app.R;
 
 import android.app.ProgressDialog;

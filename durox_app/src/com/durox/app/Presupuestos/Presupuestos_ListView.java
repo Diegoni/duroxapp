@@ -10,6 +10,7 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class Presupuestos_ListView extends BaseAdapter {
 		holder.estado.setText(presupuestos.get(position).getEstado());
 		holder.fecha.setText(presupuestos.get(position).getFecha());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
+		
+		holder.estado.setTextColor(Color.parseColor("#F5DC49"));
+		
 		
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
