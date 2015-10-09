@@ -96,7 +96,8 @@
          android:layout_alignBottom="@+id/textView7"
          android:layout_alignLeft="@+id/txt_pIva"
          android:text="@string/ficha_tecnica"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#00a65a" />
 
      <TextView
          android:id="@+id/txt_pDateUpd"

@@ -191,11 +191,17 @@ public class Productos_model extends Activity{
 	
 	public Cursor getAutocomplete(String producto){
 		sql = "SELECT "
-				+ "id_back, "
-				+ "nombre, "
-				+ "precio "
-			+ "FROM productos "
-			+ "WHERE nombre = '"+producto+"' ";
+				+ "productos.id_back, "
+				+ "productos.nombre, "
+				+ "productos.precio, "
+				+ "productos.id_moneda, "
+				+ "monedas.valor "
+			+ "FROM "
+				+ "productos "
+			+ "INNER JOIN "
+				+ "monedas ON(productos.id_moneda = monedas.id_back)"
+			+ "WHERE "
+				+ "nombre = '"+producto+"' ";
 		
 		c = db.rawQuery(sql, null);
 		

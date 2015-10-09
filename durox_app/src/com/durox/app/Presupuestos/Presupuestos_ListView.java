@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.durox.app.Config_durox;
 import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +40,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 	public class ViewHolder {
 		TextView nombre;
 		TextView total;
+		TextView moneda;
 		TextView estado;
 		TextView fecha;
 		TextView id;
@@ -70,6 +71,7 @@ public class Presupuestos_ListView extends BaseAdapter {
 			holder.nombre = (TextView) view.findViewById(R.id.txt_pCliente);
 			holder.id = (TextView) view.findViewById(R.id.txt_pBack);
 			holder.total = (TextView) view.findViewById(R.id.txt_pTotal);
+			holder.moneda = (TextView) view.findViewById(R.id.txt_moneda);
 			holder.estado = (TextView) view.findViewById(R.id.txt_pEstado);
 			holder.fecha = (TextView) view.findViewById(R.id.txt_pFecha);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
@@ -79,14 +81,16 @@ public class Presupuestos_ListView extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		
+		Config_durox config = new Config_durox();
+		
+		
 		holder.nombre.setText(presupuestos.get(position).getNombre());
 		holder.id.setText(presupuestos.get(position).getID());
 		holder.total.setText(presupuestos.get(position).getTotal());
+		holder.moneda.setText(config.getMoneda());
 		holder.estado.setText(presupuestos.get(position).getEstado());
 		holder.fecha.setText(presupuestos.get(position).getFecha());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
-		
-		holder.estado.setTextColor(Color.parseColor("#F5DC49"));
 		
 		
 		view.setOnClickListener(new OnClickListener() {

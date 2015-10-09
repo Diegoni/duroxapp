@@ -129,4 +129,15 @@
         android:onClick="guardar_presupuesto"
         android:text="@string/guardar" />
 
+    <TextView
+        android:id="@+id/txt_moneda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txt_pTotal"
+        android:layout_alignBottom="@+id/txt_pTotal"
+        android:layout_marginRight="18dp"
+        android:layout_toLeftOf="@+id/txt_pTotal"
+        android:text="$"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>

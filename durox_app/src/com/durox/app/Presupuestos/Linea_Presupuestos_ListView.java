@@ -10,7 +10,6 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,7 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 	private List<Linea_Presupuestos> linea_presupuestos = null;
 	private ArrayList<Linea_Presupuestos> arraylist;
 
-	public Linea_Presupuestos_ListView(Context context, List<Linea_Presupuestos> linea_presupuestos) 
-	{
+	public Linea_Presupuestos_ListView(Context context, List<Linea_Presupuestos> linea_presupuestos) {
 		mContext = context;
 		this.linea_presupuestos = linea_presupuestos;
 		inflater = LayoutInflater.from(mContext);
@@ -37,35 +35,30 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 		this.arraylist.addAll(linea_presupuestos);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView producto;
 		TextView cantidad;
 		TextView precio;
+		TextView moneda;
 		TextView total;
 	}
 	
-	public int getCount() 
-	{
+	public int getCount() {
 		return linea_presupuestos.size();
 	}
 
-	public Linea_Presupuestos getItem(int position) 
-	{
+	public Linea_Presupuestos getItem(int position) {
 		return linea_presupuestos.get(position);
 	}
 
-	public long getItemId(int position) 
-	{
+	public long getItemId(int position) {
 		return position;
 	}
-
+	
 	@SuppressLint("InflateParams")
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.linea_presupuestos_listviewitem, null);
 			
@@ -76,17 +69,15 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 			holder.total = (TextView) view.findViewById(R.id.linea_presupuesto_total);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
 		// Set the results into TextViews
 		holder.producto.setText(linea_presupuestos.get(position).getProducto());
 		holder.cantidad.setText(linea_presupuestos.get(position).getCantidad());
-		holder.precio.setText(linea_presupuestos.get(position).getPrecio());
-		holder.total.setText(linea_presupuestos.get(position).getTotal());
+		holder.precio.setText(linea_presupuestos.get(position).getMoneda()+" "+linea_presupuestos.get(position).getPrecio());
+		holder.total.setText(linea_presupuestos.get(position).getPorDefecto()+" "+linea_presupuestos.get(position).getTotal());
 		
 		
 		// Detecta que item de la lista le hicieron clic
@@ -101,11 +92,6 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 				intent.putExtra("id", (linea_presupuestos.get(position).getid()));
 				intent.putExtra("id_presupuesto", (linea_presupuestos.get(position).getid_presupuesto()));
 				
-				Log.e("Linea_Presupuestos_ListView ", "cNombre "+linea_presupuestos.get(position).getcNombre());
-				Log.e("Linea_Presupuestos_ListView ", "cIdVisita "+linea_presupuestos.get(position).getcIdVisita());
-				Log.e("Linea_Presupuestos_ListView ", "id "+linea_presupuestos.get(position).getid());
-				Log.e("Linea_Presupuestos_ListView ", "id_presupuesto "+linea_presupuestos.get(position).getid_presupuesto());
-				
 				// Start SingleItemView Class
 				mContext.startActivity(intent);
 				
@@ -117,20 +103,14 @@ public class Linea_Presupuestos_ListView extends BaseAdapter {
 	}
 
 	// Filter Class
-	public void filter(String charText) 
-	{
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		linea_presupuestos.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			linea_presupuestos.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Linea_Presupuestos wp : arraylist) 
-			{
-				if (wp.getProducto().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
+		} else {
+			for (Linea_Presupuestos wp : arraylist) {
+				if (wp.getProducto().toLowerCase(Locale.getDefault()).contains(charText)) {
 					linea_presupuestos.add(wp);
 				}
 			}

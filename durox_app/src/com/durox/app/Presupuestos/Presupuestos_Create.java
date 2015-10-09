@@ -8,6 +8,7 @@ import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
+import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Vendedores_model;
@@ -52,6 +53,8 @@ public class Presupuestos_Create extends MenuActivity {
 	String id_linea;
 	String id;
 	
+	int convertir = 1;
+	
 	Config_durox config;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,8 @@ public class Presupuestos_Create extends MenuActivity {
 		Button btnAprobar = (Button) findViewById(R.id.btnAprobarPresupuesto);
 		TextView txtNombre = (TextView) findViewById(R.id.txtNombre);
 		TextView txtIDVistia = (TextView) findViewById(R.id.txt_idVisita);
+		TextView txtMoneda = (TextView) findViewById(R.id.txt_moneda);
+		
 		txtNombre.setText(cNombre);
 		txtIDVistia.setText(cIdVisita);
 				
@@ -102,7 +107,7 @@ public class Presupuestos_Create extends MenuActivity {
 				
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
-				p_nombre[j] = c.getString(4);
+				p_nombre[j] = c.getString(1);
     			j = j + 1;
     		}		
 		}
@@ -140,8 +145,14 @@ public class Presupuestos_Create extends MenuActivity {
 			String[] producto_linea = new String[cantidad_lineas];
 			String[] cantidad_linea = new String[cantidad_lineas];
 			String[] precio_linea = new String[cantidad_lineas];
+			String[] moneda = new String[cantidad_lineas];
+			String[] valor_moneda = new String[cantidad_lineas];
+			String[] id_moneda = new String[cantidad_lineas];
 			String[] total_linea = new String[cantidad_lineas];
 			String[] id_linea = new String[cantidad_lineas];
+			
+			Monedas_model mMonedas = new Monedas_model(db);
+			String por_defecto = mMonedas.getPorDefecto();
 			
 			int x = 0;
 					
@@ -152,8 +163,16 @@ public class Presupuestos_Create extends MenuActivity {
 					precio_linea[x] = cursor.getString(2);
 					total_linea[x] = cursor.getString(3);
 					id_linea[x] = cursor.getString(6);
+					moneda[x] = cursor.getString(7)+" "+cursor.getString(8);
+					valor_moneda[x] = cursor.getString(9);
+					id_moneda[x] = cursor.getString(10);
+					
+					Log.e("moneda ", moneda[x]);
+					Log.e("valor_moneda ", valor_moneda[x]);
+					Log.e("id_moneda ", id_moneda[x]);
 					x = x + 1;
 				}	
+			
 				
 				list = (ListView) findViewById(R.id.list_linea);
 
@@ -163,7 +182,11 @@ public class Presupuestos_Create extends MenuActivity {
 							cantidad_linea[i],
 							producto_linea[i],
 							precio_linea[i],
+							moneda[i],
+							valor_moneda[i],
+							id_moneda[i],
 							total_linea[i],
+							por_defecto,
 							cNombre,
 							cIdVisita,
 							id_presupuesto,
@@ -199,7 +222,8 @@ public class Presupuestos_Create extends MenuActivity {
 				}
 				
 				TextView txtTotal = (TextView) findViewById(R.id.txt_pTotal);
-				txtTotal.setText(""+total+"");
+				txtTotal.setText(" "+total);
+				txtMoneda.setText(por_defecto);
 				
 				btnGuardar.setEnabled(true);
 				btnAprobar.setEnabled(true);
@@ -229,7 +253,9 @@ public class Presupuestos_Create extends MenuActivity {
 				
 				Float precio = Float.parseFloat(cursor.getString(2)); 
 				Float row_cant = Float.parseFloat(cantidad);
-				Float subtotal = precio * row_cant;
+				Float valor_moneda = Float.parseFloat(cursor.getString(4));
+				Float subtotal = precio * row_cant * valor_moneda;
+				
 				String subt = String.valueOf(subtotal);
 				
 				String linea_id_back = "0";
@@ -255,22 +281,27 @@ public class Presupuestos_Create extends MenuActivity {
 					}
 				}
 				
+				Log.e("ID MONEDA", cursor.getString(3));
+				
 				mLineas.insert(
-						linea_id_back,			//id_back
-						linea_id_temporario,	//id_temporario
-						linea_id_presupuesto,	//id_presupuesto
-						cursor.getString(0),	//id_producto
-						cursor.getString(2), 	//precio
-						cantidad,				//cantidad
-						subt, 					//subtotal
-						"1", 					//id_estado_producto_presupuesto
-						comentario, 			//comentario
-						null, 					//date_add
-						null, 					//date_upd
-						null,					//eliminado 
-						null,					//user_add
-						null 					//user_upd
+					linea_id_back,			//id_back
+					linea_id_temporario,	//id_temporario
+					linea_id_presupuesto,	//id_presupuesto
+					cursor.getString(0),	//id_producto
+					cursor.getString(2), 	//precio
+					cursor.getString(3), 	//id_moneda
+					cursor.getString(4), 	//valor_moneda
+					cantidad,				//cantidad
+					subt, 					//subtotal
+					"1", 					//id_estado_producto_presupuesto
+					comentario, 			//comentario
+					null, 					//date_add
+					null, 					//date_upd
+					null,					//eliminado 
+					null,					//user_add
+					null 					//user_upd
 				);
+				
 				Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
 			}		
 		} else {

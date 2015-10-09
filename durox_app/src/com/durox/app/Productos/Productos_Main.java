@@ -324,6 +324,7 @@ public class Productos_Main extends MenuActivity {
 				String simbolo = jsonChildNode.optString("simbolo");
 				String valor = jsonChildNode.optString("valor");
 				String id_pais = jsonChildNode.optString("id_pais");
+				String por_defecto = jsonChildNode.optString("por_defecto");
 				String date_add = jsonChildNode.optString("date_add");
 				String date_upd = jsonChildNode.optString("date_upd");
 				String eliminado = jsonChildNode.optString("eliminado");
@@ -337,6 +338,7 @@ public class Productos_Main extends MenuActivity {
 					simbolo, 
 					valor, 
 					id_pais, 
+					por_defecto,
 					date_add, 
 					date_upd, 
 					eliminado, 

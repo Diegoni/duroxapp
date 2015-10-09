@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Lineas_Presupuestos_model;
+import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Presupuestos.Presupuestos_Create;
 
@@ -129,6 +130,9 @@ public class Presupuestos_ItemView extends MenuActivity {
 		String[] producto_linea = new String[cantidad_lineas];
 		String[] cantidad_linea = new String[cantidad_lineas];
 		String[] precio_linea = new String[cantidad_lineas];
+		String[] moneda = new String[cantidad_lineas];
+		String[] valor_moneda = new String[cantidad_lineas];
+		String[] id_moneda = new String[cantidad_lineas];
 		String[] total_linea = new String[cantidad_lineas];
 		String[] id_linea = new String[cantidad_lineas];
 			
@@ -141,10 +145,16 @@ public class Presupuestos_ItemView extends MenuActivity {
 				precio_linea[x] = cursorLinea.getString(2);
 				total_linea[x] = cursorLinea.getString(3);
 				id_linea[x] = cursorLinea.getString(6);
+				moneda[x] = cursorLinea.getString(7)+" "+cursorLinea.getString(8);
+				valor_moneda[x] = cursorLinea.getString(9);
+				id_moneda[x] = cursorLinea.getString(10);
 				x = x + 1;
 			}	
 				
 			list = (ListView) findViewById(R.id.detallePresupuesto);
+			
+			Monedas_model mMoneda = new Monedas_model(db);
+			String por_defecto = mMoneda.getPorDefecto(); 
 
 			for (int j = 0; j < producto_linea.length; j++) {
 				
@@ -153,12 +163,17 @@ public class Presupuestos_ItemView extends MenuActivity {
 					cantidad_linea[j],
 					producto_linea[j],
 					precio_linea[j],
+					id_linea[j],
+					moneda[j],
+					valor_moneda[j],
 					total_linea[j],
+					por_defecto,
 					"1",
 					"1",
 					"1",
 					"1"
 				);
+				
 					
 				arraylist.add(wp);
 			}

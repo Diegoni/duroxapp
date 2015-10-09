@@ -26,6 +26,7 @@ public class Monedas_model extends Activity{
 				+ "simbolo VARCHAR,"
 				+ "valor VARCHAR,"
 				+ "id_pais VARCHAR,"
+				+ "por_defecto VARCHAR,"
 				+ "date_add VARCHAR,"
 				+ "date_upd VARCHAR,"
 				+ "eliminado VARCHAR,"
@@ -80,6 +81,7 @@ public class Monedas_model extends Activity{
 			String simbolo,
 			String valor,
 			String id_pais,
+			String por_defecto,
 			String date_add,
 			String date_upd,
 			String eliminado,
@@ -92,6 +94,7 @@ public class Monedas_model extends Activity{
 				+ "`simbolo`, "
 				+ "`valor`, "
 				+ "`id_pais`, "
+				+ "`por_defecto`, "
 				+ "`date_add`, "
 				+ "`date_upd`, "
 				+ "`eliminado`, "
@@ -104,6 +107,7 @@ public class Monedas_model extends Activity{
 				+ "'"+simbolo+"', "
 				+ "'"+valor+"', "
 				+ "'"+id_pais+"', "
+				+ "'"+por_defecto+"', "
 				+ "'"+date_add+"', "
 				+ "'"+date_upd+"', "
 				+ "'"+eliminado+"', "
@@ -132,5 +136,26 @@ public class Monedas_model extends Activity{
 		c = db.rawQuery(sql, null);
 		
 		return c;
+	}
+	
+	
+	public String  getPorDefecto(){
+		sql = "SELECT "
+				+ "abreviatura, "
+				+ "simbolo "
+				+ " FROM monedas"
+				+ " WHERE por_defecto = 1";
+		
+		c = db.rawQuery(sql, null);
+		
+		String moneda = "";
+		
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				moneda = c.getString(0)+" "+c.getString(1);
+			}
+		}
+		
+		return moneda;
 	}
 }

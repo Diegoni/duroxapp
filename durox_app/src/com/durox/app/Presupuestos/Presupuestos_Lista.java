@@ -211,6 +211,7 @@ public class Presupuestos_Lista extends MenuActivity {
 					cPresupuestos.getString(15)		//+ 15"eliminado VARCHAR, "
 				);
 				
+				
 				String url2 = config.getIp(db)+"/actualizaciones/setPresupuestos/";
 		 		task.execute(new String[] { url2 });
     		}		
@@ -223,14 +224,16 @@ public class Presupuestos_Lista extends MenuActivity {
 		if(cLineas.getCount() > 0) {
 			while(cLineas.moveToNext()){
 				JsonSetTaskLineas task = new JsonSetTaskLineas(
-					cLineas.getString(2), 	//2+ "id_temporario VARCHAR, "		
+					cLineas.getString(2), 	//2+ "id_temporario VARCHAR, "	
 					cLineas.getString(4), 	//4+ "id_producto VARCHAR, "
 					cLineas.getString(5), 	//5+ "precio VARCHAR, "
-					cLineas.getString(6), 	//6+ "cantidad VARCHAR, "
-					cLineas.getString(7), 	//7+ "subtotal VARCHAR, "
-					cLineas.getString(8), 	//8+ "id_estado_producto_presupuesto VARCHAR, "
-					cLineas.getString(9), 	//9+ "comentario VARCHAR, "
-					cLineas.getString(12) 	//12+ "eliminado VARCHAR, "
+					cLineas.getString(6), 	//6+ "id_moneda VARCHAR, "
+					cLineas.getString(7), 	//7+ "valor_moneda VARCHAR, "
+					cLineas.getString(8), 	//8+ "cantidad VARCHAR, "
+					cLineas.getString(9), 	//9+ "subtotal VARCHAR, "
+					cLineas.getString(10), 	//10+ "id_estado_producto_presupuesto VARCHAR, "
+					cLineas.getString(11), 	//11+ "comentario VARCHAR, "
+					cLineas.getString(14) 	//14+ "eliminado VARCHAR, "
 				);
 				
 				String url2 = config.getIp(db)+"/actualizaciones/setLineasPresupuestos/";
@@ -394,6 +397,8 @@ public class Presupuestos_Lista extends MenuActivity {
 		String id_temporario;		
 		String id_producto;
 		String precio;
+		String id_moneda;		
+		String valor_moneda;
 		String cantidad;
 		String subtotal;
 		String id_estado_producto_presupuesto;
@@ -404,6 +409,8 @@ public class Presupuestos_Lista extends MenuActivity {
  				String id_temporario,		
 				String id_producto,
 				String precio,
+				String id_moneda,
+				String valor_moneda,
 				String cantidad,
 				String subtotal,
 				String id_estado_producto_presupuesto,
@@ -413,6 +420,8 @@ public class Presupuestos_Lista extends MenuActivity {
  			this.id_temporario = id_temporario;		
 			this.id_producto = id_producto;
 			this.precio = precio;
+			this.id_moneda = id_moneda;
+			this.valor_moneda = valor_moneda;
 			this.cantidad = cantidad;
 			this.subtotal = subtotal;
 			this.id_estado_producto_presupuesto = id_estado_producto_presupuesto;
@@ -429,6 +438,8 @@ public class Presupuestos_Lista extends MenuActivity {
 	 		pairs.add(new BasicNameValuePair("id_temporario", id_temporario));		
 	 		pairs.add(new BasicNameValuePair("id_producto", id_producto));
 	 		pairs.add(new BasicNameValuePair("precio", precio));
+	 		pairs.add(new BasicNameValuePair("id_moneda", id_moneda));
+	 		pairs.add(new BasicNameValuePair("valor_moneda", valor_moneda));
 	 		pairs.add(new BasicNameValuePair("cantidad", cantidad));
 	 		pairs.add(new BasicNameValuePair("subtotal", subtotal));
 	 		pairs.add(new BasicNameValuePair("id_estado_producto_presupuesto", id_estado_producto_presupuesto));
@@ -543,6 +554,8 @@ public class Presupuestos_Lista extends MenuActivity {
 	 			String id_presupuesto = jsonChildNode.optString("id_presupuesto");
 	 			String id_producto = jsonChildNode.optString("id_producto");
 	 			String precio = jsonChildNode.optString("precio");
+	 			String id_moneda = jsonChildNode.optString("id_moneda");
+	 			String valor_moneda = jsonChildNode.optString("valor_moneda");
 	 			String cantidad = jsonChildNode.optString("cantidad");
 	 			String subtotal = jsonChildNode.optString("subtotal");
 	 			String id_estado_producto_presupuesto = jsonChildNode.optString("id_estado_producto_presupuesto");
@@ -559,7 +572,9 @@ public class Presupuestos_Lista extends MenuActivity {
 		 			id_temporario, 
 		 			id_presupuesto, 
 		 			id_producto, 
-		 			precio, 
+		 			precio,
+		 			id_moneda,
+		 			valor_moneda,
 		 			cantidad, 
 		 			subtotal, 
 		 			id_estado_producto_presupuesto, 
