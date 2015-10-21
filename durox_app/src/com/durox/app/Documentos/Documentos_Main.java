@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
+import com.durox.app.Alarmas.Alarmas_Update;
 import com.durox.app.Models.Documentos_model;
 
 
@@ -77,59 +78,6 @@ public class Documentos_Main extends MenuActivity {
 	}
 	
 	
-    // Async Task to access the web
-	private class JsonReadTask extends AsyncTask<String, Void, String> {
-		
-		protected String doInBackground(String... params) {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(params[0]);
-			
-			try { 				
-				HttpResponse response = httpclient.execute(httppost);
-				jsonResult = inputStreamToString(
-				response.getEntity().getContent()).toString();
-			} catch (ClientProtocolException e) {
-				Log.e("Error ClientProtocolException", e.toString());
-				return "ClientProtocolException "+e.toString();
-			} catch (IOException e) {
-				Log.e("Error IOException", e.toString());
-				return "IOException "+e.toString();
-			}
-			
-			return "ok";
-		}
- 
-		private StringBuilder inputStreamToString(InputStream is) {
-			String rLine = "";
-			StringBuilder answer = new StringBuilder();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	 
-			try {
-				while ((rLine = rd.readLine()) != null) {
-					answer.append(rLine);
-				}
-			} catch (IOException e) {
-				// e.printStackTrace();
-				Toast.makeText(getApplicationContext(), 
-				config.msjError(e.toString()), Toast.LENGTH_LONG).show();
-			}
-			
-			return answer;
-		}
- 
-		protected void onPostExecute(String result) {
-			pDialog.dismiss();
-			
-			if(result.equals("ok")){
-				CargarDocumentos();
-			}else{
-				Toast.makeText(getApplicationContext(), 
-						result, Toast.LENGTH_LONG).show();
-			}
-		}
-	}// end async task
-	
-	
 	public void actualizar_documentos(View view) {
 		pDialog = new ProgressDialog(this);
         pDialog.setMessage("Actualizando....");
@@ -137,65 +85,13 @@ public class Documentos_Main extends MenuActivity {
         pDialog.setCancelable(false);
         pDialog.show();
         
-		JsonReadTask taskclientes = new JsonReadTask();
-		String url = config.getIp(db)+"/actualizaciones/getDocumentos/";
-		taskclientes.execute(new String[] { url });
+        Documentos_Update update = new Documentos_Update(db, this);
+		update.actualizar_registros();
+		
+		pDialog.dismiss();
+        
+     	documentos_lista();
 	}
-	
-	
-	
-	
-	// build hash set for list view
-	public void CargarDocumentos() {
-		try {
-			JSONObject jsonResponse = new JSONObject(jsonResult);
-			JSONArray jsonMainNode = jsonResponse.optJSONArray("documentos");
-	 			
-			if(jsonMainNode.length() > 0){
-				mDocumentos.createTable();
-				mDocumentos.truncate();
-	 			Toast.makeText(getApplicationContext(), 
-	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
-	 		}
-	 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			String id_back = jsonChildNode.optString("id_documento");
-	 			String nombre = jsonChildNode.optString("nombre");
-				String documento = jsonChildNode.optString("documento");
-				String date_add = jsonChildNode.optString("date_add");
-				String date_upd = jsonChildNode.optString("date_upd");
-				String eliminado = jsonChildNode.optString("eliminado");
-				String user_add = jsonChildNode.optString("user_add");
-				String user_upd = jsonChildNode.optString("user_upd");
-	 				
-				mDocumentos.insert(
-					id_back,
-					nombre,
-					documento,
-	 				date_add,
-	 				date_upd,
-	 				eliminado,
-	 				user_add,
-	 				user_upd
-	 			);
-	 			
-	 		}
-	 		
-	 		Toast.makeText(getApplicationContext(), 
-	 		 		config.msjRegistrosActualizados(" documentos "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	 		
-	 	} catch (JSONException e) {
-	 		Toast.makeText(getApplicationContext(), 
-	 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();
-	 	}
-	 		
-	 	
-	 		
-	 	documentos_lista();
-	}
-	 	
 	
 	
 	public void documentos_lista(){
@@ -208,16 +104,14 @@ public class Documentos_Main extends MenuActivity {
 			
 		int j = 0;
 					
-		if(cDocumentos.getCount() > 0)
-		{
+		if(cDocumentos.getCount() > 0){
 			String[] id_documento = new String[cDocumentos.getCount()];
 			String[] nombre = new String[cDocumentos.getCount()];
 			String[] epoca = new String[cDocumentos.getCount()];
 			String[] fecha = new String[cDocumentos.getCount()];
 			int[] foto = new int[cDocumentos.getCount()];
 			
-			while(cDocumentos.moveToNext())
-			{
+			while(cDocumentos.moveToNext()){
 				id_documento[j] = cDocumentos.getString(0);
 				nombre[j] = cDocumentos.getString(1);
 				epoca[j] = cDocumentos.getString(2);
@@ -230,8 +124,7 @@ public class Documentos_Main extends MenuActivity {
 			list = (ListView) findViewById(R.id.lvDocumentos);
 			arraylistd.clear();
 
-			for (int i = 0; i < nombre.length; i++) 
-			{
+			for (int i = 0; i < nombre.length; i++) {
 				Documentos wp = new Documentos(
 						id_documento[i],
 						nombre[i],

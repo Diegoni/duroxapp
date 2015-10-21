@@ -3,6 +3,7 @@ package com.durox.app.Models;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Epocas_model extends Activity{
 	
@@ -26,6 +27,8 @@ public class Epocas_model extends Activity{
 				+ "user_add VARCHAR, "
 				+ "user_upd VARCHAR"
 				+ ");";
+		
+		Log.e("CONSULTA", sql);
 		
 		db.execSQL(sql);
 	}
@@ -67,6 +70,8 @@ public class Epocas_model extends Activity{
  			    + "'"+user_add+"', "
  			    + "'"+user_upd+"'"
  			+ ");";
+		
+		Log.e("CONSULTA", sql);
  			    
  		db.execSQL(sql);
  	}

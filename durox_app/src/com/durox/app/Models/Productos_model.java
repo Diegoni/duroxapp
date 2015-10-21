@@ -185,6 +185,7 @@ public class Productos_model extends Activity{
  	}
 	
 	public void truncate(){
+		
 		sql = "DELETE FROM `productos`";
 		db.execSQL(sql);
 	}

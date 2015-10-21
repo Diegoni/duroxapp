@@ -82,7 +82,7 @@
         <activity android:name="com.durox.app.Vendedores.Mensajes_ItemView" >
         </activity>
         <activity android:name="com.durox.app.AndroidActivity" >
-        </activity>
+        </activity>        
 	</application>
 
 </manifest>

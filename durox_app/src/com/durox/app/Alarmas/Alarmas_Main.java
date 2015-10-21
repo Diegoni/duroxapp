@@ -1,26 +1,44 @@
-package com.durox.app.Productos;
+package com.durox.app.Alarmas;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Documentos.Documentos;
 import com.durox.app.Documentos.Documentos_ListView;
+import com.durox.app.Models.Alarmas_model;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Documentos_model;
+import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
 
+import android.R.array;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +49,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Productos_Main extends MenuActivity {
+public class Alarmas_Main extends MenuActivity {
 	
 	// Declare Variables
 	ListView list;
@@ -53,6 +71,8 @@ public class Productos_Main extends MenuActivity {
 	String sql;
 	Cursor c;
 	int j;	
+			
+	private String jsonResult;
 		
 	Clientes_model mCliente;
 	Productos_model mProductos;
@@ -74,7 +94,8 @@ public class Productos_Main extends MenuActivity {
 	String subjet;
 	
 	
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
@@ -94,7 +115,7 @@ public class Productos_Main extends MenuActivity {
 			@Override
 			public void onClick(View v) {
 
-				PopupMenu popup = new PopupMenu(Productos_Main.this, btn_orden);
+				PopupMenu popup = new PopupMenu(Alarmas_Main.this, btn_orden);
 				popup.getMenuInflater().inflate(R.menu.popup_producto, popup.getMenu());
 
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -103,7 +124,7 @@ public class Productos_Main extends MenuActivity {
 						
 						productos_lista(orden, filtro);
 						
-						Toast.makeText(Productos_Main.this, "Orden : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+						Toast.makeText(Alarmas_Main.this, "Orden : " + item.getTitle(), Toast.LENGTH_SHORT).show();
 		                        return true;
 					}
 				});
@@ -118,7 +139,7 @@ public class Productos_Main extends MenuActivity {
 			@Override
 			public void onClick(View v) {
 
-				PopupMenu popup = new PopupMenu(Productos_Main.this, btn_filtro);
+				PopupMenu popup = new PopupMenu(Alarmas_Main.this, btn_filtro);
 				popup.getMenuInflater().inflate(R.menu.popup_producto, popup.getMenu());
 
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -127,7 +148,7 @@ public class Productos_Main extends MenuActivity {
 						
 						productos_lista(orden, filtro);
 						
-						Toast.makeText(Productos_Main.this, "Filtro : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+						Toast.makeText(Alarmas_Main.this, "Filtro : " + item.getTitle(), Toast.LENGTH_SHORT).show();
 		                        return true;
 					}
 				});
@@ -140,7 +161,6 @@ public class Productos_Main extends MenuActivity {
 	
 	
 	
-	
 	public void actualizar_productos(View view) {
 		pDialog = new ProgressDialog(this);
         pDialog.setMessage("Actualizando....");
@@ -148,17 +168,11 @@ public class Productos_Main extends MenuActivity {
         pDialog.setCancelable(false);
         pDialog.show();
 		
-		Productos_Update update = new Productos_Update(db, this);
-		update.actualizar_registros();
+		Alarmas_Update update = new Alarmas_Update(db, this);
+		update.actualizar_productos();
 		
 		pDialog.dismiss();
-		
-		productos_lista(orden, filtro);  
 	}
-		
-		
-	
-	
 	
 	
 	public void productos_lista(CharSequence order, final CharSequence filtro){
@@ -189,6 +203,8 @@ public class Productos_Main extends MenuActivity {
 				j = j + 1;
 			}	
 		
+			
+			// Locate the ListView in listview_main.xml
 			list = (ListView) findViewById(R.id.listview);
 			arraylistp.clear();
 			
@@ -202,13 +218,21 @@ public class Productos_Main extends MenuActivity {
 						imagen[i]
 				);
 				
+				// Binds all strings into an array
 				arraylistp.add(wp);
 			}
+			
+			// Pass results to ListViewAdapter Class
 			adapterp = new Productos_ListView(this, arraylistp);
+			
+			// Binds the Adapter to the ListView
 			list.setAdapter(adapterp);
 			
+			// Locate the EditText in listview_main.xml
 			editsearch = (EditText) findViewById(R.id.search);
 			editsearch.setHint(filtro);
+			
+			// Capture Text in EditText
 			editsearch.addTextChangedListener(new TextWatcher() {
 			
 				@Override
@@ -235,6 +259,5 @@ public class Productos_Main extends MenuActivity {
 			});
 		}		
 	}
-
-
+	
 }
