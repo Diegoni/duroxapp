@@ -3,6 +3,7 @@ package com.durox.app.Models;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Visitas_model extends Activity{
 	
@@ -126,7 +127,7 @@ public class Visitas_model extends Activity{
 				+ "'"+user_upd+"' "
 			+ ");";
  		
-		//return sql;
+		Log.e("Consulta ", sql);
 		db.execSQL(sql);
  	}
 	

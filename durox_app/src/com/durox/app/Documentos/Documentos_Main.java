@@ -1,29 +1,13 @@
 package com.durox.app.Documentos;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.example.durox_app.R;
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Alarmas.Alarmas_Update;
 import com.durox.app.Models.Documentos_model;
 
-
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -32,7 +16,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -40,7 +23,13 @@ import android.widget.Toast;
 
 public class Documentos_Main extends MenuActivity {
 
-	// Declare Variables
+	Config_durox config;
+	SQLiteDatabase db;
+	Documentos_model mDocumentos;
+	
+	ProgressDialog pDialog;
+	Cursor cDocumentos;
+	
 	ListView list;
 	Documentos_ListView adapterd;
 	EditText editsearch;
@@ -49,17 +38,8 @@ public class Documentos_Main extends MenuActivity {
 	String[] direccion;
 	int[] imagen;
 	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
-	SQLiteDatabase db;
 	
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
-	private String jsonResult;
-	Config_durox config;
-	ProgressDialog pDialog;
-	
-	
-	public void onCreate(Bundle savedInstanceState) 
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setTitle("Documentos - Lista");
@@ -99,7 +79,6 @@ public class Documentos_Main extends MenuActivity {
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 			
 		mDocumentos = new Documentos_model(db);
-			
 		cDocumentos = mDocumentos.getRegistros();
 			
 		int j = 0;
@@ -120,7 +99,6 @@ public class Documentos_Main extends MenuActivity {
 				j = j + 1;
 			}				
 			
-			// Locate the ListView in listview_main.xml
 			list = (ListView) findViewById(R.id.lvDocumentos);
 			arraylistd.clear();
 
@@ -132,21 +110,13 @@ public class Documentos_Main extends MenuActivity {
 						foto[i]
 				);
 					
-				// Binds all strings into an array
 				arraylistd.add(wp);
 			}
 			
-			// Pass results to ListViewAdapter Class
 			adapterd = new Documentos_ListView(this, arraylistd);
-			
-			// Binds the Adapter to the ListView
 			list.setAdapter(adapterd);
 			
-			// Locate the EditText in listview_main.xml
 			editsearch = (EditText) findViewById(R.id.search);
-			
-
-			// Capture Text in EditText
 			editsearch.addTextChangedListener(new TextWatcher() {
 				public void afterTextChanged(Editable arg0) {
 					String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
@@ -168,6 +138,5 @@ public class Documentos_Main extends MenuActivity {
 				}
 			});	
 		}
-	 }	
-	
+	 }		
 }

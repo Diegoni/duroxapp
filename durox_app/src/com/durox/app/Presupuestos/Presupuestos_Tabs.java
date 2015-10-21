@@ -1,9 +1,10 @@
-package com.durox.app.Clientes;
+package com.durox.app.Presupuestos;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
@@ -12,6 +13,11 @@ import android.widget.TabHost.TabSpec;
 
 import com.durox.app.Config_vista_durox;
 import com.durox.app.MainActivity;
+import com.durox.app.Clientes.Clientes_Direcciones;
+import com.durox.app.Clientes.Clientes_ItemView;
+import com.durox.app.Clientes.Clientes_Mails;
+import com.durox.app.Clientes.Clientes_Main;
+import com.durox.app.Clientes.Clientes_Telefonos;
 import com.durox.app.Documentos.Documentos_Main;
 import com.durox.app.Presupuestos.Presupuestos_Main;
 import com.durox.app.Productos.Productos_Main;
@@ -21,18 +27,31 @@ import com.example.durox_app.R;
 @SuppressWarnings("deprecation")
 
 
-public class Clientes_Tabs extends TabActivity {
+public class Presupuestos_Tabs extends TabActivity {
 	
 	int imagen;
+	
+	String cNombre;
+	String cIdVisita;
+	String truncate;
+	String id_presupuesto;
+	String id_linea;
+	String id;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		setTitle("Clientes - Registro");
-        getActionBar().setIcon(R.drawable.menuclientes);
+		setTitle("Presupuestos - Crear");
+        getActionBar().setIcon(R.drawable.menupresupuesto);
 		
 		Intent i = getIntent();
+		cNombre = i.getStringExtra("nombre");
+		cIdVisita = i.getStringExtra("id_visita");
+		id_presupuesto = i.getStringExtra("id_presupuesto");
+		id = i.getStringExtra("id");
+		id_linea = i.getStringExtra("id_linea");
+		truncate = i.getStringExtra("truncate");
 		
 		// Traigo los resultados 
 		String id = i.getStringExtra("id");
@@ -41,47 +60,42 @@ public class Clientes_Tabs extends TabActivity {
 		Resources ressources = getResources(); 
 		TabHost tabHost = getTabHost(); 
 		
-		// Android tab
+		// Productos
+		Intent intent = new Intent().setClass(this, Presupuestos_Create.class);
 		
-		Intent intentCliente = new Intent().setClass(this, Clientes_ItemView.class);
-		intentCliente.putExtra("id", id);
-		intentCliente.putExtra("imagen", imagen);
+		intent.putExtra("nombre", cNombre);
+		intent.putExtra("id_visita", cIdVisita);
+		intent.putExtra("id_presupuesto", id_presupuesto);
+		intent.putExtra("id", id);
+		intent.putExtra("id_linea", id_linea);
+		intent.putExtra("truncate", truncate);
 		
 		TabSpec tabSpecCliente = tabHost
 			.newTabSpec("@string/perfil")
 			.setIndicator("", ressources.getDrawable(R.drawable.users))
-			.setContent(intentCliente);
+			.setContent(intent);
+		
 
-		// Apple tab
-		Intent intentTelefono = new Intent().setClass(this, Clientes_Telefonos.class);
-		intentTelefono.putExtra("id", id);
+		// Datos
+		Intent intentDatos = new Intent().setClass(this, Presupuestos_Datos.class);
+		
+		intentDatos.putExtra("nombre", cNombre);
+		intentDatos.putExtra("id_visita", cIdVisita);
+		intentDatos.putExtra("id_presupuesto", id_presupuesto);
+		intentDatos.putExtra("id", id);
+		intentDatos.putExtra("id_linea", id_linea);
+		intentDatos.putExtra("truncate", truncate);
+		
 		TabSpec tabSpecTelefono = tabHost
-			.newTabSpec("@string/telefono")
+			.newTabSpec("@string/datos")
 			.setIndicator("", ressources.getDrawable(R.drawable.phonecell))
-			.setContent(intentTelefono);
-		
-		// Windows tab
-		Intent intentMail = new Intent().setClass(this, Clientes_Mails.class);
-		intentMail.putExtra("id", id);
-		TabSpec tabSpecMail = tabHost
-			.newTabSpec("@string/mail")
-			.setIndicator("", ressources.getDrawable(R.drawable.email))
-			.setContent(intentMail);
+			.setContent(intentDatos);
 		
 		
-		// Blackberry tab
-		Intent intentDireccion = new Intent().setClass(this, Clientes_Direcciones.class);
-		intentDireccion.putExtra("id", id);
-		TabSpec tabSpecDireccion = tabHost
-			.newTabSpec("@string/direccion")
-			.setIndicator("", ressources.getDrawable(R.drawable.address))
-			.setContent(intentDireccion);
-	
 		// add all tabs 
 		tabHost.addTab(tabSpecCliente);
 		tabHost.addTab(tabSpecTelefono);
-		tabHost.addTab(tabSpecDireccion);
-		tabHost.addTab(tabSpecMail);
+		
 		
 		//set Windows tab as default (zero based)
 		tabHost.setCurrentTab(0);

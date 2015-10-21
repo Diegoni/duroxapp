@@ -1,44 +1,26 @@
 package com.durox.app.Alarmas;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Documentos.Documentos;
 import com.durox.app.Documentos.Documentos_ListView;
-import com.durox.app.Models.Alarmas_model;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Documentos_model;
-import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
 import com.example.durox_app.R;
 
-import android.R.array;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,8 +53,6 @@ public class Alarmas_Main extends MenuActivity {
 	String sql;
 	Cursor c;
 	int j;	
-			
-	private String jsonResult;
 		
 	Clientes_model mCliente;
 	Productos_model mProductos;
@@ -169,7 +149,7 @@ public class Alarmas_Main extends MenuActivity {
         pDialog.show();
 		
 		Alarmas_Update update = new Alarmas_Update(db, this);
-		update.actualizar_productos();
+		update.actualizar_registros();
 		
 		pDialog.dismiss();
 	}

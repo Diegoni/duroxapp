@@ -67,7 +67,15 @@ public class MenuActivity extends Activity {
             Intent intentLogin = new Intent(this, Config_vista_durox.class);
      		startActivity(intentLogin);
     		
-            return true;            
+            return true;   
+            
+        case R.id.item8: 
+            Toast.makeText(this, "Actualizar", Toast.LENGTH_SHORT).show(); 
+            Intent intentActualizar = new Intent(this, MainActivity.class);
+            intentActualizar.putExtra("actualizar", "ok");
+            startActivity(intentActualizar);
+    		
+            return true;               
         default:
             return super.onOptionsItemSelected(item);
         }

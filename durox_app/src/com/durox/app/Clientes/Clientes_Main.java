@@ -1,37 +1,11 @@
 package com.durox.app.Clientes;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
-import com.durox.app.Models.Departamentos_model;
-import com.durox.app.Models.Direcciones_clientes_model;
-import com.durox.app.Models.Documentos_model;
-import com.durox.app.Models.Grupos_model;
-import com.durox.app.Models.Iva_model;
-import com.durox.app.Models.Mails_clientes_model;
-import com.durox.app.Models.Provincias_model;
-import com.durox.app.Models.Telefonos_clientes_model;
-import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
 import com.example.durox_app.R;
 
@@ -40,7 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,8 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Clientes_Main extends MenuActivity {
-	
-	// Declare Variables
+
 	ListView list;
 	Clientes_ListView adapter;
 	EditText editsearch;
@@ -67,7 +39,6 @@ public class Clientes_Main extends MenuActivity {
 	String[] nombre;
 	int[] imagen;
 	
-	
 	ArrayList<Clientes> arraylist = new ArrayList<Clientes>();
 	SQLiteDatabase db;
 		
@@ -75,14 +46,9 @@ public class Clientes_Main extends MenuActivity {
 	String sql;
 	Cursor c;
 	int j;	
-			
-	private String jsonResult;
 		
 	Clientes_model mCliente;
 	TextView content;
-		
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
 	
 	Vendedores_model mVendedor;
 	String id_vendedor;

@@ -1,20 +1,10 @@
 package com.durox.app.Visitas;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.example.durox_app.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.durox.app.Config_durox;
 import com.durox.app.MainActivity;
 import com.durox.app.MenuActivity;
@@ -27,7 +17,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,11 +25,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Visitas_Main extends MenuActivity {
 	AutoCompleteTextView auto_cliente;
-	AutoCompleteTextView auto_epoca;
+	Spinner auto_epoca;
 	RatingBar ebValoracion;
 	DatePicker etfecha;
 	EditText etComentario;
@@ -56,8 +46,6 @@ public class Visitas_Main extends MenuActivity {
 	Clientes_model mClientes;
 	Visitas_model mVisitas;
 	Epocas_model mEpocas;
-	
-	private String jsonResult;
 	
 	Config_durox config;
 
@@ -75,7 +63,6 @@ public class Visitas_Main extends MenuActivity {
 	
 	public void cargar_vista(){
 		auto_cliente = (AutoCompleteTextView) findViewById(R.id.autoClientes);
-		auto_epoca = (AutoCompleteTextView) findViewById(R.id.autoEpocas);
 		etfecha = (DatePicker) findViewById(R.id.dp_Fecha);
 		etComentario = (EditText) findViewById(R.id.txtcomentario);
 		ebValoracion = (RatingBar) findViewById(R.id.ebValoracion);
@@ -85,15 +72,10 @@ public class Visitas_Main extends MenuActivity {
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		mClientes = new Clientes_model(db);
-		
 		c = mClientes.getClientesVisitas();
-		
 		cantidad = c.getCount();
-		
 		c_nombre = new String[cantidad];
-		
 		j = 0;
-				
 		if(c.getCount() > 0){
 			while(c.moveToNext()){
 				c_nombre[j] = c.getString(10);
@@ -103,29 +85,21 @@ public class Visitas_Main extends MenuActivity {
 			Toast.makeText(this, config.msjNoRegistros("clientes"), Toast.LENGTH_SHORT).show();
 		}
 				
+		
+		
+		Spinner auto_epoca = (Spinner) findViewById(R.id.autoEpocas);
+		List<String> listEpocas = new ArrayList<String>();
 		mEpocas = new Epocas_model(db);
+		Cursor cEpocas = mEpocas.getRegistros();
+		if(cEpocas.getCount() > 0){
+			while(cEpocas.moveToNext()){
+				listEpocas.add(cEpocas.getString(2));
+			}	
 		
-		c = mEpocas.getRegistros();
-		
-		cantidad = c.getCount();
-		
-		epocas = new String[cantidad];
-		
-		j = 0;
-				
-		if(c.getCount() > 0){
-			while(c.moveToNext()){
-				epocas[j] = c.getString(2);
-				
-    			j = j + 1;
-    		}		
-		} else {
-			Toast.makeText(this, config.msjNoRegistro("epocas"), Toast.LENGTH_LONG).show();
 		}
-		
-		ArrayAdapter<String> adapterProductos = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, epocas);
-		auto_epoca.setThreshold(1);
-		auto_epoca.setAdapter(adapterProductos);
+		ArrayAdapter<String> adapterEpocas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listEpocas);
+		adapterEpocas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		auto_epoca.setAdapter(adapterEpocas);
 		
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, c_nombre);
@@ -144,14 +118,22 @@ public class Visitas_Main extends MenuActivity {
 	
 	
 	public void guardar(View view){
+		Log.e("PASO", "1");
+		
 		String razon_social = auto_cliente.getText().toString();
-		String epoca = auto_epoca.getText().toString();
+		//String epoca = auto_epoca.getSelectedItem().toString();
+		
+		String epoca = ((Spinner)findViewById(R.id.autoEpocas)).getSelectedItem().toString();
+		
+		Log.e("PASO", "2");
 		
 		int mes = etfecha.getMonth();
 		mes = mes + 1;
 		String fecha = etfecha.getYear()+"/"+mes+"/"+etfecha.getDayOfMonth();
 		String comentario = etComentario.getText().toString();
 		float valoracion2 = ebValoracion.getRating();
+		
+		Log.e("PASO", "3");
 		
 		Log.e("Fecha ","dia "+etfecha.getDayOfMonth());
 		Log.e("Fecha ","mes "+etfecha.getMonth());
@@ -166,13 +148,9 @@ public class Visitas_Main extends MenuActivity {
 			while(cCliente.moveToNext()){
 				
 				mEpocas = new Epocas_model(db);
-				
 				Cursor cEpoca = mEpocas.getID(epoca);
-				
 				Vendedores_model mVendedor = new Vendedores_model(db);
-				
 				Cursor cVendedor = mVendedor.getRegistros();
-				
 				String IDvendedor = "0";
 				
 				if(cVendedor.getCount() > 0){

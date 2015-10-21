@@ -3,7 +3,12 @@ package com.durox.app;
 
 
 import com.example.durox_app.R;
+import com.durox.app.Alarmas.Alarmas_Update;
+import com.durox.app.Clientes.Clientes_Update;
+import com.durox.app.Documentos.Documentos_Update;
+import com.durox.app.Models.Alarmas_model;
 import com.durox.app.Models.Clientes_model;
+import com.durox.app.Models.Condiciones_pago_model;
 import com.durox.app.Models.Departamentos_model;
 import com.durox.app.Models.Direcciones_clientes_model;
 import com.durox.app.Models.Documentos_model;
@@ -13,16 +18,25 @@ import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Mails_clientes_model;
+import com.durox.app.Models.Mensajes_model;
+import com.durox.app.Models.Modos_pago_model;
 import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Pedidos_model;
 import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
+import com.durox.app.Models.Tiempos_entrega_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
+import com.durox.app.Presupuestos.Presupuestos_Update;
+import com.durox.app.Productos.Productos_Update;
+import com.durox.app.Vendedores.Mensajes_Update;
+import com.durox.app.Visitas.Epocas_Update;
+import com.durox.app.Visitas.Visitas_Update;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +47,7 @@ public class MainActivity extends MenuActivity {
  
 	Config_durox config;
 	SQLiteDatabase db;
+	private ProgressDialog pDialog;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +65,7 @@ public class MainActivity extends MenuActivity {
 		String user = i.getStringExtra("user");
 		String pass = i.getStringExtra("pass");
 		String id_vendedor = i.getStringExtra("id_vendedor");
+		String actualizar = i.getStringExtra("actualizar");
 
 		if(user != null){
 			Vendedores_model mVendedor = new Vendedores_model(db);
@@ -69,9 +85,15 @@ public class MainActivity extends MenuActivity {
 				"", 			// user_add, 
 				"" 			// user_upd
 			);
+			
+			crearTablas();
 		}
 		
-		crearTablas();
+		if(actualizar != null){
+			bigInsert();
+		}
+		
+		
    } 
     
    public void crearTablas(){
@@ -115,7 +137,47 @@ public class MainActivity extends MenuActivity {
 	   		mProvincias.createTable();	
 	   Monedas_model mMonedas = new Monedas_model(db);
 	   		mMonedas.createTable();
+	   Mensajes_model mMensajes = new Mensajes_model(db);
+	   		mMensajes.createTable();	
+	   Alarmas_model mAlarmas = new Alarmas_model(db);
+	   		mAlarmas.createTable();
+	   Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
+	   		mCondiciones.createTable();		
+	   Modos_pago_model mModos = new Modos_pago_model(db);
+	   		mModos.createTable();
+	   Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
+	   		mTiempos.createTable();				
+	   
+	   bigInsert();
    } 
-
+   
+   public void bigInsert(){
+	   pDialog = new ProgressDialog(MainActivity.this);
+	   pDialog.setMessage("Actualizando....");
+       pDialog.setIndeterminate(false);
+       pDialog.setCancelable(false);
+       pDialog.show();
+       
+        Alarmas_Update uAlarmas = new Alarmas_Update(db, this);	
+			uAlarmas.actualizar_registros();
+		Clientes_Update uClientes = new Clientes_Update(db, this);	
+			uClientes.actualizar_registros();
+		Documentos_Update uDocumentos = new Documentos_Update(db, this);
+			uDocumentos.actualizar_registros();
+		Epocas_Update uEpocas = new Epocas_Update(db, this);
+			uEpocas.actualizar_registros();
+		Mensajes_Update uMensajes = new Mensajes_Update(db, this);
+			uMensajes.actualizar_registros();
+		Presupuestos_Update uPresupuestos = new Presupuestos_Update(db, this);
+			uPresupuestos.actualizar_registros();
+		Productos_Update uProductos = new Productos_Update(db, this);
+			uProductos.actualizar_registros();
+		Visitas_Update uVisitas = new Visitas_Update(db, this);
+			uVisitas.actualizar_registros();
+		
+		pDialog.dismiss();
+   } 
 }
+
+
   

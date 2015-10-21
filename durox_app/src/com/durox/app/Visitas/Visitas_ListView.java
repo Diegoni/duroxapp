@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import com.example.durox_app.R;
 import com.durox.app.Presupuestos.Presupuestos_Create;
+import com.durox.app.Presupuestos.Presupuestos_Tabs;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +29,7 @@ public class Visitas_ListView extends BaseAdapter {
 	private List<Visitas> visitas = null;
 	private ArrayList<Visitas> arraylist;
 	
-	public Visitas_ListView(Context context, ArrayList<Visitas> arraylist2) 
-	{
+	public Visitas_ListView(Context context, ArrayList<Visitas> arraylist2) {
 		mContext = context;
 		this.visitas = arraylist2;
 		inflater = LayoutInflater.from(mContext);
@@ -100,7 +101,7 @@ public class Visitas_ListView extends BaseAdapter {
 					Toast.makeText(mContext, "Por favor actualice", Toast.LENGTH_SHORT).show(); 
 				}else{
 					// Send single item click data to SingleItemView Class
-					Intent intent = new Intent(mContext, Presupuestos_Create.class);
+					Intent intent = new Intent(mContext, Presupuestos_Tabs.class);
 					
 					// Pasamos toda la informacion
 					intent.putExtra("id_visita", (visitas.get(position).getVisita()));

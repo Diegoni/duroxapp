@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,68 +16,21 @@ import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Documentos.Documentos;
-import com.durox.app.Documentos.Documentos_ListView;
-import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Documentos_model;
-import com.durox.app.Models.Monedas_model;
-import com.durox.app.Models.Productos_model;
-import com.durox.app.Productos.Productos;
-import com.durox.app.Productos.Productos_ListView;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Documentos_Update extends MenuActivity {
-	
-	// Declare Variables
-	ListView list;
-	Productos_ListView adapterp;
-	Documentos_ListView adapterd;
-	EditText editsearch;
-	
-	String[] nombre;
-	String[] id_back;
-	String[] precio;
-	String[] moneda;
-	String[] codigo;
-	int[] imagen;
-	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
-	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
-	SQLiteDatabase db;
-		
-	String truncate;
-	String sql;
-	Cursor c;
-	int j;	
-			
-	private String jsonResult;
-		
-	Clientes_model mCliente;
-	Productos_model mProductos;
-		
-	TextView content;
-		
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
-		
 	Config_durox config;
-	ProgressDialog pDialog;
-	
-	CharSequence orden;
-	CharSequence filtro;
-	
-	String subjet;
-	
 	Context mContext;
+	SQLiteDatabase db;
+	
+	private String jsonResult;
+	Documentos_model mDocumentos;
 	
 	public Documentos_Update(SQLiteDatabase db_enviada, Context context) {
 		config = new Config_durox();

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/label_datos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/datos"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/sp_condiciones_pago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_condiciones_pago"
+        android:layout_toLeftOf="@+id/label_datos" />
+
+    <TextView
+        android:id="@+id/label_condiciones_pago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/condiciones_pago"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/label_modos_pago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sp_condiciones_pago"
+        android:text="@string/modos_pago"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/sp_modos_pago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_modos_pago"
+        android:layout_toLeftOf="@+id/label_datos" />
+
+    <TextView
+        android:id="@+id/label_tiempo_entrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sp_modos_pago"
+        android:text="@string/tiempo_entrega"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/sp_tiempo_entrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label_tiempo_entrega"
+        android:layout_toLeftOf="@+id/label_datos" />
+
+    <TextView
+        android:id="@+id/label_nota_privada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sp_condiciones_pago"
+        android:layout_toRightOf="@+id/label_datos"
+        android:text="@string/nota_privada"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_nota_privada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/label_modos_pago"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sp_condiciones_pago"
+        android:layout_toRightOf="@+id/label_datos"
+        android:ems="10"
+        android:hint="@string/nota_privada"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/label_nota_publica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/sp_modos_pago"
+        android:layout_toRightOf="@+id/label_datos"
+        android:text="@string/nota_publica"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_nota_publica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sp_tiempo_entrega"
+        android:layout_alignLeft="@+id/label_nota_publica"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/label_nota_publica"
+        android:ems="10"
+        android:hint="@string/nota_publica"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

@@ -91,6 +91,12 @@
 	<string name="filtro">"Filtro"</string>
 	<string name="ordenar">"Ordernar"</string>
 	<string name="moneda">"Moneda"</string>
+	<string name="condiciones_pago">"Condiciones de pago"</string>
+	<string name="modos_pago">"Modos de pago"</string>
+	<string name="tiempo_entrega">"Tiempos de entrega"</string>
+	<string name="nota_privada">"Nota privada"</string>
+	<string name="nota_publica">"Nota publica"</string>
+	<string name="datos">"Datos"</string>
 	
 	
 	

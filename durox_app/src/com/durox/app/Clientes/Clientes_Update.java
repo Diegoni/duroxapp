@@ -21,77 +21,30 @@ import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Documentos.Documentos;
-import com.durox.app.Documentos.Documentos_ListView;
 import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Departamentos_model;
 import com.durox.app.Models.Direcciones_clientes_model;
-import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Grupos_model;
 import com.durox.app.Models.Iva_model;
 import com.durox.app.Models.Mails_clientes_model;
-import com.durox.app.Models.Monedas_model;
-import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
 import com.durox.app.Models.Tipos_model;
 import com.durox.app.Models.Vendedores_model;
-import com.durox.app.Productos.Productos;
-import com.durox.app.Productos.Productos_ListView;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Clientes_Update extends MenuActivity {
-	
-	// Declare Variables
-	ListView list;
-	Productos_ListView adapterp;
-	Documentos_ListView adapterd;
-	EditText editsearch;
-	
-	String[] nombre;
-	String[] id_back;
-	String[] precio;
-	String[] moneda;
-	String[] codigo;
-	int[] imagen;
-	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
-	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
-	SQLiteDatabase db;
-		
-	String truncate;
-	String sql;
-	Cursor c;
-	int j;	
-			
-	private String jsonResult;
-		
-	Clientes_model mCliente;
-	Productos_model mProductos;
-		
-	TextView content;
-		
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
-		
 	Config_durox config;
-	ProgressDialog pDialog;
-	
-	CharSequence orden;
-	CharSequence filtro;
-	
-	String subjet;
-	
 	Context mContext;
+	SQLiteDatabase db;
+	
+	private String jsonResult;
 	
 	Vendedores_model mVendedor;
 	String id_vendedor;
@@ -107,7 +60,7 @@ public class Clientes_Update extends MenuActivity {
 	
 	public void addNew() {
 		String url;
-		JsonReadTask taskclientes = new JsonReadTask("clientes");
+		JsonReadTask taskclientes = new JsonReadTask();
 		url = config.getIp(db)+"/actualizaciones/getClientes/";
 		taskclientes.execute(new String[] { url });
 	}
@@ -198,11 +151,6 @@ public class Clientes_Update extends MenuActivity {
 
 	// Async Task to access the web
 	private class JsonReadTask extends AsyncTask<String, Void, String> {
-		String carga;
-		
-		public JsonReadTask(String carga) {
-			this.carga = carga;
-		}
 		
 		protected String doInBackground(String... params) {
 			HttpClient httpclient = new DefaultHttpClient();
@@ -248,9 +196,7 @@ public class Clientes_Update extends MenuActivity {
 		
 		protected void onPostExecute(String result) {
 			if(result.equals("ok")){
-				if(carga == "clientes"){
-					CargarClientes();
-				}
+				CargarClientes();
 			}else{
 				Toast.makeText(mContext, 
 						result, Toast.LENGTH_LONG).show();

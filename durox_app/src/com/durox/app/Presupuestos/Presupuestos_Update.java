@@ -21,73 +21,33 @@ import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Documentos.Documentos;
-import com.durox.app.Documentos.Documentos_ListView;
-import com.durox.app.Models.Clientes_model;
-import com.durox.app.Models.Documentos_model;
+import com.durox.app.Models.Condiciones_pago_model;
 import com.durox.app.Models.Estados_presupuesto_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
-import com.durox.app.Models.Monedas_model;
+import com.durox.app.Models.Modos_pago_model;
 import com.durox.app.Models.Presupuestos_model;
-import com.durox.app.Models.Productos_model;
+import com.durox.app.Models.Tiempos_entrega_model;
 import com.durox.app.Models.Vendedores_model;
-import com.durox.app.Productos.Productos;
-import com.durox.app.Productos.Productos_ListView;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Presupuestos_Update extends MenuActivity {
 	
-	// Declare Variables
-	ListView list;
-	Productos_ListView adapterp;
-	Documentos_ListView adapterd;
-	EditText editsearch;
-	
-	String[] nombre;
-	String[] id_back;
-	String[] precio;
-	String[] moneda;
-	String[] codigo;
-	int[] imagen;
-	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
-	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
-	SQLiteDatabase db;
-		
-	String truncate;
-	String sql;
-	Cursor c;
-	int j;	
-			
-	private String jsonResult;
-	
-	TextView content;
-		
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
-		
-	Config_durox config;
-	ProgressDialog pDialog;
-	
-	CharSequence orden;
-	CharSequence filtro;
-	
-	String subjet;
-	
-	Context mContext;
-	
 	Presupuestos_model mPresupuesto;
 	Estados_presupuesto_model mEstados;
 	Lineas_Presupuestos_model mLineas;
+	
+	Config_durox config;
+	Context mContext;
+	SQLiteDatabase db;
+	
+	private String jsonResult;
+	
 	Vendedores_model mVendedor;
 	String id_vendedor;
 	
@@ -514,6 +474,108 @@ public class Presupuestos_Update extends MenuActivity {
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
-	 	}		
+	 	}	
+		
+		
+		
+		subjet = "condiciones_pago";
+		Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			
+			if(jsonMainNode.length() > 0){
+				mCondiciones.truncate();
+	 		}
+		 			  
+	 		for (int i = 0; i < jsonMainNode.length(); i++) {
+	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	 			
+	 			mCondiciones.insert(
+		 			jsonChildNode.optString("id_condicion_pago"),
+			 		jsonChildNode.optString("condicion_pago"),
+			 		jsonChildNode.optString("dias"),
+			 		jsonChildNode.optString("date_add"),
+				 	jsonChildNode.optString("date_upd"),
+				 	jsonChildNode.optString("eliminado"),
+				 	jsonChildNode.optString("user_add"),
+				 	jsonChildNode.optString("user_upd")
+		 		);
+		 			
+	 		}
+		 		
+	 		Toast.makeText(mContext, 
+	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 	} catch (JSONException e) {
+	 		Toast.makeText(mContext, 
+	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 	}
+		
+		
+		subjet = "modos_pago";
+		Modos_pago_model mModos = new Modos_pago_model(db);
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			
+			if(jsonMainNode.length() > 0){
+				mModos.truncate();
+	 		}
+		 			  
+	 		for (int i = 0; i < jsonMainNode.length(); i++) {
+	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	 			
+	 			mModos.insert(
+		 			jsonChildNode.optString("id_modo_pago"),
+			 		jsonChildNode.optString("modo_pago"),
+			 		jsonChildNode.optString("date_add"),
+				 	jsonChildNode.optString("date_upd"),
+				 	jsonChildNode.optString("eliminado"),
+				 	jsonChildNode.optString("user_add"),
+				 	jsonChildNode.optString("user_upd")
+		 		);
+		 			
+	 		}
+		 		
+	 		Toast.makeText(mContext, 
+	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 	} catch (JSONException e) {
+	 		Toast.makeText(mContext, 
+	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 	}
+		
+		
+
+		subjet = "tiempos_entrega";
+		Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			
+			if(jsonMainNode.length() > 0){
+				mTiempos.truncate();
+	 		}
+		 			  
+	 		for (int i = 0; i < jsonMainNode.length(); i++) {
+	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	 			
+	 			mTiempos.insert(
+		 			jsonChildNode.optString("id_tiempo_entrega"),
+			 		jsonChildNode.optString("tiempo_entrega"),
+			 		jsonChildNode.optString("date_add"),
+				 	jsonChildNode.optString("date_upd"),
+				 	jsonChildNode.optString("eliminado"),
+				 	jsonChildNode.optString("user_add"),
+				 	jsonChildNode.optString("user_upd")
+		 		);
+		 			
+	 		}
+		 		
+	 		Toast.makeText(mContext, 
+	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 	} catch (JSONException e) {
+	 		Toast.makeText(mContext, 
+	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 	}
 	}
 }

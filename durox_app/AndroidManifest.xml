@@ -63,9 +63,13 @@
         </activity>
         <activity android:name="com.durox.app.Productos.Productos_ItemView" >
         </activity>
+        <activity android:name="com.durox.app.Presupuestos.Presupuestos_Tabs" >
+        </activity>
         <activity android:name="com.durox.app.Presupuestos.Presupuestos_Main" >
         </activity>
         <activity android:name="com.durox.app.Presupuestos.Presupuestos_Create" >
+        </activity>
+          <activity android:name="com.durox.app.Presupuestos.Presupuestos_Datos" >
         </activity>
         <activity android:name="com.durox.app.Presupuestos.Presupuestos_Lista" >
         </activity>

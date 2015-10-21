@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/fondo" >
-   
+
     <AutoCompleteTextView
         android:id="@+id/autoClientes"
         android:layout_width="wrap_content"
@@ -13,36 +13,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="@string/cliente">
+        android:hint="@string/cliente" >
 
         <requestFocus />
     </AutoCompleteTextView>
-
-    <AutoCompleteTextView
-        android:id="@+id/autoEpocas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/autoClientes"
-        android:layout_toLeftOf="@+id/btm_lpLimpiar2"
-        android:ems="10"
-        android:hint="@string/epoca" />
-
-    <RatingBar
-        android:id="@+id/ebValoracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/autoEpocas"
-        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btm_lpLimpiar2"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/autoEpocas"
-        android:layout_alignBottom="@+id/autoEpocas"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoClientes"
         android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_epocas"
         android:text="@string/bajar" />
@@ -75,16 +57,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/txtcomentario"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/ebValoracion" />
+        android:layout_below="@+id/ebValoracion"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:id="@+id/autoEpocas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/autoClientes"
+        android:layout_toLeftOf="@+id/btm_lpLimpiar2" />
+
+    <RatingBar
+        android:id="@+id/ebValoracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/dp_Fecha"
+        android:layout_alignTop="@+id/textView1" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ebValoracion"
-        android:layout_alignLeft="@+id/dp_Fecha"
-        android:layout_below="@+id/btm_lpLimpiar2"
+        android:layout_below="@+id/autoEpocas"
+        android:layout_toLeftOf="@+id/ebValoracion"
         android:gravity="center_horizontal|center"
         android:text="@string/valoracion"
         android:textAppearance="?android:attr/textAppearanceSmall" />

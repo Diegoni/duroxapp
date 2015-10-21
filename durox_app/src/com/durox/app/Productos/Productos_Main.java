@@ -5,10 +5,6 @@ import java.util.Locale;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Documentos.Documentos;
-import com.durox.app.Documentos.Documentos_ListView;
-import com.durox.app.Models.Clientes_model;
-import com.durox.app.Models.Documentos_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Productos.Productos;
 import com.durox.app.Productos.Productos_ListView;
@@ -36,7 +32,6 @@ public class Productos_Main extends MenuActivity {
 	// Declare Variables
 	ListView list;
 	Productos_ListView adapterp;
-	Documentos_ListView adapterd;
 	EditText editsearch;
 	
 	String[] nombre;
@@ -46,7 +41,6 @@ public class Productos_Main extends MenuActivity {
 	String[] codigo;
 	int[] imagen;
 	ArrayList<Productos> arraylistp = new ArrayList<Productos>();
-	ArrayList<Documentos> arraylistd = new ArrayList<Documentos>();
 	SQLiteDatabase db;
 		
 	String truncate;
@@ -54,14 +48,9 @@ public class Productos_Main extends MenuActivity {
 	Cursor c;
 	int j;	
 		
-	Clientes_model mCliente;
 	Productos_model mProductos;
-		
 	TextView content;
-		
-	Documentos_model mDocumentos;
-	Cursor cDocumentos;
-		
+	
 	Config_durox config;
 	ProgressDialog pDialog;
 	

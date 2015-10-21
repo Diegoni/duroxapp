@@ -61,8 +61,12 @@ public class Presupuestos_Create extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
 		
-		setTitle("Presupuestos - Carga de un nuevo presupuesto");
-        getActionBar().setIcon(R.drawable.menupresupuesto);
+		Log.e("Paso", "6");
+		
+		//setTitle("Presupuestos - Carga de un nuevo presupuesto");
+        //getActionBar().setIcon(R.drawable.menupresupuesto);
+        
+        Log.e("Paso", "7");
 		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
@@ -71,6 +75,8 @@ public class Presupuestos_Create extends MenuActivity {
 		id = intent.getStringExtra("id");
 		id_linea = intent.getStringExtra("id_linea");
 		String truncate = intent.getStringExtra("truncate");
+		
+		Log.e("Paso", "8");
 		
 		if(truncate == null){
 			truncate = "no"; 
@@ -111,6 +117,8 @@ public class Presupuestos_Create extends MenuActivity {
     			j = j + 1;
     		}		
 		}
+		
+		Log.e("Paso", "9");
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, p_nombre);
 		auto_producto.setThreshold(1);
@@ -308,7 +316,7 @@ public class Presupuestos_Create extends MenuActivity {
 			Toast.makeText(this, config.msjNoRegistro("producto"), Toast.LENGTH_SHORT).show();
 		}
 				
-		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Create.class);
+		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Tabs.class);
 		intent.putExtra("truncate", "no");
 		intent.putExtra("nombre", cNombre);
 		intent.putExtra("id_visita", cIdVisita);
@@ -328,7 +336,7 @@ public class Presupuestos_Create extends MenuActivity {
 	public void limpiar_detalle(View view){
 		Toast.makeText(this, config.msjOkDelete(), Toast.LENGTH_SHORT).show();
 		
-		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Create.class);
+		Intent intent = new Intent(Presupuestos_Create.this, Presupuestos_Tabs.class);
 		
 		intent.putExtra("nombre", cNombre);
 		intent.putExtra("id_visita", cIdVisita);
