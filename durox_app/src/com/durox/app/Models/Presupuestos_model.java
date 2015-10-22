@@ -24,6 +24,9 @@ public class Presupuestos_model extends Activity{
 				+ "id_cliente VARCHAR, "
 				+ "id_vendedor VARCHAR, "
 				+ "id_estado_presupuesto VARCHAR, "
+				+ "id_condicion_pago` VARCHAR, "
+				+ "id_tiempo_entrega` VARCHAR, "
+				+ "nota_publica` VARCHAR, "
 				+ "total VARCHAR, "
 				+ "fecha VARCHAR, "
 				+ "id_origen VARCHAR, "
@@ -142,6 +145,9 @@ public class Presupuestos_model extends Activity{
 			String id_cliente,
 			String id_vendedor,
 			String id_estado_presupuesto,
+			String id_condicion_pago,
+			String id_tiempo_entrega,
+			String nota_publica,
 			String total,
 			String fecha,
 			String id_origen,
@@ -161,6 +167,9 @@ public class Presupuestos_model extends Activity{
 				+ "`id_cliente`, "
 				+ "`id_vendedor`, "
 				+ "`id_estado_presupuesto`, "
+				+ "`id_condicion_pago`, "
+				+ "`id_tiempo_entrega`, "
+				+ "`nota_publica`, "
 				+ "`total`, "
 				+ "`fecha`, "
 				+ "`id_origen`, "
@@ -179,6 +188,9 @@ public class Presupuestos_model extends Activity{
  			    + "'"+id_cliente+"', "
  			    + "'"+id_vendedor+"', "
  			    + "'"+id_estado_presupuesto+"', "
+ 			    + "'"+id_condicion_pago+"', "
+ 				+ "'"+id_tiempo_entrega+"', "
+ 				+ "'"+nota_publica+"', "
  			    + "'"+total+"', "
  			    + "'"+fecha+"', "
  			    + "'"+id_origen+"', "

@@ -7,31 +7,17 @@ import java.util.List;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
-import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Condiciones_pago_model;
-import com.durox.app.Models.Epocas_model;
-import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Modos_pago_model;
-import com.durox.app.Models.Monedas_model;
-import com.durox.app.Models.Presupuestos_model;
 import com.durox.app.Models.Tiempos_entrega_model;
-import com.durox.app.Presupuestos.Presupuestos_Create;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("ShowToast")
 public class Presupuestos_Datos extends MenuActivity {

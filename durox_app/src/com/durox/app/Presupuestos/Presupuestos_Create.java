@@ -391,6 +391,9 @@ public class Presupuestos_Create extends MenuActivity {
 				id_cliente,		// id_cliente 
 				id_vendedor,	// id_vendedor 
 				"1",			// id_estado_presupuesto 
+				"1",			// id_condicion_pago
+				"1",			// id_tiempo_entrega
+				"1",			// nota_publica
 				total,			// total 
 				"0",			// fecha 
 				"1",			// id_origen
@@ -465,6 +468,9 @@ public class Presupuestos_Create extends MenuActivity {
 			id_cliente,		// id_cliente 
 			id_vendedor,	// id_vendedor 
 			"1",			// id_estado_presupuesto 
+			"1",			// id_condicion_pago
+			"1",			// id_tiempo_entrega
+			"1",			// nota_publica
 			total,			// total 
 			"0",			// fecha 
 			"1",			// id_origen
