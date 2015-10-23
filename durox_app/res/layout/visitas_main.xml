@@ -10,55 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnGuardar"
         android:ems="10"
         android:hint="@string/cliente" >
 
         <requestFocus />
     </AutoCompleteTextView>
-
-    <Button
-        android:id="@+id/btm_lpLimpiar2"
-        style="@style/btn_primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/autoClientes"
-        android:drawableLeft="@drawable/downloadw"
-        android:onClick="actualizar_epocas"
-        android:text="@string/bajar" />
-
-    <Button
-        android:id="@+id/btnGuardar"
-        style="@style/btn_primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/savew"
-        android:onClick="guardar"
-        android:text="@string/guardar" />
-
-    <EditText
-        android:id="@+id/txtcomentario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnGuardar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:hint="@string/comentarios"
-        android:inputType="textMultiLine" />
-
-    <DatePicker
-        android:id="@+id/dp_Fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txtcomentario"
-        android:layout_below="@+id/ebValoracion"
-        android:layout_centerHorizontal="true" />
 
     <Spinner
         android:id="@+id/autoEpocas"
@@ -67,21 +25,63 @@
         android:layout_below="@+id/autoClientes"
         android:layout_toLeftOf="@+id/btm_lpLimpiar2" />
 
-    <RatingBar
-        android:id="@+id/ebValoracion"
+    <Button
+        android:id="@+id/btnGuardar"
+        style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/dp_Fecha"
-        android:layout_alignTop="@+id/textView1" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/savew"
+        android:onClick="guardar"
+        android:text="@string/guardar" />
+
+    <Button
+        android:id="@+id/btm_lpLimpiar2"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/autoEpocas"
+        android:layout_toLeftOf="@+id/btnGuardar"
+        android:drawableLeft="@drawable/downloadw"
+        android:onClick="actualizar_epocas"
+        android:text="@string/bajar" />
+
+    <DatePicker
+        android:id="@+id/dp_Fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ebValoracion"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/autoEpocas"
-        android:layout_toLeftOf="@+id/ebValoracion"
+        android:layout_below="@+id/dp_Fecha"
+        android:layout_toRightOf="@+id/btnGuardar"
         android:gravity="center_horizontal|center"
         android:text="@string/valoracion"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <RatingBar
+        android:id="@+id/ebValoracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnGuardar"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1" />
+
+    <EditText
+        android:id="@+id/txtcomentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ebValoracion"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/autoEpocas"
+        android:layout_toLeftOf="@+id/btnGuardar"
+        android:ems="10"
+        android:hint="@string/comentarios"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

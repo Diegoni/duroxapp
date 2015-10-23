@@ -108,8 +108,6 @@ public class Documentos_Update extends MenuActivity {
 			if(jsonMainNode.length() > 0){
 				mDocumentos.createTable();
 				mDocumentos.truncate();
-	 			Toast.makeText(mContext, 
-	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	 		}
 	 			  
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {

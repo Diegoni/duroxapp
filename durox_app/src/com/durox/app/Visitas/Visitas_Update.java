@@ -212,8 +212,6 @@ public class Visitas_Update extends MenuActivity {
 	 			
 			if(jsonMainNode.length() > 0){
 	 			mVisitas.truncate();
-	 			Toast.makeText(mContext, 
-	 					config.msjActualizandoRegistros() , Toast.LENGTH_SHORT).show();
 	 		}
 	 			  
 	 		for (int i = 0; i < jsonMainNode.length(); i++) {
