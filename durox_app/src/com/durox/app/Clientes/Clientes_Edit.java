@@ -1,6 +1,10 @@
 package com.durox.app.Clientes;
 
 import com.example.durox_app.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Clientes_model;
@@ -16,9 +20,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
@@ -35,8 +39,8 @@ public class Clientes_Edit extends MenuActivity {
 	EditText et_nombre_fantasia;
 	EditText et_nombre;
 	EditText et_apellido;
-	AutoCompleteTextView ac_grupo;
-	AutoCompleteTextView ac_iva;
+	Spinner ac_grupo;
+	Spinner ac_iva;
 	EditText et_web;
 	EditText et_cuit;
 	Button btn_editar;
@@ -49,14 +53,42 @@ public class Clientes_Edit extends MenuActivity {
 		et_nombre_fantasia = (EditText) findViewById(R.id.et_nombre_fantasia);
 		et_nombre = (EditText) findViewById(R.id.et_nombre);
 		et_apellido = (EditText) findViewById(R.id.et_apellido);
-		ac_grupo = (AutoCompleteTextView) findViewById(R.id.ac_grupo);
-		ac_iva = (AutoCompleteTextView) findViewById(R.id.ac_iva);
 		et_web = (EditText) findViewById(R.id.et_web);
 		et_cuit = (EditText) findViewById(R.id.et_cuit);
 		btn_editar = (Button) findViewById(R.id.btn_editar);
 		
 		config = new Config_durox();
 	    db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
+		
+		// Autocomplete Grupos
+		ac_grupo = (Spinner) findViewById(R.id.ac_grupo);
+		List<String> listGrupos = new ArrayList<String>();
+		Grupos_model mGrupos = new Grupos_model(db);
+		Cursor cursor_grupos = mGrupos.getRegistros();
+		if(cursor_grupos.getCount() > 0){
+			while(cursor_grupos.moveToNext()){
+				listGrupos.add(cursor_grupos.getString(2));
+			}	
+		
+		}
+		ArrayAdapter<String> adapterGrupos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listGrupos);
+		adapterGrupos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ac_grupo.setAdapter(adapterGrupos);
+		
+		// Autocomplete Iva		
+		ac_iva = (Spinner) findViewById(R.id.ac_iva);
+		List<String> listIva = new ArrayList<String>();
+		Iva_model mIva = new Iva_model(db);
+		Cursor cursor_iva = mIva.getRegistros();
+		if(cursor_iva.getCount() > 0){
+			while(cursor_iva.moveToNext()){
+				listIva.add(cursor_iva.getString(2));
+			}	
+		
+		}
+		ArrayAdapter<String> adapterIva = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listIva);
+		adapterIva.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ac_iva.setAdapter(adapterIva);
 		
 		Intent i = getIntent();
 		id = i.getStringExtra("id");
@@ -73,61 +105,23 @@ public class Clientes_Edit extends MenuActivity {
 					et_nombre_fantasia.setText(cursor.getString(9));
 					et_nombre.setText(cursor.getString(2));
 					et_apellido.setText(cursor.getString(3));
-					ac_grupo.setText(cursor.getString(6));
-					ac_iva.setText(cursor.getString(7));
+					ac_iva.setPrompt(cursor.getString(7));
 					et_web.setText(cursor.getString(11));
 					et_cuit.setText(cursor.getString(5));
+					
+					String compareValue = cursor.getString(6);
+					if (!compareValue.equals(null)) {
+					    int spinnerPosition = adapterGrupos.getPosition(compareValue);
+					    ac_grupo.setSelection(spinnerPosition);
+					}
+					compareValue = cursor.getString(7);
+					if (!compareValue.equals(null)) {
+					    int spinnerPosition = adapterIva.getPosition(compareValue);
+					    ac_iva.setSelection(spinnerPosition);
+					}
 				}
 			}
 		}
-				
-		// Autocomplete Grupos
-		Grupos_model mGrupos = new Grupos_model(db);
-		Cursor cursor_grupos = mGrupos.getRegistros();
-		int cantidad = cursor_grupos.getCount();
-		
-		String[] grupos_array;
-		grupos_array = new String[cantidad];
-		
-		int j = 0;
-				
-		if(cursor_grupos.getCount() > 0){
-			while(cursor_grupos.moveToNext()){
-				grupos_array[j] = cursor_grupos.getString(2);
-				
-    			j = j + 1;
-    		}		
-		} else {
-			Toast.makeText(this, config.msjNoRegistro("grupos"), Toast.LENGTH_LONG).show();
-		}
-		
-		ArrayAdapter<String> adapterGrupos = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, grupos_array);
-		ac_grupo.setThreshold(1);
-		ac_grupo.setAdapter(adapterGrupos);
-		
-		// Autocomplete Iva		
-		Iva_model mIva = new Iva_model(db);
-		Cursor cursor_iva = mIva.getRegistros();
-		int cantidad_iva = cursor_iva.getCount();
-		
-		String[] iva_array;
-		iva_array = new String[cantidad_iva];
-		
-		int k = 0;
-				
-		if(cursor_iva.getCount() > 0){
-			while(cursor_iva.moveToNext()){
-				iva_array[k] = cursor_iva.getString(2);
-				
-    			k = k + 1;
-    		}		
-		} else {
-			Toast.makeText(this, config.msjNoRegistro("iva"), Toast.LENGTH_LONG).show();
-		}
-		
-		ArrayAdapter<String> adapterIva = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, iva_array);
-		ac_iva.setThreshold(1);
-		ac_iva.setAdapter(adapterIva);
 	}
 	
 	
@@ -137,8 +131,8 @@ public class Clientes_Edit extends MenuActivity {
 		String nombre_fantasia = et_nombre_fantasia.getText().toString();
 		String nombre = et_nombre.getText().toString();
 		String apellido = et_apellido.getText().toString();
-		String grupo = ac_grupo.getText().toString();
-		String iva = ac_iva.getText().toString();
+		String grupo = ((Spinner)findViewById(R.id.ac_grupo)).getSelectedItem().toString();
+		String iva = ((Spinner)findViewById(R.id.ac_iva)).getSelectedItem().toString();
 		String web = et_web.getText().toString();
 		String cuit = et_cuit.getText().toString();
 		String id_grupo = "0";
@@ -166,12 +160,12 @@ public class Clientes_Edit extends MenuActivity {
 		
 		if(id_grupo.equals("0")){
 			Toast.makeText(this, config.msjNoRegistro("grupo"), Toast.LENGTH_SHORT).show();
-			ac_grupo.setText("");
+			//ac_grupo.setText("");
 			ac_grupo.setFocusable(true);			
 		}else{
 			if(id_iva.equals("0")){
 				Toast.makeText(this, config.msjNoRegistro("iva"), Toast.LENGTH_SHORT).show();
-				ac_iva.setText("");
+				//ac_iva.setText("");
 				ac_iva.setFocusable(true);
 			}else{
 				mCliente = new Clientes_model(db);

@@ -41,41 +41,45 @@ public class MenuActivity extends Activity {
         	Toast.makeText(this, "Visitas", Toast.LENGTH_SHORT).show();
         	Intent intentVisitas = new Intent(this, Visitas_Main.class);
     		startActivity(intentVisitas);
-        	 
-            return true;            
+        	return true;
+        	
         case R.id.item4: 
             Toast.makeText(this, "Presupuestos", Toast.LENGTH_SHORT).show();
             Intent intentPresupuestos = new Intent(this, Presupuestos_Main.class);
     		startActivity(intentPresupuestos);
-            
             return true;
+            
         case R.id.item5: 
         	Toast.makeText(this, "Documentos", Toast.LENGTH_SHORT).show();
         	Intent intentDocumentos = new Intent(this, Documentos_Main.class);
      		startActivity(intentDocumentos);
-        	  
-            return true;
+        	return true;
+        	
         case R.id.item6: 
             Toast.makeText(this, "Mi Perfil", Toast.LENGTH_SHORT).show(); 
             Intent intentVendedores = new Intent(this, Mensajes_Main.class);
      		startActivity(intentVendedores);
-    		
-            return true;            
+    		return true;            
         
         case R.id.item7: 
             Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show(); 
             Intent intentLogin = new Intent(this, Config_vista_durox.class);
      		startActivity(intentLogin);
-    		
-            return true;   
+    		return true;   
             
         case R.id.item8: 
             Toast.makeText(this, "Actualizar", Toast.LENGTH_SHORT).show(); 
             Intent intentActualizar = new Intent(this, MainActivity.class);
             intentActualizar.putExtra("actualizar", "ok");
             startActivity(intentActualizar);
-    		
-            return true;               
+    		return true;   
+    	
+        case R.id.item9: 
+        	Intent intentTest = new Intent(this, Login.class);
+        	intentTest.putExtra("no_back", "ok");
+        	startActivity(intentTest);
+            return true;
+            
         default:
             return super.onOptionsItemSelected(item);
         }

@@ -54,7 +54,8 @@ public class Visitas_model extends Activity{
 				+ "visitas.id_back, "
 				+ "clientes.razon_social, "
 				+ "epocas_visitas.epoca, "
-				+ "visitas.fecha "
+				+ "visitas.fecha, "
+				+ "visitas.id_visita "
 			+ " FROM "
 				+ " `visitas` "
 			+ " INNER JOIN "
@@ -67,6 +68,57 @@ public class Visitas_model extends Activity{
 		c = db.rawQuery(sql, null);
 		
 		return c;
+	}
+	
+	
+	public Cursor getVisita(String id){
+		createTable();
+		
+		sql = "SELECT "
+				+ "visitas.id_back, "
+				+ "clientes.razon_social, "
+				+ "epocas_visitas.epoca, "
+				+ "visitas.fecha, "
+				+ "visitas.id_visita, "
+				+ "visitas.descripcion, "
+				+ "visitas.id_epoca_visita, "
+				+ "visitas.valoracion "
+			+ " FROM "
+				+ " `visitas` "
+			+ " INNER JOIN "
+				+ " clientes ON(visitas.id_cliente = clientes.id_back) "
+			+ " INNER JOIN "
+				+ " epocas_visitas ON(visitas.id_epoca_visita = epocas_visitas.id_back) "
+			+ " WHERE "
+				+ "	visitas.id_visita = '"+id+"'";
+		
+		c = db.rawQuery(sql, null);
+		
+		return c;
+	}
+	
+	
+	public void updateVisita(
+		String id,
+		String id_cliente,
+		String descripcion,
+		String id_epoca_visita,
+		String valoracion,
+		String fecha)
+	{	
+		sql = "UPDATE `visitas`"
+				+ " SET "
+					+ " id_cliente 		= '"+id_cliente+"',"
+					+ " descripcion 	= '"+descripcion+"',"
+					+ " id_epoca_visita = '"+id_epoca_visita+"',"
+					+ " valoracion 		= '"+valoracion+"',"
+					+ " fecha 			= '"+fecha+"'"					
+				+ " WHERE "
+					+ " id_visita = '"+id+"'";	
+		
+		Log.e("CONSULTA ", sql);
+			
+		db.execSQL(sql);
 	}
 	
 	

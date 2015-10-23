@@ -6,42 +6,44 @@ public class Visitas {
 	private String epoca;
 	private String fecha;
 	private int imagen;
+	private String id_front;
 	
 	public Visitas(	
 			String id_visita,
 			String nombre, 
 			String epoca,
 			String fecha,
-			int imagen) {
+			int imagen,
+			String id_front) {
 		this.id_visita = id_visita;
 		this.nombre = nombre;
 		this.epoca = epoca;
 		this.fecha = fecha;
 		this.imagen = imagen;
+		this.id_front = id_front;
 	}
 
-	public String getNombre() 
-	{
+	public String getNombre() {
 		return this.nombre;
 	}
 
-	public String getEpoca() 
-	{
+	public String getEpoca() {
 		return this.epoca;
 	}
 
-	public String getFecha() 
-	{
+	public String getFecha() {
 		return this.fecha;
 	}
 	
-	public int getImagen() 
-	{
+	public int getImagen() {
 		return this.imagen;
 	}
 	
-	public String getVisita() 
-	{
+	public String getVisita() {
 		return this.id_visita;
+	}
+	
+	public String getIdFront() {
+		return this.id_front;
 	}
 }

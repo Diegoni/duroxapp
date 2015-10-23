@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
 public class Visitas_ListView extends BaseAdapter {
 
@@ -37,21 +38,18 @@ public class Visitas_ListView extends BaseAdapter {
 		this.arraylist.addAll(arraylist2);
 	}
 
-	public class ViewHolder 
-	{
+	public class ViewHolder {
 		TextView nombre;
 		TextView epoca;
 		TextView fecha;
 		ImageView imagen;
 	}
 	
-	public int getCount() 
-	{
+	public int getCount() {
 		return visitas.size();
 	}
 
-	public Visitas getItem(int position) 
-	{
+	public Visitas getItem(int position) {
 		return visitas.get(position);
 	}
 
@@ -61,11 +59,9 @@ public class Visitas_ListView extends BaseAdapter {
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(final int position, View view, ViewGroup parent) 
-	{
+	public View getView(final int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
-		if (view == null) 
-		{
+		if (view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.visitas_listviewitem, null);
 			
@@ -76,9 +72,7 @@ public class Visitas_ListView extends BaseAdapter {
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
-		}
-		else 
-		{
+		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		
@@ -93,26 +87,36 @@ public class Visitas_ListView extends BaseAdapter {
 			public void onClick(View arg0) {
 				
 				String id = visitas.get(position).getVisita();
-				
-				Log.e("Paso ", "id "+id);
-				
 				if(id.equals("0")){
 					Toast.makeText(mContext, "Por favor actualice", Toast.LENGTH_SHORT).show(); 
 				}else{
-					// Send single item click data to SingleItemView Class
 					Intent intent = new Intent(mContext, Presupuestos_Tabs.class);
-					
-					// Pasamos toda la informacion
 					intent.putExtra("id_visita", (visitas.get(position).getVisita()));
 					intent.putExtra("nombre", (visitas.get(position).getNombre()));
 					intent.putExtra("epoca", (visitas.get(position).getEpoca()));
 					intent.putExtra("fecha", (visitas.get(position).getFecha()));
 					intent.putExtra("imagen", (visitas.get(position).getImagen()));
 					intent.putExtra("truncate", "truncate");
-					
-					// Start SingleItemView Class
 					mContext.startActivity(intent);
 				}
+			}
+		});
+		
+		view.setOnLongClickListener(new OnLongClickListener() {
+			public boolean onLongClick(View arg0) {
+				String id = visitas.get(position).getVisita();
+				
+				Log.e("Paso", "id_visita"+id);
+				
+				if(id.equals("0")){
+					Intent intent = new Intent(mContext, Visitas_Main.class);
+					intent.putExtra("id_front", (visitas.get(position).getIdFront()));
+					mContext.startActivity(intent);
+				}else{
+					Toast.makeText(mContext, "No se puede modificar la visita", Toast.LENGTH_SHORT).show(); 
+				}
+				
+				return true;
 			}
 		});
 
@@ -120,20 +124,14 @@ public class Visitas_ListView extends BaseAdapter {
 	}
 
 	// Filter Class
-	public void filter(String charText) 
-	{
+	public void filter(String charText) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		visitas.clear();
-		if (charText.length() == 0) 
-		{
+		if (charText.length() == 0) {
 			visitas.addAll(arraylist);
-		} 
-		else 
-		{
-			for (Visitas wp : arraylist) 
-			{
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) 
-				{
+		} else {
+			for (Visitas wp : arraylist) {
+				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
 					visitas.add(wp);
 				}
 			}

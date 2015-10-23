@@ -12,13 +12,14 @@ import com.durox.app.Models.Clientes_model;
 import com.durox.app.Models.Epocas_model;
 import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
+import com.durox.app.Presupuestos.Presupuestos_Main;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -46,6 +47,9 @@ public class Visitas_Main extends MenuActivity {
 	Clientes_model mClientes;
 	Visitas_model mVisitas;
 	Epocas_model mEpocas;
+	ProgressDialog pDialog;
+	
+	String id_front;
 	
 	Config_durox config;
 
@@ -68,7 +72,6 @@ public class Visitas_Main extends MenuActivity {
 		ebValoracion = (RatingBar) findViewById(R.id.ebValoracion);
 		
 		config = new Config_durox();
-		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		mClientes = new Clientes_model(db);
@@ -84,9 +87,7 @@ public class Visitas_Main extends MenuActivity {
 		} else {
 			Toast.makeText(this, config.msjNoRegistros("clientes"), Toast.LENGTH_SHORT).show();
 		}
-				
-		
-		
+			
 		Spinner auto_epoca = (Spinner) findViewById(R.id.autoEpocas);
 		List<String> listEpocas = new ArrayList<String>();
 		mEpocas = new Epocas_model(db);
@@ -109,8 +110,33 @@ public class Visitas_Main extends MenuActivity {
 		
 		Intent i = getIntent();
 		String nombre = i.getStringExtra("nombre");
+		id_front = i.getStringExtra("id_front");
 		
-		if(nombre != ""){
+		if(id_front !=null  &&  !id_front.isEmpty()) {
+			Visitas_model mVisitas = new Visitas_model(db);
+			Cursor cVisitas = mVisitas.getVisita(id_front);
+			
+
+			if(cVisitas.getCount() > 0){
+				while(cVisitas.moveToNext()){
+					String compareValue = cVisitas.getString(2);
+					if (!compareValue.equals(null)) {
+					    int spinnerPosition = adapterEpocas.getPosition(compareValue);
+					    auto_epoca.setSelection(spinnerPosition);
+					}
+					auto_cliente.setText(cVisitas.getString(1));
+					etComentario.setText(cVisitas.getString(5));
+					ebValoracion.setRating(Float.parseFloat(cVisitas.getString(7)));
+					
+					String fecha = cVisitas.getString(3);
+					String[] fecha_separada = fecha.split("/");
+					etfecha.updateDate(
+							Integer.parseInt(fecha_separada[0]), 
+							Integer.parseInt(fecha_separada[1]), 
+							Integer.parseInt(fecha_separada[2]));
+				}
+			}
+		}else if(nombre != ""){
 			auto_cliente.setText(nombre);
 		}	
 		
@@ -118,35 +144,20 @@ public class Visitas_Main extends MenuActivity {
 	
 	
 	public void guardar(View view){
-		Log.e("PASO", "1");
-		
 		String razon_social = auto_cliente.getText().toString();
-		//String epoca = auto_epoca.getSelectedItem().toString();
-		
 		String epoca = ((Spinner)findViewById(R.id.autoEpocas)).getSelectedItem().toString();
-		
-		Log.e("PASO", "2");
 		
 		int mes = etfecha.getMonth();
 		mes = mes + 1;
 		String fecha = etfecha.getYear()+"/"+mes+"/"+etfecha.getDayOfMonth();
 		String comentario = etComentario.getText().toString();
 		float valoracion2 = ebValoracion.getRating();
-		
-		Log.e("PASO", "3");
-		
-		Log.e("Fecha ","dia "+etfecha.getDayOfMonth());
-		Log.e("Fecha ","mes "+etfecha.getMonth());
-		Log.e("Fecha ","año "+etfecha.getYear());
-		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
 		
 		Cursor cCliente = mClientes.getID(razon_social);
 		
 		if(cCliente.getCount() > 0){
-			
 			while(cCliente.moveToNext()){
-				
 				mEpocas = new Epocas_model(db);
 				Cursor cEpoca = mEpocas.getID(epoca);
 				Vendedores_model mVendedor = new Vendedores_model(db);
@@ -169,24 +180,37 @@ public class Visitas_Main extends MenuActivity {
 						String valoracion = Float.toString(valoracion2);
 						mVisitas = new Visitas_model(db);
 						
-						mVisitas.insert(
-					 			id_visita,
-					 			id_vendedor,
-					 			id_cliente,
-					 			descripcion,
-					 			id_epoca_visita,
-					 			valoracion,
-					 			fecha,
-					 			null,
-					 			null,
-					 			null,
-					 			null,
-					 			null,
-					 			null,
-					 			null
-					 		);
 						
-						Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
+						if(id_front !=null  &&  !id_front.isEmpty()) {
+							mVisitas.updateVisita(
+								id_front, 
+								id_cliente, 
+								descripcion, 
+								id_epoca_visita, 
+								valoracion, 
+								fecha);
+						
+							Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
+							
+						}else{
+							mVisitas.insert(
+						 		id_visita,
+						 		id_vendedor,
+						 		id_cliente,
+						 		descripcion,
+						 		id_epoca_visita,
+						 		valoracion,
+						 		fecha,
+						 		null,
+						 		null,
+						 		null,
+						 		null,
+						 		null,
+						 		null,
+						 		null);
+							
+							Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
+						}
 						
 						Intent intent = new Intent(Visitas_Main.this, MainActivity.class);
 						startActivity(intent);
@@ -206,9 +230,26 @@ public class Visitas_Main extends MenuActivity {
 	}
 	
 	
+	public void ver_visitas(View view){
+		Intent intent = new Intent(Visitas_Main.this, Presupuestos_Main.class);
+		startActivity(intent);
+	}
+	
+	
 	public void actualizar_epocas(View view) {
+		pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Actualizando....");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+        
  		Epocas_Update epocas = new Epocas_Update(db, this);
  		epocas.actualizar_registros();
+ 		
+ 		Visitas_Update visitas = new Visitas_Update(db, this);
+ 		visitas.actualizar_registros();
+ 		
+ 		pDialog.dismiss();
  		cargar_vista();
  	}
 }

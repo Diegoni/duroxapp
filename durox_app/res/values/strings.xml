@@ -97,7 +97,8 @@
 	<string name="nota_privada">"Nota privada"</string>
 	<string name="nota_publica">"Nota publica"</string>
 	<string name="datos">"Datos"</string>
-	
+	<string name="logout">"Log Out"</string>
+	<string name="lista">"Lista"</string>
 	
 	
 	<!-- Color del Texto General -->

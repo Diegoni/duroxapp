@@ -8,6 +8,7 @@ import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
 import com.durox.app.Models.Vendedores_model;
 import com.durox.app.Models.Visitas_model;
+import com.durox.app.Visitas.Epocas_Update;
 import com.durox.app.Visitas.Visitas;
 import com.durox.app.Visitas.Visitas_ListView;
 import com.durox.app.Visitas.Visitas_Update;
@@ -32,9 +33,6 @@ public class Presupuestos_Main extends MenuActivity {
 	Visitas_ListView adapter;
 	EditText editsearch;
 	
-	String[] nombre;
-	String[] direccion;
-	int[] imagen;
 	ArrayList<Visitas> arraylist = new ArrayList<Visitas>();
 	SQLiteDatabase db;
 	
@@ -71,6 +69,9 @@ public class Presupuestos_Main extends MenuActivity {
         pDialog.setCancelable(false);
         pDialog.show();
         
+        Epocas_Update epocas = new Epocas_Update(db, this);
+        epocas.actualizar_registros();
+        
     	Visitas_Update visitas = new Visitas_Update(db, this);
     	visitas.actualizar_registros();
     	
@@ -91,6 +92,7 @@ public class Presupuestos_Main extends MenuActivity {
 		String[] epoca = new String[cVisitas.getCount()];
 		String[] fecha = new String[cVisitas.getCount()];
 		int[] foto = new int[cVisitas.getCount()];
+		String[] id_front = new String[cVisitas.getCount()];
 			
 		int j = 0;
 					
@@ -101,21 +103,23 @@ public class Presupuestos_Main extends MenuActivity {
 				epoca[j] = cVisitas.getString(2);
 				fecha[j] = cVisitas.getString(3);
 				foto[j] = R.drawable.visitas; 
+				id_front[j] = cVisitas.getString(4);
 				j = j + 1;
 			}				
 			
 			list = (ListView) findViewById(R.id.lvVisitas);
 			arraylist.clear();
 
-			for (int i = 0; i < nombre.length; i++) 
-			{
+			for (int i = 0; i < nombre.length; i++) {
 				Visitas wp = new Visitas(
 						id_visita[i],
 						nombre[i],
 						epoca[i], 
 						fecha[i], 
-						foto[i]
+						foto[i],
+						id_front[i]
 				);
+				
 				arraylist.add(wp);
 			}
 			adapter = new Visitas_ListView(this, arraylist);

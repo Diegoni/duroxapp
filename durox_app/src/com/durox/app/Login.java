@@ -53,6 +53,12 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         
+        Intent i = getIntent();
+		String back = i.getStringExtra("no_back");
+		if(back !=null  &&  !back.isEmpty()) {
+			moveTaskToBack(true);
+		}
+		
         config = new Config_durox();
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
         URL_connect = config.getIp(db)+"/actualizaciones/getLogin/"; 

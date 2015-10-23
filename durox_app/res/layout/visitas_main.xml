@@ -22,8 +22,55 @@
         android:id="@+id/autoEpocas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/autoClientes"
-        android:layout_toLeftOf="@+id/btm_lpLimpiar2" />
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/autoClientes" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/btnGuardar"
+        android:gravity="center_horizontal|center"
+        android:text="@string/valoracion"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <RatingBar
+        android:id="@+id/ebValoracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_toRightOf="@+id/btnGuardar" />
+
+    <EditText
+        android:id="@+id/txtcomentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dp_Fecha"
+        android:layout_alignLeft="@+id/ebValoracion"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/dp_Fecha"
+        android:ems="10"
+        android:hint="@string/comentarios"
+        android:inputType="textMultiLine" />
+
+    <DatePicker
+        android:id="@+id/dp_Fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/autoEpocas"
+        android:layout_toLeftOf="@+id/btnGuardar" />
+
+    <Button
+        android:id="@+id/btnLista"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnGuardar"
+          android:onClick="ver_visitas"
+        android:text="@string/lista" />
 
     <Button
         android:id="@+id/btnGuardar"
@@ -37,51 +84,14 @@
         android:text="@string/guardar" />
 
     <Button
-        android:id="@+id/btm_lpLimpiar2"
+        android:id="@+id/btnActualizar"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/autoEpocas"
-        android:layout_toLeftOf="@+id/btnGuardar"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnLista"
         android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_epocas"
         android:text="@string/bajar" />
-
-    <DatePicker
-        android:id="@+id/dp_Fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ebValoracion"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dp_Fecha"
-        android:layout_toRightOf="@+id/btnGuardar"
-        android:gravity="center_horizontal|center"
-        android:text="@string/valoracion"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <RatingBar
-        android:id="@+id/ebValoracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnGuardar"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1" />
-
-    <EditText
-        android:id="@+id/txtcomentario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ebValoracion"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/autoEpocas"
-        android:layout_toLeftOf="@+id/btnGuardar"
-        android:ems="10"
-        android:hint="@string/comentarios"
-        android:inputType="textMultiLine" />
 
 </RelativeLayout>
