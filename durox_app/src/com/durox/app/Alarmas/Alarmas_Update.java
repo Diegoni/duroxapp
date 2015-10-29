@@ -21,8 +21,8 @@ import com.durox.app.Models.Alarmas_model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
+import android.util.Log;
 
 public class Alarmas_Update extends MenuActivity {
 	Config_durox config;
@@ -122,6 +122,7 @@ public class Alarmas_Update extends MenuActivity {
 					jsonChildNode.optString("id_origen"), 
 					jsonChildNode.optString("visto_back"), 
 					jsonChildNode.optString("visto_front"), 
+					jsonChildNode.optString("id_front"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -183,7 +184,9 @@ public class Alarmas_Update extends MenuActivity {
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
 					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_cliente"), 
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_cliente"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -211,8 +214,10 @@ public class Alarmas_Update extends MenuActivity {
 				
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_pedido"), 
+					jsonChildNode.optString("id_alarma"),
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_pedido"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -242,7 +247,9 @@ public class Alarmas_Update extends MenuActivity {
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
 					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_producto"), 
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_producto"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -271,7 +278,9 @@ public class Alarmas_Update extends MenuActivity {
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
 					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_presupuesto"), 
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_presupuesto"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -300,7 +309,9 @@ public class Alarmas_Update extends MenuActivity {
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
 					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_visita"), 
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_visita"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 
@@ -329,7 +340,9 @@ public class Alarmas_Update extends MenuActivity {
 				mAlarmas.insertSin(
 					jsonChildNode.optString("id_sin_alarma_cliente"), 
 					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_vendedor"), 
+					jsonChildNode.optInt("id_front_alarma"),
+					jsonChildNode.optString("id_vendedor"),
+					jsonChildNode.optInt("id_front_tabla"),
 					jsonChildNode.optString("date_add"), 
 					jsonChildNode.optString("date_upd"), 
 					jsonChildNode.optString("eliminado"), 

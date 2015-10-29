@@ -212,6 +212,15 @@ public class Presupuestos_model extends Activity{
  		return c;
  	}
 	
+	public int lastInsert() {
+	    final String MY_QUERY = "SELECT last_insert_rowid()";
+	    Cursor cur = db.rawQuery(MY_QUERY, null);
+	    cur.moveToFirst();
+	    int ID = cur.getInt(0);
+	    cur.close();
+	    return ID;
+	}
+	
 	
 	public void truncate(){
 		sql = "DELETE FROM `presupuestos` WHERE aprobado_front = '1' AND visto_front = '1'";

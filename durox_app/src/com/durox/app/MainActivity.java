@@ -41,7 +41,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
  
 public class MainActivity extends MenuActivity {
  
@@ -138,11 +137,11 @@ public class MainActivity extends MenuActivity {
 	   Monedas_model mMonedas = new Monedas_model(db);
 	   		mMonedas.createTable();
 	   Mensajes_model mMensajes = new Mensajes_model(db);
-	   		mMensajes.createTable();	
+	   		mMensajes.createTable();
 	   Alarmas_model mAlarmas = new Alarmas_model(db);
 	   		mAlarmas.createTable();
 	   Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
-	   		mCondiciones.createTable();		
+	   		mCondiciones.createTable();
 	   Modos_pago_model mModos = new Modos_pago_model(db);
 	   		mModos.createTable();
 	   Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);

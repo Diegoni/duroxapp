@@ -1,19 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >  
-
     <item  
         android:id="@+id/nombre"  
-        android:title="nombre"/>  
+        android:title="@string/nombre"/>  
 
     <item  
         android:id="@+id/id_producto"  
-        android:title="id"/>  
+        android:title="@string/ranklabel"/>  
 
     <item  
         android:id="@+id/codigo"  
-        android:title="codigo"/> 
+        android:title="@string/codigo"/> 
         
     <item  
         android:id="@+id/precio"  
-        android:title="precio"/> 
-
+        android:title="@string/precio"/> 
 </menu>  

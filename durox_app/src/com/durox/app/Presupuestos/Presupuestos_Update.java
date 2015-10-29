@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import com.durox.app.Config_durox;
 import com.durox.app.MenuActivity;
+import com.durox.app.Models.Alarmas_model;
 import com.durox.app.Models.Condiciones_pago_model;
 import com.durox.app.Models.Estados_presupuesto_model;
 import com.durox.app.Models.Lineas_Presupuestos_model;
@@ -41,6 +42,8 @@ public class Presupuestos_Update extends MenuActivity {
 	Presupuestos_model mPresupuesto;
 	Estados_presupuesto_model mEstados;
 	Lineas_Presupuestos_model mLineas;
+	Alarmas_model mAlarmas;
+	Modos_pago_model mModos;
 	
 	Config_durox config;
 	Context mContext;
@@ -66,9 +69,14 @@ public class Presupuestos_Update extends MenuActivity {
 		mPresupuesto = new Presupuestos_model(db);
     	mEstados = new Estados_presupuesto_model(db);
     	mLineas = new Lineas_Presupuestos_model(db);
+    	mAlarmas = new Alarmas_model(db);
+    	mModos = new Modos_pago_model(db);
 		
     	Cursor cLineas = mLineas.getNuevos();
     	Cursor cPresupuestos = mPresupuesto.getNuevos();
+    	Cursor cAlarmas = mAlarmas.getNuevos();
+    	Cursor cAlarmasSin = mAlarmas.getNuevosSin("presupuestos");
+    	Cursor cModos = mModos.getNuevos();
     	
     	// Exportamos los presupuestos		
 		
@@ -80,14 +88,19 @@ public class Presupuestos_Update extends MenuActivity {
 					cPresupuestos.getString(3),		//+ 3"id_cliente VARCHAR, "
 					cPresupuestos.getString(4),		//+ 4"id_vendedor VARCHAR, "
 					cPresupuestos.getString(5),		//+ 5"id_estado_presupuesto VARCHAR, "
-					cPresupuestos.getString(6),		//+ 6"total VARCHAR, "
-					cPresupuestos.getString(8),		//+ 8"id_origen VARCHAR, "
-					cPresupuestos.getString(9),		//+ 9" aprobado_back VARCHAR, "
-					cPresupuestos.getString(10),	//+ 10" aprobado_front VARCHAR, "
-					cPresupuestos.getString(11),	//+ 11" visto_back VARCHAR, "
-					cPresupuestos.getString(12),	//+ 12" visto_front VARCHAR, "
-					cPresupuestos.getString(15)		//+ 15"eliminado VARCHAR, "
+					cPresupuestos.getString(6),		// 6+ "`id_condicion_pago` VARCHAR, "
+					cPresupuestos.getString(7),		//7+ "`id_tiempo_entrega` VARCHAR, "
+					cPresupuestos.getString(8),		//8+ "`nota_publica` VARCHAR, "
+					cPresupuestos.getString(9),		//+ 9"total VARCHAR, "
+					cPresupuestos.getString(11),	//+ 8"id_origen VARCHAR, "
+					cPresupuestos.getString(12),	//+ 9" aprobado_back VARCHAR, "
+					cPresupuestos.getString(13),	//+ 10" aprobado_front VARCHAR, "
+					cPresupuestos.getString(14),	//+ 11" visto_back VARCHAR, "
+					cPresupuestos.getString(15),	//+ 12" visto_front VARCHAR, "
+					cPresupuestos.getString(18)		//+ 15"eliminado VARCHAR, "
 				);
+				
+			
 				
 				
 				String url2 = config.getIp(db)+"/actualizaciones/setPresupuestos/";
@@ -117,9 +130,62 @@ public class Presupuestos_Update extends MenuActivity {
 				String url2 = config.getIp(db)+"/actualizaciones/setLineasPresupuestos/";
 		 		task.execute(new String[] { url2 });
     		}		
-		} else {
-			Toast.makeText(mContext, config.msjNoRegistros("lineas presupuestos"), Toast.LENGTH_SHORT).show();
-		}
+		} 
+		
+		
+		// Exportamos las alarmas
+		
+		if(cAlarmas.getCount() > 0) {
+			while(cAlarmas.moveToNext()){
+				JsonSetTaskAlarmas task = new JsonSetTaskAlarmas(
+					cAlarmas.getString(0),	//	2+ "`id_alarma` VARCHAR,"
+					cAlarmas.getString(2),	//	2+ "`id_tipo_alarma` VARCHAR,"
+					cAlarmas.getString(3),	//	3+ "`mensaje` VARCHAR,"
+					cAlarmas.getString(4),	//	4+ "`id_creador` VARCHAR,"
+					cAlarmas.getString(5),	//	5+ "`id_origen` VARCHAR,"
+					cAlarmas.getString(6),	//	6+ "`visto_back` VARCHAR,"
+					cAlarmas.getString(7)	//	7+ "`visto_front` VARCHAR,"
+				);
+				
+				String url2 = config.getIp(db)+"/actualizaciones/setAlarmas/";
+		 		task.execute(new String[] { url2 });
+    		}		
+		} 
+		
+		
+		// Exportamos las alarmas sin 
+		
+		if(cAlarmasSin.getCount() > 0) {
+			while(cAlarmasSin.moveToNext()){
+				JsonSetTaskAlarmasSin task = new JsonSetTaskAlarmasSin(
+					cAlarmasSin.getString(2),	//2 + "`id_alarma` VARCHAR,"
+					cAlarmasSin.getString(3),	//3 + "`id_front_alarma` VARCHAR,"
+					cAlarmasSin.getString(4),	//4 + "`id_presupuesto` VARCHAR,"
+					cAlarmasSin.getString(5)	//5 + "`id_front_tabla` VARCHAR,"
+				);
+					
+				String url2 = config.getIp(db)+"/actualizaciones/setAlarmasSin/";
+		 		task.execute(new String[] { url2 });
+			}		
+		} 
+		
+		
+		// Exportamos las Modos
+		
+		if(cModos.getCount() > 0) {
+			while(cModos.moveToNext()){
+				JsonSetTaskModosSin task = new JsonSetTaskModosSin(
+					cModos.getString(2),	//2 + " `id_presupuesto` VARCHAR,"
+					cModos.getString(2),	//3 + " `id_presupuesto_front` VARCHAR,"
+					cModos.getString(2)	//4 + " `id_modo_pago` VARCHAR,"
+				);
+							
+				String url2 = config.getIp(db)+"/actualizaciones/setModosSin/";
+				task.execute(new String[] { url2 });
+			}		
+		} 
+		
+		
 		
 		// Importamos los presupuestos
 		JsonReadTask taskpresupuestos = new JsonReadTask();
@@ -191,6 +257,9 @@ public class Presupuestos_Update extends MenuActivity {
 		String id_cliente;
 		String id_vendedor;
 		String id_estado_presupuesto;
+		String id_condicion_pago;
+		String id_tiempo_entrega;
+		String nota_publica;
 		String total;
 		String id_origen;
 		String aprobado_back;
@@ -205,6 +274,9 @@ public class Presupuestos_Update extends MenuActivity {
 				String id_cliente,
 				String id_vendedor,
 				String id_estado_presupuesto,
+				String id_condicion_pago,
+				String id_tiempo_entrega,
+				String nota_publica,
 				String total,
 				String id_origen,
 				String aprobado_back,
@@ -217,6 +289,9 @@ public class Presupuestos_Update extends MenuActivity {
  			this.id_cliente = id_cliente;
  			this.id_vendedor = id_vendedor;
  			this.id_estado_presupuesto = id_estado_presupuesto;
+ 			this.id_condicion_pago = id_condicion_pago;
+ 			this.id_tiempo_entrega = id_tiempo_entrega;
+ 			this.nota_publica = nota_publica;
  			this.total = total;
  			this.id_origen = id_origen;
  			this.aprobado_back = aprobado_back;
@@ -238,6 +313,9 @@ public class Presupuestos_Update extends MenuActivity {
 	 		pairs.add(new BasicNameValuePair("id_cliente", id_cliente));
 	 		pairs.add(new BasicNameValuePair("id_vendedor", id_vendedor));
 	 		pairs.add(new BasicNameValuePair("id_estado_presupuesto", id_estado_presupuesto));
+	 		pairs.add(new BasicNameValuePair("id_condicion_pago", id_condicion_pago));
+	 		pairs.add(new BasicNameValuePair("id_tiempo_entrega", id_tiempo_entrega));
+	 		pairs.add(new BasicNameValuePair("nota_publica", nota_publica));
 	 		pairs.add(new BasicNameValuePair("total", total));
 	 		pairs.add(new BasicNameValuePair("id_origen", id_origen));
 	 		pairs.add(new BasicNameValuePair("aprobado_back", aprobado_back));
@@ -341,6 +419,145 @@ public class Presupuestos_Update extends MenuActivity {
 	  
 		protected void onPostExecute(String result) {
 	 	}
+	}
+	
+	
+	
+	
+	private class JsonSetTaskModosSin extends AsyncTask<String, Void, String> {
+		String id_presupuesto;
+		String id_presupuesto_front;
+		String id_modo_pago;
+		
+ 		public JsonSetTaskModosSin(
+ 				String id_presupuesto,
+ 				String id_presupuesto_front,
+ 				String id_modo_pago
+				) {
+ 			this.id_presupuesto = id_presupuesto;		
+			this.id_presupuesto_front = id_presupuesto_front;
+			this.id_modo_pago = id_modo_pago;
+ 		}
+ 		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_presupuesto", id_presupuesto));		
+	 		pairs.add(new BasicNameValuePair("id_presupuesto_front", id_presupuesto_front));
+	 		pairs.add(new BasicNameValuePair("id_modo_pago", id_modo_pago));	
+ 			try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(mContext, 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 		} catch (IOException e) {
+	 			Toast.makeText(mContext, 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 		return null;
+	 	}
+		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	
+	private class JsonSetTaskAlarmas extends AsyncTask<String, Void, String> {
+		String id_alarma;
+		String id_tipo_alarma;
+		String mensaje;
+		String id_creador;
+		String id_origen;
+		String visto_back;
+		String visto_front;
+		
+ 		public JsonSetTaskAlarmas(
+ 				String id_alarma,
+ 				String id_tipo_alarma,
+ 				String mensaje,
+ 				String id_creador,
+ 				String id_origen,
+ 				String visto_back,
+ 				String visto_front
+				) {
+ 			this.id_alarma = id_alarma;
+ 			this.id_tipo_alarma = id_tipo_alarma;		
+			this.mensaje = mensaje;
+			this.id_creador = id_creador;
+			this.id_origen = id_origen;
+			this.visto_back = visto_back;
+			this.visto_front = visto_front;
+ 		}
+ 		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_alarma", id_alarma));
+	 		pairs.add(new BasicNameValuePair("id_tipo_alarma", id_tipo_alarma));		
+	 		pairs.add(new BasicNameValuePair("mensaje", mensaje));
+	 		pairs.add(new BasicNameValuePair("id_creador", id_creador));
+	 		pairs.add(new BasicNameValuePair("id_origen", id_origen));
+	 		pairs.add(new BasicNameValuePair("visto_back", visto_back));
+	 		pairs.add(new BasicNameValuePair("visto_front", visto_front));
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(mContext, 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 		} catch (IOException e) {
+	 			Toast.makeText(mContext, 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 		return null;
+	 	}
+ 		protected void onPostExecute(String result) {
+	 	}
+	}
+	
+	
+	
+	
+	private class JsonSetTaskAlarmasSin extends AsyncTask<String, Void, String> {
+		String id_alarma;
+		String id_front_alarma;
+		String id_presupuesto;
+		String id_front_tabla;
+		
+ 		public JsonSetTaskAlarmasSin(
+ 				String id_alarma,
+ 				String id_front_alarma,
+ 				String id_presupuesto,
+ 				String id_front_tabla
+				) {
+ 			this.id_alarma = id_alarma;		
+			this.id_front_alarma = id_front_alarma;
+			this.id_presupuesto = id_presupuesto;
+			this.id_front_tabla = id_front_tabla;
+ 		}
+		protected String doInBackground(String... params) {
+	 		HttpClient httpclient = new DefaultHttpClient();
+	 		HttpPost httppost = new HttpPost(params[0]);
+	 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	 		pairs.add(new BasicNameValuePair("id_alarma", id_alarma));		
+	 		pairs.add(new BasicNameValuePair("id_front_alarma", id_front_alarma));
+	 		pairs.add(new BasicNameValuePair("id_presupuesto", id_presupuesto));
+	 		pairs.add(new BasicNameValuePair("id_front_tabla", id_front_tabla));
+	 		try { 				
+	 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+	 			httpclient.execute(httppost);
+	 		} catch (ClientProtocolException e) {
+	 			Toast.makeText(mContext, 
+	 		 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 		} catch (IOException e) {
+	 			Toast.makeText(mContext, 
+	 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+	 		}
+	 		return null;
+	 	}
+		protected void onPostExecute(String result) {
+	  	}
 	}
 	
 	
@@ -548,6 +765,34 @@ public class Presupuestos_Update extends MenuActivity {
 	 	}
 		
 		
+		subjet = "sin_presupuestos_modos";
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 			  
+	 		for (int i = 0; i < jsonMainNode.length(); i++) {
+	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	 			
+	 			mModos.insertSin(
+	 				jsonChildNode.optString("id_sin_presupuesto_modo"),
+	 				jsonChildNode.optString("id_presupuesto"), 
+	 				jsonChildNode.optInt("id_presupuesto_front"),
+	 				jsonChildNode.optString("id_modo_pago"), 
+	 				jsonChildNode.optString("date_add"),
+				 	jsonChildNode.optString("date_upd"),
+				 	jsonChildNode.optString("eliminado"),
+				 	jsonChildNode.optString("user_add"),
+				 	jsonChildNode.optString("user_upd")
+	 			);
+	 		}
+		 		
+	 		Toast.makeText(mContext, 
+	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 	} catch (JSONException e) {
+	 		Toast.makeText(mContext, 
+	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
+	 	}
+				
 
 		subjet = "tiempos_entrega";
 		Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);

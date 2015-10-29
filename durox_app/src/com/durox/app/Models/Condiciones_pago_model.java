@@ -106,5 +106,22 @@ public class Condiciones_pago_model extends Activity{
 		sql = "DELETE FROM `condiciones_pago`";
 		db.execSQL(sql);
 	}
+	
+	
+	public String getID(String condicion){
+		sql = "SELECT "
+				+ "id_back"
+				+ " FROM condiciones_pago"
+				+ " WHERE condicion_pago = '"+condicion+"'";
+		
+		c = db.rawQuery(sql, null);
+		String id = "0";
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id = c.getString(0);
+			}
+		} 
+		return id;
+	}
 
 }

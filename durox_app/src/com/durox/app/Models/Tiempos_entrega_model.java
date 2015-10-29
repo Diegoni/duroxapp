@@ -100,5 +100,21 @@ public class Tiempos_entrega_model extends Activity{
 		sql = "DELETE FROM `tiempos_entrega`";
 		db.execSQL(sql);
 	}
+	
+	public String getID(String tiempo){
+		sql = "SELECT "
+				+ "id_back"
+				+ " FROM tiempos_entrega"
+				+ " WHERE tiempo_entrega = '"+tiempo+"'";
+		
+		c = db.rawQuery(sql, null);
+		String id = "0";
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				id = c.getString(0);
+			}
+		} 
+		return id;
+	}
 
 }
