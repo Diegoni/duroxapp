@@ -11,6 +11,7 @@ import com.example.durox_app.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,15 @@ public class Presupuestos_ListView extends BaseAdapter {
 		holder.id.setText(presupuestos.get(position).getID());
 		holder.total.setText(presupuestos.get(position).getTotal());
 		holder.moneda.setText(config.getMoneda());
-		holder.estado.setText(presupuestos.get(position).getEstado());
+		String estado =  presupuestos.get(position).getEstado();
+		holder.estado.setText(estado);
+		if(estado.equals("Aprobado")){
+			holder.estado.setTextColor(Color.parseColor("#5cb85c"));
+		}else if(estado.equals("Anulado")){
+			holder.estado.setTextColor(Color.parseColor("#d9534f"));
+		}else if(estado.equals("Generado")){
+			holder.estado.setTextColor(Color.parseColor("#000000"));
+		}
 		holder.fecha.setText(presupuestos.get(position).getFecha());
 		holder.imagen.setImageResource(presupuestos.get(position).getImagen());
 		

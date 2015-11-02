@@ -21,7 +21,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -78,14 +77,12 @@ public class Presupuestos_Main extends MenuActivity {
     	pDialog.dismiss();
     	visitas_lista();
 	}
-	
+
 	
 	
 	public void visitas_lista(){
 		mVisitas = new Visitas_model(db);
 		cVisitas = mVisitas.getVisitas();
-		
-		Log.e("Paso", "Cantidad de visitas "+cVisitas.getCount());
 			
 		String[] id_visita = new String[cVisitas.getCount()];
 		String[] nombre = new String[cVisitas.getCount()];
@@ -93,7 +90,6 @@ public class Presupuestos_Main extends MenuActivity {
 		String[] fecha = new String[cVisitas.getCount()];
 		int[] foto = new int[cVisitas.getCount()];
 		String[] id_front = new String[cVisitas.getCount()];
-			
 		int j = 0;
 					
 		if(cVisitas.getCount() > 0){
@@ -147,13 +143,11 @@ public class Presupuestos_Main extends MenuActivity {
 				}
 			});
 		}
-	 }	
+	}	
 	
 	
 	public void presupuestos_lista(View view){
 		Intent intent = new Intent(Presupuestos_Main.this, Presupuestos_Lista.class);
 		startActivity(intent);
 	}
-	
-	
 }

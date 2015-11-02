@@ -387,9 +387,6 @@ public class Presupuestos_Create extends MenuActivity {
 		mPresupuestos.createTable();
 		
 		if(id_presupuesto.length() == 1){
-			Log.e("mPresupuestos.createTable() ENTRO", "id_presupuesto "+id_presupuesto);
-			Log.e("mPresupuestos.createTable() ENTRO", "id_presupuesto.length() "+id_presupuesto.length());
-			
 			Presupuestos_temp_model mTemp = new Presupuestos_temp_model(db);
 			String condicion_pago = "";
 			String id_condicion_pago = "";
@@ -400,8 +397,6 @@ public class Presupuestos_Create extends MenuActivity {
 			String nota_privada = "";
 			String nota_publica = "";
 			Cursor cTemp = mTemp.getTemp();
-			
-			Log.e("Crear Presupuesto", "cTemp.getCount() "+cTemp.getCount());
 			
 			if(cTemp.getCount() > 0){
 				while(cTemp.moveToNext()){
@@ -423,20 +418,10 @@ public class Presupuestos_Create extends MenuActivity {
 					}
 				}	
 			}
-			
-			Log.e("Crear Presupuesto", "condicion_pago "+condicion_pago);
-			Log.e("Crear Presupuesto", "modo_pago "+modo_pago);
-			Log.e("Crear Presupuesto", "tiempo_entrega "+tiempo_entrega);
-			Log.e("Crear Presupuesto", "nota_privada "+nota_privada);
-			Log.e("Crear Presupuesto", "nota_publica "+nota_publica);
-			
 			Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
 			id_condicion_pago = mCondiciones.getID(condicion_pago);
 			Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
 			id_tiempo_entrega = mTiempos.getID(tiempo_entrega);
-			
-			Log.e("Crear Presupuesto", "id_condicion_pago "+id_condicion_pago);
-			Log.e("Crear Presupuesto", "id_tiempo_entrega "+id_tiempo_entrega);
 			
 			mPresupuestos.insert(
 				"0", 			// id_back

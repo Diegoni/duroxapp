@@ -42,6 +42,7 @@ public class Visitas_ListView extends BaseAdapter {
 		TextView nombre;
 		TextView epoca;
 		TextView fecha;
+		TextView id_visita;
 		ImageView imagen;
 	}
 	
@@ -69,6 +70,7 @@ public class Visitas_ListView extends BaseAdapter {
 			holder.nombre = (TextView) view.findViewById(R.id.txt_vNombre);
 			holder.epoca = (TextView) view.findViewById(R.id.txt_vEpoca);
 			holder.fecha = (TextView) view.findViewById(R.id.txt_vFecha);
+			holder.id_visita = (TextView) view.findViewById(R.id.txt_id);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
 			view.setTag(holder);
@@ -80,6 +82,13 @@ public class Visitas_ListView extends BaseAdapter {
 		holder.nombre.setText(visitas.get(position).getNombre());
 		holder.epoca.setText(visitas.get(position).getEpoca());
 		holder.fecha.setText(visitas.get(position).getFecha());
+		String IDVisita = visitas.get(position).getVisita();
+		if(IDVisita.equals("0")){
+			holder.id_visita.setText("en proceso");
+		}else{
+			holder.id_visita.setText(visitas.get(position).getVisita());
+		}
+		
 		holder.imagen.setImageResource(visitas.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic

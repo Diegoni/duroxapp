@@ -383,6 +383,9 @@ public class Alarmas_model extends Activity{
 		
 		sql = "DELETE FROM `tipos_alarmas`";
 		db.execSQL(sql);
+		
+		sql = "DELETE FROM `sin_alarmas_presupuestos`";
+		db.execSQL(sql);
 	}
 	
 	public void truncateSin(String alarma){

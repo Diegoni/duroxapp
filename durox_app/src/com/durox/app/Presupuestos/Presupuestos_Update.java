@@ -132,7 +132,6 @@ public class Presupuestos_Update extends MenuActivity {
     		}		
 		} 
 		
-		
 		// Exportamos las alarmas
 		
 		if(cAlarmas.getCount() > 0) {
@@ -152,7 +151,6 @@ public class Presupuestos_Update extends MenuActivity {
     		}		
 		} 
 		
-		
 		// Exportamos las alarmas sin 
 		
 		if(cAlarmasSin.getCount() > 0) {
@@ -169,23 +167,19 @@ public class Presupuestos_Update extends MenuActivity {
 			}		
 		} 
 		
-		
 		// Exportamos las Modos
 		
 		if(cModos.getCount() > 0) {
 			while(cModos.moveToNext()){
 				JsonSetTaskModosSin task = new JsonSetTaskModosSin(
 					cModos.getString(2),	//2 + " `id_presupuesto` VARCHAR,"
-					cModos.getString(2),	//3 + " `id_presupuesto_front` VARCHAR,"
-					cModos.getString(2)	//4 + " `id_modo_pago` VARCHAR,"
+					cModos.getString(3),	//3 + " `id_presupuesto_front` VARCHAR,"
+					cModos.getString(4)		//4 + " `id_modo_pago` VARCHAR,"
 				);
-							
 				String url2 = config.getIp(db)+"/actualizaciones/setModosSin/";
 				task.execute(new String[] { url2 });
 			}		
 		} 
-		
-		
 		
 		// Importamos los presupuestos
 		JsonReadTask taskpresupuestos = new JsonReadTask();
