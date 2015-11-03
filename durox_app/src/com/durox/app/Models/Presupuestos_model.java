@@ -139,7 +139,8 @@ public class Presupuestos_model extends Activity{
 		sql = "UPDATE "
 				+ "	`presupuestos` "
 			+ " SET "
-				+ " `aprobado_front` = '1' "
+				+ " `aprobado_front` = '1', "
+				+ " `id_estado_presupuesto` = '5' "
 			+ " WHERE "
 				+ " `presupuestos`.`id_presupuesto` = '"+id+"' ";
 		

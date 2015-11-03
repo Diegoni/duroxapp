@@ -85,7 +85,7 @@ public class Visitas_ListView extends BaseAdapter {
 		holder.fecha.setText(visitas.get(position).getFecha());
 		String IDVisita = visitas.get(position).getVisita();
 		if(IDVisita.equals("0")){
-			holder.id_visita.setText("en proceso");
+			holder.id_visita.setText("Sin enviar");
 		}else{
 			holder.id_visita.setText(visitas.get(position).getVisita());
 		}

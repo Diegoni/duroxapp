@@ -263,7 +263,6 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		if(cursor.getCount() > 0){
 			while(cursor.moveToNext()){
-				
 				Float precio = Float.parseFloat(cursor.getString(2)); 
 				Float row_cant = Float.parseFloat(cantidad);
 				Float valor_moneda = Float.parseFloat(cursor.getString(4));
@@ -274,7 +273,6 @@ public class Presupuestos_Create extends MenuActivity {
 				String linea_id_back = "0";
 				String linea_id_presupuesto = "0";
 				String linea_id_temporario = "0";
-				
 				
 				if(id_presupuesto == null){
 				}else{
@@ -470,17 +468,17 @@ public class Presupuestos_Create extends MenuActivity {
 				Log.e("Crear Presupuesto", "idAlarma "+idAlarma);
 				
 				mAlarmas.insertSin(
-					"0",			// id_back,
-					"0",			// id_alarma, 
-					idAlarma,		// id_front_alarma,
-					"0",			// id_tabla, 
-					idPresupuesto,	// id_front_tabla,
-					"",				// date_add, 
-					"",				// date_upd, 
-					"",				// eliminado, 
-					"",				// user_add, 
-					"",				// user_upd, 
-					"sin_alarmas_presupuestos"// alarma
+						"0",			// id_back,
+						"0",			// id_alarma, 
+						idAlarma,		// id_front_alarma,
+						"0",			// id_tabla, 
+						idPresupuesto,	// id_front_tabla,
+						"",				// date_add, 
+						"",				// date_upd, 
+						"",				// eliminado, 
+						"",				// user_add, 
+						"",				// user_upd, 
+						"sin_alarmas_presupuestos"// alarma
 				);
 				
 				Log.e("Crear Presupuesto", "mAlarmas ");
@@ -610,7 +608,7 @@ public class Presupuestos_Create extends MenuActivity {
 			cIdVisita, 		// id_visita 
 			id_cliente,		// id_cliente 
 			id_vendedor,	// id_vendedor 
-			"1",			// id_estado_presupuesto 
+			"5",			// id_estado_presupuesto 
 			id_condicion_pago,	// id_condicion_pago
 			id_tiempo_entrega,	// id_tiempo_entrega
 			nota_publica,	// nota_publica

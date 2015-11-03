@@ -86,7 +86,12 @@ public class Presupuestos_ListView extends BaseAdapter {
 		
 		
 		holder.nombre.setText(presupuestos.get(position).getNombre());
-		holder.id.setText(presupuestos.get(position).getID());
+		String idPresupuesto = presupuestos.get(position).getID();
+		if(idPresupuesto.equals("0")){
+			holder.id.setText("Sin enviar");
+		}else{
+			holder.id.setText(idPresupuesto);
+		}
 		holder.total.setText(presupuestos.get(position).getTotal());
 		holder.moneda.setText(config.getMoneda());
 		String estado =  presupuestos.get(position).getEstado();
@@ -96,6 +101,8 @@ public class Presupuestos_ListView extends BaseAdapter {
 		}else if(estado.equals("Anulado")){
 			holder.estado.setTextColor(Color.parseColor("#d9534f"));
 		}else if(estado.equals("Generado")){
+			holder.estado.setTextColor(Color.parseColor("#428bca"));
+		}else if(estado.equals("En Proceso")){
 			holder.estado.setTextColor(Color.parseColor("#000000"));
 		}
 		holder.fecha.setText(presupuestos.get(position).getFecha());
