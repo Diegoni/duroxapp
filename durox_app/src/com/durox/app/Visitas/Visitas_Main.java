@@ -143,9 +143,34 @@ public class Visitas_Main extends MenuActivity {
 	}
 	
 	
+	
+	public void guardar_bajar(View view){
+		String textReturn = guardar_visita();
+		if(textReturn.equals("ok")){
+			Intent intent = new Intent(Visitas_Main.this, Presupuestos_Main.class);
+			intent.putExtra("actualizar", "ok");
+			startActivity(intent);
+		}else{
+			Toast.makeText(this, textReturn, Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	
 	public void guardar(View view){
+		String textReturn = guardar_visita();
+		if(textReturn.equals("ok")){
+			Intent intent = new Intent(Visitas_Main.this, MainActivity.class);
+			startActivity(intent);
+		}else{
+			Toast.makeText(this, textReturn, Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	
+	public String guardar_visita(){
 		String razon_social = auto_cliente.getText().toString();
 		String epoca = ((Spinner)findViewById(R.id.autoEpocas)).getSelectedItem().toString();
+		String textReturn = "";
 		
 		int mes = etfecha.getMonth();
 		mes = mes + 1;
@@ -191,6 +216,7 @@ public class Visitas_Main extends MenuActivity {
 								fecha);
 						
 							Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
+							textReturn = "ok";
 							
 						}else{
 							mVisitas.insert(
@@ -210,19 +236,20 @@ public class Visitas_Main extends MenuActivity {
 						 		null);
 							
 							Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
+							textReturn = "ok";
 						}
-						
-						Intent intent = new Intent(Visitas_Main.this, MainActivity.class);
-						startActivity(intent);
 					}
 				}else{
-					Toast.makeText(this, config.msjNoRegistro("epoca"), Toast.LENGTH_LONG).show();
+					textReturn = config.msjNoRegistro("epoca");
 				}
 			}	
 		} else {
-			Toast.makeText(this, config.msjNoRegistro("cliente"), Toast.LENGTH_LONG).show();
+			textReturn = config.msjNoRegistro("cliente");
 		}
+		return textReturn;
 	}
+	
+	
 	
 	public void actualizar_visitas(View view){
 		Intent intent = new Intent(Visitas_Main.this, Visitas_Enviar.class);
@@ -230,10 +257,12 @@ public class Visitas_Main extends MenuActivity {
 	}
 	
 	
+	
 	public void ver_visitas(View view){
 		Intent intent = new Intent(Visitas_Main.this, Presupuestos_Main.class);
 		startActivity(intent);
 	}
+	
 	
 	
 	public void actualizar_epocas(View view) {

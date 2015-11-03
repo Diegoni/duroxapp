@@ -106,6 +106,15 @@ public class Presupuestos_Main extends MenuActivity {
 				popup.show();
 			}
 	    }); 
+	    
+	    Intent intent = getIntent();
+	    String actualizar = intent.getStringExtra("actualizar");
+		if(actualizar != null){
+			Visitas_Update visitas = new Visitas_Update(db, this);
+	    	visitas.actualizar_registros();
+	    	Intent i = new Intent(Presupuestos_Main.this, Presupuestos_Main.class);
+	    	startActivity(i);
+		}
 	}
 	
 	

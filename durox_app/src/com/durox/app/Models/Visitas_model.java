@@ -50,7 +50,9 @@ public class Visitas_model extends Activity{
 	public Cursor getVisitas(CharSequence orden){
 		createTable();
 		
-		if(orden.equals("") || orden.equals("Fecha")){
+		if(orden.equals("")){
+			orden = "visitas.id_visita DESC";
+		}else if(orden.equals("Fecha")){
 			orden = "visitas.fecha DESC";
 		}else if(orden.equals("Razón Social")){
 			orden = "clientes.razon_social";

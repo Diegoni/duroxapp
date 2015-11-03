@@ -22,8 +22,8 @@
         android:id="@+id/autoEpocas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/autoClientes" />
+        android:layout_below="@+id/autoClientes"
+        android:layout_toLeftOf="@+id/btnGuardar" />
 
     <TextView
         android:id="@+id/textView1"
@@ -63,16 +63,6 @@
         android:layout_toLeftOf="@+id/btnGuardar" />
 
     <Button
-        android:id="@+id/btnLista"
-        style="@style/btn_primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnGuardar"
-          android:onClick="ver_visitas"
-        android:text="@string/lista" />
-
-    <Button
         android:id="@+id/btnGuardar"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
@@ -93,5 +83,27 @@
         android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_epocas"
         android:text="@string/bajar" />
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnGuardar"
+        android:layout_marginLeft="20dp"
+        android:onClick="guardar_bajar"
+        android:text="@string/guardar_bajar" />
+
+    <Button
+        android:id="@+id/btnLista"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnGuardar"
+        android:layout_marginRight="20dp"
+        android:onClick="ver_visitas"
+        android:text="@string/lista" />
 
 </RelativeLayout>
