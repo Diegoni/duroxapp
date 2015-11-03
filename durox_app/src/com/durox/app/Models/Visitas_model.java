@@ -47,15 +47,28 @@ public class Visitas_model extends Activity{
 		return c;
 	}
 	
-	public Cursor getVisitas(){
+	public Cursor getVisitas(CharSequence orden){
 		createTable();
+		
+		if(orden.equals("") || orden.equals("Fecha")){
+			orden = "visitas.fecha DESC";
+		}else if(orden.equals("Razón Social")){
+			orden = "clientes.razon_social";
+		}else if(orden.equals("Epoca")){
+			orden = "epocas_visitas.epoca";
+		}else if(orden.equals("Comentarios")){
+			orden = "visitas.descripcion";
+		}else if(orden.equals("ID")){
+			orden = "visitas.id_visita DESC";
+		}
 		
 		sql = "SELECT "
 				+ "visitas.id_back, "
 				+ "clientes.razon_social, "
 				+ "epocas_visitas.epoca, "
 				+ "visitas.fecha, "
-				+ "visitas.id_visita "
+				+ "visitas.id_visita, "
+				+ "visitas.descripcion "
 			+ " FROM "
 				+ " `visitas` "
 			+ " INNER JOIN "
@@ -63,7 +76,7 @@ public class Visitas_model extends Activity{
 			+ " INNER JOIN "
 				+ " epocas_visitas ON(visitas.id_epoca_visita = epocas_visitas.id_back) "
 			+ " ORDER BY "
-				+ "	visitas.fecha DESC";
+				+ "	"+orden+" ";
 		
 		c = db.rawQuery(sql, null);
 		

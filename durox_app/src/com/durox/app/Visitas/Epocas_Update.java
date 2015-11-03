@@ -104,29 +104,30 @@ public class Epocas_Update extends MenuActivity {
   			JSONObject jsonResponse = new JSONObject(jsonResult);
   			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
   			
-  			Epocas_model mEpocas = new Epocas_model(db);
-  			mEpocas.getRegistros();
-  			
-  			if(jsonMainNode.length() > 0){
-  				mEpocas.truncate();
+  			if(jsonMainNode != null){
+	  			Epocas_model mEpocas = new Epocas_model(db);
+	  			mEpocas.getRegistros();
+	  			
+	  			if(jsonMainNode.length() > 0){
+	  				mEpocas.truncate();
+	  			}
+	  			  
+	  			for (int i = 0; i < jsonMainNode.length(); i++) {
+	  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+	  				mEpocas.insert(
+	  					jsonChildNode.optString("id_epoca_visita"),
+	  					jsonChildNode.optString("epoca"),
+	  					jsonChildNode.optString("date_add"),
+	  					jsonChildNode.optString("date_upd"),
+	  					jsonChildNode.optString("eliminado"),
+	  					jsonChildNode.optString("user_add"),
+	  					jsonChildNode.optString("user_upd")
+	  				);
+	  			}
+	  		
+	  			Toast.makeText(mContext, 
+	  	  	 			config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
   			}
-  			  
-  			for (int i = 0; i < jsonMainNode.length(); i++) {
-  				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-  				mEpocas.insert(
-  					jsonChildNode.optString("id_epoca_visita"),
-  					jsonChildNode.optString("epoca"),
-  					jsonChildNode.optString("date_add"),
-  					jsonChildNode.optString("date_upd"),
-  					jsonChildNode.optString("eliminado"),
-  					jsonChildNode.optString("user_add"),
-  					jsonChildNode.optString("user_upd")
-  				);
-  			}
-  		
-  			Toast.makeText(mContext, 
-  	  	 			config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-  			
   		} catch (JSONException e) {
   			Toast.makeText(mContext, 
   			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();

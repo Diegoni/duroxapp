@@ -217,46 +217,42 @@ public class Clientes_Update extends MenuActivity {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 	 		
-	 		Log.e("Paso ", "Clientes total "+ jsonMainNode.length());
-	 		
-	 		mModel.createTable();
-	 			
-	 		if(jsonMainNode.length() > 0){
-	 			mModel.truncate();
-	 		}
-	 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			String razon_social = jsonChildNode.optString("razon_social");
-	 			Cursor cUnico = mModel.getID(razon_social);
-				
-				if(cUnico.getCount() > 0){
-					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
-				}else{
-	 			 	mModel.insert(
-	 			 		jsonChildNode.optString("id_cliente"),
-	 			 		jsonChildNode.optString("nombre"),
-	 			 		jsonChildNode.optString("apellido"),
-		 				"0",				// modificado
-		 				jsonChildNode.optString("cuit"),
-			 			jsonChildNode.optString("id_grupo_cliente"),
-			 			jsonChildNode.optString("id_iva"),
-			 			jsonChildNode.optString("imagen"),
-			 			jsonChildNode.optString("nombre_fantasia"),
-		 				razon_social,
-		 				jsonChildNode.optString("web"),
-	 		 			jsonChildNode.optString("date_add"),
-	 		 			jsonChildNode.optString("date_upd"),
-	 		 			jsonChildNode.optString("eliminado"),
-	 		 			jsonChildNode.optString("user_add"),
-	 		 			jsonChildNode.optString("user_upd")
-		 			);
-				}
-	 		}
-	 		
-	 		Toast.makeText(mContext, 
+	 		if(jsonMainNode != null){
+		 		if(jsonMainNode.length() > 0){
+		 			mModel.truncate();
+		 		}
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 			
+		 			String razon_social = jsonChildNode.optString("razon_social");
+		 			Cursor cUnico = mModel.getID(razon_social);
+					
+					if(cUnico.getCount() > 0){
+						//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+		 			 	mModel.insert(
+		 			 		jsonChildNode.optString("id_cliente"),
+		 			 		jsonChildNode.optString("nombre"),
+		 			 		jsonChildNode.optString("apellido"),
+			 				"0",				// modificado
+			 				jsonChildNode.optString("cuit"),
+				 			jsonChildNode.optString("id_grupo_cliente"),
+				 			jsonChildNode.optString("id_iva"),
+				 			jsonChildNode.optString("imagen"),
+				 			jsonChildNode.optString("nombre_fantasia"),
+			 				razon_social,
+			 				jsonChildNode.optString("web"),
+		 		 			jsonChildNode.optString("date_add"),
+		 		 			jsonChildNode.optString("date_upd"),
+		 		 			jsonChildNode.optString("eliminado"),
+		 		 			jsonChildNode.optString("user_add"),
+		 		 			jsonChildNode.optString("user_upd")
+			 			);
+					}
+		 		}
+	 			Toast.makeText(mContext, 
 		  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 		}
 		} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -274,37 +270,34 @@ public class Clientes_Update extends MenuActivity {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("grupos");
 	 		
-	 		Log.e("Paso ", "Grupos total "+ jsonMainNode.length());
-	 			
-	 		mGrupos.createTable();
-	  			
-	  		if(jsonMainNode.length() > 0){
-	  			mGrupos.truncate();
-	  		}
-	  		
-	  		for (int i = 0; i < jsonMainNode.length(); i++) {
-	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	  			
-	  			String grupo = jsonChildNode.optString("grupo_nombre");
-	  			Cursor cUnico = mModel.getID(grupo);
-				
-				if(cUnico.getCount() > 0){
-					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
-				}else{
-	  				mGrupos.insert(
-	  					jsonChildNode.optString("id_grupo_cliente"),
-		  				grupo,
-		  				jsonChildNode.optString("date_add"),
-			  			jsonChildNode.optString("date_upd"),
-			  			jsonChildNode.optString("eliminado"),
-			  			jsonChildNode.optString("user_add"),
-			  			jsonChildNode.optString("user_upd")
-		  			);
-				}
-	  		}
-	  			
-	  		Toast.makeText(mContext, 
-	  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 		if(jsonMainNode != null){
+	 			if(jsonMainNode.length() > 0){
+		  			mGrupos.truncate();
+		  		}
+		  		for (int i = 0; i < jsonMainNode.length(); i++) {
+		  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			
+		  			String grupo = jsonChildNode.optString("grupo_nombre");
+		  			Cursor cUnico = mModel.getID(grupo);
+					
+					if(cUnico.getCount() > 0){
+						//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+		  				mGrupos.insert(
+		  					jsonChildNode.optString("id_grupo_cliente"),
+			  				grupo,
+			  				jsonChildNode.optString("date_add"),
+				  			jsonChildNode.optString("date_upd"),
+				  			jsonChildNode.optString("eliminado"),
+				  			jsonChildNode.optString("user_add"),
+				  			jsonChildNode.optString("user_upd")
+			  			);
+					}
+		  		}
+		  			
+		  		Toast.makeText(mContext, 
+		  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 		}
 	  			
 	  	} catch (JSONException e) {
 	  		Toast.makeText(mContext, 
@@ -324,38 +317,35 @@ public class Clientes_Update extends MenuActivity {
 	  		JSONObject jsonResponse = new JSONObject(jsonResult);
 	  		JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 	  		
-	  		Log.e("Paso ", "iva total "+ jsonMainNode.length());
-	  			
-	  		mIva.createTable();
-	  		
-	  		if(jsonMainNode.length() > 0){
-	  			mIva.truncate();
-	  		}
-	  		  
-	  		for (int i = 0; i < jsonMainNode.length(); i++) {
-	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	  			
-	  			String iva = jsonChildNode.optString("iva");
-	  			Cursor cUnico = mModel.getID(iva);
-				
-				if(cUnico.getCount() > 0){
-					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
-				}else{
-	  			 	mIva.insert(
-	  			 		jsonChildNode.optString("id_iva"),
-		  				iva,
-		  				jsonChildNode.optString("date_add"),
-			  			jsonChildNode.optString("date_upd"),
-			  			jsonChildNode.optString("eliminado"),
-			  			jsonChildNode.optString("user_add"),
-			  			jsonChildNode.optString("user_upd")
-		  			);
-				}
-	  		}
-	  		
-	  		Toast.makeText(mContext, 
-	  	 	 	config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	  		
+	  		if(jsonMainNode != null){
+		  		if(jsonMainNode.length() > 0){
+		  			mIva.truncate();
+		  		}
+		  		  
+		  		for (int i = 0; i < jsonMainNode.length(); i++) {
+		  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			
+		  			String iva = jsonChildNode.optString("iva");
+		  			Cursor cUnico = mModel.getID(iva);
+					
+					if(cUnico.getCount() > 0){
+						//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+		  			 	mIva.insert(
+		  			 		jsonChildNode.optString("id_iva"),
+			  				iva,
+			  				jsonChildNode.optString("date_add"),
+				  			jsonChildNode.optString("date_upd"),
+				  			jsonChildNode.optString("eliminado"),
+				  			jsonChildNode.optString("user_add"),
+				  			jsonChildNode.optString("user_upd")
+			  			);
+					}
+		  		}
+		  		
+		  		Toast.makeText(mContext, 
+		  	 	 	config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	  		}	
 	  	} catch (JSONException e) {
 	  		Toast.makeText(mContext, 
 	  		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -372,36 +362,35 @@ public class Clientes_Update extends MenuActivity {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-		 	mTipos.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mTipos.truncate();
-		   	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		String tipo = jsonChildNode.optString("tipo");
-		  		Cursor cUnico = mModel.getID(tipo);
-				
-				if(cUnico.getCount() > 0){
-					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
-				}else{
-		  			mTipos.insert(
-		  				jsonChildNode.optString("id_tipo"),
-			  			tipo, 
-			  			jsonChildNode.optString("date_add"),
-				  		jsonChildNode.optString("date_upd"),
-				  		jsonChildNode.optString("eliminado"),
-				  		jsonChildNode.optString("user_add"),
-				  		jsonChildNode.optString("user_upd")
-			  		);
-				}
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mTipos.truncate();
+			   	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		String tipo = jsonChildNode.optString("tipo");
+			  		Cursor cUnico = mModel.getID(tipo);
+					
+					if(cUnico.getCount() > 0){
+						//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+			  			mTipos.insert(
+			  				jsonChildNode.optString("id_tipo"),
+				  			tipo, 
+				  			jsonChildNode.optString("date_add"),
+					  		jsonChildNode.optString("date_upd"),
+					  		jsonChildNode.optString("eliminado"),
+					  		jsonChildNode.optString("user_add"),
+					  		jsonChildNode.optString("user_upd")
+				  		);
+					}
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}  			
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -419,33 +408,32 @@ public class Clientes_Update extends MenuActivity {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 		 			
-		 	mTelefonos.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mTelefonos.truncate();
-		  	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mTelefonos.insert(
-		  			jsonChildNode.optString("id_telefono"),
-				  	jsonChildNode.optString("id_tipo"),
-				  	jsonChildNode.optString("telefono"),
-				  	jsonChildNode.optString("cod_area"),
-				  	jsonChildNode.optString("fax"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mTelefonos.truncate();
+			  	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mTelefonos.insert(
+			  			jsonChildNode.optString("id_telefono"),
+					  	jsonChildNode.optString("id_tipo"),
+					  	jsonChildNode.optString("telefono"),
+					  	jsonChildNode.optString("cod_area"),
+					  	jsonChildNode.optString("fax"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}  			
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -466,32 +454,30 @@ public class Clientes_Update extends MenuActivity {
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			
-		 	mSinTelefonos.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mSinTelefonos.truncateSin();
-		  	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mSinTelefonos.insertSin(
-		  			jsonChildNode.optString("id_sin_cliente_telefono"),
-				  	jsonChildNode.optString("id_cliente"),
-				  	jsonChildNode.optString("id_telefono"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mSinTelefonos.truncateSin();
+			  	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mSinTelefonos.insertSin(
+			  			jsonChildNode.optString("id_sin_cliente_telefono"),
+					  	jsonChildNode.optString("id_cliente"),
+					  	jsonChildNode.optString("id_telefono"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}  			
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -510,32 +496,30 @@ public class Clientes_Update extends MenuActivity {
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			
-		 	mMails.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mMails.truncate();
-		  	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mMails.insert(
-		  			jsonChildNode.optString("id_mail"),
-				  	jsonChildNode.optString("id_tipo"),
-				  	jsonChildNode.optString("mail"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mMails.truncate();
+			  	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mMails.insert(
+			  			jsonChildNode.optString("id_mail"),
+					  	jsonChildNode.optString("id_tipo"),
+					  	jsonChildNode.optString("mail"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}		
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -550,32 +534,30 @@ public class Clientes_Update extends MenuActivity {
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			
-		 	mSinMails.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mSinMails.truncateSin();
-		  	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mSinMails.insertSin(
-		  			jsonChildNode.optString("id_sin_cliente_mail"),
-				  	jsonChildNode.optString("id_cliente"),
-				  	jsonChildNode.optString("id_mail"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mSinMails.truncateSin();
+			  	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mSinMails.insertSin(
+			  			jsonChildNode.optString("id_sin_cliente_mail"),
+					  	jsonChildNode.optString("id_cliente"),
+					  	jsonChildNode.optString("id_mail"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}		
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -591,36 +573,34 @@ public class Clientes_Update extends MenuActivity {
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			
-		 	mDirecciones.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mDirecciones.truncate();
-		  	}
-		  			  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mDirecciones.insert( 
-		  			jsonChildNode.optString("id_direccion"),
-				  	jsonChildNode.optString("id_tipo"),
-				  	jsonChildNode.optString("id_departamento"),
-				  	jsonChildNode.optString("id_provincia"),
-				  	jsonChildNode.optString("id_pais"),
-				  	jsonChildNode.optString("direccion"),
-				  	jsonChildNode.optString("cod_postal"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mDirecciones.truncate();
+			  	}
+			  			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mDirecciones.insert( 
+			  			jsonChildNode.optString("id_direccion"),
+					  	jsonChildNode.optString("id_tipo"),
+					  	jsonChildNode.optString("id_departamento"),
+					  	jsonChildNode.optString("id_provincia"),
+					  	jsonChildNode.optString("id_pais"),
+					  	jsonChildNode.optString("direccion"),
+					  	jsonChildNode.optString("cod_postal"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}		
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -640,32 +620,30 @@ public class Clientes_Update extends MenuActivity {
 		try {
 		 	JSONObject jsonResponse = new JSONObject(jsonResult);
 		 	JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			
-		 	mSinDirecciones.createTable();
-		  			
-		  	if(jsonMainNode.length() > 0){
-		  		mSinDirecciones.truncateSin();
-		  	}
-		  		
-		  	for (int i = 0; i < jsonMainNode.length(); i++) {
-		  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		  		
-		  		mSinDirecciones.insertSin(
-		  			jsonChildNode.optString("id_sin_cliente_direccion"),
-				  	jsonChildNode.optString("id_cliente"),
-				  	jsonChildNode.optString("id_direccion"),
-				  	jsonChildNode.optString("date_add"),
-				  	jsonChildNode.optString("date_upd"),
-				  	jsonChildNode.optString("eliminado"),
-				  	jsonChildNode.optString("user_add"),
-				  	jsonChildNode.optString("user_upd")
-		  		);
-		  		
-		  	}
-		  			
-		  	Toast.makeText(mContext, 
-		  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-		  			
+		 	if(jsonMainNode != null){		
+			  	if(jsonMainNode.length() > 0){
+			  		mSinDirecciones.truncateSin();
+			  	}
+			  		
+			  	for (int i = 0; i < jsonMainNode.length(); i++) {
+			  		JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			  		
+			  		mSinDirecciones.insertSin(
+			  			jsonChildNode.optString("id_sin_cliente_direccion"),
+					  	jsonChildNode.optString("id_cliente"),
+					  	jsonChildNode.optString("id_direccion"),
+					  	jsonChildNode.optString("date_add"),
+					  	jsonChildNode.optString("date_upd"),
+					  	jsonChildNode.optString("eliminado"),
+					  	jsonChildNode.optString("user_add"),
+					  	jsonChildNode.optString("user_upd")
+			  		);
+			  		
+			  	}
+			  			
+			  	Toast.makeText(mContext, 
+			  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	}  			
 		} catch (JSONException e) {
 		 	Toast.makeText(mContext, 
 		 		config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -679,29 +657,27 @@ public class Clientes_Update extends MenuActivity {
 		try {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("departamentos");
-	 			
-	 		mDepartamentos.createTable();
-	  			
-	  		if(jsonMainNode.length() > 0){
-	  			mDepartamentos.truncate();
-	  		}
-	  		
-	  		for (int i = 0; i < jsonMainNode.length(); i++) {
-	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	  			  				
-	  			String id_back = jsonChildNode.optString("id_departamento");
-	  			String id_provincia = jsonChildNode.optString("id_provincia");
-	  			String nombre_departamento = jsonChildNode.optString("nombre_departamento");
-	  				 				
-	  			mDepartamentos.insert(
-	  				id_back, 
-	  				id_provincia, 
-	  				nombre_departamento);
-	  		}
-	  			
-	  		Toast.makeText(mContext, 
-	  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	  			
+	 		if(jsonMainNode != null){	
+		  		if(jsonMainNode.length() > 0){
+		  			mDepartamentos.truncate();
+		  		}
+		  		
+		  		for (int i = 0; i < jsonMainNode.length(); i++) {
+		  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			  				
+		  			String id_back = jsonChildNode.optString("id_departamento");
+		  			String id_provincia = jsonChildNode.optString("id_provincia");
+		  			String nombre_departamento = jsonChildNode.optString("nombre_departamento");
+		  				 				
+		  			mDepartamentos.insert(
+		  				id_back, 
+		  				id_provincia, 
+		  				nombre_departamento);
+		  		}
+		  			
+		  		Toast.makeText(mContext, 
+		  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 		}		
 	  	} catch (JSONException e) {
 	  		Toast.makeText(mContext, 
 	  			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -716,31 +692,29 @@ public class Clientes_Update extends MenuActivity {
 		try {
 	 		JSONObject jsonResponse = new JSONObject(jsonResult);
 	 		JSONArray jsonMainNode = jsonResponse.optJSONArray("provincias");
-	 			
-	 		mProvincias.createTable();
-	  			
-	  		if(jsonMainNode.length() > 0){
-	  			mProvincias.truncate();
-	  		}
-	  		
-	  		Log.e("Paso ", "Provincias total "+ jsonMainNode.length());
-	  			  		
-	  		for (int i = 0; i < jsonMainNode.length(); i++) {
-	  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	  			  				
-	  			String id_back = jsonChildNode.optString("id_provincia");
-	  			String id_pais = jsonChildNode.optString("id_pais");
-	  			String nombre_provincia = jsonChildNode.optString("nombre_provincia");
-	  				 				
-	  			mProvincias.insert(
-	  				id_back, 
-	  				id_pais, 
-	  				nombre_provincia);
-	  		}
-	  			
-	  		Toast.makeText(mContext, 
-	  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	  			
+	 		if(jsonMainNode != null){	
+		  		if(jsonMainNode.length() > 0){
+		  			mProvincias.truncate();
+		  		}
+		  		
+		  		Log.e("Paso ", "Provincias total "+ jsonMainNode.length());
+		  			  		
+		  		for (int i = 0; i < jsonMainNode.length(); i++) {
+		  			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		  			  				
+		  			String id_back = jsonChildNode.optString("id_provincia");
+		  			String id_pais = jsonChildNode.optString("id_pais");
+		  			String nombre_provincia = jsonChildNode.optString("nombre_provincia");
+		  				 				
+		  			mProvincias.insert(
+		  				id_back, 
+		  				id_pais, 
+		  				nombre_provincia);
+		  		}
+		  			
+		  		Toast.makeText(mContext, 
+		  	  		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+	 		}
 	  	} catch (JSONException e) {
 	  		Toast.makeText(mContext, 
 	  			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();

@@ -104,29 +104,30 @@ public class Documentos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-	 			
-			if(jsonMainNode.length() > 0){
-				mDocumentos.createTable();
-				mDocumentos.truncate();
-	 		}
-	 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mDocumentos.insert(
-					jsonChildNode.optString("id_documento"),
-					jsonChildNode.optString("nombre"),
-					jsonChildNode.optString("documento"),
-					jsonChildNode.optString("date_add"),
-					jsonChildNode.optString("date_upd"),
-					jsonChildNode.optString("eliminado"),
-					jsonChildNode.optString("user_add"),
-					jsonChildNode.optString("user_upd")
-	 			);
-	 		}
 	 		
-	 		Toast.makeText(mContext, config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	 		
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mDocumentos.truncate();
+		 		}
+		 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 			
+		 			mDocumentos.insert(
+						jsonChildNode.optString("id_documento"),
+						jsonChildNode.optString("nombre"),
+						jsonChildNode.optString("documento"),
+						jsonChildNode.optString("date_add"),
+						jsonChildNode.optString("date_upd"),
+						jsonChildNode.optString("eliminado"),
+						jsonChildNode.optString("user_add"),
+						jsonChildNode.optString("user_upd")
+		 			);
+		 		}
+		 		
+		 		Toast.makeText(mContext, 
+		 				config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			"Error" + e.toString(), Toast.LENGTH_SHORT).show();

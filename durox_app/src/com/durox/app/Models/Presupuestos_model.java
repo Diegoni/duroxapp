@@ -46,8 +46,20 @@ public class Presupuestos_model extends Activity{
 		db.execSQL(sql);
 	}
 	
-	public Cursor getRegistros(){
+	public Cursor getRegistros(CharSequence orden){
 		createTable();
+		
+		if(orden.equals("") || orden.equals("Fecha")){
+			orden = "presupuestos.fecha DESC";
+		}else if(orden.equals("Razón Social")){
+			orden = "clientes.razon_social";
+		}else if(orden.equals("Estado")){
+			orden = "estados_presupuestos.text";
+		}else if(orden.equals("Total")){
+			orden = "presupuestos.total DESC";
+		}else if(orden.equals("ID")){
+			orden = "presupuestos.id_presupuesto DESC";
+		}
 		
 		sql = "SELECT "
 				+ " presupuestos.id_back, "
@@ -64,11 +76,9 @@ public class Presupuestos_model extends Activity{
 			+ " INNER JOIN "
 				+ " estados_presupuestos ON(presupuestos.id_estado_presupuesto = estados_presupuestos.id_back)"
 			+ " ORDER BY "
-				+ "	presupuestos.fecha DESC";
+				+ "	"+orden+" ";
 		
 		c = db.rawQuery(sql, null);
-		
-		Log.e("Consulta ", sql);
 		
 		return c;
 	}

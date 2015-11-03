@@ -120,15 +120,34 @@ public class Presupuestos_ListView extends BaseAdapter {
 	}
 
 	
-	public void filter(String charText) {
+	public void filter(String charText, CharSequence filtro) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		presupuestos.clear();
 		if (charText.length() == 0) {
 			presupuestos.addAll(arraylist);
 		} else {
 			for (Presupuesto wp : arraylist)  {
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)){
-					presupuestos.add(wp);
+				
+				if(filtro.equals("") || filtro.equals("Razón Social")){
+					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+						presupuestos.add(wp);
+					}
+				}else if(filtro.equals("Fecha")){
+					if (wp.getFecha().toLowerCase(Locale.getDefault()).contains(charText)) {
+						presupuestos.add(wp);
+					}
+				}else if(filtro.equals("Estado")){
+					if (wp.getEstado().toLowerCase(Locale.getDefault()).contains(charText)) {
+						presupuestos.add(wp);
+					}
+				}else if(filtro.equals("Total")){
+					if (wp.getTotal().toLowerCase(Locale.getDefault()).contains(charText)) {
+						presupuestos.add(wp);
+					}
+				}else if(filtro.equals("ID")){
+					if (wp.getID().toLowerCase(Locale.getDefault()).contains(charText)) {
+						presupuestos.add(wp);
+					}
 				}
 			}
 		}

@@ -156,7 +156,6 @@ public class Alarmas_Main extends MenuActivity {
 	
 	
 	public void productos_lista(CharSequence order, final CharSequence filtro){
-		
 		mProductos = new Productos_model(db);
 		mProductos.createTable();
 		c = mProductos.getRegistros(order);
@@ -239,5 +238,4 @@ public class Alarmas_Main extends MenuActivity {
 			});
 		}		
 	}
-	
 }

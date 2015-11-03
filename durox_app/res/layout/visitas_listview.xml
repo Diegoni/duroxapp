@@ -42,4 +42,22 @@
         android:onClick="actualizar_visitas"
         android:text="@string/bajar" />
 
+    <Button
+        android:id="@+id/btn_filtro"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvVisitas"
+        android:layout_toRightOf="@+id/btn_vPresupuestos"
+        android:text="@string/filtro" />
+
+    <Button
+        android:id="@+id/btn_ordenar"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btn_filtro"
+        android:text="@string/ordenar" />
+
 </RelativeLayout>

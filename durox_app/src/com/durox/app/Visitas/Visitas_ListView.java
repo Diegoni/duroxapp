@@ -10,7 +10,6 @@ import com.durox.app.Presupuestos.Presupuestos_Tabs;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,7 @@ public class Visitas_ListView extends BaseAdapter {
 		TextView nombre;
 		TextView epoca;
 		TextView fecha;
+		TextView comentario;
 		TextView id_visita;
 		ImageView imagen;
 	}
@@ -70,6 +70,7 @@ public class Visitas_ListView extends BaseAdapter {
 			holder.nombre = (TextView) view.findViewById(R.id.txt_vNombre);
 			holder.epoca = (TextView) view.findViewById(R.id.txt_vEpoca);
 			holder.fecha = (TextView) view.findViewById(R.id.txt_vFecha);
+			holder.comentario = (TextView) view.findViewById(R.id.txt_comentario);
 			holder.id_visita = (TextView) view.findViewById(R.id.txt_id);
 			holder.imagen = (ImageView) view.findViewById(R.id.imagen);
 			
@@ -88,7 +89,7 @@ public class Visitas_ListView extends BaseAdapter {
 		}else{
 			holder.id_visita.setText(visitas.get(position).getVisita());
 		}
-		
+		holder.comentario.setText(visitas.get(position).getComentario());
 		holder.imagen.setImageResource(visitas.get(position).getImagen());
 
 		// Detecta que item de la lista le hicieron clic
@@ -115,8 +116,6 @@ public class Visitas_ListView extends BaseAdapter {
 			public boolean onLongClick(View arg0) {
 				String id = visitas.get(position).getVisita();
 				
-				Log.e("Paso", "id_visita"+id);
-				
 				if(id.equals("0")){
 					Intent intent = new Intent(mContext, Visitas_Main.class);
 					intent.putExtra("id_front", (visitas.get(position).getIdFront()));
@@ -133,15 +132,33 @@ public class Visitas_ListView extends BaseAdapter {
 	}
 
 	// Filter Class
-	public void filter(String charText) {
+	public void filter(String charText, CharSequence filtro) {
 		charText = charText.toLowerCase(Locale.getDefault());
 		visitas.clear();
 		if (charText.length() == 0) {
 			visitas.addAll(arraylist);
 		} else {
 			for (Visitas wp : arraylist) {
-				if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
-					visitas.add(wp);
+				if(filtro.equals("") || filtro.equals("Razón Social")){
+					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
+						visitas.add(wp);
+					}
+				}else if(filtro.equals("Fecha")){
+					if (wp.getFecha().toLowerCase(Locale.getDefault()).contains(charText)) {
+						visitas.add(wp);
+					}
+				}else if(filtro.equals("Epoca")){
+					if (wp.getEpoca().toLowerCase(Locale.getDefault()).contains(charText)) {
+						visitas.add(wp);
+					}
+				}else if(filtro.equals("Comentarios")){
+					if (wp.getComentario().toLowerCase(Locale.getDefault()).contains(charText)) {
+						visitas.add(wp);
+					}
+				}else if(filtro.equals("ID")){
+					if (wp.getVisita().toLowerCase(Locale.getDefault()).contains(charText)) {
+						visitas.add(wp);
+					}
 				}
 			}
 		}

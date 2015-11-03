@@ -567,42 +567,44 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-				 			
-			if(jsonMainNode.length() > 0){
-				mPresupuesto.truncate();
-	 		}
-	 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-		 		mPresupuesto.insert(
-		 			jsonChildNode.optString("id_presupuesto"),
-				 	jsonChildNode.optString("id_visita"),
-				 	jsonChildNode.optString("id_cliente"),
-				 	jsonChildNode.optString("id_vendedor"),
-				 	jsonChildNode.optString("id_estado_presupuesto"),
-				 	jsonChildNode.optString("id_condicion_pago"),
-				 	jsonChildNode.optString("id_tiempo_entrega"),
-				 	jsonChildNode.optString("nota_publica"),
-				 	jsonChildNode.optString("total"),
-				 	jsonChildNode.optString("fecha"),
-				 	jsonChildNode.optString("id_origen"),
-				 	jsonChildNode.optString("aprobado_back"),
-				 	jsonChildNode.optString("aprobado_front"),
-				 	jsonChildNode.optString("visto_back"),
-				 	jsonChildNode.optString("visto_front"),
-				 	jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-		 		);
-	 			
-	 		}
-	 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-	 	} catch (JSONException e) {
+			
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mPresupuesto.truncate();
+		 		}
+		 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 			
+			 		mPresupuesto.insert(
+			 			jsonChildNode.optString("id_presupuesto"),
+					 	jsonChildNode.optString("id_visita"),
+					 	jsonChildNode.optString("id_cliente"),
+					 	jsonChildNode.optString("id_vendedor"),
+					 	jsonChildNode.optString("id_estado_presupuesto"),
+					 	jsonChildNode.optString("id_condicion_pago"),
+					 	jsonChildNode.optString("id_tiempo_entrega"),
+					 	jsonChildNode.optString("nota_publica"),
+					 	jsonChildNode.optString("total"),
+					 	jsonChildNode.optString("fecha"),
+					 	jsonChildNode.optString("id_origen"),
+					 	jsonChildNode.optString("aprobado_back"),
+					 	jsonChildNode.optString("aprobado_front"),
+					 	jsonChildNode.optString("visto_back"),
+					 	jsonChildNode.optString("visto_front"),
+					 	jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+			 		);
+		 			
+		 		}
+		 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
+		} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
 	 	}
@@ -615,38 +617,38 @@ public class Presupuestos_Update extends MenuActivity {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
 			
-			mLineas.delete();
-					
-			if(jsonMainNode.length() > 0){
-				mLineas.delete();
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mLineas.delete();
+				}
+			 	
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			 	
+		 			mLineas.insert(
+		 				jsonChildNode.optString("id_linea_producto_presupuesto"),
+		 		 		jsonChildNode.optString("id_presupuesto"),
+		 		 		jsonChildNode.optString("id_producto"),
+		 		 		jsonChildNode.optString("precio"),
+		 		 		jsonChildNode.optString("id_moneda"),
+		 		 		jsonChildNode.optString("valor_moneda"),
+		 		 		jsonChildNode.optString("cantidad"),
+		 		 		jsonChildNode.optString("subtotal"),
+		 		 		jsonChildNode.optString("id_estado_producto_presupuesto"),
+		 		 		jsonChildNode.optString("id_front"),
+		 		 		jsonChildNode.optString("comentario"),
+		 			 	jsonChildNode.optString("date_add"),
+		 			 	jsonChildNode.optString("date_upd"),
+		 			 	jsonChildNode.optString("eliminado"),
+		 			 	jsonChildNode.optString("user_add"),
+		 			 	jsonChildNode.optString("user_upd")
+			 		);
+			 			
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
 			}
-		 	
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		 	
-	 			mLineas.insert(
-	 				jsonChildNode.optString("id_linea_producto_presupuesto"),
-	 		 		jsonChildNode.optString("id_presupuesto"),
-	 		 		jsonChildNode.optString("id_producto"),
-	 		 		jsonChildNode.optString("precio"),
-	 		 		jsonChildNode.optString("id_moneda"),
-	 		 		jsonChildNode.optString("valor_moneda"),
-	 		 		jsonChildNode.optString("cantidad"),
-	 		 		jsonChildNode.optString("subtotal"),
-	 		 		jsonChildNode.optString("id_estado_producto_presupuesto"),
-	 		 		jsonChildNode.optString("id_front"),
-	 		 		jsonChildNode.optString("comentario"),
-	 			 	jsonChildNode.optString("date_add"),
-	 			 	jsonChildNode.optString("date_upd"),
-	 			 	jsonChildNode.optString("eliminado"),
-	 			 	jsonChildNode.optString("user_add"),
-	 			 	jsonChildNode.optString("user_upd")
-		 		);
-		 			
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -659,32 +661,34 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 	
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mEstados.delete();
+		 		}
+			 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 		 			
-			if(jsonMainNode.length() > 0){
-				mEstados.delete();
-	 		}
-		 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mEstados.insert(
-		 			jsonChildNode.optString("id_estado_presupuesto"),
-			 		jsonChildNode.optString("estado"),
-			 		jsonChildNode.optString("text"),
-			 		jsonChildNode.optString("eliminar_cliente"),
-			 		jsonChildNode.optString("eliminar_vendedor"),
-			 		jsonChildNode.optString("eliminar_visita"),
-			 		jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-		 		);
-		 			
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 			mEstados.insert(
+			 			jsonChildNode.optString("id_estado_presupuesto"),
+				 		jsonChildNode.optString("estado"),
+				 		jsonChildNode.optString("text"),
+				 		jsonChildNode.optString("eliminar_cliente"),
+				 		jsonChildNode.optString("eliminar_vendedor"),
+				 		jsonChildNode.optString("eliminar_visita"),
+				 		jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+			 		);
+			 			
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -697,29 +701,31 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 	
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mCondiciones.truncate();
+		 		}
+			 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 		 			
-			if(jsonMainNode.length() > 0){
-				mCondiciones.truncate();
-	 		}
-		 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mCondiciones.insert(
-		 			jsonChildNode.optString("id_condicion_pago"),
-			 		jsonChildNode.optString("condicion_pago"),
-			 		jsonChildNode.optString("dias"),
-			 		jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-		 		);
-		 			
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 			mCondiciones.insert(
+			 			jsonChildNode.optString("id_condicion_pago"),
+				 		jsonChildNode.optString("condicion_pago"),
+				 		jsonChildNode.optString("dias"),
+				 		jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+			 		);
+			 			
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -731,28 +737,30 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 	
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mModos.truncate();
+		 		}
+			 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 		 			
-			if(jsonMainNode.length() > 0){
-				mModos.truncate();
-	 		}
-		 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mModos.insert(
-		 			jsonChildNode.optString("id_modo_pago"),
-			 		jsonChildNode.optString("modo_pago"),
-			 		jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-		 		);
-		 			
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 			mModos.insert(
+			 			jsonChildNode.optString("id_modo_pago"),
+				 		jsonChildNode.optString("modo_pago"),
+				 		jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+			 		);
+			 			
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -763,25 +771,27 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-		 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mModos.insertSin(
-	 				jsonChildNode.optString("id_sin_presupuesto_modo"),
-	 				jsonChildNode.optString("id_presupuesto"), 
-	 				jsonChildNode.optInt("id_presupuesto_front"),
-	 				jsonChildNode.optString("id_modo_pago"), 
-	 				jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-	 			);
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 	
+			if(jsonMainNode != null){
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 			
+		 			mModos.insertSin(
+		 				jsonChildNode.optString("id_sin_presupuesto_modo"),
+		 				jsonChildNode.optString("id_presupuesto"), 
+		 				jsonChildNode.optInt("id_presupuesto_front"),
+		 				jsonChildNode.optString("id_modo_pago"), 
+		 				jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+		 			);
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();
@@ -793,28 +803,30 @@ public class Presupuestos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+		 	
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mTiempos.truncate();
+		 		}
+			 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 		 			
-			if(jsonMainNode.length() > 0){
-				mTiempos.truncate();
-	 		}
-		 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 			
-	 			mTiempos.insert(
-		 			jsonChildNode.optString("id_tiempo_entrega"),
-			 		jsonChildNode.optString("tiempo_entrega"),
-			 		jsonChildNode.optString("date_add"),
-				 	jsonChildNode.optString("date_upd"),
-				 	jsonChildNode.optString("eliminado"),
-				 	jsonChildNode.optString("user_add"),
-				 	jsonChildNode.optString("user_upd")
-		 		);
-		 			
-	 		}
-		 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+		 			mTiempos.insert(
+			 			jsonChildNode.optString("id_tiempo_entrega"),
+				 		jsonChildNode.optString("tiempo_entrega"),
+				 		jsonChildNode.optString("date_add"),
+					 	jsonChildNode.optString("date_upd"),
+					 	jsonChildNode.optString("eliminado"),
+					 	jsonChildNode.optString("user_add"),
+					 	jsonChildNode.optString("user_upd")
+			 		);
+			 			
+		 		}
+			 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();

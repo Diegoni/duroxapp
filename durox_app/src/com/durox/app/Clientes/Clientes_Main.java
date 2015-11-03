@@ -72,7 +72,6 @@ public class Clientes_Main extends MenuActivity {
         
         setTitle("Clientes - Lista");
         getActionBar().setIcon(R.drawable.menuclientes);
-        
         setContentView(R.layout.clientes_listview);
         
         orden = "";
@@ -123,7 +122,7 @@ public class Clientes_Main extends MenuActivity {
 			        
 					popup.show();
 				}
-			});
+	    });
 	}
 	
 	

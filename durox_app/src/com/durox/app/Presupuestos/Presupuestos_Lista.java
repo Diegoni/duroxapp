@@ -20,10 +20,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
  
 public class Presupuestos_Lista extends MenuActivity {
 	
@@ -59,6 +64,11 @@ public class Presupuestos_Lista extends MenuActivity {
 	ProgressDialog pDialog;
 	Vendedores_model mVendedor;
 	String id_vendedor;
+	
+	Button btn_orden;
+	Button btn_filtro;
+	CharSequence orden;
+	CharSequence filtro;
    
 	
     public void onCreate(Bundle savedInstanceState) {
@@ -74,16 +84,53 @@ public class Presupuestos_Lista extends MenuActivity {
         mVendedor = new Vendedores_model(db);
         id_vendedor = mVendedor.getID();        
         
-        presupuestos_lista();
+        orden = "";
+	    filtro = "Razón Social";
+        presupuestos_lista(orden, filtro);
+        
+        btn_orden = (Button) findViewById(R.id.btn_ordenar);
+	    btn_orden.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				PopupMenu popup = new PopupMenu(Presupuestos_Lista.this, btn_orden);
+				popup.getMenuInflater().inflate(R.menu.popup_presupuesto, popup.getMenu());
+
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						orden = item.getTitle();
+						presupuestos_lista(orden, filtro);
+						Toast.makeText(Presupuestos_Lista.this, "Orden : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		                        return true;
+					}
+				});
+				popup.show();
+			}
+		});
+	        
+	    btn_filtro = (Button) findViewById(R.id.btn_filtro);
+	    btn_filtro.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				PopupMenu popup = new PopupMenu(Presupuestos_Lista.this, btn_filtro);
+				popup.getMenuInflater().inflate(R.menu.popup_presupuesto, popup.getMenu());
+
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						filtro = item.getTitle();
+						presupuestos_lista(orden, filtro);
+						Toast.makeText(Presupuestos_Lista.this, "Filtro : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		                        return true;
+					}
+				});
+				popup.show();
+			}
+	    }); 
+
    }
     
     
-   public void presupuestos_lista(){
- 		setContentView(R.layout.presupuestos_listview);
- 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
-    	
-    	Presupuestos_model mPresupuestos = new Presupuestos_model(db);
- 		c = mPresupuestos.getRegistros();
+   public void presupuestos_lista(CharSequence orden, final CharSequence filtro){
+ 		Presupuestos_model mPresupuestos = new Presupuestos_model(db);
+ 		c = mPresupuestos.getRegistros(orden);
 		
 		int cantidad_presupuestos = c.getCount();
 		
@@ -130,11 +177,12 @@ public class Presupuestos_Lista extends MenuActivity {
     		adapter = new Presupuestos_ListView(this, arraylist);
     		list.setAdapter(adapter);
     		editsearch = (EditText) findViewById(R.id.search);
+    		editsearch.setHint(filtro);
     		
     		editsearch.addTextChangedListener(new TextWatcher() {
 	   			public void afterTextChanged(Editable arg0) {
 	   				String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-	    			adapter.filter(text);
+	    			adapter.filter(text, filtro);
 	    		}
 	
 	    		public void beforeTextChanged(
@@ -167,8 +215,7 @@ public class Presupuestos_Lista extends MenuActivity {
         presupuestos.actualizar_registros();
         
         pDialog.dismiss();
-        presupuestos_lista();
-    	
+        presupuestos_lista(orden, filtro);    	
     }	
 }
   

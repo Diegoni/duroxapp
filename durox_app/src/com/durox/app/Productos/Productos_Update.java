@@ -115,83 +115,85 @@ public class Productos_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			 			
-			if(jsonMainNode.length() > 0){
-				mProductos.truncate();
-			}
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mProductos.truncate();
+				}
 				
-				String nombre = jsonChildNode.optString("nombre");
-				Cursor cUnico = mProductos.getID(nombre);
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					String nombre = jsonChildNode.optString("nombre");
+					Cursor cUnico = mProductos.getID(nombre);
+					
+					if(cUnico.getCount() > 0){
+						//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
+					}else{
+						mProductos.insert(
+							jsonChildNode.optString("id_producto"),
+							jsonChildNode.optString("codigo"),
+							jsonChildNode.optString("codigo_lote"),
+							nombre,
+							jsonChildNode.optString("precio"),
+							jsonChildNode.optString("precio_iva"),
+							jsonChildNode.optString("precio_min"),
+							jsonChildNode.optString("precio_min_iva"),
+							jsonChildNode.optString("id_iva"),
+							jsonChildNode.optString("id_moneda"),
+							jsonChildNode.optString("ficha_tecnica"),
+							jsonChildNode.optString("date_add"),
+							jsonChildNode.optString("date_upd"),
+							jsonChildNode.optString("eliminado"),
+							jsonChildNode.optString("user_add"),
+							jsonChildNode.optString("user_upd")
+						);
+					}
+				}
 				
-				if(cUnico.getCount() > 0){
-					//Toast.makeText(this, config.msjDuplicado(), Toast.LENGTH_SHORT).show();
-				}else{
-					mProductos.insert(
-						jsonChildNode.optString("id_producto"),
-						jsonChildNode.optString("codigo"),
-						jsonChildNode.optString("codigo_lote"),
-						nombre,
-						jsonChildNode.optString("precio"),
-						jsonChildNode.optString("precio_iva"),
-						jsonChildNode.optString("precio_min"),
-						jsonChildNode.optString("precio_min_iva"),
-						jsonChildNode.optString("id_iva"),
-						jsonChildNode.optString("id_moneda"),
-						jsonChildNode.optString("ficha_tecnica"),
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
+		} catch (JSONException e) {
+			Toast.makeText(mContext, 
+			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
+		}
+		
+		
+		subjet = "monedas";
+		Monedas_model mMonedas = new Monedas_model(db); 
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
+			 
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+					mMonedas.truncate();
+				}
+				  
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mMonedas.insert(
+						jsonChildNode.optString("id_moneda"), 
+						jsonChildNode.optString("moneda"),
+						jsonChildNode.optString("abreviatura"), 
+						jsonChildNode.optString("simbolo"),
+						jsonChildNode.optString("valor"),
+						jsonChildNode.optString("id_pais"), 
+						jsonChildNode.optString("por_defecto"),
 						jsonChildNode.optString("date_add"),
 						jsonChildNode.optString("date_upd"),
 						jsonChildNode.optString("eliminado"),
 						jsonChildNode.optString("user_add"),
 						jsonChildNode.optString("user_upd")
 					);
+					
 				}
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
-		} catch (JSONException e) {
-			Toast.makeText(mContext, 
-			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
-		}
-		
-		subjet = "monedas";
-		Monedas_model mMonedas = new Monedas_model(db); 
-		
-		try {
-			JSONObject jsonResponse = new JSONObject(jsonResult);
-			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			 			
-			if(jsonMainNode.length() > 0){
-				mMonedas.truncate();
-			}
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 				
-				mMonedas.insert(
-					jsonChildNode.optString("id_moneda"), 
-					jsonChildNode.optString("moneda"),
-					jsonChildNode.optString("abreviatura"), 
-					jsonChildNode.optString("simbolo"),
-					jsonChildNode.optString("valor"),
-					jsonChildNode.optString("id_pais"), 
-					jsonChildNode.optString("por_defecto"),
-					jsonChildNode.optString("date_add"),
-					jsonChildNode.optString("date_upd"),
-					jsonChildNode.optString("eliminado"),
-					jsonChildNode.optString("user_add"),
-					jsonChildNode.optString("user_upd")
-				);
-				
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
 			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 			config.msjError(e.toString()), Toast.LENGTH_SHORT).show();

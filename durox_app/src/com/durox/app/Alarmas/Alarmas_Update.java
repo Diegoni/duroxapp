@@ -111,30 +111,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-				mAlarmas.insert(
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optString("id_tipo_alarma"), 
-					jsonChildNode.optString("mensaje"), 
-					jsonChildNode.optString("id_creador"), 
-					jsonChildNode.optString("id_origen"), 
-					jsonChildNode.optString("visto_back"), 
-					jsonChildNode.optString("visto_front"), 
-					jsonChildNode.optString("id_front"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"));
-				Log.e("PASO", "10");
-			}
-			Log.e("PASO", "11");
-			Toast.makeText(mContext, 
-				config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			Log.e("PASO", "12");
 			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					mAlarmas.insert(
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optString("id_tipo_alarma"), 
+						jsonChildNode.optString("mensaje"), 
+						jsonChildNode.optString("id_creador"), 
+						jsonChildNode.optString("id_origen"), 
+						jsonChildNode.optString("visto_back"), 
+						jsonChildNode.optString("visto_front"), 
+						jsonChildNode.optString("id_front"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"));
+				}
+				Toast.makeText(mContext, 
+					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 				config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -145,25 +143,26 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			 
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertTipos(
+						jsonChildNode.optString("id_tipo_alarma"), 
+						jsonChildNode.optString("nombre"), 
+						jsonChildNode.optString("tipo_alarma"), 
+						jsonChildNode.optString("color"), 
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"));
+				}
 				
-				mAlarmas.insertTipos(
-					jsonChildNode.optString("id_tipo_alarma"), 
-					jsonChildNode.optString("nombre"), 
-					jsonChildNode.optString("tipo_alarma"), 
-					jsonChildNode.optString("color"), 
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"));
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -177,27 +176,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_cliente"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_cliente"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -208,27 +208,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"),
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_pedido"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"),
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_pedido"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -240,27 +241,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_producto"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_producto"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -271,27 +273,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){  
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_presupuesto"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_presupuesto"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -302,27 +305,28 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_visita"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_visita"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
@@ -333,31 +337,31 @@ public class Alarmas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-			  
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+			
+			if(jsonMainNode != null){
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					
+					mAlarmas.insertSin(
+						jsonChildNode.optString("id_sin_alarma_cliente"), 
+						jsonChildNode.optString("id_alarma"), 
+						jsonChildNode.optInt("id_front_alarma"),
+						jsonChildNode.optString("id_vendedor"),
+						jsonChildNode.optInt("id_front_tabla"),
+						jsonChildNode.optString("date_add"), 
+						jsonChildNode.optString("date_upd"), 
+						jsonChildNode.optString("eliminado"), 
+						jsonChildNode.optString("user_add"), 
+						jsonChildNode.optString("user_upd"), 
+						subjet);
+				}
 				
-				mAlarmas.insertSin(
-					jsonChildNode.optString("id_sin_alarma_cliente"), 
-					jsonChildNode.optString("id_alarma"), 
-					jsonChildNode.optInt("id_front_alarma"),
-					jsonChildNode.optString("id_vendedor"),
-					jsonChildNode.optInt("id_front_tabla"),
-					jsonChildNode.optString("date_add"), 
-					jsonChildNode.optString("date_upd"), 
-					jsonChildNode.optString("eliminado"), 
-					jsonChildNode.optString("user_add"), 
-					jsonChildNode.optString("user_upd"), 
-					subjet);
-			}
-			
-			Toast.makeText(mContext, 
-					config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
-			
+				Toast.makeText(mContext, 
+						config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}	
 		} catch (JSONException e) {
 			Toast.makeText(mContext, 
 					config.msjError(e.toString()), Toast.LENGTH_SHORT).show();
-		}
-	   
+		}	   
 	}
 }

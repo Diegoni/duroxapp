@@ -5,6 +5,7 @@ public class Visitas {
 	private String nombre;
 	private String epoca;
 	private String fecha;
+	private String comentario;
 	private int imagen;
 	private String id_front;
 	
@@ -13,12 +14,14 @@ public class Visitas {
 			String nombre, 
 			String epoca,
 			String fecha,
+			String comentario,
 			int imagen,
 			String id_front) {
 		this.id_visita = id_visita;
 		this.nombre = nombre;
 		this.epoca = epoca;
 		this.fecha = fecha;
+		this.comentario = comentario;
 		this.imagen = imagen;
 		this.id_front = id_front;
 	}
@@ -33,6 +36,10 @@ public class Visitas {
 
 	public String getFecha() {
 		return this.fecha;
+	}
+	
+	public String getComentario() {
+		return this.comentario;
 	}
 	
 	public int getImagen() {

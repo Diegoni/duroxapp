@@ -209,35 +209,37 @@ public class Visitas_Update extends MenuActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray(subjet);
-	 			
-			if(jsonMainNode.length() > 0){
-	 			mVisitas.truncate();
-	 		}
-	 			  
-	 		for (int i = 0; i < jsonMainNode.length(); i++) {
-	 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-	 				
-	 			mVisitas.insert(
-	 				jsonChildNode.optString("id_visita"),
-	 				jsonChildNode.optString("id_vendedor"),
-	 				jsonChildNode.optString("id_cliente"),
-	 				jsonChildNode.optString("descripcion"),
-	 				jsonChildNode.optString("id_epoca_visita"),
-	 				jsonChildNode.optString("valoracion"),
-	 				jsonChildNode.optString("fecha"),
-	 				jsonChildNode.optString("id_origen"),
-	 				jsonChildNode.optString("visto"),
-	 				jsonChildNode.optString("date_add"),
-	 				jsonChildNode.optString("date_upd"),
-	 				jsonChildNode.optString("eliminado"),
-	 				jsonChildNode.optString("user_add"),
-	 				jsonChildNode.optString("user_upd")
-	 			);
-	 			
-	 		}
 	 		
-	 		Toast.makeText(mContext, 
-	 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			if(jsonMainNode != null){
+				if(jsonMainNode.length() > 0){
+		 			mVisitas.truncate();
+		 		}
+		 			  
+		 		for (int i = 0; i < jsonMainNode.length(); i++) {
+		 			JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+		 				
+		 			mVisitas.insert(
+		 				jsonChildNode.optString("id_visita"),
+		 				jsonChildNode.optString("id_vendedor"),
+		 				jsonChildNode.optString("id_cliente"),
+		 				jsonChildNode.optString("descripcion"),
+		 				jsonChildNode.optString("id_epoca_visita"),
+		 				jsonChildNode.optString("valoracion"),
+		 				jsonChildNode.optString("fecha"),
+		 				jsonChildNode.optString("id_origen"),
+		 				jsonChildNode.optString("visto"),
+		 				jsonChildNode.optString("date_add"),
+		 				jsonChildNode.optString("date_upd"),
+		 				jsonChildNode.optString("eliminado"),
+		 				jsonChildNode.optString("user_add"),
+		 				jsonChildNode.optString("user_upd")
+		 			);
+		 			
+		 		}
+		 		
+		 		Toast.makeText(mContext, 
+		 		 		config.msjRegistrosActualizados(subjet+" "+jsonMainNode.length()), Toast.LENGTH_SHORT).show();
+			}
 	 	} catch (JSONException e) {
 	 		Toast.makeText(mContext, 
 	 			config.msjError(e.toString()) , Toast.LENGTH_SHORT).show();

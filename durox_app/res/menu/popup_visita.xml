@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >  
+    <item  
+        android:id="@+id/razon_social"  
+        android:title="@string/razon_social"/>  
+    
+    <item  
+        android:id="@+id/id"  
+        android:title="@string/ranklabel"/>      
+
+    <item  
+        android:id="@+id/epoca"  
+        android:title="@string/epoca"/>  
+        
+    <item  
+        android:id="@+id/fecha"  
+        android:title="@string/fecha"/>  
+
+    <item  
+        android:id="@+id/comentarios"  
+        android:title="@string/comentarios"/>
+    
+</menu>  

@@ -30,7 +30,6 @@ public class Presupuesto {
 		return this.id_back;
 	}
 
-
 	public String getNombre() {
 		return this.nombre;
 	}

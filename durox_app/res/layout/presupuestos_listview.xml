@@ -4,32 +4,53 @@
     android:layout_height="fill_parent"
     android:background="@drawable/fondo" >
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lvPresupuestos"
-        android:layout_toLeftOf="@+id/btnpActualizar"
-        android:hint="@string/cliente" >
-
-        <requestFocus />
-    </EditText>
-
-    <ListView
-        android:id="@+id/lvPresupuestos"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/btnpActualizar" />
-
     <Button
         android:id="@+id/btnpActualizar"
         style="@style/btn_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:drawableLeft="@drawable/downloadw"
         android:onClick="actualizar_presupuestos"
         android:text="@string/bajar" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/cliente" />
+
+    <ListView
+        android:id="@+id/lvPresupuestos"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/btnpActualizar"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/search" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/btn_filtro"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/filtro" />
+
+    <Button
+        android:id="@+id/btn_ordenar"
+        style="@style/btn_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_filtro"
+        android:layout_alignBottom="@+id/btn_filtro"
+        android:layout_toRightOf="@+id/btn_filtro"
+        android:text="@string/ordenar" />
     
 </RelativeLayout>
