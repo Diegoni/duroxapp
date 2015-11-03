@@ -32,7 +32,7 @@ public class Config_durox {
 				
 		if(c.getCount() == 0){
 			ip =  "http://192.168.1.219/durox/index.php";
-			documentos = "http://192.168.1.219/durox/documentos";
+			documentos = "http://192.168.1.219/durox/documentos/";
 			fichaProductos = "http://192.168.1.219/Durox/img/productos/documentos/";
 
 			sql = "INSERT INTO `config` ("

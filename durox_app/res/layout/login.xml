@@ -71,7 +71,6 @@
 
     <Button
         android:id="@+id/btn_Sin"
-        
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,5 +78,13 @@
         android:layout_alignLeft="@+id/btn_Salir"
         android:drawableLeft="@drawable/refresh" />
 
+    <Button
+        android:id="@+id/btn_config"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignRight="@+id/edpassword"
+        android:drawableLeft="@drawable/support" />
 
 </RelativeLayout>

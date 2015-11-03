@@ -34,6 +34,7 @@ public class Login extends Activity {
     Button blogin;
     Button btnSalir;
     Button btn_Sin;
+    Button btn_config;
     
     Httppostaux post;
     String URL_connect;
@@ -75,6 +76,7 @@ public class Login extends Activity {
         blogin = (Button) findViewById(R.id.Blogin);
         btnSalir = (Button) findViewById(R.id.btn_Salir);
         btn_Sin = (Button) findViewById(R.id.btn_Sin);
+        btn_config = (Button) findViewById(R.id.btn_config);
                
         intentos = 3;
         segundos = 15;
@@ -142,6 +144,14 @@ public class Login extends Activity {
         			//si detecto un error en la primera validacion vibrar y mostrar un Toast con un mensaje de error.
         			err_login();
         		}
+        	}
+        });
+        
+        
+        btn_config.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View view){
+        		Intent intent = new Intent(Login.this, Config_login.class);
+    			startActivity(intent);
         	}
         });
         

@@ -74,7 +74,7 @@ public class Documentos_ItemView extends MenuActivity {
 			abrirArchivo();
 		} else {
 			Toast.makeText(getApplicationContext(), "El archivo no existe en la tarjeta SD, comenzando descarga", Toast.LENGTH_LONG).show();
-			new DownloadMusicfromInternet().execute(url);
+			new DownloadArchivo().execute(url);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class Documentos_ItemView extends MenuActivity {
 	}
 
 
-	class DownloadMusicfromInternet extends AsyncTask<String, String, String> {
+	class DownloadArchivo extends AsyncTask<String, String, String> {
 		@SuppressWarnings("deprecation")
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -127,7 +127,6 @@ public class Documentos_ItemView extends MenuActivity {
 			} catch (Exception e) {
 				Log.e("Error: ", e.getMessage());
 			}
-		
 			return null;
 		}
 
