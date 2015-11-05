@@ -42,6 +42,7 @@ public class Config_login extends Activity {
     }
     
     
+    
     public void guardar(View view){
     	config.setIP(etIp.getText().toString(), db);
     	config.setDocumentos(etDocumentos.getText().toString(), db);
@@ -52,5 +53,4 @@ public class Config_login extends Activity {
     	Intent intentLogin = new Intent(this, Login.class);
   		startActivity(intentLogin);
     }
-    
 }

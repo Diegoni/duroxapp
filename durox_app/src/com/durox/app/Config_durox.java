@@ -32,8 +32,8 @@ public class Config_durox {
 				
 		if(c.getCount() == 0){
 			ip =  "http://192.168.1.219/durox/index.php";
-			documentos = "http://192.168.1.219/durox/documentos/";
-			fichaProductos = "http://192.168.1.219/Durox/img/productos/documentos/";
+			documentos = "http://192.168.1.219/durox/documentos";
+			fichaProductos = "http://192.168.1.219/durox/img/productos/documentos/";
 
 			sql = "INSERT INTO `config` ("
 					+ "`ip`, "
@@ -49,6 +49,7 @@ public class Config_durox {
 			while(c.moveToNext()){
 				ip = c.getString(1);
 				documentos = c.getString(2);
+				fichaProductos = c.getString(3);
     		}	
 		}
 	}

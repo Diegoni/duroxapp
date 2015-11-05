@@ -130,42 +130,22 @@ public class Productos_ItemView extends MenuActivity {
 		txt_pFichaTecnica.setOnClickListener(new View.OnClickListener(){
         	public void onClick(View view){
         		ip = config.getFichaProductos(db);
-        		
-        		Log.e("Paso ","1");
-        		
-        		url = txt_pFichaTecnica.getText().toString();
-        		
-        		Log.e("Paso ","2");
-        		
-        		//cortado = url.substring(ip.length());
-        		
-        		Log.e("Paso ","3");
-        		
-        		file_url = ip+url;
+        		url = ip+txt_pFichaTecnica.getText().toString();
+        		cortado = txt_pFichaTecnica.getText().toString();
+        		file_url = url;
         			
-        		Log.e("Paso ","nombre= "+nombre);
-        		Log.e("Paso ","id= "+id);
-        		Log.e("Paso ","url= "+url);
-        		Log.e("Paso ","cortado= "+cortado);
-        			
-        		//file = new File(Environment.getExternalStorageDirectory().getPath()+cortado);
-        		file = new File(Environment.getExternalStorageDirectory().getPath()+url);
-        			
+        		file = new File(Environment.getExternalStorageDirectory().getPath()+"/"+cortado);
         		if (file.exists()) {
         			Toast.makeText(getApplicationContext(), "El archivo ya existe en la tarjeta SD", Toast.LENGTH_LONG).show();
         			abrirArchivo();
         		} else {
         			Toast.makeText(getApplicationContext(), "El archivo no existe en la tarjeta SD, comenzando descarga", Toast.LENGTH_LONG).show();
-        			new DownloadMusicfromInternet().execute(url);
+        			new DownloadArchivo().execute(url);
         		}
         		
         	}
 		});
 	}
-	
-	
-	
-	
 	
 	
 	protected Dialog onCreateDialog(int id) {
@@ -183,11 +163,13 @@ public class Productos_ItemView extends MenuActivity {
 				return null;
 		}
 	}
-
-
-	class DownloadMusicfromInternet extends AsyncTask<String, String, String> {
+	
+	
+	
+	class DownloadArchivo extends AsyncTask<String, String, String> {
 		@SuppressWarnings("deprecation")
 		protected void onPreExecute() {
+			Log.e("Paso", "1");
 			super.onPreExecute();
 			showDialog(progress_bar_type);
 		}
@@ -195,39 +177,47 @@ public class Productos_ItemView extends MenuActivity {
 		protected String doInBackground(String... f_url) {
 			int count;
 			try {
+				Log.e("Paso", "2");
 				URL url = new URL(f_url[0]);
 				URLConnection conection = url.openConnection();
 				conection.connect();
 
+				Log.e("Paso", "3");
 				int lenghtOfFile = conection.getContentLength();
+				Log.e("Paso", "lenghtOfFile "+lenghtOfFile);
 				InputStream input = new BufferedInputStream(url.openStream(),10*1024);
-				OutputStream output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+cortado);
+				Log.e("Paso", "3a ");
+				OutputStream output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/"+cortado);
+				Log.e("Paso", "3b ");
 				byte data[] = new byte[1024];
+				Log.e("Paso", "3c ");
 				long total = 0;
+				Log.e("Paso", "4");
 				while ((count = input.read(data)) != -1) {
 					total += count;
 					publishProgress("" + (int) ((total * 100) / lenghtOfFile));
 					output.write(data, 0, count);
 				}
-
+				Log.e("Paso", "5");
 				output.flush();
 				output.close();
 				input.close();
 			} catch (Exception e) {
 				Log.e("Error: ", e.getMessage());
 			}
-		
 			return null;
 		}
 
 		
 		protected void onProgressUpdate(String... progress) {
+			Log.e("Paso", "6");
 			prgDialog.setProgress(Integer.parseInt(progress[0]));
 		}
 
 		
 		@SuppressWarnings("deprecation")
 		protected void onPostExecute(String file_url) {
+			Log.e("Paso", "7");
 			dismissDialog(progress_bar_type);
 			Toast.makeText(getApplicationContext(), "Descarga Completa", Toast.LENGTH_LONG).show();
 			abrirArchivo();
@@ -236,12 +226,15 @@ public class Productos_ItemView extends MenuActivity {
 	
 			
 	public void abrirArchivo(){
-		File file = new File(Environment.getExternalStorageDirectory()+cortado);
+		File file = new File(Environment.getExternalStorageDirectory()+"/"+cortado);
 		if (file .exists()){
+			Log.e("Paso", "8");
 			Uri path = Uri.fromFile(file );
+			Log.e("Paso", "9");
 			Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
 			pdfIntent.setDataAndType(path , "application/pdf");
 			pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			Log.e("Paso", "10");
 			try {
 				startActivity(pdfIntent ); 
 			} catch (ActivityNotFoundException e) {
