@@ -60,7 +60,6 @@ public class Visitas_Update extends MenuActivity {
 		
 		if(c.getCount() > 0) {
 			while(c.moveToNext()){
-				
 				JsonSetTask task = new JsonSetTask(
 					c.getString(2),
 					c.getString(3),
@@ -69,7 +68,6 @@ public class Visitas_Update extends MenuActivity {
 					c.getString(6),
 					c.getString(7)
 				);
-				
 				String url2 = config.getIp(db)+"/actualizaciones/setVisita/";
 		 		task.execute(new String[] { url2 });
     		}		
@@ -77,10 +75,10 @@ public class Visitas_Update extends MenuActivity {
 			Toast.makeText(mContext, config.msjNoRegistros("visitas"), Toast.LENGTH_SHORT).show();
 		}
 		
-		
 		JsonReadTask taskVisitas = new JsonReadTask();
 		String url = config.getIp(db)+"/actualizaciones/getVisitas/";
 		taskVisitas.execute(new String[] { url });
+
 	}
 	
 	
