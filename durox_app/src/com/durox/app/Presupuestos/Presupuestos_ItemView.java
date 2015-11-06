@@ -8,7 +8,6 @@ import com.durox.app.MenuActivity;
 import com.durox.app.Models.Lineas_Presupuestos_model;
 import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Presupuestos_model;
-import com.durox.app.Presupuestos.Presupuestos_Create;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -199,16 +197,14 @@ public class Presupuestos_ItemView extends MenuActivity {
 	
 	
 	public void editar_presupuesto(View view) {
-		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Create.class);
+		Intent intent = new Intent(Presupuestos_ItemView.this, Presupuestos_Tabs.class);
+		
 		intent.putExtra("truncate", "no");
 		intent.putExtra("nombre", cNombre);
-		Log.e("Paso ", "nombre "+cNombre);
 		intent.putExtra("id_visita", cIdVisita);
-		Log.e("Paso ", "id_visita "+cIdVisita);
 		intent.putExtra("id_presupuesto", id_presupuesto);
-		Log.e("Paso ", "id_presupuesto "+id_presupuesto);
 		intent.putExtra("id", id);
-		Log.e("Paso ", "id "+id);
+		
 		startActivity(intent);
 	}
 }

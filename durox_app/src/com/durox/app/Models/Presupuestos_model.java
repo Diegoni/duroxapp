@@ -18,7 +18,7 @@ public class Presupuestos_model extends Activity{
 	
 	public void createTable(){
 		sql = "CREATE TABLE IF NOT EXISTS presupuestos("
-				+ "id_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "`id_presupuesto` INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "`id_back` VARCHAR, "
 				+ "`id_visita` VARCHAR, "
 				+ "`id_cliente` VARCHAR, "
@@ -237,12 +237,17 @@ public class Presupuestos_model extends Activity{
 		sql = "DELETE FROM `presupuestos` WHERE aprobado_front = '1' AND visto_front = '1'";
 		db.execSQL(sql);
 		
-		Log.e("Consulta ", sql);
+		Log.e("DELETE ", sql);
 		
 		sql = "DELETE FROM `presupuestos` WHERE visto_front = '0'"; 
 		db.execSQL(sql);
 		
-		Log.e("Consulta ", sql);
+		Log.e("DELETE ", sql);
+	}
+	
+	public void eliminarAnterior(String id){
+		sql = "DELETE FROM `presupuestos` WHERE id_presupuesto = '"+id+"' ";
+		db.execSQL(sql);
 	}
 	
 	
@@ -250,10 +255,12 @@ public class Presupuestos_model extends Activity{
 		createTable();
 		
 		sql = "SELECT "
-				+ "	* FROM "
+				+ "	* "
+			+ "FROM "
 				+ " `presupuestos` "
-				+ " WHERE id_back = '0' AND "
-				+ " aprobado_front = '1' ";
+			+ " WHERE "
+				+ "`id_back` = '0' AND "
+				+ " `aprobado_front` = '1' ";
 		
 		c = db.rawQuery(sql, null);
 		

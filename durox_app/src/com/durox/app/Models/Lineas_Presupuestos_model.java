@@ -203,10 +203,30 @@ public class Lineas_Presupuestos_model extends Activity{
 	public void delete(){
 		createTable();
 		
-		sql = "DELETE FROM "
-				+ " `linea_productos_presupuestos` ";
-				//+ " WHERE id_back = '0";
-		db.execSQL(sql);
+		sql = "SELECT id_presupuesto, id_back FROM `presupuestos` WHERE aprobado_front = '1' AND visto_front = '1'";
+		c = db.rawQuery(sql, null);
+		
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				sql = "DELETE FROM `linea_productos_presupuestos` WHERE `id_temporario` = '"+c.getString(0)+"' ";
+				db.execSQL(sql);
+				sql = "DELETE FROM `linea_productos_presupuestos` WHERE `id_presupuesto` = '"+c.getString(1)+"' ";
+				db.execSQL(sql);
+			}
+		}
+		
+		sql = "SELECT id_presupuesto, id_back FROM `presupuestos` WHERE visto_front = '0'"; 
+		c = db.rawQuery(sql, null);
+		
+		
+		if(c.getCount() > 0){
+			while(c.moveToNext()){
+				sql = "DELETE FROM `linea_productos_presupuestos` WHERE `id_temporario` = '"+c.getString(0)+"' ";
+				db.execSQL(sql);
+				sql = "DELETE FROM `linea_productos_presupuestos` WHERE `id_presupuesto` = '"+c.getString(1)+"' ";
+				db.execSQL(sql);
+			}
+		}
 	}
 	
 	public void deleteLinea(String linea){
@@ -255,12 +275,21 @@ public class Lineas_Presupuestos_model extends Activity{
 				+ "	* "
 			+ "FROM "
 				+ " `linea_productos_presupuestos` "
+			+ " INNER JOIN "
+				+ " `presupuestos`"
+				+ " ON (linea_productos_presupuestos.id_temporario = presupuestos.id_presupuesto)"
 			+ " WHERE "
-				+ "id_back = '0' ";
+				+ " `presupuestos`.`id_back` = '0' AND "
+				+ " `presupuestos`.`aprobado_front` = '1' ";
 		
 		c = db.rawQuery(sql, null);
 		
 		return c;
+	}
+	
+	public void eliminarAnterior(String id){
+		sql = "DELETE FROM `linea_productos_presupuestos` WHERE id_temporario = '"+id+"' ";
+		db.execSQL(sql);
 	}
 	
 }

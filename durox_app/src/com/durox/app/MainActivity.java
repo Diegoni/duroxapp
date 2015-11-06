@@ -23,6 +23,7 @@ import com.durox.app.Models.Modos_pago_model;
 import com.durox.app.Models.Monedas_model;
 import com.durox.app.Models.Pedidos_model;
 import com.durox.app.Models.Presupuestos_model;
+import com.durox.app.Models.Presupuestos_temp_model;
 import com.durox.app.Models.Productos_model;
 import com.durox.app.Models.Provincias_model;
 import com.durox.app.Models.Telefonos_clientes_model;
@@ -145,7 +146,9 @@ public class MainActivity extends MenuActivity {
 	   Modos_pago_model mModos = new Modos_pago_model(db);
 	   		mModos.createTable();
 	   Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
-	   		mTiempos.createTable();				
+	   		mTiempos.createTable();	
+	   Presupuestos_temp_model mPresTemp = new Presupuestos_temp_model(db);
+	   		mPresTemp.createTable();
 	   
 	   bigInsert();
    } 

@@ -90,7 +90,6 @@ public class Presupuestos_Main extends MenuActivity {
 	        
 	    btn_filtro = (Button) findViewById(R.id.btn_filtro);
 	    btn_filtro.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				PopupMenu popup = new PopupMenu(Presupuestos_Main.this, btn_filtro);
 				popup.getMenuInflater().inflate(R.menu.popup_visita, popup.getMenu());
@@ -115,8 +114,8 @@ public class Presupuestos_Main extends MenuActivity {
 	    	Intent i = new Intent(Presupuestos_Main.this, Presupuestos_Main.class);
 	    	startActivity(i);
 		}
-	}
 	
+	}
 	
 	
 	public void actualizar_visitas(View view) {
@@ -138,7 +137,7 @@ public class Presupuestos_Main extends MenuActivity {
     	pDialog.dismiss();
     	visitas_lista(orden, filtro);
 	}
-
+	
 	
 	
 	public void visitas_lista(CharSequence orden, final CharSequence filtro){

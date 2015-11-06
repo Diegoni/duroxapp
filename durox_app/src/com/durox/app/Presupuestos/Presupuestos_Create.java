@@ -66,13 +66,6 @@ public class Presupuestos_Create extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presupuestos_create);
 		
-		Log.e("Paso", "6");
-		
-		//setTitle("Presupuestos - Carga de un nuevo presupuesto");
-        //getActionBar().setIcon(R.drawable.menupresupuesto);
-        
-        Log.e("Paso", "7");
-		
 		Intent intent = getIntent();
 		cNombre = intent.getStringExtra("nombre");
 		cIdVisita = intent.getStringExtra("id_visita");
@@ -81,17 +74,9 @@ public class Presupuestos_Create extends MenuActivity {
 		id_linea = intent.getStringExtra("id_linea");
 		String truncate = intent.getStringExtra("truncate");
 		
-		Log.e("Paso", "8");
-		
 		if(truncate == null){
 			truncate = "no"; 
 		}
-		
-		Log.e("Presupuestos_Create", "cNombre "+cNombre);
-		Log.e("Presupuestos_Create", "cIdVisita "+cIdVisita);
-		Log.e("Presupuestos_Create", "id_presupuesto "+id_presupuesto);
-		Log.e("Presupuestos_Create", "id "+id);
-		Log.e("Presupuestos_Create ", "truncate "+truncate);
 		
 		Button btnGuardar = (Button) findViewById(R.id.guardar_presupuesto);
 		Button btnAprobar = (Button) findViewById(R.id.btnAprobarPresupuesto);
@@ -123,8 +108,6 @@ public class Presupuestos_Create extends MenuActivity {
     		}		
 		}
 		
-		Log.e("Paso", "9");
-		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, p_nombre);
 		auto_producto.setThreshold(1);
 		auto_producto.setAdapter(adapter);
@@ -140,7 +123,6 @@ public class Presupuestos_Create extends MenuActivity {
 			btnGuardar.setEnabled(false);
 			btnAprobar.setEnabled(false);
 		}else{
-			
 			Cursor cursor;
 			
 			if(id_presupuesto == null || id_presupuesto.equals(" ") || id_presupuesto == ""+null){
@@ -180,12 +162,8 @@ public class Presupuestos_Create extends MenuActivity {
 					valor_moneda[x] = cursor.getString(9);
 					id_moneda[x] = cursor.getString(10);
 					
-					Log.e("moneda ", moneda[x]);
-					Log.e("valor_moneda ", valor_moneda[x]);
-					Log.e("id_moneda ", id_moneda[x]);
 					x = x + 1;
 				}	
-			
 				
 				list = (ListView) findViewById(R.id.list_linea);
 
@@ -241,7 +219,6 @@ public class Presupuestos_Create extends MenuActivity {
 				btnGuardar.setEnabled(true);
 				btnAprobar.setEnabled(true);
 			} else {
-				
 				btnGuardar.setEnabled(false);
 				btnAprobar.setEnabled(false);
 			}
@@ -256,9 +233,7 @@ public class Presupuestos_Create extends MenuActivity {
 		String comentario = etComentario.getText().toString();
 		
 		db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
-		
 		mLineas = new Lineas_Presupuestos_model(db);
-		
 		Cursor cursor = mProductos.getAutocomplete(producto);
 		
 		if(cursor.getCount() > 0){
@@ -291,8 +266,6 @@ public class Presupuestos_Create extends MenuActivity {
 						}
 					}
 				}
-				
-				Log.e("ID MONEDA", cursor.getString(3));
 				
 				mLineas.insert(
 					linea_id_back,			//id_back
@@ -356,11 +329,8 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		TextView txtTotal = (TextView) findViewById(R.id.txt_pTotal);
 		String total = txtTotal.getText().toString();
-		
 		Clientes_model mCliente = new Clientes_model(db);
-		
 		Cursor cursorCliente = mCliente.getID(cNombre);
-		
 		String id_cliente = "1";
 		
 		if(cursorCliente.getCount() > 0){
@@ -382,131 +352,116 @@ public class Presupuestos_Create extends MenuActivity {
 		Presupuestos_model mPresupuestos = new Presupuestos_model(db);
 		Lineas_Presupuestos_model mLineas = new Lineas_Presupuestos_model(db);
 		
-		mPresupuestos.createTable();
+		eliminarAnterior();
 		
-		if(id_presupuesto.length() == 1){
-			Presupuestos_temp_model mTemp = new Presupuestos_temp_model(db);
-			String condicion_pago = "";
-			String id_condicion_pago = "";
-			String modo_pago = "";
-			String id_modo_pago = "";
-			String tiempo_entrega = "";
-			String id_tiempo_entrega = "";
-			String nota_privada = "";
-			String nota_publica = "";
-			Cursor cTemp = mTemp.getTemp();
-			
-			if(cTemp.getCount() > 0){
-				while(cTemp.moveToNext()){
-					condicion_pago = cTemp.getString(0);
-					modo_pago = cTemp.getString(1);
-					tiempo_entrega = cTemp.getString(2);
-					nota_publica = cTemp.getString(3);
-					nota_privada = cTemp.getString(4);
+		Presupuestos_temp_model mTemp = new Presupuestos_temp_model(db);
+		String condicion_pago = "";
+		String id_condicion_pago = "";
+		String modo_pago = "";
+		String id_modo_pago = "";
+		String tiempo_entrega = "";
+		String id_tiempo_entrega = "";
+		String nota_privada = "";
+		String nota_publica = "";
+		Cursor cTemp = mTemp.getTemp();
+		
+		if(cTemp.getCount() > 0){
+			while(cTemp.moveToNext()){
+				condicion_pago = cTemp.getString(0);
+				modo_pago = cTemp.getString(1);
+				tiempo_entrega = cTemp.getString(2);
+				nota_publica = cTemp.getString(3);
+				nota_privada = cTemp.getString(4);
+			}
+		}else{
+			Cursor cTemp2 = mTemp.getDefault();
+			if(cTemp2.getCount() > 0){
+				while(cTemp2.moveToNext()){
+					condicion_pago = cTemp2.getString(0);
+					modo_pago = cTemp2.getString(1);
+					tiempo_entrega = cTemp2.getString(2);
+					nota_publica = cTemp2.getString(3);
+					nota_privada = cTemp2.getString(4);
 				}
-			}else{
-				Cursor cTemp2 = mTemp.getDefault();
-				if(cTemp2.getCount() > 0){
-					while(cTemp2.moveToNext()){
-						condicion_pago = cTemp2.getString(0);
-						modo_pago = cTemp2.getString(1);
-						tiempo_entrega = cTemp2.getString(2);
-						nota_publica = cTemp2.getString(3);
-						nota_privada = cTemp2.getString(4);
-					}
-				}	
-			}
-			Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
-			id_condicion_pago = mCondiciones.getID(condicion_pago);
-			Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
-			id_tiempo_entrega = mTiempos.getID(tiempo_entrega);
-			
-			mPresupuestos.insert(
-				"0", 			// id_back
-				cIdVisita, 		// id_visita 
-				id_cliente,		// id_cliente 
-				id_vendedor,	// id_vendedor 
-				"1",			// id_estado_presupuesto 
-				id_condicion_pago,	// id_condicion_pago
-				id_tiempo_entrega,	// id_tiempo_entrega
-				nota_publica,		// nota_publica
-				total,			// total 
-				"0",			// fecha 
-				"1",			// id_origen
-				"0",			// aprobado_back 
-				"0",			// aprobado_front
-				"0",			// visto_back 
-				"1",			// visto_front
-				null,			// date_add
-				null,			// date_upd 
-				null,			// eliminado 
-				null,			// user_add 
-				null			// user_upd
-			);
-			
-			int idPresupuesto = mPresupuestos.lastInsert();
-			Log.e("Crear Presupuesto", "idPresupuesto "+idPresupuesto);
-			
-			if(!nota_privada.equals("")){
-				Alarmas_model mAlarmas = new Alarmas_model(db);
-				mAlarmas.insert(
-					"0" ,			// id_back, 
-					"2"	,			// id_tipo_alarma, 
-					nota_privada ,	// mensaje, 
-					"1",			// id_creador, 
-					"2",			// id_origen, 
-					"1",			// visto_back, 
-					"0",			// visto_front,
-					"0",			// id_front, 
-					"",				// date_add, 
-					"",				// date_upd, 
-					"",				// eliminado, 
-					"",				// user_add, 
-					""				// user_upd
-				);
-				int idAlarma = mAlarmas.lastInsert();
-				Log.e("Crear Presupuesto", "idAlarma "+idAlarma);
-				
-				mAlarmas.insertSin(
-						"0",			// id_back,
-						"0",			// id_alarma, 
-						idAlarma,		// id_front_alarma,
-						"0",			// id_tabla, 
-						idPresupuesto,	// id_front_tabla,
-						"",				// date_add, 
-						"",				// date_upd, 
-						"",				// eliminado, 
-						"",				// user_add, 
-						"",				// user_upd, 
-						"sin_alarmas_presupuestos"// alarma
-				);
-				
-				Log.e("Crear Presupuesto", "mAlarmas ");
-			}
-			
-			Modos_pago_model mModel = new Modos_pago_model(db);
-			id_modo_pago = mModel.getID(modo_pago);
-			Log.e("Crear Presupuesto", "id_modo_pago "+id_modo_pago);
-			mModel.insertSin(
-				"0", 			// id_back,
-				"0",			// id_presupuesto,
-				idPresupuesto,	// id_presupuesto_front,
-				id_modo_pago,	// id_modo_pago,
+			}	
+		}
+		Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
+		id_condicion_pago = mCondiciones.getID(condicion_pago);
+		Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
+		id_tiempo_entrega = mTiempos.getID(tiempo_entrega);
+		
+		mPresupuestos.insert(
+			"0", 			// id_back
+			cIdVisita, 		// id_visita 
+			id_cliente,		// id_cliente 
+			id_vendedor,	// id_vendedor 
+			"1",			// id_estado_presupuesto 
+			id_condicion_pago,	// id_condicion_pago
+			id_tiempo_entrega,	// id_tiempo_entrega
+			nota_publica,		// nota_publica
+			total,			// total 
+			"0",			// fecha 
+			"1",			// id_origen
+			"0",			// aprobado_back 
+			"0",			// aprobado_front
+			"0",			// visto_back 
+			"1",			// visto_front
+			null,			// date_add
+			null,			// date_upd 
+			null,			// eliminado 
+			null,			// user_add 
+			null			// user_upd
+		);
+		
+		int idPresupuesto = mPresupuestos.lastInsert();
+		
+		if(!nota_privada.equals("")){
+			Alarmas_model mAlarmas = new Alarmas_model(db);
+			mAlarmas.insert(
+				"0" ,			// id_back, 
+				"2"	,			// id_tipo_alarma, 
+				nota_privada ,	// mensaje, 
+				"1",			// id_creador, 
+				"2",			// id_origen, 
+				"1",			// visto_back, 
+				"0",			// visto_front,
+				"0",			// id_front, 
 				"",				// date_add, 
 				"",				// date_upd, 
 				"",				// eliminado, 
 				"",				// user_add, 
-				""				// user_upd, 
+				""				// user_upd
 			);
+			int idAlarma = mAlarmas.lastInsert();
 			
-			
-		} else {
-			mPresupuestos.update(total, id_presupuesto);
-			Log.e("mPresupuestos.createTable() NO", "id_presupuesto "+id_presupuesto);
-			Log.e("mPresupuestos.createTable() NO", "id_presupuesto.length() "+id_presupuesto.length());
+			mAlarmas.insertSin(
+					"0",			// id_back,
+					"0",			// id_alarma, 
+					idAlarma,		// id_front_alarma,
+					"0",			// id_tabla, 
+					idPresupuesto,	// id_front_tabla,
+					"",				// date_add, 
+					"",				// date_upd, 
+					"",				// eliminado, 
+					"",				// user_add, 
+					"",				// user_upd, 
+					"sin_alarmas_presupuestos"// alarma
+			);
 		}
 		
-		
+		Modos_pago_model mModel = new Modos_pago_model(db);
+			id_modo_pago = mModel.getID(modo_pago);
+			mModel.insertSin(
+			"0", 			// id_back,
+			"0",			// id_presupuesto,
+			idPresupuesto,	// id_presupuesto_front,
+			id_modo_pago,	// id_modo_pago,
+			"",				// date_add, 
+			"",				// date_upd, 
+			"",				// eliminado, 
+			"",				// user_add, 
+			""				// user_upd, 
+		);
 		
 		Cursor last_insert = mPresupuestos.getLastInsert();
 		
@@ -515,8 +470,7 @@ public class Presupuestos_Create extends MenuActivity {
 				mLineas.setPresupuesto(last_insert.getString(0)); 
 			}
 		}	
-		
-		
+				
 		Toast.makeText(this, config.msjOkInsert(), Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
 		startActivity(intent);
@@ -553,8 +507,6 @@ public class Presupuestos_Create extends MenuActivity {
 		Presupuestos_model mPresupuestos = new Presupuestos_model(db);
 		Lineas_Presupuestos_model mLineas = new Lineas_Presupuestos_model(db);
 		
-		mPresupuestos.createTable();
-		
 		Presupuestos_temp_model mTemp = new Presupuestos_temp_model(db);
 		String condicion_pago = "";
 		String id_condicion_pago = "";
@@ -565,8 +517,6 @@ public class Presupuestos_Create extends MenuActivity {
 		String nota_privada = "";
 		String nota_publica = "";
 		Cursor cTemp = mTemp.getTemp();
-		
-		Log.e("Crear Presupuesto", "cTemp.getCount() "+cTemp.getCount());
 		
 		if(cTemp.getCount() > 0){
 			while(cTemp.moveToNext()){
@@ -589,19 +539,10 @@ public class Presupuestos_Create extends MenuActivity {
 			}	
 		}
 		
-		Log.e("Crear Presupuesto", "condicion_pago "+condicion_pago);
-		Log.e("Crear Presupuesto", "modo_pago "+modo_pago);
-		Log.e("Crear Presupuesto", "tiempo_entrega "+tiempo_entrega);
-		Log.e("Crear Presupuesto", "nota_privada "+nota_privada);
-		Log.e("Crear Presupuesto", "nota_publica "+nota_publica);
-		
 		Condiciones_pago_model mCondiciones = new Condiciones_pago_model(db);
 		id_condicion_pago = mCondiciones.getID(condicion_pago);
 		Tiempos_entrega_model mTiempos = new Tiempos_entrega_model(db);
 		id_tiempo_entrega = mTiempos.getID(tiempo_entrega);
-		
-		Log.e("Crear Presupuesto", "id_condicion_pago "+id_condicion_pago);
-		Log.e("Crear Presupuesto", "id_tiempo_entrega "+id_tiempo_entrega);
 		
 		mPresupuestos.insert(
 			"0", 			// id_back
@@ -627,7 +568,6 @@ public class Presupuestos_Create extends MenuActivity {
 		);
 		
 		int idPresupuesto = mPresupuestos.lastInsert();
-		Log.e("Crear Presupuesto", "idPresupuesto "+idPresupuesto);
 		
 		if(!nota_privada.equals("")){
 			Alarmas_model mAlarmas = new Alarmas_model(db);
@@ -647,7 +587,6 @@ public class Presupuestos_Create extends MenuActivity {
 				""				// user_upd
 			);
 			int idAlarma = mAlarmas.lastInsert();
-			Log.e("Crear Presupuesto", "idAlarma "+idAlarma);
 			mAlarmas.insertSin(
 				"0",			// id_back,
 				"0",			// id_alarma, 
@@ -665,7 +604,6 @@ public class Presupuestos_Create extends MenuActivity {
 		
 		Modos_pago_model mModel = new Modos_pago_model(db);
 		id_modo_pago = mModel.getID(modo_pago);
-		Log.e("Crear Presupuesto", "id_modo_pago "+id_modo_pago);
 		mModel.insertSin(
 			"0", 			// id_back,
 			"0",			// id_presupuesto,
@@ -690,4 +628,17 @@ public class Presupuestos_Create extends MenuActivity {
 		Intent intent = new Intent(Presupuestos_Create.this, MainActivity.class);
 		startActivity(intent);
 	}	
+	
+	
+	private void eliminarAnterior(){
+		if(id_presupuesto == null || id_presupuesto.equals(" ") || id_presupuesto == ""+null){
+			Log.e("PRESUPUESTO", "null o vacio");
+		} else {
+			Presupuestos_model mPresupuestos = new Presupuestos_model(db);
+			Lineas_Presupuestos_model mLineas = new Lineas_Presupuestos_model(db);
+			mPresupuestos.eliminarAnterior(id);
+			mLineas.eliminarAnterior(id);
+			Log.e("PRESUPUESTO", ""+id);				
+		}
+	}
 }

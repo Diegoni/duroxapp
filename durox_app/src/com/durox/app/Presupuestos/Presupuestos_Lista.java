@@ -84,7 +84,7 @@ public class Presupuestos_Lista extends MenuActivity {
         mVendedor = new Vendedores_model(db);
         id_vendedor = mVendedor.getID();        
         
-        orden = "";
+        orden = "ID";
 	    filtro = "Razón Social";
         presupuestos_lista(orden, filtro);
         
