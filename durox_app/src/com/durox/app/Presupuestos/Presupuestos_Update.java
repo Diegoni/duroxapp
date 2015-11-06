@@ -54,6 +54,7 @@ public class Presupuestos_Update extends MenuActivity {
 	Vendedores_model mVendedor;
 	String id_vendedor;
 	
+	
 	public Presupuestos_Update(SQLiteDatabase db_enviada, Context context) {
 		config = new Config_durox();
 		db = db_enviada;
@@ -598,7 +599,6 @@ public class Presupuestos_Update extends MenuActivity {
 					 	jsonChildNode.optString("user_add"),
 					 	jsonChildNode.optString("user_upd")
 			 		);
-		 			
 		 		}
 		 		
 		 		Toast.makeText(mContext, 
@@ -642,8 +642,7 @@ public class Presupuestos_Update extends MenuActivity {
 		 			 	jsonChildNode.optString("eliminado"),
 		 			 	jsonChildNode.optString("user_add"),
 		 			 	jsonChildNode.optString("user_upd")
-			 		);
-			 			
+			 		);		
 		 		}
 			 		
 		 		Toast.makeText(mContext, 
