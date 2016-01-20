@@ -112,11 +112,11 @@ public class Clientes_ListView extends BaseAdapter {
 			clientes.addAll(arraylist);
 		} else {
 			for (Clientes wp : arraylist) {
-				if(filtro.equals("") || filtro.equals("razon social")){
+				if(filtro.equals("") || filtro.equals("razon social") || filtro.equals("Razón Social")){
 					if (wp.getRazonSocial().toLowerCase(Locale.getDefault()).contains(charText)) {
 						clientes.add(wp);
 					}
-				} else if(filtro.equals("nombre") || filtro.equals("apellido")){
+				} else if(filtro.equals("nombre") || filtro.equals("apellido") || filtro.equals("Nombre") || filtro.equals("Apellido")){
 					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
 						clientes.add(wp);
 					}

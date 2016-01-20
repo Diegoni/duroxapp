@@ -28,24 +28,28 @@ public class Config_vista_durox extends MenuActivity {
         getActionBar().setIcon(R.drawable.menuconfig);
         
         etIp = (EditText) findViewById(R.id.et_config_ip);
+        /*
         etDocumentos = (EditText) findViewById(R.id.et_config_documento);
         etProductos = (EditText) findViewById(R.id.et_config_productos);
-        
+        */
         config = new Config_durox();
         
         db = openOrCreateDatabase(config.getDatabase(), Context.MODE_PRIVATE, null);
         
-        etIp.setText(config.getIp(db));
+        etIp.setText(config.getRealIp(db));
+        /*
         etDocumentos.setText(config.getDocumentos(db));
         etProductos.setText(config.getFichaProductos(db));
+        */
     }
     
     
     public void guardar(View view){
     	config.setIP(etIp.getText().toString(), db);
+    	/*
     	config.setDocumentos(etDocumentos.getText().toString(), db);
     	config.setFichaProductos(etProductos.getText().toString(), db);
-    	
+    	*/
     	Toast.makeText(this, config.msjOkUpdate(), Toast.LENGTH_SHORT).show();
     	
     	Intent intentLogin = new Intent(this, Config_vista_durox.class);

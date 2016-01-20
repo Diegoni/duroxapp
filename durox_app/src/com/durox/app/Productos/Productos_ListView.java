@@ -116,15 +116,15 @@ public class Productos_ListView extends BaseAdapter {
 		} else {
 			for (Productos wp : arraylist) {
 				
-				if(filtro.equals("") || filtro.equals("nombre")){
+				if(filtro.equals("") || filtro.equals("Nombre")){
 					if (wp.getNombre().toLowerCase(Locale.getDefault()).contains(charText)) {
 						productos.add(wp);
 					}
-				} else if(filtro.equals("id")){
+				} else if(filtro.equals("ID")){
 					if (wp.getID().toLowerCase(Locale.getDefault()).contains(charText)) {
 						productos.add(wp);
 					}
-				} else if(filtro.equals("codigo")){
+				} else if(filtro.equals("Código")){
 					if (wp.getCodigo().toLowerCase(Locale.getDefault()).contains(charText)) {
 						productos.add(wp);
 					}

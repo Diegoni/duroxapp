@@ -7,6 +7,7 @@ import android.util.Log;
 public class Config_durox {
 	private String database = "Durox_tres";
 	
+	private String real_ip;
 	private String ip;
 	private String documentos;
 	private String fichaProductos;
@@ -21,7 +22,8 @@ public class Config_durox {
 				+ "id_config INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "ip VARCHAR,"
 				+ "documentos VARCHAR, "
-				+ "fichaProductos VARCHAR"
+				+ "fichaProductos VARCHAR, "
+				+ "real_ip VARCHAR "
 				+ ");";
 		
 		db.execSQL(sql);
@@ -31,18 +33,27 @@ public class Config_durox {
 		c = db.rawQuery(sql, null);
 				
 		if(c.getCount() == 0){
+			/*
 			ip =  "http://192.168.1.219/durox/index.php";
 			documentos = "http://192.168.1.219/durox/documentos";
 			fichaProductos = "http://192.168.1.219/durox/img/productos/documentos/";
+			*/
+			real_ip = "http://190.15.192.35:8090";	
+			ip = "/durox/index.php";
+			documentos = "/durox/documentos";
+			fichaProductos = "/durox/img/productos/documentos/";
+
 
 			sql = "INSERT INTO `config` ("
 					+ "`ip`, "
 					+ "`documentos`, "
-					+ "`fichaProductos` "
+					+ "`fichaProductos`, "
+					+ "`real_ip` "
 				+ ") VALUES ("
 					+ "'"+ip+"', "
 					+ "'"+documentos+"', "
-					+ "'"+fichaProductos+"' "
+					+ "'"+fichaProductos+"', "
+					+ "'"+real_ip+"' "
 					+ ");";
 	 		db.execSQL(sql);
 		}else{
@@ -50,6 +61,7 @@ public class Config_durox {
 				ip = c.getString(1);
 				documentos = c.getString(2);
 				fichaProductos = c.getString(3);
+				real_ip = c.getString(4);
     		}	
 		}
 	}
@@ -62,7 +74,9 @@ public class Config_durox {
 	public String getIp(SQLiteDatabase db) {
 		this.db = db;
 		createConfig();
-		return this.ip;
+		
+		String ip_return = this.real_ip+this.ip;
+		return ip_return;
 	}
 	
 	
@@ -78,11 +92,31 @@ public class Config_durox {
 		this.ip = ip;
 	}
 	
+	public String getRealIp(SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		return this.real_ip;
+	}
+	
+	
+	public void setRealIP(String real_ip, SQLiteDatabase db) {
+		this.db = db;
+		createConfig();
+		
+		sql = "UPDATE `config` SET real_ip = '"+real_ip+"'"; 
+		Log.e("Consulta ", sql);
+		
+		db.execSQL(sql);
+		this.real_ip = real_ip;
+	}
+	
 	
 	public String getFichaProductos(SQLiteDatabase db) {
 		this.db = db;
 		createConfig();
-		return this.fichaProductos;
+		
+		String ip_return = this.real_ip+this.fichaProductos;
+		return ip_return;
 	}
 	
 	
@@ -102,7 +136,8 @@ public class Config_durox {
 	public String getDocumentos(SQLiteDatabase db) {
 		this.db = db;
 		createConfig();
-		return this.documentos;
+		String ip_return = this.real_ip+this.documentos;
+		return ip_return;
 	}	
 	
 	

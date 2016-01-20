@@ -54,7 +54,7 @@ public class Productos_model extends Activity{
 					+ "productos "
 				+ "INNER JOIN "
 					+ "monedas ON(productos.id_moneda = monedas.id_back)";
-		}else if(order.equals("id")){
+		}else if(order.equals("id") || order.equals("ID")){
 			sql = "SELECT "
 					+ "productos.id_back, "
 					+ "productos.nombre, "
@@ -67,7 +67,21 @@ public class Productos_model extends Activity{
 				+ "INNER JOIN "
 					+ "monedas ON(productos.id_moneda = monedas.id_back)"
 				+ " ORDER BY "
-					+ "id_back ";
+					+ "productos.id_back ";
+		}else if(order.equals("Código")){
+			sql = "SELECT "
+					+ "productos.id_back, "
+					+ "productos.nombre, "
+					+ "productos.precio, "
+					+ "monedas.simbolo, "
+					+ "monedas.abreviatura, "
+					+ "productos.codigo "
+				+ "FROM "
+					+ "productos "
+				+ "INNER JOIN "
+					+ "monedas ON(productos.id_moneda = monedas.id_back)"
+				+ " ORDER BY "
+					+ "productos.codigo ";
 			
 		}else{
 			sql = "SELECT "

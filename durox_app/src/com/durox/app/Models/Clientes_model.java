@@ -43,7 +43,7 @@ public class Clientes_model extends Activity{
 	public Cursor getRegistros(CharSequence orden){
 		createTable();
 		
-		if(orden.equals("") || orden.equals("razon social")){
+		if(orden.equals("") || orden.equals("razon social") || orden.equals("Razón Social")){
 			sql = "SELECT "
 					+ "id_cliente,"
 					+ "id_back,"
@@ -64,7 +64,7 @@ public class Clientes_model extends Activity{
 					+ "user_upd"
 				+ " FROM clientes "
 					+ " ORDER BY razon_social";
-		} else if(orden.equals("id")){
+		} else if(orden.equals("id") || orden.equals("ID")){
 			sql = "SELECT "
 					+ "id_cliente,"
 					+ "id_back,"
